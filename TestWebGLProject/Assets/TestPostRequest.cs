@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class TestPostRequest : MonoBehaviour
 {
+    public UnityStringEvent PostReceived;
+    
     public void Upload()
     {
         StartCoroutine(Post());
@@ -38,7 +39,8 @@ public class TestPostRequest : MonoBehaviour
         }
         else
         {
-            Debug.Log("Form upload complete!");
+            Debug.Log(www.downloadHandler.text);
+            PostReceived.Invoke(www.downloadHandler.text);
         }
     }
 }
