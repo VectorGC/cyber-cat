@@ -20,10 +20,10 @@ public class TestPostRequest : MonoBehaviour
 
         // UnityWebRequest www = UnityWebRequest.Get("https://kee-reel.com/solution?token="+token+"&gen_doc=0");
 
-        var formSection = new MultipartFormDataSection("token=" + token);
+        var formSection = new MultipartFormDataSection("token", token);
         formData.Add(formSection); 
         
-        var sectionTaskId = new MultipartFormDataSection("tasks=93");
+        var sectionTaskId = new MultipartFormDataSection("tasks", "93");
         formData.Add(sectionTaskId);
 
         formData.Add(new MultipartFormFileSection("source_93", "твой_локально_сохранённый_файл.txt"));
