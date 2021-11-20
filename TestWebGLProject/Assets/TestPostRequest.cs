@@ -26,8 +26,9 @@ public class TestPostRequest : MonoBehaviour
         var sectionTaskId = new MultipartFormDataSection("tasks", "93");
         formData.Add(sectionTaskId);
 
-        formData.Add(new MultipartFormFileSection("source_93", "твой_локально_сохранённый_файл.txt"));
-        
+        var data = System.Text.Encoding.UTF8.GetBytes("#include <stdio.h>\nint main(){return 0;}");
+        formData.Add(new MultipartFormFileSection("source_93", data, "test.c", "application/octet-stream"));
+
         UnityWebRequest www = UnityWebRequest.Post("https://kee-reel.com/solution", formData);
         yield return www.SendWebRequest();
 
