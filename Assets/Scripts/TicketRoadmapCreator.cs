@@ -36,10 +36,6 @@ public class TicketRoadmapCreator : BaseTicketRoadmapCreator
         }
         _tree = new NonBinarTree(tickets.ElementAt(0));
         AddChildrenToTree(tickets, 0, 0, _tree.RootNode);
-        TaskNodeView taskNodeView;
-        var layout = Instantiate(_horizontalLayoutGroupPrefab, Vector3.zero, Quaternion.identity, _taskNodeContainer);
-        taskNodeView = Instantiate(_taskNodeViewPrefab, Vector3.zero, Quaternion.identity, layout.gameObject.transform);
-        taskNodeView.UpdateView(tickets.ElementAt(0));
         CreateLayoutsWithNodes();
     }
 
