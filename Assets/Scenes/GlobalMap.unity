@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4c7b8f6ed52c4a94fefa7e179238f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TaskNodeViewPrefab: {fileID: 6508296475465351839, guid: 93f499f4bfa8831469f34abc701c2339, type: 3}
-  TaskNodeContainer: {fileID: 338543796}
+  _taskNodeViewPrefab: {fileID: 6508296475465351839, guid: 93f499f4bfa8831469f34abc701c2339, type: 3}
+  _taskNodeContainer: {fileID: 338543796}
+  _horizontalLayoutGroupPrefab: {fileID: 3254739514209669530, guid: e561cde6f646a1447a2782f702c81dbb, type: 3}
 --- !u!4 &27680420
 Transform:
   m_ObjectHideFlags: 0
@@ -264,7 +265,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -272,7 +273,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &528433363
 GameObject:
   m_ObjectHideFlags: 0
