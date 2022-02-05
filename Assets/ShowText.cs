@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class ShowText : MonoBehaviour
 {
     public Text text;
