@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GlobalMapStartup : MonoBehaviour
@@ -10,5 +9,8 @@ public class GlobalMapStartup : MonoBehaviour
         var serviceProvider = ServiceProvider.Instance;
         var tickets = serviceProvider.TicketRequester.GetTickets();
         serviceProvider.TicketRoadmapCreator.CreateRoadmap(tickets);
+        
+        // Uncomment to test load window.
+        //serviceProvider.LoadWindow.StartLoading();
     }
 }
