@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IPlayerProfile
+public interface IPlayerProfile : ICloneable
 {
     public string Mail { get; }
     public string Name { get; }
@@ -65,25 +65,23 @@ public class PlayerProfile : IPlayerProfile
 
     }
 
-    public PlayerProfile(IPlayerProfile playerProfile)
-    {
-        CopyFromAnother(playerProfile);
-    }
-
     public string Serialize()
     {
         return JsonUtility.ToJson(this);
     }
-
-    private void CopyFromAnother(IPlayerProfile playerProfile)
+    
+    public object Clone()
     {
-        Mail = playerProfile.Mail;
-        Name = playerProfile.Name;
-        SurName = playerProfile.SurName;
-        Tocken = playerProfile.Tocken;
-        LastServerChange = playerProfile.LastServerChange;
-        LastClientChange = playerProfile.LastClientChange;
-        LastIPs = playerProfile.LastIPs;
+        return new PlayerProfile
+        {
+            Mail = Mail,
+            Name = Name,
+            SurName = SurName,
+            Tocken = Tocken,
+            LastServerChange = LastServerChange,
+            LastClientChange = LastClientChange,
+            LastIPs = LastIPs
+        };
     }
 
     public static IPlayerProfile Deserialize(string jsonData)
