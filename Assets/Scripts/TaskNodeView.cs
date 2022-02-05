@@ -2,6 +2,7 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TaskNodeView : MonoBehaviour
 {
@@ -33,12 +34,14 @@ public class TaskNodeView : MonoBehaviour
 
     public void LoadTask()
     {
-        Debug.Log($"Была выбрана задача #{_ticket.Id} '{_ticket.TicketName}' ");
+        Debug.Log($"пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ #{_ticket.Id} '{_ticket.TicketName}' ");
         foreach(var star in stars)
         {
             star.color = Color.yellow;
         }
-        Debug.Log($"#{_ticket.Id} '{_ticket.TicketName}' решена");
+
+        SceneManager.LoadScene("Code_editor_Blue");
+        //Debug.Log($"#{_ticket.Id} '{_ticket.TicketName}' пїЅпїЅпїЅпїЅпїЅпїЅ");
     }
 
 }
