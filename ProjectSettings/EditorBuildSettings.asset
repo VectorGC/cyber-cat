@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GlobalMap.unity
     guid: d155cf63bd64cae48b2f1b7a95d39a50
+  - enabled: 1
+    path: Assets/Scenes/Code_editor_Blue.unity
+    guid: 15651a159b27a3046bcbbeab2b7ce1b6
   m_configObjects: {}
