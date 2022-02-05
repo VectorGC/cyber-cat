@@ -952,7 +952,7 @@ VideoPlayer:
   m_TargetMaterialProperty: _MainTex
   m_RenderMode: 0
   m_AspectRatio: 2
-  m_DataSource: 1
+  m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
@@ -990,6 +990,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2093693538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411367fc696d6704f9f6db890d281175, type: 3}
+  m_Script: {fileID: 11500000, guid: 2edc20a5cf07c85418fb90b0550f6566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  streamingVideoAsset: {fileID: 102900000, guid: 5d513223e2885ac428e7ddffb102bd85, type: 3}
+  filePath: Assets/StreamingAssets/AuthVideoBackground.mp4
