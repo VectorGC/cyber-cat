@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,21 @@ public class TestPostRequest : MonoBehaviour
         formData.Add(new MultipartFormFileSection("source_93", data, "test.c", "application/octet-stream"));
 
         UnityWebRequest www = UnityWebRequest.Post("https://kee-reel.com/solution", formData);
-        yield return www.SendWebRequest();
+        
+        var t = www.SendWebRequest();
+        while (!t.isDone)
+        {
+            Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
+            Debug.Log($"progress {t.progress}");
+            Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
+            yield return null;
+        }
+
+        Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
+        Debug.Log($"progress {t.progress}");
+        Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
+        
+        //yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
         {
