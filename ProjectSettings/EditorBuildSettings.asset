@@ -9,15 +9,18 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Scenes/Templates/AuthSceneNew.unity
+    guid: 4c6865323d5d8bb4dbd1ceb93e811370
+  - enabled: 0
     path: Assets/Scenes/AuthScene.unity
     guid: 0479e755f5bd05c44a28813e453e1040
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: fecbc7e6ea99f0341b5fd71c3c835b20
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GlobalMap.unity
     guid: d155cf63bd64cae48b2f1b7a95d39a50
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Code_editor_Blue.unity
     guid: 15651a159b27a3046bcbbeab2b7ce1b6
   m_configObjects: {}

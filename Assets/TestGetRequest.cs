@@ -1,15 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Authentication;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
-
-[Serializable]
-public class UnityStringEvent : UnityEvent<string>
-{
-    
-}
+using UnityEventTypes;
 
 public class TestGetRequest : MonoBehaviour
 {

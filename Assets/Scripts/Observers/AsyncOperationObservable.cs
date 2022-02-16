@@ -5,78 +5,41 @@ using UnityEngine;
 
 namespace Observers
 {
-    public class AsyncOperationObservable<T> : IObservable<T>, IEnumerator where T : AsyncOperation
+    public class AsyncOperationObservable<T> : IObservable<T> where T : AsyncOperation
     {
-        private readonly T _asyncOperation;
-
         private readonly List<IObserver<T>> _observers =
             new List<IObserver<T>>();
 
-        private IEnumerator _asyncOperationRoutine;
-
-        private IEnumerator AsyncOperationRoutine =>
-            _asyncOperationRoutine ??= ObserveOperation();
-
         public AsyncOperationObservable(T asyncOperation)
         {
-            _asyncOperation = asyncOperation;
-            AsyncOperationRoutine.StartCoroutine();
+            ObserveOperation(asyncOperation).StartCoroutine();
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
             _observers.Add(observer);
-
-            if (_asyncOperation.isDone)
-            {
-                CallCompleted(_asyncOperation);
-            }
-
             return new Unsubscriber<T>(_observers, observer);
         }
 
-        public IEnumerator ObserveOperation()
+        private IEnumerator ObserveOperation(T asyncOperation)
         {
-            var lastProgress = 0f;
             do
             {
-                var currentProgress = _asyncOperation.progress;
-                if (!Mathf.Approximately(currentProgress, lastProgress))
-                {
-                    lastProgress = currentProgress;
-                    _observers.ForEach(observer => observer.OnNext(_asyncOperation));
-                }
-
+                _observers.ForEach(observer => observer.OnNext(asyncOperation));
                 yield return null;
-            } while (!_asyncOperation.isDone);
+            } while (!asyncOperation.isDone);
 
-            CallCompleted(_asyncOperation);
+            CallCompleted(asyncOperation);
         }
 
         private void CallCompleted(T asyncOperation)
         {
-            _observers.ForEach(observer => observer.OnNext(asyncOperation));
-            _observers.ForEach(observer => CallCompleted(asyncOperation, observer));
+            _observers.ForEach(observer => OnCompleted(asyncOperation, observer));
         }
 
-        protected virtual void CallCompleted(T asyncOperation, IObserver<T> observer)
+        protected virtual void OnCompleted(T asyncOperation, IObserver<T> observer)
         {
-            if (asyncOperation.isDone)
-            {
-                observer.OnCompleted();
-            }
+            observer.OnCompleted();
         }
-
-        public bool MoveNext()
-        {
-            return AsyncOperationRoutine.MoveNext();
-        }
-
-        public void Reset()
-        {
-            AsyncOperationRoutine.Reset();
-        }
-
-        public object Current => AsyncOperationRoutine.Current;
     }
 }

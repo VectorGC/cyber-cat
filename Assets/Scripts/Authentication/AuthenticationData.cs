@@ -1,4 +1,4 @@
-namespace DefaultNamespace.TestButtons
+namespace Authentication
 {
     public class AuthenticationData
     {

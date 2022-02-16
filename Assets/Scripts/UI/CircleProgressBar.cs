@@ -4,43 +4,34 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class CircleProgressBar : MonoBehaviour, IObserver<float>
+    public class CircleProgressBar : MonoBehaviour, IObserver<AsyncOperation>
     {
         [SerializeField] private Image circleImage;
 
-        private IObservable<float> _progressHandler;
-
-        private void Construct(IObservable<float> progressHandler)
+        private void Start()
         {
-            _progressHandler = progressHandler;
-            progressHandler.Subscribe(this);
+            circleImage.gameObject.SetActive(false);
         }
 
-        private void OnDestroy()
+        public void Observe(IObservable<AsyncOperation> asyncOperationObservable)
         {
-            if (_progressHandler is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
+            asyncOperationObservable.Subscribe(this);
         }
 
         public void OnCompleted()
         {
-            Debug.Log("Progress operation completed");
             circleImage.gameObject.SetActive(false);
         }
 
         public void OnError(Exception error)
         {
-            Debug.LogError($"Progress operation ended with error '{error}'");
-            circleImage.gameObject.SetActive(false);
         }
 
-        public void OnNext(float value)
+        public void OnNext(AsyncOperation asyncOperation)
         {
-            Debug.Log($"Progress changed to {value:P0}");
+            var progress = asyncOperation.progress;
+            circleImage.fillAmount = progress;
 
-            circleImage.fillAmount = value;
             circleImage.gameObject.SetActive(true);
         }
     }

@@ -10,6 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 274d3ca4cbc9a62468c3230eb56f8801, type: 3}
-  m_Name: AuthenticationService
+  m_Name: AuthenticationRequest
   m_EditorClassIdentifier: 
-  auth: {fileID: 11500000, guid: 394c475ac576e0e458c8699428b84b17, type: 3}

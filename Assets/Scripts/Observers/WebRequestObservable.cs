@@ -4,13 +4,17 @@ using UnityEngine.Networking;
 
 namespace Observers
 {
-    public class WebRequestObservable : AsyncOperationObservable<UnityWebRequestAsyncOperation>
+    public class WebRequestObservable : AsyncOperationObservable<UnityWebRequestAsyncOperation>,
+        IWebRequestObservable
     {
-        public WebRequestObservable(UnityWebRequestAsyncOperation asyncOperation) : base(asyncOperation)
+        public UnityWebRequest WebRequest { get; }
+
+        public WebRequestObservable(UnityWebRequest webRequest) : base(webRequest.SendWebRequest())
         {
+            WebRequest = webRequest;
         }
 
-        protected override void CallCompleted(UnityWebRequestAsyncOperation asyncOperation,
+        protected override void OnCompleted(UnityWebRequestAsyncOperation asyncOperation,
             IObserver<UnityWebRequestAsyncOperation> observer)
         {
             switch (asyncOperation.webRequest.result)
