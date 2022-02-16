@@ -16,10 +16,10 @@ MonoBehaviour:
   material: {fileID: 21725345230478544}
   materialHashCode: -1702559022
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 44b172c0be3c7a44db72c7cd853db724
-  m_SourceFontFile_EditorRef: {fileID: 0}
-  m_SourceFontFile: {fileID: 0}
-  m_AtlasPopulationMode: 0
+  m_SourceFontFileGUID: 6af4ce852638a9d4c9fc4dd1eb17185b
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 6af4ce852638a9d4c9fc4dd1eb17185b, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: 6af4ce852638a9d4c9fc4dd1eb17185b, type: 3}
+  m_AtlasPopulationMode: 1
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: Dosis
@@ -5913,7 +5913,7 @@ Texture2D:
   m_MipsStripped: 0
   m_TextureFormat: 1
   m_MipCount: 1
-  m_IsReadable: 0
+  m_IsReadable: 1
   m_IsPreProcessed: 0
   m_IgnoreMasterTextureLimit: 0
   m_StreamingMipmaps: 0
