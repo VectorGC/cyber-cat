@@ -1,10 +1,10 @@
 using UnityEngine.Networking;
 
-namespace Observers
+namespace Observers.WebRequest
 {
     public static class UnityWebRequestExt
     {
-        public static WebRequestObservable ToObservable(this UnityWebRequest webRequest) =>
+        public static IWebRequestObservable ToObservable(this UnityWebRequest webRequest) =>
             new WebRequestObservable(webRequest);
     }
 }
