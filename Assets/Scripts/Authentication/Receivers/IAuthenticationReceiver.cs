@@ -1,8 +1,11 @@
 using System;
-using Observers;
 using UnityEngine.Networking;
+using WebRequests.Observers;
 
-public interface IAuthenticationReceiver : IObserver<UnityWebRequestAsyncOperation>
+namespace Authentication.Receivers
 {
-    void Subscribe(IWebRequestObservable webRequestObservable);
+    public interface IAuthenticationReceiver : IObserver<UnityWebRequestAsyncOperation>
+    {
+        void Subscribe(IWebRequestObservable webRequestObservable);
+    }
 }

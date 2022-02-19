@@ -1,6 +1,7 @@
 using Observers;
 using UnityEngine;
 using UnityEngine.Networking;
+using WebRequests.Observers;
 
 namespace Authentication.Requests
 {

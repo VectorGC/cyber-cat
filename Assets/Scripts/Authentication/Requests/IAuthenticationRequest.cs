@@ -1,4 +1,5 @@
 using Observers;
+using WebRequests.Observers;
 
 namespace Authentication.Requests
 {

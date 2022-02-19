@@ -1,20 +1,42 @@
 using System;
+using System.Collections.Specialized;
+using System.Web;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Authentication
 {
-    [Serializable]
     public struct TokenSession
     {
+        private const string QueryParam = "token";
+        private const string PlayerPrefsKey = "token";
+        
         public static event Action<TokenSession> TokenSavedToPlayerPrefs;
 
-        [SerializeField] private string token;
+        [JsonProperty("token")]
+        private string _token;
 
-        public string Token => token;
+        public string Token => _token;
 
-        private TokenSession(string token)
+        public TokenSession(string token)
         {
-            this.token = token;
+            _token = token;
+        }
+
+        public static implicit operator string(TokenSession tokenSession) => tokenSession.Token;
+
+        public static NameValueCollection AsQueryParam()
+        {
+            var token = FromPlayerPrefs();
+            return token.ToQueryParam();
+        }
+
+        public NameValueCollection ToQueryParam()
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query.Add(QueryParam, Token);
+
+            return query;
         }
 
         public void SaveToPlayerPrefs()
@@ -25,7 +47,7 @@ namespace Authentication
                 return;
             }
 
-            PlayerPrefs.SetString("token", Token);
+            PlayerPrefs.SetString(PlayerPrefsKey, Token);
             Debug.Log("Token saved to player prefs");
 
             TokenSavedToPlayerPrefs?.Invoke(this);
@@ -42,7 +64,7 @@ namespace Authentication
 
         public static TokenSession FromPlayerPrefs()
         {
-            var token = PlayerPrefs.GetString("token");
+            var token = PlayerPrefs.GetString(PlayerPrefsKey);
             var tokenSession = new TokenSession(token);
 
             Debug.Assert(!string.IsNullOrEmpty(tokenSession.Token),
