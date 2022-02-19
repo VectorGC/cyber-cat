@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Networking;
 
-namespace Observers.WebRequest
+namespace WebRequests.Observers
 {
     public interface IWebRequestObservable : IObservable<UnityWebRequestAsyncOperation>
     {

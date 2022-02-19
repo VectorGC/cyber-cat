@@ -1,6 +1,6 @@
 using UnityEngine.Networking;
 
-namespace Observers.WebRequest
+namespace WebRequests.Observers
 {
     public static class UnityWebRequestExt
     {

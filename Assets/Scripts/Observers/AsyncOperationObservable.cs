@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Extensions;
 using UnityEngine;
 
 namespace Observers
@@ -10,14 +11,23 @@ namespace Observers
         private readonly List<IObserver<T>> _observers =
             new List<IObserver<T>>();
 
+        private readonly T _asyncOperation;
+
         public AsyncOperationObservable(T asyncOperation)
         {
+            _asyncOperation = asyncOperation;
             ObserveOperation(asyncOperation).StartCoroutine();
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
             _observers.Add(observer);
+            if (_asyncOperation.isDone)
+            {
+                CallOnNext(_asyncOperation);
+                CallCompleted(_asyncOperation);
+            }
+
             return new Unsubscriber<T>(_observers, observer);
         }
 
@@ -25,11 +35,16 @@ namespace Observers
         {
             do
             {
-                _observers.ForEach(observer => observer.OnNext(asyncOperation));
+                CallOnNext(asyncOperation);
                 yield return null;
             } while (!asyncOperation.isDone);
 
             CallCompleted(asyncOperation);
+        }
+
+        private void CallOnNext(T asyncOperation)
+        {
+            _observers.ForEach(observer => observer.OnNext(asyncOperation));
         }
 
         private void CallCompleted(T asyncOperation)
