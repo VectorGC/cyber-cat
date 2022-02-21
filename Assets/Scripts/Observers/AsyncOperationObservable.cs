@@ -15,7 +15,6 @@ namespace Observers
         public AsyncOperationObservable(T asyncOperation)
         {
             _asyncOperation = asyncOperation;
-            ObserveOperation(asyncOperation).StartCoroutine();
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
@@ -28,6 +27,11 @@ namespace Observers
             }
 
             return new Unsubscriber<T>(_observers, observer);
+        }
+
+        public void StartOperation()
+        {
+            ObserveOperation(_asyncOperation).StartCoroutine();
         }
 
         private IEnumerator ObserveOperation(T asyncOperation)

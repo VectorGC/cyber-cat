@@ -5,7 +5,8 @@ using WebRequests.Observers;
 
 namespace Authentication.Requests
 {
-    [CreateAssetMenu(fileName = "AuthenticationRequest", menuName = "ScriptableObjects/Authentication/Request", order = 1)]
+    [CreateAssetMenu(fileName = "AuthenticationRequest", menuName = "ScriptableObjects/Authentication/Request",
+        order = 1)]
     public class AuthenticationRequest : ScriptableObject, IAuthenticationRequest
     {
         [SerializeField] private string authenticationRequestQuery =
@@ -17,7 +18,7 @@ namespace Authentication.Requests
             Debug.Log($"[AuthenticationRequest] Send query '{query}'");
 
             var webRequest = UnityWebRequest.Get(query);
-            return webRequest.ToObservable();
+            return null; //webRequest.ToObservable();
         }
     }
 }

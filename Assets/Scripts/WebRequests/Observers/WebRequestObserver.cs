@@ -1,9 +1,25 @@
 using System;
 using Newtonsoft.Json;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace WebRequests.Observers
 {
+    public class WebResponseTextObserver : IObserver<UnityWebRequestAsyncOperation>
+    {
+        public void OnCompleted()
+        {
+            var t = 10;
+        }
+
+        public void OnError(Exception error)
+        {
+        }
+
+        public void OnNext(UnityWebRequestAsyncOperation value)
+        {
+        }
+    }
     public class WebRequestObserver : IObserver<UnityWebRequestAsyncOperation>
     {
         private event Action<string> _onResponse;
@@ -12,26 +28,34 @@ namespace WebRequests.Observers
 
         public void OnResponse<T>(Action<T> callback)
         {
-            OnResponse(SubscribeOnResponse);
+            OnResponse(OnResponsed);
 
-            void SubscribeOnResponse(string responseText)
+            void OnResponsed(string responseText)
             {
-                _onResponse -= SubscribeOnResponse;
+                _onResponse -= OnResponsed;
 
-                var obj = JsonConvert.DeserializeObject<T>(responseText);
-                callback?.Invoke(obj);
+                try
+                {
+                    var obj = JsonConvert.DeserializeObject<T>(responseText);
+                    callback?.Invoke(obj);
+                }
+                catch (JsonReaderException)
+                {
+                    Debug.LogError($"Error on deserialize response text: '{responseText}'");
+                    throw;
+                }
             }
         }
-        
+
         public void OnResponse(Action<string> callback)
         {
-            void SubscribeOnResponse(string responseText)
+            void OnResponsed(string responseText)
             {
-                _onResponse -= SubscribeOnResponse;
+                _onResponse -= OnResponsed;
                 callback?.Invoke(responseText);
             }
 
-            _onResponse += SubscribeOnResponse;
+            _onResponse += OnResponsed;
         }
 
         public void OnCompleted()
@@ -41,6 +65,7 @@ namespace WebRequests.Observers
 
         public void OnError(Exception error)
         {
+            Debug.LogError(error);
         }
 
         public void OnNext(UnityWebRequestAsyncOperation asyncOperation)

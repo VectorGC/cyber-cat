@@ -25,13 +25,7 @@ namespace Authentication
 
         public static implicit operator string(TokenSession tokenSession) => tokenSession.Token;
 
-        public static NameValueCollection AsQueryParam()
-        {
-            var token = FromPlayerPrefs();
-            return token.ToQueryParam();
-        }
-
-        public NameValueCollection ToQueryParam()
+        public readonly NameValueCollection ToQueryParam()
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query.Add(QueryParam, Token);
