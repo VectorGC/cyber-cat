@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DefaultNamespace;
 
 public class NonBinarTree
 {
@@ -13,7 +12,7 @@ public class NonBinarTree
         private set;
     }
 
-    public NodeTree AddNodeAfterNode(ITicket ticket, NodeTree node)
+    public NodeTree AddNodeAfterNode(ITaskTicket ticket, NodeTree node)
     {
         return node.AddNode(ticket);
     }
@@ -31,7 +30,7 @@ public class NonBinarTree
     {
     }
 
-    public NonBinarTree(ITicket ticket)
+    public NonBinarTree(ITaskTicket ticket)
     {
         RootNode = new NodeTree(ticket);
     }
@@ -60,7 +59,7 @@ public class NonBinarTree
 
 public class NodeTree
 {
-    public ITicket Ticket
+    public ITaskTicket Ticket
     {
         get;
         private set;
@@ -72,7 +71,7 @@ public class NodeTree
         private set;
     }
 
-    public NodeTree AddNode(ITicket ticket)
+    public NodeTree AddNode(ITaskTicket ticket)
     {
         var node = new NodeTree(ticket);
         NextNodes.Add(node);
@@ -96,7 +95,7 @@ public class NodeTree
         return null;
     }
 
-    public NodeTree(ITicket ticket)
+    public NodeTree(ITaskTicket ticket)
     {
         Ticket = ticket;
         NextNodes = new List<NodeTree>();

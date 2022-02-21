@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
 public interface ITicketRoadmapCreator
 {
-    void CreateRoadmap(IReadOnlyCollection<ITicket> tickets);
+    void CreateRoadmap(IReadOnlyCollection<ITaskTicket> tickets);
 }
 
 public abstract class BaseTicketRoadmapCreator : MonoBehaviour, ITicketRoadmapCreator
 {
-    public abstract void CreateRoadmap(IReadOnlyCollection<ITicket> tickets);
+    public abstract void CreateRoadmap(IReadOnlyCollection<ITaskTicket> tickets);
 }
 
 public class TicketRoadmapCreator : BaseTicketRoadmapCreator
@@ -28,7 +27,7 @@ public class TicketRoadmapCreator : BaseTicketRoadmapCreator
         _canvas = GameObject.FindObjectOfType<Canvas>();
     }
 
-    public override void CreateRoadmap(IReadOnlyCollection<ITicket> tickets)
+    public override void CreateRoadmap(IReadOnlyCollection<ITaskTicket> tickets)
     {
         if (tickets.Count == 0)
         {
@@ -71,10 +70,10 @@ public class TicketRoadmapCreator : BaseTicketRoadmapCreator
         }
     }
 
-    private void AddChildrenToTree(IReadOnlyCollection<ITicket> tickets, int indexOfTicket, int offset, NodeTree curNode)
+    private void AddChildrenToTree(IReadOnlyCollection<ITaskTicket> tickets, int indexOfTicket, int offset, NodeTree curNode)
     {
         var ticket = tickets.ElementAt(indexOfTicket);
-        if (ticket.CountOfChildren == 0)
+        /*if (ticket.CountOfChildren == 0)
         {
             return;
         }
@@ -85,6 +84,6 @@ public class TicketRoadmapCreator : BaseTicketRoadmapCreator
             indexOfNewParentNode = indexOfTicket + i + offset + 1;
             var ticket2 = tickets.ElementAt(indexOfNewParentNode);
             AddChildrenToTree(tickets, indexOfNewParentNode, ticket.CountOfChildren - i - 1, curNode.AddNode(ticket2));
-        }
+        }*/
     }
 }

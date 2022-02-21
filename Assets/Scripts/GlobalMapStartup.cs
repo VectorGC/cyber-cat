@@ -6,7 +6,7 @@ public class GlobalMapStartup : MonoBehaviour
     {
         Debug.Log("Hello Cyber Cat");
 
-        var serviceProvider = ServiceProvider.Instance;
+        var serviceProvider = ServiceLocator.Instance;
         var tickets = serviceProvider.TicketRequester.GetTickets();
         serviceProvider.TicketRoadmapCreator.CreateRoadmap(tickets);
         

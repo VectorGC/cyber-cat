@@ -1,4 +1,3 @@
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -12,19 +11,19 @@ public class TaskNodeView : MonoBehaviour
     public List<Image> stars;
     public Button NodeButton;
 
-    private ITicket _ticket;
+    private ITaskTicket _ticket;
 
-    public void UpdateView(ITicket ticket)
+    public void UpdateView(ITaskTicket ticket)
     {
         _ticket = ticket;
         NodeNumberOfTask.text = ticket.Id.ToString();
-        NodeName.text = ticket.TicketName;
+        NodeName.text = ticket.Name;
         NodeFrontImage.color = GetColorByTicketTheme(ticket);
     }
 
-    private Color GetColorByTicketTheme(ITicket ticket)
+    private Color GetColorByTicketTheme(ITaskTicket ticket)
     {
-        switch (ticket.TicketTheme)
+        switch (ticket.Description)
         {
             case "Green": return Color.green;
             case "Blue": return Color.blue;
@@ -34,7 +33,7 @@ public class TaskNodeView : MonoBehaviour
 
     public void LoadTask()
     {
-        Debug.Log($"���� ������� ������ #{_ticket.Id} '{_ticket.TicketName}' ");
+        Debug.Log($"���� ������� ������ #{_ticket.Id} '{_ticket.Name}' ");
         foreach(var star in stars)
         {
             star.color = Color.yellow;

@@ -1,0 +1,11 @@
+using Newtonsoft.Json;
+
+namespace WebRequests.Requests.GetTasksData
+{
+    public class TaskData : ITaskTicket
+    {
+        [JsonProperty("unit_id")] public int Id { get; set; }
+        [JsonProperty("name")] public string Name { get; set; }
+        [JsonProperty("desc")] public string Description { get; set; }
+    }
+}

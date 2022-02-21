@@ -1,21 +1,20 @@
-using DefaultNamespace;
 using UnityEngine;
 
-public interface ISeviceProvider
+public interface IServiceLocator
 {
     ITicketRequester TicketRequester { get; }
     ITicketRoadmapCreator TicketRoadmapCreator { get; }
     ILoadWindow LoadWindow { get; }
 }
 
-public class ServiceProvider : ISeviceProvider
+public class ServiceLocator : IServiceLocator
 {
-    private static ServiceProvider _instance;
-    private ISeviceProvider _seviceProviderImplementation;
+    private static ServiceLocator _instance;
+    private IServiceLocator _seviceProviderImplementation;
 
-    public static ServiceProvider Instance => _instance ??= new ServiceProvider();
+    public static ServiceLocator Instance => _instance ??= new ServiceLocator();
 
-    private ServiceProvider()
+    private ServiceLocator()
     {
         TicketRequester = new MockTicketRequester();
         TicketRoadmapCreator = GameObject.FindObjectOfType<BaseTicketRoadmapCreator>();
