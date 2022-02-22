@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Authentication;
+using TasksData.Requests;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Networking;
 using WebRequests;
 using WebRequests.Extensions;
-using WebRequests.Requests.GetTasksData;
 
 public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
 {
@@ -41,43 +42,43 @@ public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
 
 
         // =============================
-         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-         formData.Add(new MultipartFormDataSection("task_id", _taskId.ToString()));
-         formData.Add(new MultipartFormDataSection("source_text", _codeText));
-         formData.Add(new MultipartFormDataSection("verbose", "false"));
+        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        formData.Add(new MultipartFormDataSection("task_id", _taskId.ToString()));
+        formData.Add(new MultipartFormDataSection("source_text", _codeText));
+        formData.Add(new MultipartFormDataSection("verbose", "false"));
 
-         var url = new GetTasksRequest(_token).GetUri();
-         // "https://kee-reel.com/cyber-cat/?" + _token.Token
-         
-         UnityWebRequest www = UnityWebRequest.Post(url, formData);
-         return www;
-         // =============================
+        var url = new GetTasksRequest(_token).GetUri();
+        // "https://kee-reel.com/cyber-cat/?" + _token.Token
+
+        UnityWebRequest www = UnityWebRequest.Post(url, formData);
+        return www;
+        // =============================
 
 
-         /*var t = www.SendWebRequest();
-         while (!t.isDone)
-         {
-             Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
-             Debug.Log($"progress {t.progress}");
-             Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
-             yield return null;
-         }
- 
-         Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
-         Debug.Log($"progress {t.progress}");
-         Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
-         
-         //yield return www.SendWebRequest();
- 
-         if (www.result != UnityWebRequest.Result.Success)
-         {
-             Debug.Log(www.error);
-         }
-         else
-         {
-             Debug.Log(www.downloadHandler.text);
-             PostReceived.Invoke(www.downloadHandler.text);
-         */
+        /*var t = www.SendWebRequest();
+        while (!t.isDone)
+        {
+            Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
+            Debug.Log($"progress {t.progress}");
+            Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
+            yield return null;
+        }
+
+        Debug.Log($"uploadProgress {t.webRequest.uploadProgress}");
+        Debug.Log($"progress {t.progress}");
+        Debug.Log($"downloadProgress {t.webRequest.downloadProgress}");
+        
+        //yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            Debug.Log(www.downloadHandler.text);
+            PostReceived.Invoke(www.downloadHandler.text);
+        */
     }
 }
 
@@ -92,8 +93,8 @@ public class CodeEditor : MonoBehaviour
         Debug.Log($"Opening code editor for task '{taskId}'");
 
         new GetTaskRequest(taskId)
-            .OnResponse(SetupCodeEditorForTask)
-            .SendRequest();
+            .SendRequest()
+            .Subscribe(SetupCodeEditorForTask);
     }
 
     public static void SetupCodeEditorForTask(ITaskTicket task)
@@ -122,12 +123,9 @@ public class CodeEditor : MonoBehaviour
     private static void SendCodeToTesting(int taskId, string codeText)
     {
         var token = TokenSession.FromPlayerPrefs();
-        new SendCodeToTestingRequest(token, taskId, codeText)
-            .OnResponse(str =>
-            {
-                Debug.Log(str);
-            })
-            .SendRequest();
+        // new SendCodeToTestingRequest(token, taskId, codeText)
+        //     .OnResponse(str => { Debug.Log(str); })
+        //     .SendRequest();
     }
 
     private string GetCode()

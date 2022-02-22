@@ -1,10 +1,9 @@
-using Observers;
-using WebRequests.Observers;
+using System;
 
 namespace Authentication.Requests
 {
     public interface IAuthenticationRequest
     {
-        IWebRequestObservable Authenticate(AuthenticationData authenticationData);
+        IObservable<string> Authenticate(AuthenticationData authenticationData);
     }
 }

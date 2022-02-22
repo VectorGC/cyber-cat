@@ -1,21 +1,19 @@
 using System;
-using Observers;
 using UnityEngine;
 using UnityEngine.Networking;
-using WebRequests.Observers;
 
 namespace Authentication.Receivers
 {
     [CreateAssetMenu(fileName = "AuthenticationReceiver", menuName = "ScriptableObjects/Authentication/Receiver")]
-    public class AuthenticationReceiver : ScriptableObject, IAuthenticationReceiver
+    public class AuthenticationReceiver : ScriptableObject//, IAuthenticationReceiver
     {
         private UnityWebRequest _webRequest;
 
-        public void Subscribe(IWebRequestObservable webRequestObservable)
-        {
-            _webRequest = webRequestObservable.WebRequest;
-            webRequestObservable.Subscribe(this);
-        }
+        // public void Subscribe(IWebRequestObservable webRequestObservable)
+        // {
+        //     _webRequest = webRequestObservable.WebRequest;
+        //     webRequestObservable.Subscribe(this);
+        // }
 
         public void OnCompleted()
         {
