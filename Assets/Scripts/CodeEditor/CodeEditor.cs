@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Authentication;
@@ -88,16 +87,15 @@ public class CodeEditor : MonoBehaviour
 
     private int _openedTaskId;
 
-    public static void OpenSolutionForTask(string taskId)
+    public static void OpenEditorForTask(string taskId)
     {
         Debug.Log($"Opening code editor for task '{taskId}'");
-
         new GetTaskRequest(taskId)
             .SendRequest()
-            .Subscribe(SetupCodeEditorForTask);
+            .Subscribe(OpenEditorForTask);
     }
 
-    public static void SetupCodeEditorForTask(ITaskTicket task)
+    public static void OpenEditorForTask(ITaskTicket task)
     {
         var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
         codeEditorStartup.SetupCodeEditorForTask(task);
@@ -106,26 +104,6 @@ public class CodeEditor : MonoBehaviour
     public void SetupCodeEditor(ITaskTicket task)
     {
         _openedTaskId = task.Id;
-    }
-
-    public void SendCodeToTesting()
-    {
-        var codeText = GetCode();
-        SendCodeToTesting(_openedTaskId, codeText);
-    }
-
-    private void SendCodeToTesting(int taskId)
-    {
-        var codeText = GetCode();
-        SendCodeToTesting(taskId, codeText);
-    }
-
-    private static void SendCodeToTesting(int taskId, string codeText)
-    {
-        var token = TokenSession.FromPlayerPrefs();
-        // new SendCodeToTestingRequest(token, taskId, codeText)
-        //     .OnResponse(str => { Debug.Log(str); })
-        //     .SendRequest();
     }
 
     private string GetCode()
