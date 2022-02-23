@@ -9,11 +9,15 @@ public class TaskNodeView : MonoBehaviour
     public Text NodeName;
     public Image NodeFrontImage;
     public List<Image> stars;
-    public Button NodeButton;
 
     private ITaskTicket _ticket;
+    public void OnClick()
+    {
+        var taskNodesController = FindObjectOfType<BaseTaskNodesController>();
+        taskNodesController.OpenTask(_ticket);
+    }
 
-    public void UpdateView(ITaskTicket ticket)
+    public void SetupView(ITaskTicket ticket)
     {
         _ticket = ticket;
         NodeNumberOfTask.text = ticket.Id.ToString();

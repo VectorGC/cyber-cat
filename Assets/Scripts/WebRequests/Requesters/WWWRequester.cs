@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 using WebRequests.Extensions;
 
 namespace WebRequests.Requesters
@@ -9,7 +10,14 @@ namespace WebRequests.Requesters
         public IObservable<string> SendGetRequest(IWebRequest webRequest)
         {
             var url = webRequest.GetUri().ToString();
-            return ObservableWWW.Get(url);
+
+            Debug.Log($"Send get request to '{url}'");
+            var observable = ObservableWWW.Get(url);
+#if DEBUG
+            observable.Subscribe(Debug.Log);
+#endif
+
+            return observable;
         }
     }
 }

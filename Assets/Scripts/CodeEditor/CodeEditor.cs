@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Authentication;
@@ -89,7 +90,6 @@ public class CodeEditor : MonoBehaviour
 
     public static void OpenEditorForTask(string taskId)
     {
-        Debug.Log($"Opening code editor for task '{taskId}'");
         new GetTaskRequest(taskId)
             .SendRequest()
             .Subscribe(OpenEditorForTask);
@@ -97,8 +97,13 @@ public class CodeEditor : MonoBehaviour
 
     public static void OpenEditorForTask(ITaskTicket task)
     {
-        var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
-        codeEditorStartup.SetupCodeEditorForTask(task);
+        Debug.Log($"Opening code editor for task '{task.Id}'");
+        Scene.OpenScene("Code_editor_Blue",
+            () =>
+            {
+                var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
+                codeEditorStartup.SetupCodeEditorForTask(task);
+            });
     }
 
     public void SetupCodeEditor(ITaskTicket task)
