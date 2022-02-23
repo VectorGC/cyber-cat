@@ -29,7 +29,7 @@ public class TaskNodesController : BaseTaskNodesController
 
     public override void OpenTask(ITaskTicket taskTicket)
     {
-        CodeEditor.OpenEditorForTask(taskTicket);
+        CustomCodeEditor.OpenEditorForTask(taskTicket);
     }
 
     public override void CreateTaskList(IReadOnlyCollection<ITaskTicket> taskTickets)

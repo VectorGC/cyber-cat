@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CodeEditorStartup : MonoBehaviour
 {
-    [SerializeField] private CodeEditor codeEditor;
+    [SerializeField] private CodeEditorController codeEditor;
     [SerializeField] private CodeEditorContainer container;
 
     public void SetupCodeEditorForTask(ITaskTicket task)

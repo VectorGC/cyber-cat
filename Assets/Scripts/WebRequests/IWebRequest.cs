@@ -7,13 +7,4 @@ namespace WebRequests
     {
         NameValueCollection QueryParams { get; }
     }
-
-    public interface IUnityWebRequestHandler
-    {
-        UnityWebRequest GetWebRequestHandler(string uri);
-    }
-
-    public interface IWebReturnedResponse<TResponse> : IWebRequest
-    {
-    }
 }

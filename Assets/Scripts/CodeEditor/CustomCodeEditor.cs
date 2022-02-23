@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Authentication;
@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 using WebRequests;
 using WebRequests.Extensions;
 
-public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
+public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
 {
     private readonly TokenSession _token;
     private readonly int _taskId;
@@ -25,7 +25,7 @@ public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
         _codeText = codeText;
     }
 
-    public UnityWebRequest GetWebRequestHandler(string uri)
+    public IObservable<string> SendRequest()
     {
         //var formData = new List<IMultipartFormSection>();
 
@@ -41,19 +41,34 @@ public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
         // return UnityWebRequest.Post("https://kee-reel.com/solution", formData);
 
 
+        //new WWWForm().AddField();
+
         // =============================
-        List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        formData.Add(new MultipartFormDataSection("task_id", _taskId.ToString()));
-        formData.Add(new MultipartFormDataSection("source_text", _codeText));
-        formData.Add(new MultipartFormDataSection("verbose", "false"));
+        //List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        var formData = new WWWForm();
+
+        formData.AddField("task_id", _taskId.ToString());
+        formData.AddField("source_text", _codeText);
+        formData.AddField("verbose", "false");
+
+        //formData.Add(new MultipartFormDataSection("source_text", _codeText));
+        //formData.Add(new MultipartFormDataSection("verbose", "false"));
 
         var url = new GetTasksRequest(_token).GetUri();
         // "https://kee-reel.com/cyber-cat/?" + _token.Token
 
-        UnityWebRequest www = UnityWebRequest.Post(url, formData);
-        return www;
+        var y = ObservableWWW.Post(url.ToString(), formData);
+        return y;
+        //UnityWebRequest www = UnityWebRequest.Post(url, formData);
+        //return www;
         // =============================
 
+        /*
+         *rmData.AddField("task_id"); .Add(new MultipartFormDataSection(, _taskId.ToString()));
+        formData.Add(new MultipartFormDataSection("source_text", _codeText));
+        formData.Add(new MultipartFormDataSection("verbose", "false"));
+         * 
+         */
 
         /*var t = www.SendWebRequest();
         while (!t.isDone)
@@ -82,7 +97,7 @@ public class SendCodeToTestingRequest : IWebRequest, IUnityWebRequestHandler
     }
 }
 
-public class CodeEditor : MonoBehaviour
+public class CustomCodeEditor : MonoBehaviour
 {
     [SerializeField] private TMP_InputField codeInputField;
 

@@ -7,7 +7,7 @@ public class TestCodeEditorSetuper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CodeEditor.OpenEditorForTask("10");
+        CustomCodeEditor.OpenEditorForTask("10");
     }
 
     // Update is called once per frame
