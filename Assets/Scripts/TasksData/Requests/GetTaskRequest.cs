@@ -3,6 +3,7 @@ using Authentication;
 using Extensions.DotNetExt;
 using UniRx;
 using WebRequests;
+using WebRequests.Requesters;
 
 namespace TasksData.Requests
 {
@@ -23,7 +24,7 @@ namespace TasksData.Requests
 
         public IObservable<ITaskTicket> SendRequest() =>
             new GetTasksRequest(_token)
-                .SendRequest()
+                .SendWWWGetObject()
                 .Select(tasks => tasks.Tasks.GetValue(_taskId));
     }
 }

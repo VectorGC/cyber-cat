@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Specialized;
 using Authentication;
-using WebRequests;
-using WebRequests.Extensions;
 using WebRequests.Requesters;
 
 namespace TasksData.Requests
 {
-    public class GetTasksRequest : IWebRequest, ISendRequestHandler<TasksData>
+    public class GetTasksRequest : IGetWebRequest<TasksData>
     {
         private readonly TokenSession _token;
 
@@ -21,7 +18,5 @@ namespace TasksData.Requests
         {
             _token = token;
         }
-        
-        public IObservable<TasksData> SendRequest() => this.SendWWWGetObject<TasksData>();
     }
 }

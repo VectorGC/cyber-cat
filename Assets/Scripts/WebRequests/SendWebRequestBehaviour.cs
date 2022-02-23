@@ -1,6 +1,7 @@
 using TasksData.Requests;
 using UniRx;
 using UnityEngine;
+using WebRequests.Requesters;
 
 namespace WebRequests
 {
@@ -9,7 +10,7 @@ namespace WebRequests
         public void SendGetRequest()
         {
             new GetTasksRequest()
-                .SendRequest() // <--- Отправляет запрос. Без этого запрос не отправится.
+                .SendWWWGetObject() // <--- Отправляет запрос. Без этого запрос не отправится.
                 .Subscribe(taskData =>
                 {
                     Debug.Log(

@@ -21,5 +21,16 @@ namespace WebRequests.Requesters
         {
             return webRequest.SendWWWGetObject<T>().Subscribe(onNext);
         }
+
+        public static IObservable<TResponse> SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest)
+        {
+            return webRequest.SendWWWGet().JsonDeserialize<TResponse>();
+        }
+
+        public static IDisposable SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest,
+            Action<TResponse> onNext)
+        {
+            return webRequest.SendWWWGetObject<TResponse>().Subscribe(onNext);
+        }
     }
 }
