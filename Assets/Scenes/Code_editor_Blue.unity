@@ -2843,6 +2843,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 44bf916382b404748a06ee993d644df2, type: 2}
     - target: {fileID: 114241622988555006, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114241622988555006, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_fontColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -2857,6 +2861,14 @@ PrefabInstance:
     - target: {fileID: 114241622988555006, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_textAlignment
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 114241622988555006, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114241622988555006, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 114257522944123224, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_Color.b
@@ -2921,6 +2933,11 @@ PrefabInstance:
     - target: {fileID: 114794710919643074, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_Value
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979364068399606, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: m_Text
+      value: "#include <stdio.h>\r\nint main()\n{\n    int a,b;scanf(\"%d%d\",&a,&b);\n   
+        printf(\"%d\",a+b);\n}"
       objectReference: {fileID: 0}
     - target: {fileID: 114979364068399606, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_CaretColor.b
@@ -3045,7 +3062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1632412213
 MonoBehaviour:
   m_ObjectHideFlags: 0

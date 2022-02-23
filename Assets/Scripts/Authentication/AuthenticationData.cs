@@ -1,3 +1,7 @@
+using System.Collections.Specialized;
+using System.Web;
+using UnityEngine;
+
 namespace Authentication
 {
     public class AuthenticationData
@@ -11,6 +15,15 @@ namespace Authentication
             Password = password;
         }
 
+        public NameValueCollection AsQueryParams()
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+            query.Add("email", Login);
+            query.Add("pass", Password);
+
+            return query;
+        }
+        
         public string GetFormattedQuery(string templateQuery) => string.Format(templateQuery, Login, Password);
     }
 }

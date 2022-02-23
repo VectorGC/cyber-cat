@@ -110,7 +110,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 0, y: 0.8}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_SizeDelta: {x: 150, y: 0}
   m_Pivot: {x: -0.75, y: 0.5}
 --- !u!1 &1787259664
 GameObject:
@@ -627,7 +627,6 @@ MonoBehaviour:
   stars:
   - {fileID: 2104132684551878339}
   - {fileID: 2681988587409307614}
-  NodeButton: {fileID: 1162244285710464352}
 --- !u!114 &7847981619234068786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,7 +642,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 200
+  m_PreferredWidth: 100
   m_PreferredHeight: 100
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
