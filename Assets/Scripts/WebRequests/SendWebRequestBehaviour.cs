@@ -1,6 +1,7 @@
+using TasksData.Requests;
+using UniRx;
 using UnityEngine;
-using WebRequests.Extensions;
-using WebRequests.Requests.GetTasksData;
+using WebRequests.Requesters;
 
 namespace WebRequests
 {
@@ -9,12 +10,12 @@ namespace WebRequests
         public void SendGetRequest()
         {
             new GetTasksRequest()
-                .OnResponse(taskData =>
+                .SendWWWGetObject() // <--- Отправляет запрос. Без этого запрос не отправится.
+                .Subscribe(taskData =>
                 {
                     Debug.Log(
                         "Поставь сюда точку останову и посмотри как с сервера приходят доступные таски в taskData :)");
-                })
-                .SendRequest(); // <--- Отправляет запрос. Без этого запрос не отправится.
+                });
         }
     }
 }

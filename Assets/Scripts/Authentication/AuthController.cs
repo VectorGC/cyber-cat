@@ -22,10 +22,10 @@ namespace Authentication
             var password = passwordTextField.text;
 
             var data = new AuthenticationData(login, password);
-            var webRequestObservable = authenticationRequest.Authenticate(data);
+            //var webRequestObservable = authenticationRequest.Authenticate(data);
 
-            progressBar.Observe(webRequestObservable);
-            authenticationReceiver.Subscribe(webRequestObservable);
+            //progressBar.Observe(webRequestObservable);
+            //authenticationReceiver.Subscribe(webRequestObservable);
         }
     }
 }

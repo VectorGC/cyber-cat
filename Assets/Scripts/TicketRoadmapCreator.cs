@@ -65,7 +65,7 @@ public class TicketRoadmapCreator : BaseTicketRoadmapCreator
             foreach (var node in nodes)
             {
                 taskNodeView = Instantiate(_taskNodeViewPrefab, Vector3.zero, Quaternion.identity, layout.gameObject.transform);
-                taskNodeView.UpdateView(node.Ticket);
+                taskNodeView.SetupView(node.Ticket);
             }
         }
     }

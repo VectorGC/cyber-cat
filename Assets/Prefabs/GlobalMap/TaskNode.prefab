@@ -351,7 +351,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6508296475465351839}
         m_TargetAssemblyTypeName: TaskNodeView, Assembly-CSharp
-        m_MethodName: LoadTask
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 7768788211050171036}
   - component: {fileID: 8356185643092341328}
   - component: {fileID: 6508296475465351839}
+  - component: {fileID: 7847981619234068786}
   m_Layer: 5
   m_Name: TaskNode
   m_TagString: Untagged
@@ -627,6 +628,26 @@ MonoBehaviour:
   - {fileID: 2104132684551878339}
   - {fileID: 2681988587409307614}
   NodeButton: {fileID: 1162244285710464352}
+--- !u!114 &7847981619234068786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551832293595005852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: 200
+  m_PreferredHeight: 100
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &6478119362127792469
 GameObject:
   m_ObjectHideFlags: 0
