@@ -24,14 +24,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         Vector3 dir = Vector3.zero;
-        if (Input.GetKey(KeyCode.LeftArrow))
-            dir.z = -1.0f;
-        if (Input.GetKey(KeyCode.RightArrow))
-            dir.z = 1.0f;
-        if (Input.GetKey(KeyCode.UpArrow))
-            dir.x = -1.0f;
-        if (Input.GetKey(KeyCode.DownArrow))
-            dir.x = 1.0f;
+        var vertical = Input.GetAxis("Vertical");
+        var horizontal = Input.GetAxis("Horizontal");
+        dir.z = horizontal;
+        dir.x = vertical * -1;
+        
         navMeshAgent.velocity = dir.normalized * moveSpeed;
 
         Vector3 forward = cursor.transform.position - transform.position;
