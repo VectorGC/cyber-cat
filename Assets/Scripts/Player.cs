@@ -26,8 +26,8 @@ public class Player : MonoBehaviour
         Vector3 dir = Vector3.zero;
         var vertical = Input.GetAxis("Vertical");
         var horizontal = Input.GetAxis("Horizontal");
-        dir.z = horizontal;
-        dir.x = vertical * -1;
+        dir.z = vertical;
+        dir.x = horizontal;
         
         navMeshAgent.velocity = dir.normalized * moveSpeed;
 
