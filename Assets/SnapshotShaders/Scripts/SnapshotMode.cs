@@ -44,20 +44,20 @@ public class SnapshotMode : MonoBehaviour
 
         // Find all shader files.
         noneShader = Shader.Find("Snapshot/Base");
-        greyscaleShader = Shader.Find("Snapshot/Greyscale");
-        sepiaShader = Shader.Find("Snapshot/Sepia");
-        gaussianShader = Shader.Find("Snapshot/GaussianBlur");
-        edgeBlurShader = Shader.Find("Snapshot/EdgeBlur");
-        silhouetteShader = Shader.Find("Snapshot/Silhouette");
-        outlineShader = Shader.Find("Snapshot/EdgeDetect");
-        neonShader = Shader.Find("Snapshot/Neon");
+        // greyscaleShader = Shader.Find("Snapshot/Greyscale");
+        // sepiaShader = Shader.Find("Snapshot/Sepia");
+        // gaussianShader = Shader.Find("Snapshot/GaussianBlur");
+        // edgeBlurShader = Shader.Find("Snapshot/EdgeBlur");
+        // silhouetteShader = Shader.Find("Snapshot/Silhouette");
+        // outlineShader = Shader.Find("Snapshot/EdgeDetect");
+        neonShader = Shader.Find("Snapshot/Neon"); 
         bloomShader = Shader.Find("Snapshot/Bloom");
-        crtShader = Shader.Find("Snapshot/CRTScreen");
-        nesShader = Shader.Find("Snapshot/PixelNES");
-        snesShader = Shader.Find("Snapshot/PixelSNES");
-        gbShader = Shader.Find("Snapshot/PixelGB");
-        paintingShader = Shader.Find("Snapshot/Painting");
-        prideShader = Shader.Find("Snapshot/Pride");
+        // crtShader = Shader.Find("Snapshot/CRTScreen");
+        // nesShader = Shader.Find("Snapshot/PixelNES");
+        // snesShader = Shader.Find("Snapshot/PixelSNES");
+        // gbShader = Shader.Find("Snapshot/PixelGB");
+        // paintingShader = Shader.Find("Snapshot/Painting");
+        // prideShader = Shader.Find("Snapshot/Pride");
 
         // Create all filters.
         filters.Add(new BaseFilter("None", Color.white, noneShader));
@@ -69,8 +69,12 @@ public class SnapshotMode : MonoBehaviour
         // filters.Add(new BaseFilter("Silhouette", new Color(0.89f, 0.71f, 0.56f), 
         //     silhouetteShader));
         // filters.Add(new BaseFilter("Outlines", Color.white, outlineShader));
-        filters.Add(new NeonFilter("Neon", Color.cyan, bloomShader, 
-            new BaseFilter("", Color.white, neonShader)));
+        
+        // filters.Add(new NeonFilter("Neon", Color.cyan, bloomShader, 
+        //     new BaseFilter("", Color.white, neonShader)));
+        
+        filters.Add(new BaseFilter("Neon", Color.white, neonShader));
+        
         // filters.Add(new BloomFilter("Bloom", Color.white, bloomShader));
         // filters.Add(new CRTFilter("NES", new Color(0.66f, 1.00f, 1.00f), 
         //     crtShader, new PixelFilter("", Color.white, nesShader)));
