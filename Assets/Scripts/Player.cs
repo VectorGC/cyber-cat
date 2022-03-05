@@ -5,36 +5,39 @@ using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
+    Shot shot;
     Cursor cursor;
     NavMeshAgent navMeshAgent;
-    Shot shot;
+
     public Transform gunBarrel;
+
     public float moveSpeed;
+    public float rotationSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
-        cursor = FindObjectOfType<Cursor>();
         shot = FindObjectOfType<Shot>();
+        cursor = FindObjectOfType<Cursor>();       
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.updateRotation = false;
+
+        //navMeshAgent.updateRotation = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 dir = Vector3.zero;
         var vertical = Input.GetAxis("Vertical");
         var horizontal = Input.GetAxis("Horizontal");
-        dir.z = vertical;
-        dir.x = horizontal;
+
+        Vector3 directionVector = new Vector3(horizontal, 0, vertical);
+
+        navMeshAgent.velocity = Vector3.ClampMagnitude(directionVector, 1) * moveSpeed;
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(directionVector), Time.deltaTime * rotationSpeed);
+
         
-        navMeshAgent.velocity = dir.normalized * moveSpeed;
-
-        Vector3 forward = cursor.transform.position - transform.position;
-        transform.rotation = Quaternion.LookRotation(new Vector3(forward.x, 0, forward.z));
-
-       if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
             var from = gunBarrel.position;
             var target = cursor.transform.position;
             var to = new Vector3(target.x, from.y, target.z);
@@ -42,9 +45,11 @@ public class Player : MonoBehaviour
             var direction = (to - from).normalized;
 
             RaycastHit hit;
-            if (Physics.Raycast(from, to - from, out hit, 100)) {
+            if (Physics.Raycast(from, to - from, out hit, 100))
+            {
                 to = new Vector3(hit.point.x, from.y, hit.point.z);
-                if (hit.transform != null) {
+                if (hit.transform != null)
+                {
                     var zombie = hit.transform.GetComponent<Zombie>();
                     if (zombie != null)
                         zombie.Kill();

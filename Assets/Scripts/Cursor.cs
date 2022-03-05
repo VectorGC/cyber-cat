@@ -17,14 +17,19 @@ public class Cursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        /*
+         * Чтобы кошка не реагировала на курсор и не совершала вращение,
+         * были закомментированы следущие строки кода
+         */
 
-        RaycastHit hit;
-        if (!Physics.Raycast(ray, out hit, 1000, layerMask))
-            spriteRenderer.enabled = false;
-        else {
-            transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            spriteRenderer.enabled = true;
-        }
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        //RaycastHit hit;
+        //if (!Physics.Raycast(ray, out hit, 1000, layerMask))
+        //    spriteRenderer.enabled = false;
+        //else {
+        //    transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+        //    spriteRenderer.enabled = true;
+        //}
     }
 }
