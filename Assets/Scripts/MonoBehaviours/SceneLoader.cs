@@ -1,6 +1,5 @@
 using MonoBehaviours.PropertyFields;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MonoBehaviours
 {
@@ -8,6 +7,7 @@ namespace MonoBehaviours
     {
         [SerializeField] private SceneField scene;
 
-        public void LoadScene() => SceneManager.LoadScene(scene);
+        public void LoadSceneAsync() => scene.LoadAsync();
+        public void LoadSceneSync() => scene.LoadAsync();
     }
 }

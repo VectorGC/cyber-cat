@@ -1,4 +1,8 @@
+using System;
+using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace MonoBehaviours.PropertyFields
 {
@@ -15,5 +19,8 @@ namespace MonoBehaviours.PropertyFields
         {
             return sceneField.SceneName;
         }
+
+        public IObservable<AsyncOperation> LoadAsync() => SceneManager.LoadSceneAsync(m_SceneName).AsObservable();
+        public void Load() => SceneManager.LoadScene(m_SceneName);
     }
 }
