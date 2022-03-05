@@ -104,7 +104,7 @@ RectTransform:
   m_GameObject: {fileID: 855634361802626974}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.89000005, y: 0.89000005, z: 0.89000005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 855634361631923686}
   - {fileID: 855634362693593833}
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 66.4
   m_fontSizeBase: 41.31
   m_fontWeight: 400
   m_enableAutoSizing: 1

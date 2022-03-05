@@ -235,19 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnTokenSaved:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1892374839}
-        m_TargetAssemblyTypeName: MonoBehaviours.SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1019467813
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,10 +541,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7299432127409065361, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7299432127855838411, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -580,10 +564,6 @@ PrefabInstance:
     - target: {fileID: 7299432127855838411, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7299432128174835499, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7299432128174835502, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
@@ -828,6 +808,34 @@ PrefabInstance:
     - target: {fileID: 7372969459867619053, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1892374839}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadSceneSync
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonoBehaviours.SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
