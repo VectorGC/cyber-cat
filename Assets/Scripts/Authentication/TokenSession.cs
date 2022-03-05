@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Web;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
@@ -37,6 +38,10 @@ namespace Authentication
 
         public string Token => _token;
 
+        public bool IsNone => string.IsNullOrEmpty(_token);
+
+        public static bool IsNoneToken() => FromPlayerPrefs().IsNone;
+
         public TokenSession(string token)
         {
             _token = token;
@@ -54,10 +59,9 @@ namespace Authentication
 
         public void SaveToPlayerPrefs()
         {
-            Debug.Assert(!string.IsNullOrEmpty(Token), "Attempt save empty token to player prefs.");
             if (string.IsNullOrEmpty(Token))
             {
-                return;
+                throw new ArgumentNullException($"Attempt save empty token to player prefs");
             }
 
             PlayerPrefs.SetString(PlayerPrefsKey, Token);
@@ -66,14 +70,18 @@ namespace Authentication
             TokenSavedToPlayerPrefs?.Invoke(this);
         }
 
-        public static void ReceiveFromServer(Action<TokenSession> onNext)
+        public static IObservable<TokenSession> ReceiveFromServer(string login, string password)
         {
-            var getTokenRequest = new GetTokenRequest("test123@gmail.com", "123456qwer");
-            FromRequest(getTokenRequest, onNext);
+            var getTokenRequest = new GetTokenRequest(login, password);
+
+            var tokenSessionRequest = FromRequest(getTokenRequest);
+            tokenSessionRequest.CatchIgnore().Subscribe(token => token.SaveToPlayerPrefs());
+            
+            return tokenSessionRequest;
         }
 
-        public static void FromRequest(IGetWebRequest<TokenSession> webRequest, Action<TokenSession> onNext) =>
-            webRequest.SendWWWGetObject(onNext);
+        private static IObservable<TokenSession> FromRequest(IGetWebRequest<TokenSession> webRequest) =>
+            webRequest.SendWWWGetObject();
 
         public static TokenSession FromJson(string jsonText)
         {
@@ -89,10 +97,9 @@ namespace Authentication
             var token = PlayerPrefs.GetString(PlayerPrefsKey);
             var tokenSession = new TokenSession(token);
 
-            Debug.Assert(!string.IsNullOrEmpty(tokenSession.Token),
-                $"Token haven't in player prefs. May be do not save it.");
-
             return tokenSession;
         }
+
+        public static void DeleteInPlayerPrefs() => PlayerPrefs.DeleteKey(PlayerPrefsKey);
     }
 }

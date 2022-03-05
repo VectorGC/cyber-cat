@@ -1,36 +1,67 @@
 using System;
+using System.Net;
+using Newtonsoft.Json;
 using Observers;
 using UniRx;
+using UnityEngine;
 
 namespace WebRequests.Requesters
 {
     public static class WWWRequesterExt
     {
-        public static IObservable<string> SendWWWGet(this IWebRequest webRequest)
+        public static IObservable<TResponse> SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest)
+        {
+            return webRequest.SendWWWGet().ResponseHandle().JsonDeserialize<TResponse>();
+        }
+
+        private static IObservable<string> SendWWWGet(this IWebRequest webRequest)
         {
             var requester = new WWWRequester();
             return requester.SendGetRequest(webRequest);
         }
+    }
 
-        public static IObservable<T> SendWWWGetObject<T>(this IWebRequest webRequest)
+    public static class ResponseHandleObserverExt
+    {
+        public static IObservable<string> ResponseHandle(
+            this IObservable<string> textObservable)
         {
-            return webRequest.SendWWWGet().JsonDeserialize<T>();
+            var responseHandleObserver = new ResponseHandleObserver();
+            textObservable.Do(responseHandleObserver).Subscribe();
+
+            return responseHandleObserver;
+        }
+    }
+
+    public struct WebErrorException
+    {
+        [JsonProperty] public string Error { get; set; }
+
+        public bool IsNone => string.IsNullOrEmpty(Error);
+
+        public WebException Exception => new WebException(Error);
+    }
+
+    public class ResponseHandleObserver : IObserver<string>, IObservable<string>
+    {
+        private readonly Subject<string> _subject = new Subject<string>();
+
+        public void OnCompleted() => _subject.OnCompleted();
+
+        public void OnError(Exception error) => _subject.OnError(error);
+
+        public void OnNext(string value)
+        {
+            var error = JsonConvert.DeserializeObject<WebErrorException>(value);
+            if (error.IsNone)
+            {
+                _subject.OnNext(value);
+                return;
+            }
+
+            OnError(error.Exception);
         }
 
-        public static IDisposable SendWWWGetObject<T>(this IWebRequest webRequest, Action<T> onNext)
-        {
-            return webRequest.SendWWWGetObject<T>().Subscribe(onNext);
-        }
-
-        public static IObservable<TResponse> SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest)
-        {
-            return webRequest.SendWWWGet().JsonDeserialize<TResponse>();
-        }
-
-        public static IDisposable SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest,
-            Action<TResponse> onNext)
-        {
-            return webRequest.SendWWWGetObject<TResponse>().Subscribe(onNext);
-        }
+        public IDisposable Subscribe(IObserver<string> observer) => _subject.Subscribe(observer);
     }
 }
