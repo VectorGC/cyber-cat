@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: UIDialogs
   m_EditorClassIdentifier: 
   LoadWindowPrefab: {fileID: 7844130884445632321, guid: 27f8cb01a8a6102428075e62c2b95b0f, type: 3}
+  TMPSettings:
+    FontAsset: {fileID: 11400000, guid: dcbd576cdce651b48bfc3475951aa5ed, type: 2}
+    CharacterSpacing: 0
+  StartScene:
+    m_SceneAsset: {fileID: 102900000, guid: 80d02a46dbba1f648b3e240780067a45, type: 3}
+    m_SceneName: StartScene
