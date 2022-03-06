@@ -3441,6 +3441,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1241613563}
     m_Modifications:
+    - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_text
+      value: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2389297106188213654, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_Name
       value: ButtonAsyncObserve
@@ -3856,7 +3864,7 @@ PrefabInstance:
       objectReference: {fileID: 832935502}
     - target: {fileID: 855634361802626973, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: LoadSceneAsync
       objectReference: {fileID: 0}
     - target: {fileID: 855634361802626973, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -3873,6 +3881,14 @@ PrefabInstance:
     - target: {fileID: 855634362693593832, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_fontSize
       value: 29.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694471730757702254, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
+      propertyPath: m_text
+      value: "\u0412\u044B\u0439\u0442\u0438"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694471730757702254, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
+      propertyPath: m_fontSize
+      value: 19.85
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2657923417845696471, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
