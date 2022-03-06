@@ -40,6 +40,8 @@ namespace WebRequests.Requesters
         public bool IsNone => string.IsNullOrEmpty(Error);
 
         public WebException Exception => new WebException(Error);
+
+        public override string ToString() => Error;
     }
 
     public class ResponseHandleObserver : IObserver<string>, IObservable<string>

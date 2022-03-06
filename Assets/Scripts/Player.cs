@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(directionVector), Time.deltaTime * rotationSpeed);
 
         
-        if (Input.GetMouseButtonDown(0))
+        /*if (Input.GetMouseButtonDown(0))
         {
             var from = gunBarrel.position;
             var target = cursor.transform.position;
@@ -59,6 +59,6 @@ public class Player : MonoBehaviour
                 to = from + direction * 100;
 
             shot.Show(from, to);
-        }
+        }*/
     }
 }
