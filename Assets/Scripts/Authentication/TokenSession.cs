@@ -100,6 +100,6 @@ namespace Authentication
             return tokenSession;
         }
 
-        public static void DeleteInPlayerPrefs() => PlayerPrefs.DeleteKey(PlayerPrefsKey);
+        public static void DeleteFromPlayerPrefs() => PlayerPrefs.DeleteKey(PlayerPrefsKey);
     }
 }
