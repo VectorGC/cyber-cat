@@ -22,7 +22,10 @@ public class CodeEditorController : MonoBehaviour
             .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress))
             .Subscribe();
 
-        return requestProgress.Union(loadCodeEditorProgress).ReportTo(progress);
+        return requestProgress
+            .Union(loadCodeEditorProgress)
+            .ReportTo(progress)
+            .ViaLoadingScreen();
     }
 
     public static IObservable<AsyncOperation> OpenEditorForTaskObservable(ITaskTicket task,
