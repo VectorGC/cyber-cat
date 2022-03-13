@@ -4,7 +4,6 @@ public interface IServiceLocator
 {
     ITicketRequester TicketRequester { get; }
     ITicketRoadmapCreator TicketRoadmapCreator { get; }
-    ILoadWindow LoadWindow { get; }
 }
 
 public class ServiceLocator : IServiceLocator
@@ -18,10 +17,8 @@ public class ServiceLocator : IServiceLocator
     {
         TicketRequester = new MockTicketRequester();
         TicketRoadmapCreator = GameObject.FindObjectOfType<BaseTicketRoadmapCreator>();
-        LoadWindow = new LoadWindow();
     }
 
     public ITicketRequester TicketRequester { get; }
     public ITicketRoadmapCreator TicketRoadmapCreator { get; }
-    public ILoadWindow LoadWindow { get; }
 }
