@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,10 +7,10 @@ using Object = UnityEngine.Object;
 
 namespace MonoBehaviours.PropertyFields
 {
-    [System.Serializable]
+    [Serializable]
     public class SceneField
     {
-        [SerializeField] private Object m_SceneAsset;
+        [SerializeField] [UsedImplicitly] private Object m_SceneAsset;
         [SerializeField] private string m_SceneName = "";
 
         public string SceneName => m_SceneName;
@@ -20,7 +21,10 @@ namespace MonoBehaviours.PropertyFields
             return sceneField.SceneName;
         }
 
-        public IObservable<AsyncOperation> LoadAsync() => SceneManager.LoadSceneAsync(m_SceneName).AsObservable();
-        public void Load() => SceneManager.LoadScene(m_SceneName);
+        public IDisposable LoadAsyncViaLoadingScreen() =>
+            SceneManager.LoadSceneAsync(m_SceneName).ViaLoadingScreenObservable().Subscribe();
+
+        public IObservable<AsyncOperation> ViaLoadingScreen() =>
+            SceneManager.LoadSceneAsync(m_SceneName).ViaLoadingScreenObservable();
     }
 }

@@ -22,9 +22,9 @@ namespace TasksData.Requests
             _token = token;
         }
 
-        public IObservable<ITaskTicket> SendRequest() =>
+        public IObservable<ITaskTicket> SendRequest(IProgress<float> progress = null) =>
             new GetTasksRequest(_token)
-                .SendWWWGetObject()
+                .SendWWWGetObject(progress)
                 .Select(tasks => tasks.Tasks.GetValue(_taskId));
     }
 }

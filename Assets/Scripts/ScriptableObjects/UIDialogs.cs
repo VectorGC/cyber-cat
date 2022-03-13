@@ -14,7 +14,30 @@ public struct TMPSettings
 [CreateAssetMenu(fileName = "UIDialogs", menuName = "ScriptableObjects/UIDialogs", order = 1)]
 public class UIDialogs : ScriptableObject
 {
-    public LoadWindowView LoadWindowPrefab;
+    [SerializeField] private LoadingScreen _loadingScreenPrefab;
+    private LoadingScreen _loadingScreen;
+    public LoadingScreen LoadingScreen
+    {
+        get
+        {
+            if (_loadingScreen)
+            {
+                return _loadingScreen;
+            }
+            
+            _loadingScreen = Instantiate(_loadingScreenPrefab);
+            _loadingScreen.gameObject.SetActive(false);
+            
+            DontDestroyOnLoad(_loadingScreen);
+            
+            return _loadingScreen;
+        }
+    }
+
+    private void OnValidate()
+    {
+        _loadingScreenPrefab = Resources.FindObjectsOfTypeAll<LoadingScreen>().FirstOrDefault();
+    }
 
     public TMPSettings TMPSettings;
 

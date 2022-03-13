@@ -3,21 +3,21 @@ using System.Net;
 using Newtonsoft.Json;
 using Observers;
 using UniRx;
-using UnityEngine;
 
 namespace WebRequests.Requesters
 {
     public static class WWWRequesterExt
     {
-        public static IObservable<TResponse> SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest)
+        public static IObservable<TResponse> SendWWWGetObject<TResponse>(this IGetWebRequest<TResponse> webRequest,
+            IProgress<float> progress = null)
         {
-            return webRequest.SendWWWGet().ResponseHandle().JsonDeserialize<TResponse>();
+            return webRequest.SendWWWGet(progress).ResponseHandle().JsonDeserialize<TResponse>();
         }
 
-        private static IObservable<string> SendWWWGet(this IWebRequest webRequest)
+        private static IObservable<string> SendWWWGet(this IWebRequest webRequest, IProgress<float> progress = null)
         {
             var requester = new WWWRequester();
-            return requester.SendGetRequest(webRequest);
+            return requester.SendGetRequest(webRequest, progress);
         }
     }
 
