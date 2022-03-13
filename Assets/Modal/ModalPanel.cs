@@ -12,20 +12,23 @@ public class ModalPanel : MonoBehaviour
 	[SerializeField] private Image  _iconImage; //The Icon Image, if any
 
 	[SerializeField] private GameObject _modalPanelObject;       //Reference to the Panel Object
-	private static ModalPanel MainModalPanel; //Reference to the Modal Panel, to make sure it's been included
+	private static ModalPanel _mainModalPanel; //Reference to the Modal Panel, to make sure it's been included
 
-	public static ModalPanel Instance()
-	{
-		if (!MainModalPanel)
-		  {
-			MainModalPanel = FindObjectOfType(typeof(ModalPanel)) as ModalPanel;
-			if (!MainModalPanel)
-			  {
-				Debug.LogError("There needs to be one active ModalPanel script on a GameObject in your scene.");
-			  }
-		  }
-		return MainModalPanel;
-	 }
+	public static ModalPanel Instance
+    {
+		get
+        {
+			if (!_mainModalPanel)
+			{
+				_mainModalPanel = FindObjectOfType<ModalPanel>();
+				if (!_mainModalPanel)
+				{
+					Debug.LogError("There needs to be one active ModalPanel script on a GameObject in your scene.");
+				}
+			}
+			return _mainModalPanel;
+		}
+    }
 
 	public void MessageBox(Sprite IconPic, string Title, string Question, UnityAction YesEvent, UnityAction NoEvent, UnityAction CancelEvent, UnityAction OkEvent, bool IconActive, string MessageType)
 	  {
@@ -93,8 +96,8 @@ public class ModalPanel : MonoBehaviour
 			_button1.onClick.RemoveAllListeners(); _button1.onClick.AddListener(actions[0]); _button1.onClick.AddListener(ClosePanel); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
 			_button2.onClick.RemoveAllListeners();
 			_button3.onClick.RemoveAllListeners(); _button3.onClick.AddListener(actions[1]); _button3.onClick.AddListener(ClosePanel); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[1];
-			_button1.gameObject.SetActive(false);
-			_button2.gameObject.SetActive(true);
+			_button1.gameObject.SetActive(true);
+			_button2.gameObject.SetActive(false);
 			_button3.gameObject.SetActive(true);
 		}
 		else if (countOfButtons == 3)
