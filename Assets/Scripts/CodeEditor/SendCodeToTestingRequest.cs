@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using Authentication;
 using TasksData.Requests;
-using TMPro;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Networking;
 using WebRequests;
 using WebRequests.Extensions;
 
@@ -25,7 +22,7 @@ public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
         _codeText = codeText;
     }
 
-    public IObservable<string> SendRequest()
+    public IObservable<string> SendRequest(IProgress<float> progress = null)
     {
         //var formData = new List<IMultipartFormSection>();
 
@@ -94,40 +91,5 @@ public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
             Debug.Log(www.downloadHandler.text);
             PostReceived.Invoke(www.downloadHandler.text);
         */
-    }
-}
-
-public class CustomCodeEditor : MonoBehaviour
-{
-    [SerializeField] private TMP_InputField codeInputField;
-
-    private int _openedTaskId;
-
-    public static void OpenEditorForTask(string taskId)
-    {
-        new GetTaskRequest(taskId)
-            .SendRequest()
-            .Subscribe(OpenEditorForTask);
-    }
-
-    public static void OpenEditorForTask(ITaskTicket task)
-    {
-        Debug.Log($"Opening code editor for task '{task.Id}'");
-        Scene.OpenScene("Code_editor_Blue",
-            () =>
-            {
-                var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
-                codeEditorStartup.SetupCodeEditorForTask(task);
-            });
-    }
-
-    public void SetupCodeEditor(ITaskTicket task)
-    {
-        _openedTaskId = task.Id;
-    }
-
-    private string GetCode()
-    {
-        return codeInputField.text;
     }
 }

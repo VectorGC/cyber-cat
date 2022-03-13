@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Extensions.UniRxExt;
 using TasksData.Requests;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CodeEditorController : MonoBehaviour
 {
@@ -11,18 +12,27 @@ public class CodeEditorController : MonoBehaviour
 
     private int _openedTaskId;
 
-    public static void OpenEditorForTask(string taskId)
+    public static IObservable<float> OpenEditorForTask(string taskId, ScheduledNotifier<float> progress = null)
     {
+        var requestProgress = new ScheduledNotifier<float>();
+        var loadCodeEditorProgress = new ScheduledNotifier<float>();
+
         new GetTaskRequest(taskId)
             .SendRequest()
-            .Subscribe(OpenEditorForTask);
+            .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress))
+            .Subscribe();
+
+        return requestProgress.Union(loadCodeEditorProgress).ReportTo(progress);
     }
 
-    public static void OpenEditorForTask(ITaskTicket task)
+    public static IObservable<AsyncOperation> OpenEditorForTaskObservable(ITaskTicket task,
+        ScheduledNotifier<float> progress = null)
     {
         Debug.Log($"Opening code editor for task '{task.Id}'");
-        Scene.OpenScene("Code_editor_Blue",
-            () =>
+
+        return SceneManager.LoadSceneAsync("Code_editor_Blue")
+            .ViaLoadingScreenObservable(progress)
+            .DoOnCompleted(() =>
             {
                 var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
                 codeEditorStartup.SetupCodeEditorForTask(task);
