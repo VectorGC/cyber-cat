@@ -6,6 +6,6 @@ public class Logout : MonoBehaviour
     public void LogoutAsync()
     {
         TokenSession.DeleteFromPlayerPrefs();
-        UIDialogs.Instance.StartScene.LoadAsync();
+        UIDialogs.Instance.StartScene.LoadAsyncViaLoadingScreen();
     }
 }

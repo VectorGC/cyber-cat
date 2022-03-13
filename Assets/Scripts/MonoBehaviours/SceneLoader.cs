@@ -7,7 +7,6 @@ namespace MonoBehaviours
     {
         [SerializeField] private SceneField scene;
 
-        public void LoadSceneAsync() => scene.LoadAsync();
-        public void LoadSceneSync() => scene.LoadAsync();
+        public void LoadSceneAsync() => scene.LoadAsyncViaLoadingScreen();
     }
 }
