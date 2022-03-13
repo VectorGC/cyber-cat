@@ -1154,6 +1154,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 695962810}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _title
+      value: 
+      objectReference: {fileID: 695962810}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: Button1
       value: 
       objectReference: {fileID: 796210889}
@@ -1170,11 +1174,35 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1654277920}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _button1
+      value: 
+      objectReference: {fileID: 796210889}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _button2
+      value: 
+      objectReference: {fileID: 870100440}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _button3
+      value: 
+      objectReference: {fileID: 1535184066}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: IconImage
       value: 
       objectReference: {fileID: 1156467004}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _question
+      value: 
+      objectReference: {fileID: 1654277920}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _iconImage
+      value: 
+      objectReference: {fileID: 1156467004}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: ModalPanelObject
+      value: 
+      objectReference: {fileID: 411431571}
+    - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
+      propertyPath: _modalPanelObject
       value: 
       objectReference: {fileID: 411431571}
     m_RemovedComponents: []
