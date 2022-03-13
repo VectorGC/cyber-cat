@@ -11,6 +11,6 @@ public class CodeSendHandler : MonoBehaviour
         var t = new SendCodeToTestingRequest(TokenSession.FromPlayerPrefs(), taskId, code);
 
         t.SendRequest().Subscribe(
-            x => Debug.LogError(x));
+            msg => CodeConsole.WriteLine(msg));
     }
 }
