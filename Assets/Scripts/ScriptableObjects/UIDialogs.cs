@@ -34,11 +34,6 @@ public class UIDialogs : ScriptableObject
         }
     }
 
-    private void OnValidate()
-    {
-        _loadingScreenPrefab = Resources.FindObjectsOfTypeAll<LoadingScreen>().FirstOrDefault();
-    }
-
     public TMPSettings TMPSettings;
 
     public SceneField StartScene;
@@ -51,7 +46,7 @@ public class UIDialogs : ScriptableObject
         {
             if (!_instance)
             {
-                _instance = Resources.FindObjectsOfTypeAll<UIDialogs>().FirstOrDefault();
+                _instance = Resources.Load<UIDialogs>("UIDialogs");
             }
 
             return _instance;

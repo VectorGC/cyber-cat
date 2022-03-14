@@ -18,14 +18,13 @@ public class CodeEditorController : MonoBehaviour
         var loadCodeEditorProgress = new ScheduledNotifier<float>();
 
         new GetTaskRequest(taskId)
-            .SendRequest()
+            .SendRequest(requestProgress)
             .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress))
             .Subscribe();
 
         return requestProgress
             .Union(loadCodeEditorProgress)
-            .ReportTo(progress)
-            .ViaLoadingScreen();
+            .ReportTo(progress);
     }
 
     public static IObservable<AsyncOperation> OpenEditorForTaskObservable(ITaskTicket task,
@@ -34,7 +33,7 @@ public class CodeEditorController : MonoBehaviour
         Debug.Log($"Opening code editor for task '{task.Id}'");
 
         return SceneManager.LoadSceneAsync("Code_editor_Blue")
-            .ViaLoadingScreenObservable(progress)
+            .AsAsyncOperationObservable(progress)
             .DoOnCompleted(() =>
             {
                 var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();

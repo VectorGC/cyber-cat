@@ -45,7 +45,7 @@ public class InteractCrystal : MonoBehaviour
         var isHackModePressed = Input.GetKeyDown(KeyCode.F);
         if (isHackModePressed && GameMode.HackMode == Mode.HackMode)
         {
-            CodeEditorController.OpenEditorForTask(Task);
+            CodeEditorController.OpenEditorForTask(Task).ViaLoadingScreen();
         }
     }
 }

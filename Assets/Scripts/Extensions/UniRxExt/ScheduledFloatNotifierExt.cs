@@ -12,19 +12,23 @@ namespace Extensions.UniRxExt
         {
             if (progressReporter == null)
             {
-                return new ScheduledNotifier<float>();
+                return observableProgress;
             }
 
-            observableProgress.Subscribe(progressReporter.Report);
+            observableProgress.Do(progressReporter.Report);
             return observableProgress;
         }
 
         public static IObservable<float> Union(this IObservable<float> progressA,
             IObservable<float> progressB)
         {
+            // Set initial values.
+            progressA = progressA.StartWith(0);
+            progressB = progressB.StartWith(0);
+
             var combinedProgress = progressA.CombineLatest(progressB,
-                (requestProgressValue, loadEditorProgressValue) =>
-                    Mathf.InverseLerp(0, 2, requestProgressValue + loadEditorProgressValue));
+                (progressAValue, progressBValue) =>
+                    Mathf.InverseLerp(0, 2, progressAValue + progressBValue));
 
             return combinedProgress;
         }

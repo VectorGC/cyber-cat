@@ -20,6 +20,9 @@ namespace MonoBehaviours.PropertyFields
         {
             return sceneField.SceneName;
         }
+        
+        public IDisposable LoadAsync() =>
+            SceneManager.LoadSceneAsync(m_SceneName).AsAsyncOperationObservable().Subscribe();
 
         public IDisposable LoadAsyncViaLoadingScreen() =>
             SceneManager.LoadSceneAsync(m_SceneName).ViaLoadingScreenObservable().Subscribe();
