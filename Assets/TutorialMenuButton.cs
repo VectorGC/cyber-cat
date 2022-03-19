@@ -7,6 +7,6 @@ public class TutorialMenuButton : MonoBehaviour
     void Start()
     {
         TryGetComponent<Button>(out var button);
-        button.interactable = false;
+        //button.interactable = false;
     }
 }
