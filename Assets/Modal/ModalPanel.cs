@@ -11,6 +11,15 @@ public class ModalPanel : MonoBehaviour
 	[SerializeField] private Button _button3;   //The third button
 	[SerializeField] private Image  _iconImage; //The Icon Image, if any
 
+	[SerializeField] private Image _errorIcon;
+	public Image ErrorIcon => _errorIcon;
+	[SerializeField] private Image _questionIcon;
+	public Image QuestionIcon => _questionIcon;
+	[SerializeField] private Image _infoIcon;
+	public Image InfoIcon => _infoIcon;
+	[SerializeField] private Image _exclamationIcon;
+	public Image ExclamationIcon => _exclamationIcon;
+
 	[SerializeField] private GameObject _modalPanelObject;       //Reference to the Panel Object
 	private static ModalPanel _mainModalPanel; //Reference to the Modal Panel, to make sure it's been included
 
