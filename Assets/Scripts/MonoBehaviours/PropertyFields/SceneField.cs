@@ -21,13 +21,13 @@ namespace MonoBehaviours.PropertyFields
             return sceneField.SceneName;
         }
         
-        public IDisposable LoadAsync() =>
-            SceneManager.LoadSceneAsync(m_SceneName).AsAsyncOperationObservable().Subscribe();
+        public IDisposable LoadAsync(LoadSceneMode loadSceneMode = default) =>
+            SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).AsAsyncOperationObservable().Subscribe();
 
-        public IDisposable LoadAsyncViaLoadingScreen() =>
-            SceneManager.LoadSceneAsync(m_SceneName).ViaLoadingScreenObservable().Subscribe();
+        public IDisposable LoadAsyncViaLoadingScreen(LoadSceneMode loadSceneMode = default) =>
+            SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).ViaLoadingScreenObservable().Subscribe();
 
-        public IObservable<AsyncOperation> ViaLoadingScreen() =>
-            SceneManager.LoadSceneAsync(m_SceneName).ViaLoadingScreenObservable();
+        public IObservable<AsyncOperation> ViaLoadingScreen(LoadSceneMode loadSceneMode = default) =>
+            SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).ViaLoadingScreenObservable();
     }
 }

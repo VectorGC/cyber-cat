@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using MonoBehaviours;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public enum Mode
 {
@@ -28,13 +27,7 @@ public class InteractCrystal : MonoBehaviour
         _collider = GetComponent<SphereCollider>();
         _collider.OnCollisionStayAsObservable().Subscribe(x => Debug.Log("123"));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
+    
     private void OnTriggerStay(Collider other)
     {
         if (!other.CompareTag("Player"))
@@ -45,7 +38,11 @@ public class InteractCrystal : MonoBehaviour
         var isHackModePressed = Input.GetKeyDown(KeyCode.F);
         if (isHackModePressed && GameMode.HackMode == Mode.HackMode)
         {
-            CodeEditorController.OpenEditorForTask(Task).ViaLoadingScreen();
+            var pauseObserver = new PauseTimeScaleObserver<Scene>();
+
+            var result = CodeEditorController.Open(Task);
+            result.WhileOpen(pauseObserver);
+            result.ProgressObservable().ViaLoadingScreen();
         }
     }
 }

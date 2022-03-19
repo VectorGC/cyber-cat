@@ -4,17 +4,16 @@ using UnityEngine;
 
 public static class LoadingScreenExt
 {
-    public static IObservable<float> ViaLoadingScreen(this IObservable<float> progressObservable)
+    public static IDisposable ViaLoadingScreen(this IObservable<float> progressObservable)
     {
-        progressObservable.Subscribe(LoadingScreen.Instance);
-        return LoadingScreen.Instance;
+        return progressObservable.Subscribe(LoadingScreen.Instance);
     }
 
+    public static IDisposable ViaLoadingScreen(this AsyncOperation asyncOperation,
+        ScheduledNotifier<float> progress = null) =>
+        asyncOperation.ViaLoadingScreenObservable(progress).Subscribe();
+    
     public static IObservable<AsyncOperation> ViaLoadingScreenObservable(this AsyncOperation asyncOperation,
         ScheduledNotifier<float> progress = null) =>
         LoadingScreen.Instance.ViaLoadingScreen(asyncOperation, progress);
-
-    public static IDisposable ViaLoadingScreen(this IObservable<AsyncOperation> asyncOperationObservable,
-        ScheduledNotifier<float> progress = null) =>
-        asyncOperationObservable.Do(LoadingScreen.Instance).Subscribe();
 }

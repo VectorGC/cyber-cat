@@ -12,19 +12,32 @@ public class CodeEditorController : MonoBehaviour
 
     private int _openedTaskId;
 
-    public static IObservable<float> OpenEditorForTask(string taskId, ScheduledNotifier<float> progress = null)
+    public static CodeEditorObservable Open(string taskId)
     {
+        var result = OpenEditorForTaskObserver(taskId);
+        result.Subscribe<AsyncOperation>();
+
+        return result;
+    }
+
+    private static CodeEditorObservable OpenEditorForTaskObserver(string taskId,
+        ScheduledNotifier<float> progress = null)
+    {
+        progress ??= new ScheduledNotifier<float>();
+
         var requestProgress = new ScheduledNotifier<float>();
         var loadCodeEditorProgress = new ScheduledNotifier<float>();
 
-        new GetTaskRequest(taskId)
-            .SendRequest(requestProgress)
-            .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress))
-            .Subscribe();
-
-        return requestProgress
+        var progressObservable = requestProgress
             .Union(loadCodeEditorProgress)
             .ReportTo(progress);
+
+        var operationObservable = new GetTaskRequest(taskId)
+            .SendRequest(requestProgress)
+            .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress));
+
+        var t = new CodeEditorObservable(operationObservable, progressObservable);
+        return t;
     }
 
     public static IObservable<AsyncOperation> OpenEditorForTaskObservable(ITaskTicket task,
@@ -32,7 +45,7 @@ public class CodeEditorController : MonoBehaviour
     {
         Debug.Log($"Opening code editor for task '{task.Id}'");
 
-        return SceneManager.LoadSceneAsync("Code_editor_Blue")
+        return SceneManager.LoadSceneAsync("Code_editor_Blue", LoadSceneMode.Additive)
             .AsAsyncOperationObservable(progress)
             .DoOnCompleted(() =>
             {
