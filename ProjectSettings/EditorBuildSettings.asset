@@ -18,15 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: fecbc7e6ea99f0341b5fd71c3c835b20
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 17d7bd76b30b050459f5d9be916dcb05
+    path: Assets/Scenes/Game.unity
+    guid: 416a8e36df97b454a8e5af691788a9b3
   - enabled: 1
     path: Assets/Scenes/Code_editor_Blue.unity
     guid: 15651a159b27a3046bcbbeab2b7ce1b6
-  - enabled: 0
-    path: Assets/Scenes/GlobalMap.unity
-    guid: d155cf63bd64cae48b2f1b7a95d39a50
-  - enabled: 0
-    path: Assets/Scenes/GlobalMapNew.unity
-    guid: 6bbfd01bb0a36444392f4e46ba60d388
   m_configObjects: {}

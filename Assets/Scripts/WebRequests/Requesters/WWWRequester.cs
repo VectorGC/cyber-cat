@@ -15,9 +15,9 @@ namespace WebRequests.Requesters
 
             Debug.Log($"Send get request to '{url}'");
             var observable = ObservableWWW.Get(url, progress: progress).Timeout(Timeout);
-#if DEBUG
+
             observable.Subscribe(Debug.Log);
-#endif
+
 
             return observable;
         }
