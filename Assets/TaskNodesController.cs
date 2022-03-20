@@ -1,15 +1,20 @@
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class GlobalMap
 {
     public static void OpenTaskList(IReadOnlyCollection<ITaskTicket> taskTickets)
     {
-        Scene.OpenScene("GlobalMapNew", () =>
-        {
-            var taskNodesController = BaseTaskNodesController.GetTaskNodesController();
-            taskNodesController.CreateTaskList(taskTickets);
-        });
+        SceneManager.LoadSceneAsync("GlobalMapNew")
+            .ViaLoadingScreenObservable()
+            .DoOnCompleted(() =>
+            {
+                var taskNodesController = BaseTaskNodesController.GetTaskNodesController();
+                taskNodesController.CreateTaskList(taskTickets);
+            })
+            .Subscribe();
     }
 }
 
@@ -29,7 +34,7 @@ public class TaskNodesController : BaseTaskNodesController
 
     public override void OpenTask(ITaskTicket taskTicket)
     {
-        CustomCodeEditor.OpenEditorForTask(taskTicket);
+        CodeEditorController.OpenEditorForTaskObservable(taskTicket).Subscribe();
     }
 
     public override void CreateTaskList(IReadOnlyCollection<ITaskTicket> taskTickets)

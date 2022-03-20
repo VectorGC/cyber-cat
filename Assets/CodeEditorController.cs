@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Extensions.UniRxExt;
 using TasksData.Requests;
 using TMPro;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CodeEditorController : MonoBehaviour
 {
@@ -11,18 +12,42 @@ public class CodeEditorController : MonoBehaviour
 
     private int _openedTaskId;
 
-    public static void OpenEditorForTask(string taskId)
+    public static CodeEditorObservable Open(string taskId)
     {
-        new GetTaskRequest(taskId)
-            .SendRequest()
-            .Subscribe(OpenEditorForTask);
+        var result = OpenEditorForTaskObserver(taskId);
+        result.Subscribe<AsyncOperation>();
+
+        return result;
     }
 
-    public static void OpenEditorForTask(ITaskTicket task)
+    private static CodeEditorObservable OpenEditorForTaskObserver(string taskId,
+        ScheduledNotifier<float> progress = null)
+    {
+        progress ??= new ScheduledNotifier<float>();
+
+        var requestProgress = new ScheduledNotifier<float>();
+        var loadCodeEditorProgress = new ScheduledNotifier<float>();
+
+        var progressObservable = requestProgress
+            .Union(loadCodeEditorProgress)
+            .ReportTo(progress);
+
+        var operationObservable = new GetTaskRequest(taskId)
+            .SendRequest(requestProgress)
+            .ContinueWith(x => OpenEditorForTaskObservable(x, loadCodeEditorProgress));
+
+        var t = new CodeEditorObservable(operationObservable, progressObservable);
+        return t;
+    }
+
+    public static IObservable<AsyncOperation> OpenEditorForTaskObservable(ITaskTicket task,
+        ScheduledNotifier<float> progress = null)
     {
         Debug.Log($"Opening code editor for task '{task.Id}'");
-        Scene.OpenScene("Code_editor_Blue",
-            () =>
+
+        return SceneManager.LoadSceneAsync("Code_editor_Blue", LoadSceneMode.Additive)
+            .AsAsyncOperationObservable(progress)
+            .DoOnCompleted(() =>
             {
                 var codeEditorStartup = FindObjectOfType<CodeEditorStartup>();
                 codeEditorStartup.SetupCodeEditorForTask(task);

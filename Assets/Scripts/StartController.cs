@@ -11,10 +11,10 @@ public class StartController : MonoBehaviour
     {
         if (TokenSession.IsNoneToken())
         {
-            authScene.LoadAsync();
+            authScene.LoadAsyncViaLoadingScreen();
             return;
         }
 
-        menu.LoadAsync();
+        menu.LoadAsyncViaLoadingScreen();
     }
 }
