@@ -11,14 +11,14 @@ public class ModalPanel : MonoBehaviour
 	[SerializeField] private Button _button3;   //The third button
 	[SerializeField] private Image  _iconImage; //The Icon Image, if any
 
-	[SerializeField] private Image _errorIcon;
-	public Image ErrorIcon => _errorIcon;
-	[SerializeField] private Image _questionIcon;
-	public Image QuestionIcon => _questionIcon;
-	[SerializeField] private Image _infoIcon;
-	public Image InfoIcon => _infoIcon;
-	[SerializeField] private Image _exclamationIcon;
-	public Image ExclamationIcon => _exclamationIcon;
+	[SerializeField] private Sprite _errorIcon;
+	public Sprite ErrorIcon => _errorIcon;
+	[SerializeField] private Sprite _questionIcon;
+	public Sprite QuestionIcon => _questionIcon;
+	[SerializeField] private Sprite _infoIcon;
+	public Sprite InfoIcon => _infoIcon;
+	[SerializeField] private Sprite _exclamationIcon;
+	public Sprite ExclamationIcon => _exclamationIcon;
 
 	[SerializeField] private GameObject _modalPanelObject;       //Reference to the Panel Object
 	private static ModalPanel _mainModalPanel; //Reference to the Modal Panel, to make sure it's been included
@@ -94,7 +94,7 @@ public class ModalPanel : MonoBehaviour
         {
 			//Button1 is on the far left; Button2 is in the center and Button3 is on the right.  Each can be activated and labeled individually.
 			_button1.onClick.RemoveAllListeners();
-			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(actions[0]); _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
+			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(ClosePanel); _button2.onClick.AddListener(actions[0]); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
 			_button3.onClick.RemoveAllListeners();
 			_button1.gameObject.SetActive(false); //We always turn on ONLY the buttons we need, and leave the rest off.
 			_button2.gameObject.SetActive(true);
@@ -102,18 +102,18 @@ public class ModalPanel : MonoBehaviour
 		}
 		else if (countOfButtons == 2)
         {
-			_button1.onClick.RemoveAllListeners(); _button1.onClick.AddListener(actions[0]); _button1.onClick.AddListener(ClosePanel); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
+			_button1.onClick.RemoveAllListeners(); _button1.onClick.AddListener(ClosePanel); _button1.onClick.AddListener(actions[0]); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
 			_button2.onClick.RemoveAllListeners();
-			_button3.onClick.RemoveAllListeners(); _button3.onClick.AddListener(actions[1]); _button3.onClick.AddListener(ClosePanel); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[1];
+			_button3.onClick.RemoveAllListeners(); _button3.onClick.AddListener(ClosePanel); _button3.onClick.AddListener(actions[1]); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[1];
 			_button1.gameObject.SetActive(true);
 			_button2.gameObject.SetActive(false);
 			_button3.gameObject.SetActive(true);
 		}
 		else if (countOfButtons == 3)
         {
-			_button1.onClick.RemoveAllListeners(); _button1.onClick.AddListener(actions[0]); _button1.onClick.AddListener(ClosePanel); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
-			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(actions[1]); _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[1];
-			_button3.onClick.RemoveAllListeners(); _button3.onClick.AddListener(actions[2]); _button3.onClick.AddListener(ClosePanel); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[2];
+			_button1.onClick.RemoveAllListeners(); _button1.onClick.AddListener(ClosePanel); _button1.onClick.AddListener(actions[0]); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[0];
+			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(ClosePanel); _button2.onClick.AddListener(actions[1]); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[1];
+			_button3.onClick.RemoveAllListeners(); _button3.onClick.AddListener(ClosePanel); _button3.onClick.AddListener(actions[2]); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = buttonNames[2];
 			_button1.gameObject.SetActive(true); //We always turn on ONLY the buttons we need, and leave the rest off.
 			_button2.gameObject.SetActive(true);
 			_button3.gameObject.SetActive(true);
