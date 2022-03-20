@@ -632,6 +632,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6620128041623890500, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: scene.m_SceneName
+      value: Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 6620128041623890500, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: scene.m_SceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 416a8e36df97b454a8e5af691788a9b3, type: 3}
     - target: {fileID: 6620128041697642933, guid: 888ca0752851606499c387301906f52d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
