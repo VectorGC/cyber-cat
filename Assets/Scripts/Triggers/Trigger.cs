@@ -3,30 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
 [RequireComponent(typeof(SphereCollider))]
-public abstract class Trigger : MonoBehaviour
+public class Trigger : MonoBehaviour
 {
-    
     private Player _player;
     private ModalPanel _modalPanel;
     private bool _activated;
-    private UnityEvent _onEnter;
 
     public Player Player => _player;
     public ModalPanel ModalPanel => _modalPanel;
-    
+
+    [SerializeField] Transform _transformOfTrigger;
+    [SerializeField] ModalInfo _modalInfo;
+
+    [SerializeField] private int _countOfModals;
+    [SerializeField] ModalInfo[] _modalInfos;
+
+    [SerializeField] private UnityEvent _onEnter;
+
+
+    private void Start()
+    {
+        Init();
+    }
 
     public void Init()
     {
+        if (_transformOfTrigger != null)
+        {
+            transform.position = _transformOfTrigger.position;
+        }
+        
         _activated = false;
         _player = GameObject.FindObjectOfType<Player>();
         _modalPanel = ModalPanel.Instance;
-        if (_onEnter == null)
-        {
-            _onEnter = new UnityEvent();
-        }
-        _onEnter.RemoveAllListeners();
-        _onEnter.AddListener(Enter);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,8 +46,7 @@ public abstract class Trigger : MonoBehaviour
         {
             _activated = true;
             _onEnter?.Invoke();
+            _modalPanel.MessageBos(_modalInfos);
         }
     }
-
-    public abstract void Enter();
 }
