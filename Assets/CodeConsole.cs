@@ -1,27 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CodeConsole: MonoBehaviour
-{   
+public class CodeConsole : MonoBehaviour
+{
     //static field with Output text
-    public  Text consoleText;
+    public Text consoleText;
     private static CodeConsole Instance => FindObjectOfType<CodeConsole>();
+
+    private void Start()
+    {
+        MessageBroker.Default.Receive<ICodeTestingResult>()
+            .Do(OnReceiveCodeTestingResult)
+            .Subscribe();
+    }
+
+    private void OnReceiveCodeTestingResult(ICodeTestingResult codeTestingResult)
+    {
+        switch (codeTestingResult)
+        {
+            case ErrorCodeTestingResult error:
+                InnerWriteLine(error.Message, MessageType.Error);
+                break;
+            default:
+                InnerWriteLine(codeTestingResult.Message);
+                break;
+        }
+    }
 
     public void InnerSetBaseColor()
     {
         consoleText.color = Color.white;
     }
 
-    public static void SetBaseColor()
-    {
-        Instance.InnerSetBaseColor();
-    }
     public void InnerWriteLine(string msg)
     {
         consoleText.text = msg;
     }
+
     public void InnerWriteLine(string msg, MessageType type)
     {
         if (type == MessageType.Error)
@@ -40,7 +56,7 @@ public class CodeConsole: MonoBehaviour
     {
         Instance.InnerWriteLine(msg);
     }
-    
+
     public void InnerClear()
     {
         consoleText.text = "";

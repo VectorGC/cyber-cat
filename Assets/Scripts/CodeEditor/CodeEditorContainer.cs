@@ -1,17 +1,14 @@
-using TMPro;
 using UnityEngine;
 
 public class CodeEditorContainer : MonoBehaviour
 {
-    public TMP_Text Title;
-    public TMP_InputField CodeInputField;
-
-    [Header("Task Description")] public TextField TaskName;
-    public TextField TaskDescription;
+    [Header("Task Description")] 
+    [SerializeField] private TextField taskName;
+    [SerializeField] private TextField taskDescription;
 
     public void SetTaskDescription(ITaskTicket taskTicket)
     {
-        TaskName.SetContent(taskTicket.Name, "Задание");
-        TaskDescription.SetContent(taskTicket.Description, "Цель");
+        taskName.SetText(taskTicket.Name);
+        taskDescription.SetText(taskTicket.Description);
     }
 }
