@@ -18,8 +18,12 @@ public class Trigger : MonoBehaviour
     [SerializeField] ModalInfo _modalInfo;
 
     [SerializeField] private int _countOfModals;
-    [SerializeField] ModalInfo[] _modalInfos;
+    [SerializeField] private ModalInfo[] _modalInfos;
+    [SerializeField] private TriggerType _triggerType;
+    [SerializeField] private EventType _eventType;
+    [SerializeField] private KeyCode[] _keyCodes;
 
+    private UnityEvent _entered;
     [SerializeField] private UnityEvent _onEnter;
 
 
@@ -38,15 +42,65 @@ public class Trigger : MonoBehaviour
         _activated = false;
         _player = GameObject.FindObjectOfType<Player>();
         _modalPanel = ModalPanel.Instance;
+        //_entered.AddListener(Activate);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_activated && other.TryGetComponent<Player>(out _player))
+        if (_activated || _triggerType != TriggerType.Enter || !other.TryGetComponent<Player>(out _player))
         {
-            _activated = true;
-            _onEnter?.Invoke();
-            _modalPanel.MessageBos(_modalInfos);
+            return;
         }
+        _entered?.Invoke();
+
+        Do();
+    }
+
+    private void Update()
+    {
+        foreach (var t in _keyCodes)
+        {
+            if (!_activated && Input.GetKeyDown(t))
+            {
+                Do();
+            }
+        }
+    }
+
+    private void Do()
+    {
+        Activate();
+        switch (_eventType)
+        {
+            case EventType.EnterEvent:
+                _onEnter?.Invoke();
+                break;
+            case EventType.Message:
+                ShowMessage();
+                break;
+        }
+    }
+
+    private void ShowMessage()
+    {
+        _modalPanel.MessageBos(_modalInfos);
+    }
+
+    private void Activate()
+    {
+        _activated = true;
+    }
+
+    public enum TriggerType
+    {
+        Enter = 0,
+        ButtonPressed = 1
+    }
+
+
+    public enum EventType
+    {
+        Message = 0,
+        EnterEvent = 1,
     }
 }

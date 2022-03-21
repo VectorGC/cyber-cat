@@ -6,35 +6,23 @@ using UnityEngine.UIElements;
 [CustomEditor(typeof(Trigger))]
 public class TriggerEditor : Editor
 {
-    public enum Type
-    {
-        Message,
-        Event,
-        MessageAndEvent
-    }
+    [SerializeField] private Trigger.EventType TypeOfEvent;
+    [SerializeField] private Trigger.TriggerType TypeOfTrigger;
 
-    public Type TypeOfTrigger;
-
-    private SerializedProperty countOfDialogs;
-    private int count;
+    [SerializeField] private SerializedProperty countOfDialogs;
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
         DisplayCommonInfo();
 
-        switch (TypeOfTrigger)
+        switch (TypeOfEvent)
         {
-            case Type.Message:
+            case Trigger.EventType.Message:
                 DisplayMessagesInfo();
                 break;
 
-            case Type.Event:
-                DisplayEvent();
-                break;
-
-            case Type.MessageAndEvent:
-                DisplayMessagesInfo();
+            case Trigger.EventType.EnterEvent:
                 DisplayEvent();
                 break;
         }
@@ -46,9 +34,24 @@ public class TriggerEditor : Editor
 
     private void DisplayCommonInfo()
     {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_transformOfTrigger"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_triggerType"));
+        TypeOfTrigger = (Trigger.TriggerType)serializedObject.FindProperty("_triggerType").enumValueIndex;
+        Debug.Log(TypeOfTrigger);
         EditorGUILayout.Space();
-        TypeOfTrigger = (Type)EditorGUILayout.EnumPopup("Type", TypeOfTrigger);
+
+        switch (TypeOfTrigger)
+        {
+            case Trigger.TriggerType.Enter:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_transformOfTrigger"));
+                EditorGUILayout.Space();
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_eventType"));
+                TypeOfEvent = (Trigger.EventType)serializedObject.FindProperty("_eventType").enumValueIndex;
+                break;
+
+            case Trigger.TriggerType.ButtonPressed:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_keyCodes"));
+                break;
+        }
         EditorGUILayout.Space();
     }
 
