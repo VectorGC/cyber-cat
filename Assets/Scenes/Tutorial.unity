@@ -2856,7 +2856,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
-  _countOfModals: 1
+  _countOfModals: 2
   _modalInfos:
   - TimeBeforeShow: 0
     Title: "\u041F\u0440\u0438\u0432\u0435\u0442 \u0447\u0435\u043B"
@@ -2868,6 +2868,20 @@ MonoBehaviour:
     ButtonEvents:
     - m_PersistentCalls:
         m_Calls: []
+  - TimeBeforeShow: 1
+    Title: "\u0420\u0435\u0430\u043B\u044C\u043D\u043E \u0432\u0430\u0436\u043D\u0430\u044F
+      \u0438\u043D\u0444\u0430"
+    Description: "\u041D\u0430\u0436\u043C\u0438 \u043D\u0430 Q"
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - "\u041B\u0430\u0434\u043D\u043E -_-"
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+  _triggerType: 0
+  _eventType: 0
+  _keyCodes: 
   _onEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -2879,10 +2893,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350967301}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &353653190
 GameObject:
@@ -5649,6 +5663,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25000006, z: 0.25000006}
   m_Children:
   - {fileID: 350967302}
+  - {fileID: 1835637984}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12325,6 +12340,92 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828684762}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1835637983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1835637984}
+  - component: {fileID: 1835637986}
+  - component: {fileID: 1835637985}
+  m_Layer: 0
+  m_Name: CrystalTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1835637984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835637983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 739294716}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1835637985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835637983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transformOfTrigger: {fileID: 0}
+  _modalInfo:
+    TimeBeforeShow: 0
+    Title: 
+    Description: 
+    Icon: {fileID: 0}
+    CountOfButtons: 0
+    ButtonText: []
+    ButtonEvents: []
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 5
+    Title: "\u0423\u0445 \u0442\u044B!!"
+    Description: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435
+      \u043D\u0430\u0436\u0430\u0442\u044C \u043D\u0430 F \u0432\u043E\u0437\u043B\u0435
+      \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u0430"
+    Icon: {fileID: 21300000, guid: 6403aa3f6c0afdf468cc7ae92e6aa939, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - F
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+  _triggerType: 1
+  _eventType: 0
+  _keyCodes: 71000000
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &1835637986
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835637983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1880819208
 GameObject:
   m_ObjectHideFlags: 0
