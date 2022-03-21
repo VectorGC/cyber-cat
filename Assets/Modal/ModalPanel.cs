@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Collections;
 
 public class ModalPanel : MonoBehaviour
   {
@@ -143,6 +144,78 @@ public class ModalPanel : MonoBehaviour
 		}
 	}
 
+    public void MessageBos(ModalInfo modalInfo)
+    {
+        _modalPanelObject.SetActive(true);
+        if (modalInfo.ButtonEvents != null)
+        {
+            if (modalInfo.CountOfButtons != modalInfo.ButtonEvents.Length)
+            {
+                throw new System.ArgumentException();
+            }
+        }
+        if (modalInfo.CountOfButtons != modalInfo.ButtonText.Length)
+        {
+            throw new System.ArgumentException();
+        }
+
+        if (modalInfo.CountOfButtons == 1)
+        {
+            //Button1 is on the far left; Button2 is in the center and Button3 is on the right.  Each can be activated and labeled individually.
+            _button1.onClick.RemoveAllListeners();
+            _button2.onClick.RemoveAllListeners();  _button2.onClick = modalInfo.ButtonEvents[0]; _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[0];
+            _button3.onClick.RemoveAllListeners();
+            _button1.gameObject.SetActive(false); //We always turn on ONLY the buttons we need, and leave the rest off.
+            _button2.gameObject.SetActive(true);
+            _button3.gameObject.SetActive(false);
+        }
+        else if (modalInfo.CountOfButtons == 2)
+        {
+            _button1.onClick.RemoveAllListeners();  _button1.onClick = modalInfo.ButtonEvents[0]; _button1.onClick.AddListener(ClosePanel); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[0];
+            _button2.onClick.RemoveAllListeners();
+            _button3.onClick.RemoveAllListeners();  _button3.onClick = modalInfo.ButtonEvents[1]; _button3.onClick.AddListener(ClosePanel); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[1];
+            _button1.gameObject.SetActive(true);
+            _button2.gameObject.SetActive(false);
+            _button3.gameObject.SetActive(true);
+        }
+        else if (modalInfo.CountOfButtons == 3)
+        {
+            _button1.onClick.RemoveAllListeners(); _button1.onClick = modalInfo.ButtonEvents[0]; _button1.onClick.AddListener(ClosePanel); _button1.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[0];
+            _button2.onClick.RemoveAllListeners(); _button2.onClick = modalInfo.ButtonEvents[1]; _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[1];
+            _button3.onClick.RemoveAllListeners(); _button3.onClick = modalInfo.ButtonEvents[2]; _button3.onClick.AddListener(ClosePanel); _button3.GetComponentInChildren<TextMeshPro_TextShared>().text = modalInfo.ButtonText[2];
+            _button1.gameObject.SetActive(true); //We always turn on ONLY the buttons we need, and leave the rest off.
+            _button2.gameObject.SetActive(true);
+            _button3.gameObject.SetActive(true);
+        }
+        else
+        {
+            throw new System.ArgumentException();
+        }
+        this._title.text = modalInfo.Title;
+        this._question.text = modalInfo.Description;
+        this._iconImage.gameObject.SetActive(true);
+        this._iconImage.sprite = modalInfo.Icon;
+    }
+
+	public void MessageBos(ModalInfo[] modalInfos)
+    {
+		StartCoroutine(CycleWithTimer(modalInfos));
+    }
+
+	private IEnumerator CycleWithTimer(ModalInfo[] modalInfos)
+    {
+		for (int i = 0; i < modalInfos.Length;)
+		{
+			yield return new WaitForSeconds(modalInfos[i].TimeBeforeShow);
+			if (!_modalPanelObject.active)
+			{
+				MessageBos(modalInfos[i]);
+				i++;
+			}
+		}
+		
+    }
+
 	private void ClosePanel()
 	{
 		_modalPanelObject.SetActive(false); //Close the Modal Dialog
@@ -154,4 +227,6 @@ public class ModalPanel : MonoBehaviour
 		Two,
 		Three,
     }
+
+	
   }
