@@ -83,12 +83,32 @@ public class Trigger : MonoBehaviour
 
     private void ShowMessage()
     {
-        _modalPanel.MessageBos(_modalInfos);
+        UnityAction[] onUnshow = new UnityAction[]
+        {
+            SetPlayerActive
+        };
+
+        UnityAction[] onShow = new UnityAction[]
+        {
+            SetPlayerInactive
+        };
+        _modalPanel.MessageBos(_modalInfos, onUnshow, onShow);
     }
 
     private void Activate()
     {
         _activated = true;
+        //_player.gameObject.SetActive(false);
+    }
+
+    private void SetPlayerActive()
+    {
+        _player.gameObject.SetActive(true);
+    }
+
+    private void SetPlayerInactive()
+    {
+        _player.gameObject.SetActive(false);
     }
 
     public enum TriggerType
