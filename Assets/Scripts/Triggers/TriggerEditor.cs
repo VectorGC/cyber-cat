@@ -43,15 +43,17 @@ public class TriggerEditor : Editor
         {
             case Trigger.TriggerType.Enter:
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_transformOfTrigger"));
-                EditorGUILayout.Space();
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("_eventType"));
-                TypeOfEvent = (Trigger.EventType)serializedObject.FindProperty("_eventType").enumValueIndex;
+                
                 break;
 
             case Trigger.TriggerType.ButtonPressed:
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_keyCodes"));
                 break;
         }
+
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_eventType"));
+        TypeOfEvent = (Trigger.EventType)serializedObject.FindProperty("_eventType").enumValueIndex;
         EditorGUILayout.Space();
     }
 
