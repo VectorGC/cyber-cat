@@ -42,6 +42,8 @@ public class Trigger : MonoBehaviour
         _activated = false;
         _player = GameObject.FindObjectOfType<Player>();
         _modalPanel = ModalPanel.Instance;
+
+        GetComponent<SphereCollider>().isTrigger = true;
         //_entered.AddListener(Activate);
     }
 
