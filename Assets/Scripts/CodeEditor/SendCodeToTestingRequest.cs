@@ -46,6 +46,7 @@ public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
 
         formData.AddField("task_id", _taskId.ToString());
         formData.AddField("source_text", _codeText);
+        formData.AddField("lang", "c");
         formData.AddField("verbose", "false");
 
         //formData.Add(new MultipartFormDataSection("source_text", _codeText));
