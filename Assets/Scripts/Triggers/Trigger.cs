@@ -13,6 +13,9 @@ public class Trigger : MonoBehaviour
 
     public Player Player => _player;
     public ModalPanel ModalPanel => _modalPanel;
+    public bool Activated => _activated;
+
+    [SerializeField] private Trigger[] _requiredTriggers;
 
     [SerializeField] Transform _transformOfTrigger;
     [SerializeField] ModalInfo _modalInfo;
@@ -71,6 +74,10 @@ public class Trigger : MonoBehaviour
 
     private void Do()
     {
+        if (!CanBeActivated())
+        {
+            return;
+        }
         Activate();
         switch (_eventType)
         {
@@ -101,6 +108,18 @@ public class Trigger : MonoBehaviour
     {
         _activated = true;
         //_player.gameObject.SetActive(false);
+    }
+
+    private bool CanBeActivated()
+    {
+        for (int i = 0; i < _requiredTriggers.Length; i++)
+        {
+            if (!_requiredTriggers[i].Activated)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void SetPlayerActive()

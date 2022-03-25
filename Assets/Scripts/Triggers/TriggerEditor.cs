@@ -34,6 +34,7 @@ public class TriggerEditor : Editor
 
     private void DisplayCommonInfo()
     {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_requiredTriggers"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_triggerType"));
         TypeOfTrigger = (Trigger.TriggerType)serializedObject.FindProperty("_triggerType").enumValueIndex;
         Debug.Log(TypeOfTrigger);
