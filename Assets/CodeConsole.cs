@@ -1,18 +1,36 @@
 using UniRx;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CodeConsole : MonoBehaviour
+public enum MessageType
 {
-    //static field with Output text
-    public Text consoleText;
-    private static CodeConsole Instance => FindObjectOfType<CodeConsole>();
+    Default = 0,
+    Error,
+    Alert
+}
 
-    private void Start()
+public struct CodeConsoleMessage
+{
+    public string Message { get; }
+    public MessageType Type { get; }
+
+    public CodeConsoleMessage(string message, MessageType type = MessageType.Default)
     {
-        MessageBroker.Default.Receive<ICodeTestingResult>()
-            .Do(OnReceiveCodeTestingResult)
-            .Subscribe();
+        Message = message;
+        Type = type;
+    }
+}
+
+public class CodeConsole : UIBehaviour
+{
+    [SerializeField]
+    private Text consoleText;
+
+    protected override void Awake()
+    {
+        MessageBroker.Default.Receive<ICodeTestingResult>().Subscribe(OnReceiveCodeTestingResult);
+        MessageBroker.Default.Receive<CodeConsoleMessage>().Subscribe(WriteLine);
     }
 
     private void OnReceiveCodeTestingResult(ICodeTestingResult codeTestingResult)
@@ -20,57 +38,41 @@ public class CodeConsole : MonoBehaviour
         switch (codeTestingResult)
         {
             case ErrorCodeTestingResult error:
-                InnerWriteLine(error.Message, MessageType.Error);
+                WriteLine(error.Message, MessageType.Error);
                 break;
             default:
-                InnerWriteLine(codeTestingResult.Message);
+                WriteLine(codeTestingResult.Message);
                 break;
         }
     }
 
-    public void InnerSetBaseColor()
+    private void WriteLine(CodeConsoleMessage codeConsoleMessage) =>
+        WriteLine(codeConsoleMessage.Message, codeConsoleMessage.Type);
+
+    private void WriteLine(string msg, MessageType type = MessageType.Default)
     {
-        consoleText.color = Color.white;
+        switch (type)
+        {
+            case MessageType.Error:
+                WriteLine(msg, Color.red);
+                return;
+            case MessageType.Alert:
+                WriteLine(msg, Color.yellow);
+                return;
+            default:
+                WriteLine(msg, Color.white);
+                return;
+        }
     }
 
-    public void InnerWriteLine(string msg)
+    private void WriteLine(string msg, Color color)
     {
+        consoleText.color = color;
         consoleText.text = msg;
     }
 
-    public void InnerWriteLine(string msg, MessageType type)
+    public void Clear()
     {
-        if (type == MessageType.Error)
-            consoleText.color = Color.red;
-        if (type == MessageType.Allert)
-            consoleText.color = Color.yellow;
-        consoleText.text = msg;
+        consoleText.text = string.Empty;
     }
-
-    public static void WriteLine(string msg, MessageType type)
-    {
-        Instance.InnerWriteLine(msg, type);
-    }
-
-    public static void WriteLine(string msg)
-    {
-        Instance.InnerWriteLine(msg);
-    }
-
-    public void InnerClear()
-    {
-        consoleText.text = "";
-    }
-
-    public static void Clear()
-    {
-        Instance.InnerClear();
-    }
-}
-
-//MessageType Enum
-public enum MessageType
-{
-    Error, //0
-    Allert //1
 }
