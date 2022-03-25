@@ -7,16 +7,15 @@ namespace Extensions.UniRxExt
 {
     public static class ScheduledFloatNotifierExt
     {
-        public static IObservable<float> ReportTo([CanBeNull] this IObservable<float> observableProgress,
+        public static IDisposable ReportTo([CanBeNull] this IObservable<float> observableProgress,
             IProgress<float> progressReporter)
         {
             if (progressReporter == null)
             {
-                return observableProgress;
+                return observableProgress.Subscribe();
             }
 
-            observableProgress.Do(progressReporter.Report);
-            return observableProgress;
+            return observableProgress.Do(progressReporter.Report).Subscribe();
         }
 
         public static IObservable<float> Union(this IObservable<float> progressA,

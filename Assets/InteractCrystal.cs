@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using MonoBehaviours;
 using UniRx;
 using UniRx.Triggers;
@@ -28,7 +30,7 @@ public class InteractCrystal : MonoBehaviour
         _collider.OnCollisionStayAsObservable().Subscribe(x => Debug.Log("123"));
     }
     
-    private void OnTriggerStay(Collider other)
+    private async void OnTriggerStay(Collider other)
     {
         if (!other.CompareTag("Player"))
         {
@@ -38,11 +40,12 @@ public class InteractCrystal : MonoBehaviour
         var isHackModePressed = Input.GetKeyDown(KeyCode.F);
         if (isHackModePressed && GameMode.HackMode == Mode.HackMode)
         {
-            var pauseObserver = new PauseTimeScaleObserver<Scene>();
-
-            var result = CodeEditorController.Open(Task);
-            result.WhileOpen(pauseObserver);
-            result.ProgressObservable().ViaLoadingScreen();
+            var progress = new ScheduledNotifier<float>();
+            progress.ViaLoadingScreen();
+            
+            Time.timeScale = 0f;
+            await CodeEditorController.OpenEditorForTask(Task, progress);
+            Time.timeScale = 1f;
         }
     }
 }
