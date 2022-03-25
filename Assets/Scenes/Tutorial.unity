@@ -5772,7 +5772,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -12667,7 +12667,10 @@ MonoBehaviour:
   - TimeBeforeShow: 1
     Title: "\u0423\u0445 \u0442\u044B!!"
     Description: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u043D\u0430\u0436\u043C\u0438\u0442\u0435
-      F \u0443 \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u0430!"
+      F \u0443 \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u0430! \u041E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F
+      \u043E\u043A\u043D\u043E \u0441 \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440\u043E\u043C.
+      \u041F\u0440\u043E\u0442\u0435\u0441\u0442\u0438\u0440\u0443\u0439\u0442\u0435
+      \u0435\u0433\u043E \u0438 \u0432\u044B\u0439\u0434\u0438\u0442\u0435."
     Icon: {fileID: 21300000, guid: 6403aa3f6c0afdf468cc7ae92e6aa939, type: 3}
     CountOfButtons: 1
     ButtonText:
@@ -13706,7 +13709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2678349081932347791, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2678349081932347791, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
       propertyPath: m_AnchorMax.x
