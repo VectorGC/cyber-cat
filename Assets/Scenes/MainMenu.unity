@@ -536,6 +536,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5764811525677994707, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5764811525677994707, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6620128041656636227}
+    - target: {fileID: 5764811525677994707, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadSceneAsync
+      objectReference: {fileID: 0}
+    - target: {fileID: 5764811525677994707, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonoBehaviours.SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 5764811525974248774, guid: 888ca0752851606499c387301906f52d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -664,6 +680,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6620128042180166995, guid: 888ca0752851606499c387301906f52d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6620128042912893119, guid: 888ca0752851606499c387301906f52d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -736,5 +756,27 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6620128042180166995, guid: 888ca0752851606499c387301906f52d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 888ca0752851606499c387301906f52d, type: 3}
+--- !u!1 &6620128041656636226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5764811525677994704, guid: 888ca0752851606499c387301906f52d, type: 3}
+  m_PrefabInstance: {fileID: 6620128041656636225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6620128041656636227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6620128041656636226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650d1d0b1c3541238b830d8240845706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene:
+    m_SceneAsset: {fileID: 102900000, guid: 60c752edc49bf044684ef6e0738eaddd, type: 3}
+    m_SceneName: Tutorial
+  loadSceneMode: 0
