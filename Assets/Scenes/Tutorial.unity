@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1e20b1465bf764b99239e2a0c36192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useCanvas: 0
+  useCanvas: 1
   snapshotCanvasPrefab: {fileID: 2654080978173619198, guid: 3a9765b469d010f4da2f7ecc008810d1, type: 3}
 --- !u!81 &137564840
 AudioListener:
@@ -2851,6 +2851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 1775819544}
   _modalInfo:
     TimeBeforeShow: 0
@@ -2916,6 +2917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -2957,6 +2959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -2998,6 +3001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -3041,6 +3045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -6075,23 +6080,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afd050ac80b694b4caff88ba98d62945, type: 3}
---- !u!1 &786087290 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7060093752320670665, guid: afd050ac80b694b4caff88ba98d62945, type: 3}
-  m_PrefabInstance: {fileID: 786087289}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &786087291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786087290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40da09dd4a7a3fa49bdf76fb1d99958e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &793809076
 GameObject:
   m_ObjectHideFlags: 0
@@ -9832,6 +9820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 1120801588}
   _modalInfo:
     TimeBeforeShow: 0
@@ -12653,6 +12642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -12709,6 +12699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
@@ -12794,6 +12785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _requiredTriggers: []
   _transformOfTrigger: {fileID: 0}
   _modalInfo:
     TimeBeforeShow: 0
