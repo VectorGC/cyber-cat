@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [CustomEditor(typeof(Trigger))]
-public class TriggerEditor : Editor
+public class TriggerEditor : UnityEditor.Editor
 {
     [SerializeField] private Trigger.EventType TypeOfEvent;
     [SerializeField] private Trigger.TriggerType TypeOfTrigger;
