@@ -25,7 +25,7 @@ public class CodeSendHandler : MonoBehaviour
 {
     public void SendCodeToTesting()
     {
-        var taskId = CodeEditorController.GetOpenedTaskId();
+        var taskId = 10; //CodeEditorController.GetOpenedTaskId();
         var code = CodeEditorController.GetCode();
         var request = new SendCodeToTestingRequest(TokenSession.FromPlayerPrefs(), taskId, code);
 
@@ -40,14 +40,10 @@ public class CodeSendHandler : MonoBehaviour
     private static void OnResponse(string codeTestingResultString)
     {
         var codeTestingResult = JsonConvert.DeserializeObject<CodeTestingResult>(codeTestingResultString);
-        MessageBroker.Default.Publish(codeTestingResult);
     }
 
     private static void OnError(Exception exception)
     {
-        MessageBroker.Default.Publish<ICodeTestingResult>(new ErrorCodeTestingResult
-        {
-            Message = exception.Message
-        });
+        CodeConsole.WriteDelayedLine(exception.Message, MessageType.Error);
     }
 }
