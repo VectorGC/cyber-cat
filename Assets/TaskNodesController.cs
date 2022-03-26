@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +35,7 @@ public class TaskNodesController : BaseTaskNodesController
 
     public override void OpenTask(ITaskTicket taskTicket)
     {
-        CodeEditorController.OpenEditorForTaskObservable(taskTicket).Subscribe();
+        CodeEditorController.OpenEditorForTask(taskTicket).Forget();
     }
 
     public override void CreateTaskList(IReadOnlyCollection<ITaskTicket> taskTickets)

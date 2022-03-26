@@ -1,60 +1,78 @@
-using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CodeConsole: MonoBehaviour
-{   
-    //static field with Output text
-    public  Text consoleText;
-    private static CodeConsole Instance => FindObjectOfType<CodeConsole>();
+public enum MessageType
+{
+    Default = 0,
+    Error,
+    Alert
+}
 
-    public void InnerSetBaseColor()
-    {
-        consoleText.color = Color.white;
-    }
+public struct CodeConsoleMessage
+{
+    public string Message { get; }
+    public MessageType Type { get; }
 
-    public static void SetBaseColor()
+    public CodeConsoleMessage(string message, MessageType type = MessageType.Default)
     {
-        Instance.InnerSetBaseColor();
-    }
-    public void InnerWriteLine(string msg)
-    {
-        consoleText.text = msg;
-    }
-    public void InnerWriteLine(string msg, MessageType type)
-    {
-        if (type == MessageType.Error)
-            consoleText.color = Color.red;
-        if (type == MessageType.Allert)
-            consoleText.color = Color.yellow;
-        consoleText.text = msg;
-    }
-
-    public static void WriteLine(string msg, MessageType type)
-    {
-        Instance.InnerWriteLine(msg, type);
-    }
-
-    public static void WriteLine(string msg)
-    {
-        Instance.InnerWriteLine(msg);
-    }
-    
-    public void InnerClear()
-    {
-        consoleText.text = "";
-    }
-
-    public static void Clear()
-    {
-        Instance.InnerClear();
+        Message = message;
+        Type = type;
     }
 }
 
-//MessageType Enum
-public enum MessageType
+public class CodeConsole : UIBehaviour
 {
-    Error, //0
-    Allert //1
+    [SerializeField]
+    private Text consoleText;
+
+    protected override void Awake()
+    {
+        MessageBroker.Default.Receive<ICodeTestingResult>().Subscribe(OnReceiveCodeTestingResult);
+        MessageBroker.Default.Receive<CodeConsoleMessage>().Subscribe(WriteLine);
+    }
+
+    private void OnReceiveCodeTestingResult(ICodeTestingResult codeTestingResult)
+    {
+        switch (codeTestingResult)
+        {
+            case ErrorCodeTestingResult error:
+                WriteLine(error.Message, MessageType.Error);
+                break;
+            default:
+                WriteLine(codeTestingResult.Message);
+                break;
+        }
+    }
+
+    private void WriteLine(CodeConsoleMessage codeConsoleMessage) =>
+        WriteLine(codeConsoleMessage.Message, codeConsoleMessage.Type);
+
+    private void WriteLine(string msg, MessageType type = MessageType.Default)
+    {
+        switch (type)
+        {
+            case MessageType.Error:
+                WriteLine(msg, Color.red);
+                return;
+            case MessageType.Alert:
+                WriteLine(msg, Color.yellow);
+                return;
+            default:
+                WriteLine(msg, Color.white);
+                return;
+        }
+    }
+
+    private void WriteLine(string msg, Color color)
+    {
+        consoleText.color = color;
+        consoleText.text = msg;
+    }
+
+    public void Clear()
+    {
+        consoleText.text = string.Empty;
+    }
 }
