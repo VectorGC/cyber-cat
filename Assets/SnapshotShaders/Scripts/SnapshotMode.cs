@@ -73,7 +73,7 @@ public class SnapshotMode : MonoBehaviour
         // filters.Add(new NeonFilter("Neon", Color.cyan, bloomShader, 
         //     new BaseFilter("", Color.white, neonShader)));
         
-        filters.Add(new BaseFilter("Neon", Color.white, neonShader));
+        filters.Add(new BaseFilter("Hacker Vision", Color.white, neonShader));
         
         // filters.Add(new BloomFilter("Bloom", Color.white, bloomShader));
         // filters.Add(new CRTFilter("NES", new Color(0.66f, 1.00f, 1.00f), 
