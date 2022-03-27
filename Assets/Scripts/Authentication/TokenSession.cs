@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.Serialization;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using RestAPIWrapper;
+using UniRx;
 using UnityEngine;
 
 namespace Authentication
@@ -13,15 +15,20 @@ namespace Authentication
         [JsonProperty("token")] 
         private string _token;
 
+        [JsonProperty("error")] 
+        public string Error { get; set; }
+
         public string Token => _token;
 
-        public bool IsNone => string.IsNullOrEmpty(_token);
+        private bool IsNone => string.IsNullOrEmpty(_token);
+        private bool IsError => !string.IsNullOrEmpty(Error);
 
         public static bool IsNoneToken() => FromPlayerPrefs().IsNone;
 
         public TokenSession(string token)
         {
             _token = token;
+            Error = string.Empty;
         }
 
         public static implicit operator string(TokenSession tokenSession) => tokenSession.Token;
@@ -29,6 +36,14 @@ namespace Authentication
         public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
         {
             var token = await RestAPI.GetToken(login, password);
+            if (token.IsNone)
+            {
+                var requestException = new RequestTokenException(token.Error);
+                MessageBroker.Default.Publish<Exception>(requestException);
+
+                throw requestException;
+            }
+
             token.SaveToPlayerPrefs();
 
             return token;
