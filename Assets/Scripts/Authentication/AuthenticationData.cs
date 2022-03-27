@@ -23,7 +23,5 @@ namespace Authentication
 
             return query;
         }
-        
-        public string GetFormattedQuery(string templateQuery) => string.Format(templateQuery, Login, Password);
     }
 }
