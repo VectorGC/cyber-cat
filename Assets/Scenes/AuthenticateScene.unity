@@ -304,6 +304,7 @@ MonoBehaviour:
   scene:
     m_SceneAsset: {fileID: 102900000, guid: fecbc7e6ea99f0341b5fd71c3c835b20, type: 3}
     m_SceneName: MainMenu
+  loadSceneMode: 0
 --- !u!4 &1892374840
 Transform:
   m_ObjectHideFlags: 0
@@ -867,8 +868,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: OnComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1892374839}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1892374839}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadSceneAsync
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonoBehaviours.SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}

@@ -1,32 +1,23 @@
-using System;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEventTypes;
 
 namespace Authentication
 {
-    public class AuthController : MonoBehaviour, IObservable<Exception>
+    public class AuthController : MonoBehaviour
     {
         [SerializeField] private TMP_InputField loginTextField;
         [SerializeField] private TMP_InputField passwordTextField;
 
-        [SerializeField] private UnityStringEvent OnComplete;
+        [SerializeField] private UnityEvent onComplete;
 
-        private readonly Subject<Exception> _exceptionSubject = new Subject<Exception>();
-
-        public void Authenticate()
+        public async void Authenticate()
         {
             var login = loginTextField.text;
             var password = passwordTextField.text;
 
-            TokenSession.ReceiveFromServer(login, password)
-                .DoOnError(e => _exceptionSubject.OnNext(e))
-                .Do(token => OnComplete.Invoke(token))
-                .Subscribe();
+            await TokenSession.RequestAndSaveFromServer(login, password);
+            onComplete.Invoke();
         }
-
-        public IDisposable Subscribe(IObserver<Exception> observer) => _exceptionSubject.Subscribe(observer);
     }
 }

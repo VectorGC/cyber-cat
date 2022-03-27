@@ -13,7 +13,7 @@ public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
     private readonly int _taskId;
     private readonly string _codeText;
 
-    public NameValueCollection QueryParams => _token.ToQueryParam();
+    public NameValueCollection QueryParams { get; }
 
     public SendCodeToTestingRequest(TokenSession token, int taskId, string codeText)
     {
