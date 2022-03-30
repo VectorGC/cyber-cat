@@ -5,37 +5,43 @@ using RestAPIWrapper;
 using UniRx;
 using UnityEngine;
 
+public class TaskChecker
+{
+    public static async UniTask<string> CheckCodeAsync(int taskId, string code)
+    {
+        var token = TokenSession.FromPlayerPrefs();
+        return await RestAPI.SendCodeToTesting(token, taskId, code);
+    }
+}
+
+public class Tasks
+{
+    public static async UniTask<ITaskTicket> GetTask(string taskId)
+    {
+        var token = TokenSession.FromPlayerPrefs();
+        return await RestAPI.GetTask(token, taskId);
+    }
+}
+
 public class TestEditor : MonoBehaviour
 {
-    private static bool isInited;
-
     async void Start()
     {
-        if (isInited)
-        {
-            return;
-        }
-
-        isInited = true;
-
         var taskId = "10";
 
         var task = await RestAPI.GetTask(TokenSession.FromPlayerPrefs(), taskId);
-        await CodeEditor.OpenSolution(task);
+
+        CodeEditor.Task = task;
+        var message = new SetTaskDescriptionMessage(task);
+        MessageBroker.Default.Publish(message);
     }
 
     public async void SendCodeToTesting()
     {
-        // Человек берет тест
-        // Отправляет
-        // Получает ответ и показывает
-
         var taskId = CodeEditor.Task.Id;
         var code = CodeEditor.Code;
 
-        var token = TokenSession.FromPlayerPrefs();
-
-        var codeTestingResult = await RestAPI.SendCodeToTesting(token, taskId, code);
-        CodeConsole.WriteDelayedLine(codeTestingResult, 0.05f);
+        var checkingResult = await TaskChecker.CheckCodeAsync(taskId, code);
+        CodeConsole.WriteLine(checkingResult);
     }
 }

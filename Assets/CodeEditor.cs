@@ -25,8 +25,12 @@ public class CodeEditor : UIBehaviour
     [SerializeField] private TMP_InputField codeInputField;
 
     private ITaskTicket _task;
-    public static ITaskTicket Task => Instance._task;
-    
+    public static ITaskTicket Task
+    {
+        get => Instance._task;
+        set => Instance._task = value;
+    }
+
     public static async UniTask OpenEditorForTask(string taskId, ScheduledNotifier<float> progress = null)
     {
         progress ??= new ScheduledNotifier<float>();
@@ -57,6 +61,13 @@ public class CodeEditor : UIBehaviour
         await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
         SetTaskInEditor(task);
     }
+
+    public static async UniTask OpenSolution(string taskId)
+    {
+        var task = await Tasks.GetTask(taskId);
+        await OpenSolution(task);
+    }
+
 
     private static void SetTaskInEditor(ITaskTicket task)
     {

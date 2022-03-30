@@ -5,31 +5,35 @@ using UnityEngine.UI;
 
 namespace mikinel.easylogview
 {
-    public class EasyLogView : MonoBehaviour {
+    public class EasyLogView : MonoBehaviour
+    {
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private ScrollRect scrollRect;
-        [SerializeField] private bool isShowMillisecond = true;
         [SerializeField] private bool isAutoScroll = true;
         [SerializeField] private int maxLines = 30;
 
-        private void Awake(){
-            if(text == null)
+        private void Awake()
+        {
+            if (text == null)
             {
                 Debug.LogError($"Please attach TextMeshProUGUI");
                 this.enabled = false;
                 return;
             }
 
-            if(scrollRect == null)
+            if (scrollRect == null)
             {
                 Debug.LogError($"Please attach ScrollView");
                 this.enabled = false;
                 return;
             }
 
-            text.text = String.Empty;
-
             Application.logMessageReceived += OnLogMessage;
+        }
+
+        private void Start()
+        {
+            text.text = string.Empty;
         }
 
         private void OnDestroy()
@@ -37,7 +41,7 @@ namespace mikinel.easylogview
             Application.logMessageReceived -= OnLogMessage;
         }
 
-        private void OnLogMessage(string logText, string stackTrace, LogType type)
+        protected void OnLogMessage(string logText, string stackTrace, LogType type)
         {
             if (text == null)
                 return;
@@ -46,14 +50,8 @@ namespace mikinel.easylogview
             TrimLine(ref tmp, maxLines);
             text.text = tmp;
 
-            var time = DateTime.Now;
-            var ms = time.Millisecond.ToString().PadLeft(3, '0');
-
-            text.text += isShowMillisecond ?
-                $"[ {time.ToLongTimeString()}.{ms} ] " :
-                $"[ {time.ToLongTimeString()} ] ";
-             
-            switch (type){
+            switch (type)
+            {
                 case LogType.Warning:
                     text.text += $"<color=#ffff00> {logText} </color> \n";
                     break;
@@ -72,13 +70,9 @@ namespace mikinel.easylogview
             }
         }
 
-        public void ClearLog(){
-            var time = DateTime.Now;
-            var ms = time.Millisecond.ToString().PadLeft(3, '0');
-
-            text.text = isShowMillisecond ?
-                $"[ {time.ToLongTimeString()}.{ms} ] Clear Log \n" :
-                $"[ {time.ToLongTimeString()} ] Clear Log \n";
+        public void ClearLog()
+        {
+            text.text = "Clear Log \n";
         }
 
         private int CountChar(string s, char c)
