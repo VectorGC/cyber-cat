@@ -44,7 +44,7 @@ public class InteractCrystal : MonoBehaviour
             progress.ViaLoadingScreen();
             
             Time.timeScale = 0f;
-            await CodeEditorController.OpenEditorForTask(Task, progress);
+            await CodeEditor.OpenEditorForTask(Task, progress);
             Time.timeScale = 1f;
         }
     }

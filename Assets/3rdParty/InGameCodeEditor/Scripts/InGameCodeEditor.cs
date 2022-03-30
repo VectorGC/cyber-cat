@@ -10,7 +10,7 @@ namespace InGameCodeEditor
     /// <summary>
     /// The main InGame Code Editor component for displaying a syntax highlighting code editor UI element.
     /// </summary>
-    public class CodeEditor : MonoBehaviour
+    public class InGameCodeEditor : MonoBehaviour
     {
         // Private 
         private static readonly KeyCode[] focusKeys = { KeyCode.Return, KeyCode.Backspace, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };

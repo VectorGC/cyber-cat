@@ -1,13 +1,12 @@
-using System;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public struct SetupTaskDescriptionMessage
+public struct SetTaskDescriptionMessage
 {
     public ITaskTicket TaskTicket { get; }
 
-    public SetupTaskDescriptionMessage(ITaskTicket taskTicket)
+    public SetTaskDescriptionMessage(ITaskTicket taskTicket)
     {
         TaskTicket = taskTicket;
     }
@@ -20,21 +19,14 @@ public class TaskDescription : UIBehaviour
 
     protected override void Awake()
     {
-        MessageBroker.Default.Receive<SetupTaskDescriptionMessage>().Subscribe(SetupTaskDescription);
+        MessageBroker.Default.Receive<SetTaskDescriptionMessage>().Subscribe(SetTaskDescription);
     }
 
-    private void OnGUI()
+    private void SetTaskDescription(SetTaskDescriptionMessage message)
     {
-        if (GUILayout.Button("Test"))
-        {
-            var task = new SimpleTaskTicket(0, 0, "Name of Task", "Description of Task");
-            MessageBroker.Default.Publish(new SetupTaskDescriptionMessage(task));
-        }
-    }
-
-    private void SetupTaskDescription(SetupTaskDescriptionMessage message)
-    {
-        goalTask.SetText(message.TaskTicket.Name);
-        descriptionTask.SetText(message.TaskTicket.Description);
+        var task = message.TaskTicket;
+        
+        goalTask.SetText(task.Name);
+        descriptionTask.SetText(task.Description);
     }
 }

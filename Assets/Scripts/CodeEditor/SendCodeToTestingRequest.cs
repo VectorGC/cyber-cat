@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using Authentication;
+using RestAPIWrapper;
 using TasksData.Requests;
 using UniRx;
 using UnityEngine;
@@ -55,7 +56,7 @@ public class SendCodeToTestingRequest : IWebRequest, ISendRequestHandler<string>
         var url = new GetTasksRequest(_token).GetUri();
         // "https://kee-reel.com/cyber-cat/?" + _token.Token
 
-        var y = ObservableWWW.Post(url.ToString(), formData);
+        var y = ObservableWWW.Post(Endpoint.URI, formData);
         return y;
         //UnityWebRequest www = UnityWebRequest.Post(url, formData);
         //return www;

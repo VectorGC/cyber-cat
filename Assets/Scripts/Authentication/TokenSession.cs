@@ -21,9 +21,8 @@ namespace Authentication
         public string Token => _token;
 
         private bool IsNone => string.IsNullOrEmpty(_token);
-        private bool IsError => !string.IsNullOrEmpty(Error);
 
-        public static bool IsNoneToken() => FromPlayerPrefs().IsNone;
+        public static bool IsNoneToken => FromPlayerPrefs().IsNone;
 
         public TokenSession(string token)
         {

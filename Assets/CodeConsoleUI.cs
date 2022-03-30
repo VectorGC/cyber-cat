@@ -53,6 +53,11 @@ public static class CodeConsole
         AsyncMessageBroker.Default.PublishAsync(msg).StartAsCoroutine();
     }
 
+    public static void WriteDelayedLine(string message, float delayInSeconds, MessageType type = MessageType.Default)
+    {
+        WriteDelayedLine(message, TimeSpan.FromSeconds(delayInSeconds), type);
+    }
+
     public static void WriteDelayedLine(string message, TimeSpan delay, MessageType type = MessageType.Default)
     {
         var msg = new CodeConsoleWriteLineDelayedMessage(message, delay, type);
