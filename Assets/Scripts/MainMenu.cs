@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Text greetingstext;
+    public TextMeshPro_TextShared greetingstext;
     public void Start()
     {
-        greetingstext.text = ("Привет, " + PlayerPrefs.GetString("name") + "!");
+        greetingstext.text = ("Привет, <color=green>" + PlayerPrefs.GetString("name") + "</color>!");
     }
     public void Run()
     {

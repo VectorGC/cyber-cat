@@ -9,7 +9,7 @@ namespace WebRequests.Extensions
 
     public static class WebRequestExt
     {
-        public const string DEFAULT_DOMAIN = "https://kee-reel.com/cyber-cat";
+        public const string DEFAULT_DOMAIN = "https://kee-reel.com/cyber-cat/v2";
 
         public static Uri GetUri(this IWebRequest webRequest)
         {
