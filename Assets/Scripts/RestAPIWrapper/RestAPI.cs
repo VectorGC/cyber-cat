@@ -21,5 +21,21 @@ namespace RestAPIWrapper
 
             return await RestClient.Get<TokenSession>(request).ToUniTask();
         }
+
+        public static async UniTask<TokenSession> PostToken(string login, string password, string name)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.REGISTER,
+                Params =
+                {
+                    ["email"] = login,
+                    ["pass"] = password,
+                    ["name"] = name
+                }
+            };
+
+            return await RestClient.Post<TokenSession>(request).ToUniTask();
+        }
     }
 }

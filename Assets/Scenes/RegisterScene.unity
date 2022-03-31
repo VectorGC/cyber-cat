@@ -272,17 +272,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119157616 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2012918644, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
-  m_PrefabInstance: {fileID: 2012918640}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a474f9dcc80fb604d8e9b9e01f0ba41e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1892374838
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,10 +350,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 855634362265257108, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 8128323518888098510, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
     - target: {fileID: 1571657210847919804, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -436,18 +421,6 @@ PrefabInstance:
     - target: {fileID: 1571657212468446700, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1611007153697103136, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1119157616}
-    - target: {fileID: 1611007153697103136, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Register
-      objectReference: {fileID: 0}
-    - target: {fileID: 1611007153697103136, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Authentication.RegisterController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1611007153697103164, guid: bbf91b9732ac3cb4b8860b01a30e20f3, type: 3}
       propertyPath: m_AnchorMax.y

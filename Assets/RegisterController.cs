@@ -27,7 +27,7 @@ namespace Authentication
                 errorText.OnError(new RequestTokenException(error));
                 return;
             }
-            if (passwordAgainTextField != passwordTextField)
+            if (passwordAgainTextField.text != passwordTextField.text)
             {
                 string error = "Passwords are not equal!";
                 errorText.OnError(new RequestTokenException(error));
@@ -37,7 +37,7 @@ namespace Authentication
             var login = loginTextField.text;
             var password = passwordTextField.text;
 
-            await TokenSession.RequestAndSaveFromServer(login, password);
+            await TokenSession.Register(login, password, "Karpik");
             onComplete.Invoke();
         }
 
