@@ -27,8 +27,6 @@ namespace mikinel.easylogview
                 this.enabled = false;
                 return;
             }
-
-            Application.logMessageReceived += OnLogMessage;
         }
 
         private void Start()
@@ -36,12 +34,7 @@ namespace mikinel.easylogview
             text.text = string.Empty;
         }
 
-        private void OnDestroy()
-        {
-            Application.logMessageReceived -= OnLogMessage;
-        }
-
-        protected void OnLogMessage(string logText, string stackTrace, LogType type)
+        protected void OnLogMessage(string logText, string stackTrace, ConsoleMessageType type)
         {
             if (text == null)
                 return;
@@ -52,11 +45,14 @@ namespace mikinel.easylogview
 
             switch (type)
             {
-                case LogType.Warning:
-                    text.text += $"<color=#ffff00> {logText} </color> \n";
+                case ConsoleMessageType.Warning:
+                    text.text += $"<color=#ffff00>{logText}</color> \n";
                     break;
-                case LogType.Error:
-                    text.text += $"<color=#ff0000> {logText} </color> \n";
+                case ConsoleMessageType.Error:
+                    text.text += $"<color=#ff0000>{logText}</color> \n";
+                    break;
+                case ConsoleMessageType.Success:
+                    text.text += $"<color=#10FD1F>{logText}</color> \n";
                     break;
                 default:
                     text.text += $"{logText} \n";

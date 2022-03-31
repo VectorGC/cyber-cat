@@ -49,14 +49,14 @@ namespace RestAPIWrapper
             return tasks.GetValue(taskId);
         }
 
-        public static async UniTask<string> SendCodeToTesting(TokenSession token, int taskId, string code)
+        public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code)
         {
             var formData = new WWWForm();
 
             formData.AddField("task_id", taskId);
             formData.AddField("source_text", code);
             formData.AddField("lang", "c");
-            formData.AddField("verbose", "false");
+            //formData.AddField("verbose", "false");
 
             //formData.Add(new MultipartFormDataSection("source_text", _codeText));
             //formData.Add(new MultipartFormDataSection("verbose", "false"));
