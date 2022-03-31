@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public Text greetingstext;
     public void Start()
     {
-        greetingstext.text = ("Привет, " + /*Имя игрока из БД?*/ "PlayerName" + "!");
+        greetingstext.text = ("Привет, " + PlayerPrefs.GetString("name") + "!");
     }
     public void Run()
     {

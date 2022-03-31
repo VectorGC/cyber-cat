@@ -19,7 +19,7 @@ namespace Authentication
         [JsonProperty("name")]
         private string _name;
 
-        [JsonProperty("error")] 
+        [JsonProperty("error")]
         public string Error { get; set; }
 
         public string Token => _token;
@@ -58,15 +58,7 @@ namespace Authentication
 
         public static async UniTask<TokenSession> Register(string login, string password, string name)
         {
-            var token = await RestAPI.PostToken(login, password, name);
-            if (token.IsNone)
-            {
-                var requestException = new RequestTokenException(token.Error);
-                MessageBroker.Default.Publish<Exception>(requestException);
-                throw requestException;
-            }
-
-            token.SaveToPlayerPrefs();
+            var token = await RestAPI.Registrate(login, password, name);
 
             return token;
         }
