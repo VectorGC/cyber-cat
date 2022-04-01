@@ -7,6 +7,7 @@ namespace Authentication
     public class RegisterController : MonoBehaviour
     {
         [SerializeField] private TMP_InputField loginTextField;
+        [SerializeField] private TMP_InputField nameTextField;
         [SerializeField] private TMP_InputField passwordTextField;
         [SerializeField] private TMP_InputField passwordAgainTextField;
         [SerializeField] private ErrorMessageView errorText;
@@ -18,6 +19,12 @@ namespace Authentication
             if (!LoginIsOk())
             {
                 string error = "Login is not OK!";
+                errorText.OnError(new RequestTokenException(error));
+                return;
+            }
+            if (!NameIsOk())
+            {
+                string error = "Name is not OK!";
                 errorText.OnError(new RequestTokenException(error));
                 return;
             }
@@ -36,8 +43,9 @@ namespace Authentication
 
             var login = loginTextField.text;
             var password = passwordTextField.text;
+            var name = nameTextField.text;
 
-            await TokenSession.Register(login, password, "Karpik");
+            await TokenSession.Register(login, password, name);
             onComplete.Invoke();
         }
 
@@ -49,6 +57,11 @@ namespace Authentication
         private bool PasswordIsOK()
         {
             return !string.IsNullOrWhiteSpace(passwordAgainTextField.text);
+        }
+
+        private bool NameIsOk()
+        {
+            return !string.IsNullOrWhiteSpace(nameTextField.text);
         }
     }
 }
