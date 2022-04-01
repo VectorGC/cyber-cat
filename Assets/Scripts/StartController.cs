@@ -9,7 +9,7 @@ public class StartController : MonoBehaviour
 
     private void Start()
     {
-        if (TokenSession.IsNoneToken())
+        if (TokenSession.IsNoneToken)
         {
             authScene.LoadAsyncViaLoadingScreen();
             return;
