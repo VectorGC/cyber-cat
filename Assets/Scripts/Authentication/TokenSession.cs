@@ -1,63 +1,54 @@
 using System;
-using System.Collections.Specialized;
-using System.Web;
-using JetBrains.Annotations;
+using System.Runtime.Serialization;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
+using RestAPIWrapper;
 using UniRx;
 using UnityEngine;
-using WebRequests.Extensions;
-using WebRequests.Requesters;
 
 namespace Authentication
 {
-    public class GetTokenRequest : IGetWebRequest<TokenSession>, IGetUriHandler
-    {
-        public NameValueCollection QueryParams => _authenticationData.AsQueryParams();
-
-        private readonly AuthenticationData _authenticationData;
-
-        public GetTokenRequest(string login, string password)
-        {
-            _authenticationData = new AuthenticationData(login, password);
-        }
-
-        public string GetUriDomain()
-        {
-            return WebRequestExt.DEFAULT_DOMAIN + "/login";
-        }
-    }
-
     public struct TokenSession
     {
-        private const string QueryParam = "token";
         private const string PlayerPrefsKey = "token";
 
-        public static event Action<TokenSession> TokenSavedToPlayerPrefs;
+        [JsonProperty("token")] 
+        private string _token;
 
-        [JsonProperty("token")] private string _token;
+        [JsonProperty("error")] 
+        public string Error { get; set; }
 
         public string Token => _token;
 
-        public bool IsNone => string.IsNullOrEmpty(_token);
+        private bool IsNone => string.IsNullOrEmpty(_token);
 
-        public static bool IsNoneToken() => FromPlayerPrefs().IsNone;
+        public static bool IsNoneToken => FromPlayerPrefs().IsNone;
 
         public TokenSession(string token)
         {
             _token = token;
+            Error = string.Empty;
         }
 
         public static implicit operator string(TokenSession tokenSession) => tokenSession.Token;
 
-        public readonly NameValueCollection ToQueryParam()
+        public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
         {
-            var query = HttpUtility.ParseQueryString(string.Empty);
-            query.Add(QueryParam, Token);
+            var token = await RestAPI.GetToken(login, password);
+            if (token.IsNone)
+            {
+                var requestException = new RequestTokenException(token.Error);
+                MessageBroker.Default.Publish<Exception>(requestException);
 
-            return query;
+                throw requestException;
+            }
+
+            token.SaveToPlayerPrefs();
+
+            return token;
         }
 
-        public void SaveToPlayerPrefs()
+        private void SaveToPlayerPrefs()
         {
             if (string.IsNullOrEmpty(Token))
             {
@@ -66,30 +57,6 @@ namespace Authentication
 
             PlayerPrefs.SetString(PlayerPrefsKey, Token);
             Debug.Log("Token saved to player prefs");
-
-            TokenSavedToPlayerPrefs?.Invoke(this);
-        }
-
-        public static IObservable<TokenSession> ReceiveFromServer(string login, string password)
-        {
-            var getTokenRequest = new GetTokenRequest(login, password);
-
-            var tokenSessionRequest = FromRequest(getTokenRequest);
-            tokenSessionRequest.CatchIgnore().Subscribe(token => token.SaveToPlayerPrefs());
-            
-            return tokenSessionRequest;
-        }
-
-        private static IObservable<TokenSession> FromRequest(IGetWebRequest<TokenSession> webRequest) =>
-            webRequest.SendWWWGetObject();
-
-        public static TokenSession FromJson(string jsonText)
-        {
-            var tokenSession = JsonUtility.FromJson<TokenSession>(jsonText);
-            Debug.Assert(!string.IsNullOrEmpty(tokenSession.Token),
-                $"Token non serialized from json '{jsonText}'. Check format.");
-
-            return JsonUtility.FromJson<TokenSession>(jsonText);
         }
 
         public static TokenSession FromPlayerPrefs()

@@ -1,78 +1,33 @@
+using mikinel.easylogview;
 using UniRx;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public enum MessageType
+public class CodeConsole : EasyLogView
 {
-    Default = 0,
-    Error,
-    Alert
-}
-
-public struct CodeConsoleMessage
-{
-    public string Message { get; }
-    public MessageType Type { get; }
-
-    public CodeConsoleMessage(string message, MessageType type = MessageType.Default)
+    public static void WriteLine(ICodeConsoleMessage codeConsoleMessage)
     {
-        Message = message;
-        Type = type;
-    }
-}
-
-public class CodeConsole : UIBehaviour
-{
-    [SerializeField]
-    private Text consoleText;
-
-    protected override void Awake()
-    {
-        MessageBroker.Default.Receive<ICodeTestingResult>().Subscribe(OnReceiveCodeTestingResult);
-        MessageBroker.Default.Receive<CodeConsoleMessage>().Subscribe(WriteLine);
+        var msg = codeConsoleMessage.GetConsoleMessage();
+        var (message, logType) = msg;
+        WriteLine(message, logType);
     }
 
-    private void OnReceiveCodeTestingResult(ICodeTestingResult codeTestingResult)
+    public static void WriteLine(string message, ConsoleMessageType type = ConsoleMessageType.Log) =>
+        new CodeConsoleMessage(message, type).Publish();
+
+    private void Awake()
     {
-        switch (codeTestingResult)
-        {
-            case ErrorCodeTestingResult error:
-                WriteLine(error.Message, MessageType.Error);
-                break;
-            default:
-                WriteLine(codeTestingResult.Message);
-                break;
-        }
+        MessageBroker.Default.Receive<CodeConsoleMessage>()
+            .Subscribe(OnLogMessage);
     }
 
-    private void WriteLine(CodeConsoleMessage codeConsoleMessage) =>
-        WriteLine(codeConsoleMessage.Message, codeConsoleMessage.Type);
-
-    private void WriteLine(string msg, MessageType type = MessageType.Default)
+    private void OnLogMessage(CodeConsoleMessage msg)
     {
-        switch (type)
-        {
-            case MessageType.Error:
-                WriteLine(msg, Color.red);
-                return;
-            case MessageType.Alert:
-                WriteLine(msg, Color.yellow);
-                return;
-            default:
-                WriteLine(msg, Color.white);
-                return;
-        }
+        var (message, logType) = msg;
+        
+        base.OnLogMessage(message, string.Empty, logType);
     }
 
-    private void WriteLine(string msg, Color color)
+    // ReSharper disable once Unity.RedundantEventFunction
+    private void OnDestroy()
     {
-        consoleText.color = color;
-        consoleText.text = msg;
-    }
-
-    public void Clear()
-    {
-        consoleText.text = string.Empty;
     }
 }

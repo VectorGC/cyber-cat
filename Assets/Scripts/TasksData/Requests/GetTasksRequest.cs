@@ -8,7 +8,7 @@ namespace TasksData.Requests
     {
         private readonly TokenSession _token;
 
-        public NameValueCollection QueryParams => _token.ToQueryParam();
+        public NameValueCollection QueryParams { get; }
 
         public GetTasksRequest() : this(TokenSession.FromPlayerPrefs())
         {
