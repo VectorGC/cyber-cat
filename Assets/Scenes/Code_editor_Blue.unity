@@ -311,49 +311,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &120876160
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 120876162}
-  - component: {fileID: 120876161}
-  m_Layer: 0
-  m_Name: TestEditor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &120876161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120876160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b123f9d897f6044dadf9506d62d2f57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &120876162
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120876160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 329.2769, y: 255.67911, z: -15.262907}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &137607310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1044,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &730986575
 GameObject:
@@ -2826,6 +2783,11 @@ PrefabInstance:
       value: 0.14509805
       objectReference: {fileID: 0}
     - target: {fileID: 114538150983932796, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: m_text
+      value: "#include <stdio.h>\r\nint main()\n{\n    int a,b;scanf(\"%d%d\",&a,&b);\n   
+        printf(\"%d\",a+b);\n}\u200B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114538150983932796, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_fontColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -3174,7 +3136,7 @@ PrefabInstance:
     - target: {fileID: 5788300726589845124, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 120876161}
+      objectReference: {fileID: 0}
     - target: {fileID: 5788300726589845124, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SendCodeToTesting
@@ -3186,7 +3148,7 @@ PrefabInstance:
     - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 120876161}
+      objectReference: {fileID: 0}
     - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SendCodeToTesting
