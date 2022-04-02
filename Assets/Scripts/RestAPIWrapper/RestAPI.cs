@@ -81,5 +81,21 @@ namespace RestAPIWrapper
             var response = await RestClient.Post(request).ToUniTask();
             return response.Text;
         }
+
+        public static async UniTask<TokenSession> Registrate(string login, string password, string name)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.REGISTER,
+                Params =
+                {
+                    ["email"] = login,
+                    ["pass"] = password,
+                    ["name"] = name
+                }
+            };
+
+            return await RestClient.Post<TokenSession>(request).ToUniTask();
+        }
     }
 }
