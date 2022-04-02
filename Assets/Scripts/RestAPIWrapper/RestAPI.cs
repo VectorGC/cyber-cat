@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Authentication;
 using Cysharp.Threading.Tasks;
 using Extensions.DotNetExt;
@@ -43,10 +44,9 @@ namespace RestAPIWrapper
             return await RestClient.Get<TasksData.TasksData>(request).ToUniTask(progress);
         }
 
-        public static async UniTask<ITaskTicket> GetTask(string token, string taskId, IProgress<float> progress = null)
+        public static UniTask<ITaskTicket> GetTask(string token, string taskId, IProgress<float> progress = null)
         {
-            var tasks = await GetTasks(token, progress);
-            return tasks.GetValue(taskId);
+            return new GetTaskRequest(taskId, token).SendRequest(progress);
         }
 
         public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code)

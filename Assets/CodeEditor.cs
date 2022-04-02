@@ -1,7 +1,8 @@
 using System;
+using Authentication;
 using Cysharp.Threading.Tasks;
 using Extensions.UniRxExt;
-using TasksData.Requests;
+using RestAPIWrapper;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -40,7 +41,7 @@ public class CodeEditor : UIBehaviour
 
         requestProgress.Union(loadCodeEditorProgress).ReportTo(progress);
 
-        var task = await new GetTaskRequest(taskId).SendRequest(requestProgress).ToUniTask();
+        var task = await new GetTaskRequest(taskId, TokenSession.FromPlayerPrefs()).SendRequest(requestProgress);
         await OpenEditorForTask(task, loadCodeEditorProgress);
     }
 
