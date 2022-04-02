@@ -1,7 +1,6 @@
 using System;
 using Authentication;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using RestAPIWrapper;
 using UniRx;
@@ -51,24 +50,5 @@ public class TestEditor : MonoBehaviour
 
         var checkingResult = await TaskChecker.CheckCodeAsync(taskId, code);
         CodeConsole.WriteLine(checkingResult);
-    }
-}
-
-public class CodeCheckingResult : ICodeConsoleMessage
-{
-    [CanBeNull]
-    [JsonProperty("error")]
-    public CodeCheckingError Error { get; set; }
-
-    public bool IsOk => Error == null;
-
-    public CodeConsoleMessage GetConsoleMessage()
-    {
-        if (IsOk)
-        {
-            return new CodeCheckingSuccess().GetConsoleMessage();
-        }
-        
-        return Error?.GetConsoleMessage() ?? new CodeCheckingNone().GetConsoleMessage();
     }
 }

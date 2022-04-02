@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -34,7 +33,7 @@ namespace mikinel.easylogview
             text.text = string.Empty;
         }
 
-        protected void OnLogMessage(string logText, string stackTrace, ConsoleMessageType type)
+        protected void OnLogMessage(string logText, ConsoleMessageType type)
         {
             if (text == null)
                 return;
@@ -43,21 +42,8 @@ namespace mikinel.easylogview
             TrimLine(ref tmp, maxLines);
             text.text = tmp;
 
-            switch (type)
-            {
-                case ConsoleMessageType.Warning:
-                    text.text += $"<color=#ffff00>{logText}</color> \n";
-                    break;
-                case ConsoleMessageType.Error:
-                    text.text += $"<color=#ff0000>{logText}</color> \n";
-                    break;
-                case ConsoleMessageType.Success:
-                    text.text += $"<color=#10FD1F>{logText}</color> \n";
-                    break;
-                default:
-                    text.text += $"{logText} \n";
-                    break;
-            }
+            var hashcode = GetColorHashCode(type);
+            PrintMessage(logText, hashcode);
 
             if (isAutoScroll)
             {
@@ -66,6 +52,32 @@ namespace mikinel.easylogview
             }
         }
 
+        private void PrintMessage(string logText, string hashcode)
+        {
+            if (string.IsNullOrEmpty(hashcode))
+            {
+                text.text += $"{logText} \n";
+                return;
+            }
+
+            text.text += $"<color=#{hashcode}>{logText}</color> \n";
+        }
+
+        private string GetColorHashCode(ConsoleMessageType type)
+        {
+            switch (type)
+            {
+                case ConsoleMessageType.Warning:
+                    return "ffff00";
+                case ConsoleMessageType.Error:
+                    return "ff0000";
+                case ConsoleMessageType.Success:
+                    return "10FD1F";
+                default:
+                    return string.Empty;
+            }
+        }
+        
         public void ClearLog()
         {
             text.text = "Clear Log \n";

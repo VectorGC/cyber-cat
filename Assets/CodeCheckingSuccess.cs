@@ -1,12 +1,11 @@
-public class CodeCheckingSuccess : ICodeConsoleMessage
+public struct CodeCheckingSuccess : ICodeConsoleMessage
 {
     public override string ToString()
     {
         return "Задача решена";
     }
 
-    public CodeConsoleMessage GetConsoleMessage()
-    {
-        return new CodeConsoleMessage(ToString());
-    }
+    public (string, ConsoleMessageType) GetConsoleMessage() => (ToString(), ConsoleMessageType.Success);
+    public string Message => ToString();
+    public ConsoleMessageType MessageType => ConsoleMessageType.Success;
 }

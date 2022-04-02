@@ -1,7 +1,10 @@
 public class CodeCheckingNone : ICodeConsoleMessage
 {
-    public CodeConsoleMessage GetConsoleMessage()
+    public override string ToString()
     {
-        return new CodeConsoleMessage("Нет данных по проверке");
+        return "Нет данных по проверке";
     }
+
+    public string Message => ToString();
+    public ConsoleMessageType MessageType => ConsoleMessageType.Log;
 }

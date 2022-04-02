@@ -1,4 +1,5 @@
 public interface ICodeConsoleMessage
 {
-    CodeConsoleMessage GetConsoleMessage();
+    string Message { get; }
+    ConsoleMessageType MessageType { get; }
 }
