@@ -220,7 +220,7 @@ public class ModalPanel : MonoBehaviour
 		for (int i = 0; i < modalInfos.Length;)
 		{
 			yield return null;
-			if (!_modalPanelObject.active)
+			if (!_modalPanelObject.activeInHierarchy)
 			{
 				yield return new WaitForSeconds(modalInfos[i].TimeBeforeShow);
 				MessageBos(modalInfos[i], onEnd, onShow);
