@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using Authentication;
+using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
-using Extensions.DotNetExt;
 using Extensions.RestClientExt;
 using Proyecto26;
-using TasksData.Requests;
-using UniRx;
 using UnityEngine;
-using WebRequests.Extensions;
 
 namespace RestAPIWrapper
 {
@@ -49,7 +45,8 @@ namespace RestAPIWrapper
             return new GetTaskRequest(taskId, token).SendRequest(progress);
         }
 
-        public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code)
+        public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code,
+            ProgLanguage progLanguage)
         {
             var formData = new WWWForm();
 

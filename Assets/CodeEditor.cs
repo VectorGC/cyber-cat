@@ -1,5 +1,6 @@
 using System;
 using Authentication;
+using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using Extensions.UniRxExt;
 using RestAPIWrapper;
@@ -26,11 +27,15 @@ public class CodeEditor : UIBehaviour
     [SerializeField] private TMP_InputField codeInputField;
 
     private ITaskTicket _task;
+
     public static ITaskTicket Task
     {
         get => Instance._task;
         set => Instance._task = value;
     }
+
+    public static string Code => Instance.codeInputField.text;
+    public static ProgLanguage Language { get; private set; }
 
     public static async UniTask OpenEditorForTask(string taskId, ScheduledNotifier<float> progress = null)
     {
@@ -53,8 +58,6 @@ public class CodeEditor : UIBehaviour
         MessageBroker.Default.Publish(new SetTaskDescriptionMessage(task));
     }
 
-    public static string Code => Instance.codeInputField.text;
-
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
     public static async UniTask OpenSolution(ITaskTicket task, IProgress<float> progress = null)
@@ -76,12 +79,13 @@ public class CodeEditor : UIBehaviour
         MessageBroker.Default.Publish(message);
     }
 
-    protected override void Awake()
+    protected override async void Awake()
     {
-        MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(SetTaskInEditor);
+        MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
+        MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
     }
 
-    private void SetTaskInEditor(SetTaskInEditor message)
+    private void OnSetTaskInEditor(SetTaskInEditor message)
     {
         _task = message.TaskTicket;
         SetDescription(_task);
@@ -91,5 +95,10 @@ public class CodeEditor : UIBehaviour
     {
         var message = new SetTaskDescriptionMessage(task);
         MessageBroker.Default.Publish(message);
+    }
+
+    private void OnProgLanguageChanged(ProgLanguageChanged msg)
+    {
+        Language = msg.Language;
     }
 }
