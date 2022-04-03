@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
@@ -25,9 +26,16 @@ namespace Extensions.UniRxExt
             progressA = progressA.StartWith(0);
             progressB = progressB.StartWith(0);
 
+            var averageBuffer = new float[2];
+
             var combinedProgress = progressA.CombineLatest(progressB,
                 (progressAValue, progressBValue) =>
-                    Mathf.InverseLerp(0, 2, progressAValue + progressBValue));
+                {
+                    averageBuffer[0] = progressAValue;
+                    averageBuffer[1] = progressBValue;
+
+                    return averageBuffer.Average();
+                });
 
             return combinedProgress;
         }

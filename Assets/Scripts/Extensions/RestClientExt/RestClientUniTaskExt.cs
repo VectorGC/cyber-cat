@@ -21,16 +21,13 @@ namespace Extensions.RestClientExt
 
             return observable;
         }
-    
-        public static UniTask<T> ToUniTask<T>(this RSG.IPromise<T> promise, IProgress<float> progress = default)
+
+        public static UniTask<T> ToUniTask<T>(this RSG.IPromise<T> promise)
         {
             var utcs = new UniTaskCompletionSource<T>();
-            promise.Done(obj => utcs.TrySetResult(obj), x => utcs.TrySetException(x));
 
-            if (progress != null)
-            {
-                promise.Progress(progress.Report);
-            }
+            promise.Then(obj => utcs.TrySetResult(obj),
+                ex => utcs.TrySetException(ex));
 
             return utcs.Task;
         }

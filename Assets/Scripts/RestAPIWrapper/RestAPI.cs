@@ -20,10 +20,11 @@ namespace RestAPIWrapper
                 {
                     ["email"] = login,
                     ["pass"] = password
-                }
+                },
+                ProgressCallback = value => progress?.Report(value) 
             };
 
-            return await RestClient.Get<TokenSession>(request).ToUniTask(progress);
+            return await RestClient.Get<TokenSession>(request).ToUniTask();
         }
 
         public static async UniTask<TasksData.TasksData> GetTasks(string token, IProgress<float> progress = null)
@@ -34,10 +35,11 @@ namespace RestAPIWrapper
                 Params =
                 {
                     ["token"] = token
-                }
+                },
+                ProgressCallback = value => progress?.Report(value) 
             };
 
-            return await RestClient.Get<TasksData.TasksData>(request).ToUniTask(progress);
+            return await RestClient.Get<TasksData.TasksData>(request).ToUniTask();
         }
 
         public static UniTask<ITaskTicket> GetTask(string token, string taskId, IProgress<float> progress = null)
@@ -46,7 +48,7 @@ namespace RestAPIWrapper
         }
 
         public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code,
-            ProgLanguage progLanguage)
+            ProgLanguage progLanguage, IProgress<float> progress = null)
         {
             var formData = new WWWForm();
 
@@ -73,7 +75,8 @@ namespace RestAPIWrapper
                     ["token"] = token
                 },
                 FormData = formData,
-                EnableDebug = true
+                EnableDebug = true,
+                ProgressCallback = value => progress?.Report(value) 
             };
 
             var response = await RestClient.Post(request).ToUniTask();
