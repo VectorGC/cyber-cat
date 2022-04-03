@@ -499,6 +499,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Authentication.AuthController, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 1611007153697103139, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_Name
+      value: LogIn
+      objectReference: {fileID: 0}
     - target: {fileID: 1611007153697103164, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -671,6 +675,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7299432127855838404, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7299432127855838411, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -718,6 +726,10 @@ PrefabInstance:
     - target: {fileID: 7299432128174835502, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7299432128335163342, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7299432128335163343, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
@@ -747,6 +759,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 7299432127855838405, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+    - target: {fileID: 7299432128910907413, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7299432128910907418, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -915,29 +931,37 @@ PrefabInstance:
       propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8773414813287319689, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_Name
+      value: CreateAccount
+      objectReference: {fileID: 0}
+    - target: {fileID: 8773414813287319689, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 355.915
       objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 111.03884
       objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 550.04254
       objectReference: {fileID: 0}
     - target: {fileID: 8773414813287319702, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -55.51942
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
