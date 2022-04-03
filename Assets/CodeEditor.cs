@@ -37,27 +37,6 @@ public class CodeEditor : UIBehaviour
     public static string Code => Instance.codeInputField.text;
     public static ProgLanguage Language { get; private set; }
 
-    public static async UniTask OpenEditorForTask(string taskId, ScheduledNotifier<float> progress = null)
-    {
-        progress ??= new ScheduledNotifier<float>();
-
-        var requestProgress = new ScheduledNotifier<float>();
-        var loadCodeEditorProgress = new ScheduledNotifier<float>();
-
-        requestProgress.Union(loadCodeEditorProgress).ReportTo(progress);
-
-        var task = await new GetTaskRequest(taskId, TokenSession.FromPlayerPrefs()).SendRequest(requestProgress);
-        await OpenEditorForTask(task, loadCodeEditorProgress);
-    }
-
-    public static async UniTask OpenEditorForTask(ITaskTicket task, ScheduledNotifier<float> progress = null)
-    {
-        Debug.Log($"Opening code editor for task '{task.Id}'");
-
-        await SceneManager.LoadSceneAsync("Code_editor_Blue", LoadSceneMode.Additive).ToUniTask(progress);
-        MessageBroker.Default.Publish(new SetTaskDescriptionMessage(task));
-    }
-
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
     public static async UniTask OpenSolution(ITaskTicket task, IProgress<float> progress = null)
@@ -66,12 +45,16 @@ public class CodeEditor : UIBehaviour
         SetTaskInEditor(task);
     }
 
-    public static async UniTask OpenSolution(string taskId)
+    public static async UniTask OpenSolution(string taskId, IProgress<float> progress = null)
     {
-        var task = await Tasks.GetTask(taskId);
-        await OpenSolution(task);
-    }
+        var requestProgress = new ScheduledNotifier<float>();
+        var openEditorProgress = new ScheduledNotifier<float>();
 
+        requestProgress.Union(openEditorProgress).ReportTo(progress);
+
+        var task = await Tasks.GetTask(taskId, requestProgress);
+        await OpenSolution(task, openEditorProgress);
+    }
 
     private static void SetTaskInEditor(ITaskTicket task)
     {
@@ -79,7 +62,7 @@ public class CodeEditor : UIBehaviour
         MessageBroker.Default.Publish(message);
     }
 
-    protected override async void Awake()
+    protected override void Awake()
     {
         MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
         MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);

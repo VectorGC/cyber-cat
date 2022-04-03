@@ -4,7 +4,7 @@ public class SendCodeHandler : MonoBehaviour
 {
     public async void SendCodeToChecking()
     {
-        var task = 10;//CodeEditor.Task;
+        var task = CodeEditor.Task.Id;
         var code = CodeEditor.Code;
         var language = CodeEditor.Language;
 
