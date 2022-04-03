@@ -52,7 +52,8 @@ namespace RestAPIWrapper
 
             formData.AddField("task_id", taskId);
             formData.AddField("source_text", code);
-            formData.AddField("lang", "c");
+            formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]);
+            
             //formData.AddField("verbose", "false");
 
             //formData.Add(new MultipartFormDataSection("source_text", _codeText));
