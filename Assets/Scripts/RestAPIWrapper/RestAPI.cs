@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace RestAPIWrapper
                     ["email"] = login,
                     ["pass"] = password
                 },
-                ProgressCallback = value => progress?.Report(value) 
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = Debug.isDebugBuild
             };
 
             return await RestClient.Get<TokenSession>(request).ToUniTask();
@@ -36,7 +38,8 @@ namespace RestAPIWrapper
                 {
                     ["token"] = token
                 },
-                ProgressCallback = value => progress?.Report(value) 
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = Debug.isDebugBuild
             };
 
             return await RestClient.Get<TasksData.TasksData>(request).ToUniTask();
@@ -75,8 +78,8 @@ namespace RestAPIWrapper
                     ["token"] = token
                 },
                 FormData = formData,
-                EnableDebug = true,
-                ProgressCallback = value => progress?.Report(value) 
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = true
             };
 
             var response = await RestClient.Post(request).ToUniTask();
@@ -93,7 +96,8 @@ namespace RestAPIWrapper
                     ["email"] = login,
                     ["pass"] = password,
                     ["name"] = name
-                }
+                },
+                EnableDebug = Debug.isDebugBuild
             };
 
             return await RestClient.Post<TokenSession>(request).ToUniTask();

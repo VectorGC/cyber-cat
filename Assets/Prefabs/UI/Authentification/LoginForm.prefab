@@ -2250,11 +2250,11 @@ PrefabInstance:
       objectReference: {fileID: 7409059495322087244}
     - target: {fileID: 855634361802626973, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Authenticate
+      value: LoadSceneAsync
       objectReference: {fileID: 0}
     - target: {fileID: 855634361802626973, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Authentication.AuthController, Assembly-CSharp
+      value: MonoBehaviours.SceneLoader, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 855634361802626974, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Name
