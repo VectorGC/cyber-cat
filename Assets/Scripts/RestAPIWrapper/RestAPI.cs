@@ -102,5 +102,20 @@ namespace RestAPIWrapper
 
             return await RestClient.Post<TokenSession>(request).ToUniTask();
         }
+
+        public static async Task<ResponseHelper> GetTaskFolders(string token)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.URI,
+                Params =
+                {
+                    ["token"] = token
+                },
+                EnableDebug = Debug.isDebugBuild
+            };
+
+            return await RestClient.Get(request).ToUniTask();
+        }
     }
 }
