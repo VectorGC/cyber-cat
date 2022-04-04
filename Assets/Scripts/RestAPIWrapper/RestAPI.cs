@@ -110,7 +110,8 @@ namespace RestAPIWrapper
                 Uri = Endpoint.URI,
                 Params =
                 {
-                    ["token"] = token
+                    ["token"] = token,
+                    ["folders"] = true.ToString()
                 },
                 EnableDebug = Debug.isDebugBuild
             };
