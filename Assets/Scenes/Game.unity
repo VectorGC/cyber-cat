@@ -27806,6 +27806,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Computer
       objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071096, guid: 3ec2e0661d5149f4a924eb4c5a7ff846, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071103, guid: 3ec2e0661d5149f4a924eb4c5a7ff846, type: 3}
       propertyPath: Task
       value: 11
@@ -28825,6 +28829,14 @@ PrefabInstance:
     - target: {fileID: 2375059412060071103, guid: 3b132f343f48af144972f03c3359f0c5, type: 3}
       propertyPath: Task
       value: 49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: 3b132f343f48af144972f03c3359f0c5, type: 3}
+      propertyPath: taskFolder._task
+      value: task-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: 3b132f343f48af144972f03c3359f0c5, type: 3}
+      propertyPath: taskFolder._unit
+      value: unit-2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b132f343f48af144972f03c3359f0c5, type: 3}
@@ -53886,6 +53898,14 @@ PrefabInstance:
       propertyPath: Task
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
+      propertyPath: taskFolder._task
+      value: task-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
+      propertyPath: taskFolder._unit
+      value: unit-3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
 --- !u!4 &1909524417 stripped
@@ -54728,13 +54748,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2001415881680744083, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.62
+      value: 14.6
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54742,7 +54766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: -18.35
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalRotation.w
@@ -54779,6 +54803,14 @@ PrefabInstance:
     - target: {fileID: 2375059412060071103, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: Task
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: taskFolder._task
+      value: task-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071103, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: taskFolder._unit
+      value: unit-1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee341ae81deb74647abfba370e67fb78, type: 3}

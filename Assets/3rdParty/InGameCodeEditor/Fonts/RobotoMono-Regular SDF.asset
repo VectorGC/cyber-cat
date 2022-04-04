@@ -40,7 +40,7 @@ MonoBehaviour:
     m_UnderlineThickness: 2.0996094
     m_StrikethroughOffset: 12.159091
     m_StrikethroughThickness: 2.0996094
-    m_TabWidth: 103.25
+    m_TabWidth: 20
   m_GlyphTable:
   - m_Index: 1
     m_Metrics:

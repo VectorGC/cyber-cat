@@ -42,7 +42,7 @@ MonoBehaviour:
     highlightLiterals: 1
     highlightColor: {r: 0.735849, g: 0.35142085, b: 0, a: 1}
   autoIndent:
-    autoIndentMode: 2
-    allowAutoIndent: 1
+    autoIndentMode: 0
+    allowAutoIndent: 0
     indentIncreaseCharacter: 123
     indentDecreaseCharacter: 125

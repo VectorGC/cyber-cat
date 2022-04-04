@@ -105,7 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed864a12a836a44ab48e982d71a745b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Task: 0
+  taskFolder:
+    _unit: unit-1
+    _task: task-1
 --- !u!1001 &8253622361659583975
 PrefabInstance:
   m_ObjectHideFlags: 0
