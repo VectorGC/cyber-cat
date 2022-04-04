@@ -4,6 +4,7 @@ using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using Extensions.RestClientExt;
+using Newtonsoft.Json.Linq;
 using Proyecto26;
 using UnityEngine;
 
@@ -57,8 +58,8 @@ namespace RestAPIWrapper
 
             formData.AddField("task_id", taskId);
             formData.AddField("source_text", code);
-            formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]);
-            
+            formData.AddField("lang", RequestParam.ProgLanguages[ProgLanguage.C]); // Dirty hack for playtest.
+
             //formData.AddField("verbose", "false");
 
             //formData.Add(new MultipartFormDataSection("source_text", _codeText));
@@ -103,7 +104,7 @@ namespace RestAPIWrapper
             return await RestClient.Post<TokenSession>(request).ToUniTask();
         }
 
-        public static async Task<ResponseHelper> GetTaskFolders(string token)
+        public static async Task<JObject> GetTaskFolders(string token, IProgress<float> progress = null)
         {
             var request = new RequestHelper
             {
@@ -111,12 +112,13 @@ namespace RestAPIWrapper
                 Params =
                 {
                     ["token"] = token,
-                    ["folders"] = true.ToString()
+                    ["folders"] = true.ToString().ToLower()
                 },
+                ProgressCallback = value => progress?.Report(value),
                 EnableDebug = Debug.isDebugBuild
             };
 
-            return await RestClient.Get(request).ToUniTask();
+            return await RestClient.Get<JObject>(request).ToUniTask();
         }
     }
 }

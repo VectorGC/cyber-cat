@@ -45,14 +45,16 @@ public class CodeEditor : UIBehaviour
         SetTaskInEditor(task);
     }
 
-    public static async UniTask OpenSolution(string taskId, IProgress<float> progress = null)
+    public static async UniTask OpenSolution(TaskFolder taskFolder, IProgress<float> progress = null)
     {
         var requestProgress = new ScheduledNotifier<float>();
         var openEditorProgress = new ScheduledNotifier<float>();
 
         requestProgress.Union(openEditorProgress).ReportTo(progress);
 
-        var task = await Tasks.GetTask(taskId, requestProgress);
+        var token = TokenSession.FromPlayerPrefs();
+        var task = await taskFolder.GetTask(token, requestProgress);
+
         await OpenSolution(task, openEditorProgress);
     }
 

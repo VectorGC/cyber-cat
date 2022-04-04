@@ -6534,6 +6534,14 @@ PrefabInstance:
       propertyPath: Task
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 9161851738586140178, guid: afd050ac80b694b4caff88ba98d62945, type: 3}
+      propertyPath: taskFolder._task
+      value: task-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9161851738586140178, guid: afd050ac80b694b4caff88ba98d62945, type: 3}
+      propertyPath: taskFolder._unit
+      value: unit-1
+      objectReference: {fileID: 0}
     - target: {fileID: 9161851739091599804, guid: afd050ac80b694b4caff88ba98d62945, type: 3}
       propertyPath: Task
       value: 11

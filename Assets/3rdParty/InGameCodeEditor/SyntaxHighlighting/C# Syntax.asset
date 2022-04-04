@@ -22,9 +22,9 @@ MonoBehaviour:
       join namespace on override protected remove select stackalloc switch try unchecked
       value volatile as base byte checked decimal do enum false for global implicit
       internal let new operator params public return set static this typeof unsafe
-      var where ascending bool case class default equals finally foreach goto in into
-      lock null orderby partial readonly sbyte short string throw uint ushort virtual
-      while\r"
+      var where ascending bool case class default equals finally foreach goto in
+      into lock null orderby partial readonly sbyte short string throw uint ushort
+      virtual while\r"
     highlightColor: {r: 0.3372549, g: 0.6117647, b: 0.8392157, a: 1}
     caseSensitive: 1
   symbolGroup:
@@ -44,7 +44,7 @@ MonoBehaviour:
     highlightLiterals: 1
     highlightColor: {r: 0.79607844, g: 0.52156866, b: 0.32941177, a: 1}
   autoIndent:
-    autoIndentMode: 2
-    allowAutoIndent: 1
+    autoIndentMode: 0
+    allowAutoIndent: 0
     indentIncreaseCharacter: 123
     indentDecreaseCharacter: 125
