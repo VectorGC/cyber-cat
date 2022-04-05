@@ -13,10 +13,26 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     [SerializeField] private CodeLanguageTheme cLanguageTheme;
     [SerializeField] private CodeLanguageTheme pythonLanguageTheme;
 
-    private void Start()
+    private IDisposable _unsubscriber;
+
+    private void Awake()
     {
         TryGetComponent(out _inGameCodeEditor);
-        MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
+    }
+
+    private void OnEnable()
+    {
+        _unsubscriber = MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
+    }
+
+    private void OnDisable()
+    {
+        _unsubscriber.Dispose();
+    }
+    
+    private void Start()
+    {
+        _inGameCodeEditor.Refresh();
     }
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)

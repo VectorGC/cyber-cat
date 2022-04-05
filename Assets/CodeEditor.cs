@@ -2,7 +2,9 @@ using System;
 using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using Extensions.UniRxExt;
+using JetBrains.Annotations;
 using RestAPIWrapper;
 using TMPro;
 using UniRx;
@@ -28,11 +30,10 @@ public class CodeEditor : UIBehaviour
 
     private ITaskTicket _task;
 
-    public static ITaskTicket Task
-    {
-        get => Instance._task;
-        set => Instance._task = value;
-    }
+    private IDisposable _setTaskInEditorUnsubcriber;
+    private IDisposable _progLanguageChangedUnsubscriber;
+
+    public static ITaskTicket Task => Instance._task;
 
     public static string Code => Instance.codeInputField.text;
     public static ProgLanguage Language { get; private set; }
@@ -58,16 +59,29 @@ public class CodeEditor : UIBehaviour
         await OpenSolution(task, openEditorProgress);
     }
 
+    public static async UniTask WaitWhenEnable()
+    {
+        var scene = SceneManager.GetSceneByName(CodeEditorScene);
+        await UniTask.WaitWhile(() => scene.isLoaded);
+    }
+
     private static void SetTaskInEditor(ITaskTicket task)
     {
         var message = new SetTaskInEditor(task);
         MessageBroker.Default.Publish(message);
     }
 
-    protected override void Awake()
+    protected override void OnEnable()
     {
-        MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
-        MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
+        _setTaskInEditorUnsubcriber = MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
+        _progLanguageChangedUnsubscriber =
+            MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
+    }
+
+    protected override void OnDisable()
+    {
+        _setTaskInEditorUnsubcriber.Dispose();
+        _progLanguageChangedUnsubscriber.Dispose();
     }
 
     private void OnSetTaskInEditor(SetTaskInEditor message)

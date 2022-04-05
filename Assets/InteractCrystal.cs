@@ -73,14 +73,17 @@ public class InteractCrystal : MonoBehaviour
             return;
         }
 
-        var isHackModePressed = Input.GetKeyDown(KeyCode.F);
+        var isHackModePressed = Input.GetKey(KeyCode.F);
         if (isHackModePressed && GameMode.HackMode == Mode.HackMode)
         {
             var progress = new ScheduledNotifier<float>();
             progress.ViaLoadingScreen();
 
             Time.timeScale = 0f;
+            
             await CodeEditor.OpenSolution(taskFolder, progress);
+            await CodeEditor.WaitWhenEnable();
+            
             Time.timeScale = 1f;
         }
     }
