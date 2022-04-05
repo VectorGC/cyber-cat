@@ -2,7 +2,7 @@ using UniRx;
 
 namespace CodeEditorModels.ProgLanguages
 {
-    public struct ProgLanguageChanged
+    public readonly struct ProgLanguageChanged
     {
         public ProgLanguage Language { get; }
         public string Text { get; }

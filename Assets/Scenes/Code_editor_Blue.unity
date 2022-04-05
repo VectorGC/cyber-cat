@@ -998,7 +998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &586187622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2707,35 +2707,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 349
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 40.916668
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 184.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30.458334
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086784, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_Name
       value: ProgLanguagePicker
-      objectReference: {fileID: 0}
-    - target: {fileID: 2827090326746086784, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_Pivot.x
@@ -2755,7 +2751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2763,15 +2759,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 369
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 60.916668
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2803,11 +2799,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 184.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -30.458334
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086787, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2839,10 +2835,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameCodeEditor
       objectReference: {fileID: 0}
-    - target: {fileID: 114979364068399606, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
-      propertyPath: m_GlobalFontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
     - target: {fileID: 224578156659129400, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
