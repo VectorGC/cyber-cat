@@ -45,7 +45,16 @@ namespace Authentication
             var password = passwordTextField.text;
             var name = nameTextField.text;
 
-            await TokenSession.Register(login, password, name);
+            var tocken = await TokenSession.Register(login, password, name);
+            if (tocken.Error != null)
+            {
+                errorText.OnError(new RequestTokenException(tocken.Error));
+            }
+            else
+            {
+                string pass = "¬ам на почту пришло сообщение с подтверждением!";
+                errorText.OnError(new InputException(pass));
+            }
             onComplete.Invoke();
         }
 
