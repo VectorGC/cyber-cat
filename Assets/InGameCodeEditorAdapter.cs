@@ -32,7 +32,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     
     private void Start()
     {
-        //_inGameCodeEditor.Refresh();
+        _inGameCodeEditor.Refresh();
     }
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)
