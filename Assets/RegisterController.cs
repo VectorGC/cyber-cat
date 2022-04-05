@@ -19,25 +19,25 @@ namespace Authentication
             if (!LoginIsOk())
             {
                 string error = "Login is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (!NameIsOk())
             {
                 string error = "Name is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (!PasswordIsOK())
             {
                 string error = "Password is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (passwordAgainTextField.text != passwordTextField.text)
             {
                 string error = "Passwords are not equal!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
 

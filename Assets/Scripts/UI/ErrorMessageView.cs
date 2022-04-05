@@ -24,7 +24,11 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.text = string.Empty;
     }
 
+    public void OnError(InputException error) => text.text = error.Message;
+
     public void OnError(Exception error) => text.text = _errors[int.Parse(error.Message)] + $" (Код ошибки {error.Message})";
+
+    public void OnNext(InputException value) => OnError(value);
 
     public void OnNext(Exception value) => OnError(value);
 
