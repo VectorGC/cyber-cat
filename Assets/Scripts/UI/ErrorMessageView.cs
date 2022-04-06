@@ -24,6 +24,16 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.text = string.Empty;
     }
 
+    public void SetGoodColor()
+    {
+        text.color = Color.green;
+    }
+
+    public void SetBadColor()
+    {
+        text.color = Color.red;
+    }
+
     public void OnError(Authentication.RequestTokenException error) => text.text = _errors[int.Parse(error.Message)] + $" (Код ошибки {error.Message})";
 
     public void OnError(Exception error) => text.text = error.Message;
@@ -43,7 +53,7 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         { 103, "Такой email уже зарегстрирован"},
         { 200, "Пароль не был введен"},
         { 201, "Пароль должен содержать хотя бы 6 символов"},
-        { 202, "Пароль неправильный Ж)"},
+        { 202, "Пароль неправильный"},
         { 300, "Внутренняя ошибка"},
         { 301, "Внутренняя ошибка"},
         { 302, "Внутренняя ошибка"},

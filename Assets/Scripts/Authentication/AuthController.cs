@@ -25,6 +25,7 @@ namespace Authentication
             catch (RequestTokenException ex)
             {
                 errorText.OnError(new RequestTokenException(ex.Message));
+                errorText.SetBadColor();
             }
         }
     }

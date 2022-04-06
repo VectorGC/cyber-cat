@@ -49,11 +49,13 @@ namespace Authentication
             if (tocken.Error != null)
             {
                 errorText.OnError(new RequestTokenException(tocken.Error));
+                errorText.SetBadColor();
             }
             else
             {
                 string pass = "¬ам на почту пришло сообщение с подтверждением!";
                 errorText.OnError(new InputException(pass));
+                errorText.SetGoodColor();
             }
             onComplete.Invoke();
         }
