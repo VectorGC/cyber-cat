@@ -54,6 +54,7 @@ namespace Authentication
             {
                 string pass = "¬ам на почту пришло сообщение с подтверждением!";
                 errorText.OnError(new InputException(pass));
+                errorText.SetGoodColor();
             }
             onComplete.Invoke();
         }
