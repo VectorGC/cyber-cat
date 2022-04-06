@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RegisterScene.unity
     guid: 0dddb3c1d53b8ec40a778ef36698b59d
+  - enabled: 1
+    path: Assets/Scenes/RestorePassword.unity
+    guid: b2b36257e1908de489a5780ac2228f47
   m_configObjects: {}
