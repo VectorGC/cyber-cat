@@ -34,9 +34,24 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.color = Color.red;
     }
 
-    public void OnError(Authentication.RequestTokenException error) => text.text = _errors[int.Parse(error.Message)] + $" (Код ошибки {error.Message})";
+    public void OnError(Authentication.RequestTokenException error)
+    {
+        var errorCode = int.Parse(error.Message);
+        if (errorCode == 303)
+        {
+            SetGoodColor();
+            text.text = "Вход с неизвестного IP, Вам на почту пришло сообщение с подтверждением";
+            return;
+        }
+        SetBadColor();
+         text.text = _errors[errorCode] + $" (Код ошибки {error.Message})";
+    }
 
-    public void OnError(Exception error) => text.text = error.Message;
+    public void OnError(Exception error)
+    {
+        SetBadColor();
+        text.text = error.Message;
+    }
 
     public void OnNext(Authentication.RequestTokenException value) => OnError(value);
 

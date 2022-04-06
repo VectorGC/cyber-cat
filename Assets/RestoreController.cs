@@ -35,13 +35,11 @@ public class RestoreController : MonoBehaviour
         if (tocken.Error != null)
         {
             errorText.OnError(new RequestTokenException(tocken.Error));
-            errorText.SetGoodColor();
         }
         else
         {
             string pass = "¬ам на почту пришло сообщение с подтверждением!";
             errorText.OnError(new InputException(pass));
-            errorText.SetGoodColor();
         }
         onComplete.Invoke();
     }
