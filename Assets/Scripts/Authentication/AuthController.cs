@@ -8,6 +8,7 @@ namespace Authentication
     {
         [SerializeField] private TMP_InputField loginTextField;
         [SerializeField] private TMP_InputField passwordTextField;
+        [SerializeField] private ErrorMessageView errorText;
 
         [SerializeField] private UnityEvent onComplete;
 
@@ -16,8 +17,15 @@ namespace Authentication
             var login = loginTextField.text;
             var password = passwordTextField.text;
 
-            await TokenSession.RequestAndSaveFromServer(login, password);
-            onComplete.Invoke();
+            try
+            {
+                var tocken = await TokenSession.RequestAndSaveFromServer(login, password);
+                onComplete.Invoke();
+            }
+            catch (RequestTokenException ex)
+            {
+                errorText.OnError(new RequestTokenException(ex.Message));
+            }
         }
     }
 }
