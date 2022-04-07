@@ -6447,6 +6447,7 @@ GameObject:
   - component: {fileID: 792995161}
   - component: {fileID: 792995160}
   - component: {fileID: 792995159}
+  - component: {fileID: 792995162}
   m_Layer: 0
   m_Name: FinishText
   m_TagString: Untagged
@@ -6494,7 +6495,7 @@ MonoBehaviour:
     ButtonEvents:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1835637988}
+        - m_Target: {fileID: 792995162}
           m_TargetAssemblyTypeName: MonoBehaviours.SceneLoader, Assembly-CSharp
           m_MethodName: LoadSceneAsync
           m_Mode: 1
@@ -6539,6 +6540,22 @@ Transform:
   m_Father: {fileID: 739294716}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &792995162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792995158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650d1d0b1c3541238b830d8240845706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene:
+    m_SceneAsset: {fileID: 102900000, guid: fecbc7e6ea99f0341b5fd71c3c835b20, type: 3}
+    m_SceneName: MainMenu
+  loadSceneMode: 0
 --- !u!1 &793809076
 GameObject:
   m_ObjectHideFlags: 0
@@ -13962,7 +13979,7 @@ GameObject:
   - component: {fileID: 1835637984}
   - component: {fileID: 1835637986}
   - component: {fileID: 1835637985}
-  - component: {fileID: 1835637988}
+  - component: {fileID: 1835637987}
   m_Layer: 0
   m_Name: ActivationCrystalTrigger
   m_TagString: Untagged
@@ -14021,7 +14038,19 @@ MonoBehaviour:
     - Press F
     ButtonEvents:
     - m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1835637987}
+          m_TargetAssemblyTypeName: MonoBehaviours.SceneLoader, Assembly-CSharp
+          m_MethodName: LoadSceneAsync
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _triggerType: 1
   _eventType: 0
   _keyCodes: 71000000
@@ -14041,7 +14070,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1835637988
+--- !u!114 &1835637987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14054,8 +14083,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene:
-    m_SceneAsset: {fileID: 102900000, guid: fecbc7e6ea99f0341b5fd71c3c835b20, type: 3}
-    m_SceneName: MainMenu
+    m_SceneAsset: {fileID: 102900000, guid: 0188962a075e56444a51b71e3a0d0637, type: 3}
+    m_SceneName: CodeEditorForTutorial
   loadSceneMode: 0
 --- !u!1 &1852788164
 GameObject:
