@@ -2,16 +2,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public struct SetTaskDescriptionMessage
-{
-    public ITaskTicket TaskTicket { get; }
-
-    public SetTaskDescriptionMessage(ITaskTicket taskTicket)
-    {
-        TaskTicket = taskTicket;
-    }
-}
-
 public class TaskDescription : UIBehaviour
 {
     [SerializeField] private TextField goalTask;
