@@ -25,23 +25,8 @@ public class ModalPanel : MonoBehaviour
 	private UnityEvent _onStartOfDialog = new UnityEvent();
 
 	[SerializeField] private GameObject _modalPanelObject;       //Reference to the Panel Object
-	private static ModalPanel _mainModalPanel; //Reference to the Modal Panel, to make sure it's been included
 
-	public static ModalPanel Instance
-    {
-		get
-        {
-			if (!_mainModalPanel)
-			{
-				_mainModalPanel = FindObjectOfType<ModalPanel>();
-				if (!_mainModalPanel)
-				{
-					Debug.LogError("There needs to be one active ModalPanel script on a GameObject in your scene.");
-				}
-			}
-			return _mainModalPanel;
-		}
-    }
+
 
 	public void MessageBox(Sprite IconPic, string Title, string Question, UnityAction YesEvent, UnityAction NoEvent, UnityAction CancelEvent, UnityAction OkEvent, bool IconActive, string MessageType)
 	  {

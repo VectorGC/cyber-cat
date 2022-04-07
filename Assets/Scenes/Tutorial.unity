@@ -14085,7 +14085,7 @@ MonoBehaviour:
   scene:
     m_SceneAsset: {fileID: 102900000, guid: 0188962a075e56444a51b71e3a0d0637, type: 3}
     m_SceneName: CodeEditorForTutorial
-  loadSceneMode: 0
+  loadSceneMode: 1
 --- !u!1 &1852788164
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class TestScript : MonoBehaviour
 
     private void Awake()
     {
-        _modalpanel = ModalPanel.Instance;
+        _modalpanel = new ModalPanel();
     }
 
     public void TestTutorial()
