@@ -1,9 +1,10 @@
 using System;
 using UniRx;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LoadingScreen : MonoBehaviour, IObserver<float>, IObserver<AsyncOperation>, IObservable<float>
+public class LoadingScreen : UIBehaviour, IObserver<float>, IObserver<AsyncOperation>, IObservable<float>
 {
     [SerializeField] private Slider loadingBar;
 
@@ -14,7 +15,7 @@ public class LoadingScreen : MonoBehaviour, IObserver<float>, IObserver<AsyncOpe
 
     public static LoadingScreen Instance => UIDialogs.Instance.LoadingScreen;
 
-    public void Awake()
+    protected override void Awake()
     {
         Disable();
     }
@@ -39,7 +40,7 @@ public class LoadingScreen : MonoBehaviour, IObserver<float>, IObserver<AsyncOpe
 
     public IDisposable Subscribe(IObserver<float> observer) => _subject.Subscribe(observer);
 
-    private void OnDisable() => _progressUnsubscriber?.Dispose();
+    protected override void OnDisable() => _progressUnsubscriber?.Dispose();
 
     private void Disable() => gameObject.SetActive(false);
 

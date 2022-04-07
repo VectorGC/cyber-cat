@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    Player player;
-    Vector3 offset;
+    private Player _player;
+    private Vector3 _offset;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        player = FindObjectOfType<Player>();
-        offset = transform.position - player.transform.position;
+        _player = FindObjectOfType<Player>();
+        _offset = transform.position - _player.transform.position;
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    private void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
+        transform.position = _player.transform.position + _offset;
     }
 }

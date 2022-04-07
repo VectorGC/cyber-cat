@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Extensions.RestClientExt
 {
-    public static class RestClientUniTaskExt
+    public static class RestClientUniExt
     {
         public static IObservable<T> ToObservable<T>(this RSG.IPromise<T> promise, IProgress<float> progress = default)
         {
