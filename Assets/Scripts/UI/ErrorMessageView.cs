@@ -57,6 +57,12 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
 
     public void OnNext(Exception value) => OnError(value);
 
+    public static bool IsLoginError(string error)
+    {
+        var er = int.Parse(error);
+        return er == 1 || er == 2 || er == 100 || er == 101 || er == 102 || er == 200 || er == 201 || er == 202;
+    }
+
     private static Dictionary<int, string> _errors = new Dictionary<int, string>
     {
         { 0, "Ошибок нет"},
