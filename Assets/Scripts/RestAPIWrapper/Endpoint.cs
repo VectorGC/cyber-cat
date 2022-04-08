@@ -6,5 +6,6 @@ namespace RestAPIWrapper
         public const string LOGIN = URI + "/login";
         public const string REGISTER = URI + "/register";
         public const string RESTORE = URI + "/restore";
+        public const string TASKSKFLAT = URI + "/tasks/flat";
     }
 }
