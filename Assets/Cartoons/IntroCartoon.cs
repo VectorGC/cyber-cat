@@ -10,13 +10,9 @@ public class IntroCartoon : MonoBehaviour
         await SceneManager.LoadSceneAsync(introCartoonScene)
             .ViaLoadingScreenObservable()
             .ToUniTask();
-
-        var t1 = 10;
-
+        
         var inputInAnimatorState = FindObjectOfType<InputInAnimatorState>();
         await inputInAnimatorState.ToUniTask();
-
-        var t = 10;
     }
 
     private async void OnGUI()
