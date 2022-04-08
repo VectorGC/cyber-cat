@@ -120,6 +120,20 @@ namespace RestAPIWrapper
             return await RestClient.Post<TokenSession>(request).ToUniTask();
         }
 
+        public static async UniTask<TokenSession> AutoLogin(string tocken)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.TASKSKFLAT,
+                Params =
+                {
+                    ["token"] = tocken
+                },
+            };
+
+            return await RestClient.Get<TokenSession>(request).ToUniTask();
+        }
+
         public static async Task<JObject> GetTaskFolders(string token, IProgress<float> progress = null)
         {
             var request = new RequestHelper
