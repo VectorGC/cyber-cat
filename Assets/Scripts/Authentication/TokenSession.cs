@@ -12,16 +12,12 @@ namespace Authentication
     {
         private const string PlayerPrefsKey = "token";
         private const string PlayerPrefsKeyName = "name";
-        private const string PlayerPrefsKeyPass = "pass";
 
         [JsonProperty("token")] 
         private string _token;
 
         [JsonProperty("name")]
         private string _name;
-
-        [JsonProperty("pass")]
-        private string _password;
 
         [JsonProperty("error")]
         public string Error { get; set; }
@@ -34,11 +30,10 @@ namespace Authentication
 
         public static bool IsNoneToken => FromPlayerPrefs().IsNone;
 
-        public TokenSession(string token, string name, string pass)
+        public TokenSession(string token, string name)
         {
             _token = token;
             _name = name;
-            _password = pass;
             Error = string.Empty;
         }
 
@@ -82,7 +77,6 @@ namespace Authentication
 
             PlayerPrefs.SetString(PlayerPrefsKey, Token);
             PlayerPrefs.SetString(PlayerPrefsKeyName, Name);
-            PlayerPrefs.SetString(PlayerPrefsKeyPass, _password);
             Debug.Log("Token saved to player prefs");
         }
 
@@ -90,8 +84,7 @@ namespace Authentication
         {
             var token = PlayerPrefs.GetString(PlayerPrefsKey);
             var name = PlayerPrefs.GetString(PlayerPrefsKeyName);
-            var pass = PlayerPrefs.GetString(PlayerPrefsKeyPass);
-            var tokenSession = new TokenSession(token, name, pass);
+            var tokenSession = new TokenSession(token, name);
 
             return tokenSession;
         }
