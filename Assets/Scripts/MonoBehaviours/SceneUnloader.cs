@@ -8,14 +8,14 @@ namespace MonoBehaviours
         public void UnloadActiveScene()
         {
             var currentScene = SceneManager.GetActiveScene();
-            SceneManager.UnloadSceneAsync(currentScene).ViaLoadingScreenObservable();
+            SceneManager.UnloadSceneAsync(currentScene).ViaLoadingScreen();
         }
 
         public void UnloadSceneByIndex(int index)
         {
             Time.timeScale = 1f;
             var sceneByIndex = SceneManager.GetSceneAt(index);
-            SceneManager.UnloadSceneAsync(sceneByIndex).ViaLoadingScreenObservable();
+            SceneManager.UnloadSceneAsync(sceneByIndex).ViaLoadingScreen();
         }
     }
 }
