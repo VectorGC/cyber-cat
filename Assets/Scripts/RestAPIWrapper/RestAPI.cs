@@ -58,7 +58,7 @@ namespace RestAPIWrapper
 
             formData.AddField("task_id", taskId);
             formData.AddField("source_text", code);
-            formData.AddField("lang", RequestParam.ProgLanguages[ProgLanguage.C]); // Dirty hack for playtest.
+            formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]); // Dirty hack for playtest.
 
             //formData.AddField("verbose", "false");
 
