@@ -45,7 +45,7 @@ namespace Authentication
             if (token.IsNone)
             {
                 var requestException = new RequestTokenException(token.Error);
-                MessageBroker.Default.Publish<Exception>(requestException);
+                MessageBroker.Default.Publish<RequestTokenException>(requestException);
 
                 throw requestException;
             }
@@ -59,6 +59,12 @@ namespace Authentication
         {
             var token = await RestAPI.Registrate(login, password, name);
 
+            return token;
+        }
+
+        public static async UniTask<TokenSession> RestorePassword(string login, string password)
+        {
+            var token = await RestAPI.RestorePassword(login, password);
             return token;
         }
 

@@ -19,25 +19,25 @@ namespace Authentication
             if (!LoginIsOk())
             {
                 string error = "Login is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (!NameIsOk())
             {
                 string error = "Name is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (!PasswordIsOK())
             {
                 string error = "Password is not OK!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
             if (passwordAgainTextField.text != passwordTextField.text)
             {
                 string error = "Passwords are not equal!";
-                errorText.OnError(new RequestTokenException(error));
+                errorText.OnError(new InputException(error));
                 return;
             }
 
@@ -45,7 +45,17 @@ namespace Authentication
             var password = passwordTextField.text;
             var name = nameTextField.text;
 
-            await TokenSession.Register(login, password, name);
+            var tocken = await TokenSession.Register(login, password, name);
+            if (tocken.Error != null)
+            {
+                errorText.OnError(new RequestTokenException(tocken.Error));
+            }
+            else
+            {
+                string pass = "¬ам на почту пришло сообщение с подтверждением!";
+                errorText.OnError(new InputException(pass));
+                errorText.SetGoodColor();
+            }
             onComplete.Invoke();
         }
 

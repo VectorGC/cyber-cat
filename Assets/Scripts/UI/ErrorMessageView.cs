@@ -24,9 +24,44 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.text = string.Empty;
     }
 
-    public void OnError(Exception error) => text.text = _errors[int.Parse(error.Message)] + $" ( од ошибки {error.Message})";
+    public void SetGoodColor()
+    {
+        text.color = Color.green;
+    }
+
+    public void SetBadColor()
+    {
+        text.color = Color.red;
+    }
+
+    public void OnError(Authentication.RequestTokenException error)
+    {
+        var errorCode = int.Parse(error.Message);
+        if (errorCode == 303)
+        {
+            SetGoodColor();
+            text.text = "¬ход с неизвестного IP, ¬ам на почту пришло сообщение с подтверждением";
+            return;
+        }
+        SetBadColor();
+         text.text = _errors[errorCode] + $" ( од ошибки {error.Message})";
+    }
+
+    public void OnError(Exception error)
+    {
+        SetBadColor();
+        text.text = error.Message;
+    }
+
+    public void OnNext(Authentication.RequestTokenException value) => OnError(value);
 
     public void OnNext(Exception value) => OnError(value);
+
+    public static bool IsLoginError(string error)
+    {
+        var er = int.Parse(error);
+        return er == 1 || er == 2 || er == 100 || er == 101 || er == 102 || er == 200 || er == 201 || er == 202;
+    }
 
     private static Dictionary<int, string> _errors = new Dictionary<int, string>
     {
@@ -36,10 +71,10 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         { 100, "Email не был введен"},
         { 101, "Email был введен с ошибкой"},
         { 102, "Email не зарегстрирован"},
-        { 103, "Email не зарегстрирован"},
+        { 103, "“акой email уже зарегстрирован"},
         { 200, "ѕароль не был введен"},
         { 201, "ѕароль должен содержать хот€ бы 6 символов"},
-        { 202, "ѕароли не совпадают"},
+        { 202, "ѕароль неправильный"},
         { 300, "¬нутренн€€ ошибка"},
         { 301, "¬нутренн€€ ошибка"},
         { 302, "¬нутренн€€ ошибка"},
@@ -61,9 +96,10 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         { 600, "¬нутренн€€ ошибка"},
         { 601, "ƒанный €зык не может быть обработан"},
         { 700, "¬нутренн€€ ошибка"},
-        { 701, "»м€ должно содержать менее 50 символов"},
-
-
-
+        { 701, "»м€ должно содержать менее 128 символов"},
+        { 800, "¬нутренн€€ ошибка"},
+        { 801, "¬нутренн€€ ошибка"},
+        { 802, "¬нутренн€€ ошибка"},
+        { 803, "¬нутренн€€ ошибка"},
     };
 }

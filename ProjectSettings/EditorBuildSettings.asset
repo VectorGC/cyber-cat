@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Cartoons/IntroCartoon.unity
     guid: bdf89ed98750961418f2f0b62f90aec8
+  - enabled: 1
+    path: Assets/Scenes/RestorePassword.unity
+    guid: b2b36257e1908de489a5780ac2228f47
   m_configObjects: {}

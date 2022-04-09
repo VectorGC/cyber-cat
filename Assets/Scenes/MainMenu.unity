@@ -853,3 +853,37 @@ MonoBehaviour:
     m_SceneAsset: {fileID: 102900000, guid: 60c752edc49bf044684ef6e0738eaddd, type: 3}
     m_SceneName: Tutorial
   loadSceneMode: 0
+--- !u!1 &6620128041656636228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6620128043067993479, guid: 888ca0752851606499c387301906f52d, type: 3}
+  m_PrefabInstance: {fileID: 6620128041656636225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6620128041656636229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6620128041656636228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389a9a00ede1cf44baa3caee31262eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loginForm: {fileID: 6620128041656636236}
+--- !u!114 &6620128041656636236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6620128041656636228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650d1d0b1c3541238b830d8240845706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene:
+    m_SceneAsset: {fileID: 102900000, guid: 4c6865323d5d8bb4dbd1ceb93e811370, type: 3}
+    m_SceneName: AuthenticateScene
+  loadSceneMode: 0
