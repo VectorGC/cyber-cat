@@ -1,4 +1,5 @@
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,13 +20,13 @@ namespace Authentication
 
             try
             {
-                var tocken = await TokenSession.RequestAndSaveFromServer(login, password);
+                var token = await TokenSession.RequestAndSaveFromServer(login, password);
                 onComplete.Invoke();
             }
             catch (RequestTokenException ex)
             {
-                errorText.OnError(new RequestTokenException(ex.Message));
-                
+                MessageBroker.Default.Publish(ex);
+
             }
         }
     }

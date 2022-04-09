@@ -1,49 +1,56 @@
+using System;
+
 namespace RestAPIWrapper
 {
-	public enum WebError
-	{
-		NoError = 0,
-		Internal = 1,
-		MethodNotSupported = 2,
+    [Flags]
+    public enum WebError
+    {
+        NoError = 0,
+        Internal = 1,
+        MethodNotSupported = 2,
 
-		EmailNotProvided = 100,
-		EmailInvalid = 101,
-		EmailUnknown = 102,
-		EmailTaken = 103,
+        EmailNotProvided = 100,
+        EmailInvalid = 101,
+        EmailUnknown = 102,
+        EmailTaken = 103,
 
-		PasswordNotProvided = 200,
-		PasswordInvalid = 201,
-		PasswordWrong = 202,
+        LoginError = EmailNotProvided | MethodNotSupported
+                                      | EmailNotProvided | EmailInvalid | EmailUnknown
+                                      | PasswordNotProvided | PasswordInvalid | PasswordWrong,
 
-		TokenNotProvided = 300,
-		TokenInvalid = 301,
-		TokenUnknown = 302,
-		TokenNotVerified = 303,
-		TokenBoundToOtherIP = 304,
+        PasswordNotProvided = 200,
+        PasswordInvalid = 201,
+        PasswordWrong = 202,
 
-		TaskIdNotProvided = 400,
-		TaskIdInvalid = 401,
-		TaskNotFound = 402,
+        TokenNotProvided = 300,
+        TokenInvalid = 301,
+        TokenUnknown = 302,
+        TokenNotVerified = 303,
+        TokenBoundToOtherIP = 304,
 
-		SolutionTextNotProvided = 500,
-		SolutionTextTooLong = 501,
-		SolutionTestsTooLong = 502,
-		SolutionTestsInvalid = 503,
-		SolutionBuildFail = 504,
-		SolutionTestFail = 505,
+        TaskIdNotProvided = 400,
+        TaskIdInvalid = 401,
+        TaskNotFound = 402,
 
-		LanguageNotProvided = 600,
-		LanguageNotSupported = 601,
+        SolutionTextNotProvided = 500,
+        SolutionTextTooLong = 501,
+        SolutionTestsTooLong = 502,
+        SolutionTestsInvalid = 503,
+        SolutionBuildFail = 504,
+        SolutionTestFail = 505,
 
-		NameNotProvided = 700,
-		NameInvalid = 701,
+        LanguageNotProvided = 600,
+        LanguageNotSupported = 601,
 
-		TasksFoldersInvalid = 800,
-		TasksProjectFolderNotFound = 801,
-		TasksUnitFolderNotFound = 802,
-		TasksTaskFolderNotFound = 803,
+        NameNotProvided = 700,
+        NameInvalid = 701,
 
-		LeaderboardProjectIdNotProvided = 900,
-		LeaderboardProjectFolderNotProvided = 901
-	}
+        TasksFoldersInvalid = 800,
+        TasksProjectFolderNotFound = 801,
+        TasksUnitFolderNotFound = 802,
+        TasksTaskFolderNotFound = 803,
+
+        LeaderboardProjectIdNotProvided = 900,
+        LeaderboardProjectFolderNotProvided = 901
+    }
 }

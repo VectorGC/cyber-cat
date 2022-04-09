@@ -1,22 +1,21 @@
 using System;
-using System.Collections.Generic;
+using Authentication;
 using TMPro;
-using UniRx;
+using UniRx.Diagnostics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ErrorMessageView : UIBehaviour, IObserver<Exception>
+public class ErrorMessageView : UIBehaviour, IObserver<LogEntry>
 {
     [SerializeField] private TMP_Text text;
-
-    protected override void Awake()
-    {
-        MessageBroker.Default.Receive<Exception>().Subscribe(OnError);
-    }
 
     protected override void Start()
     {
         text.text = string.Empty;
+        ObservableLogger.Listener.Subscribe(this);
+
+        var lp = new UniRx.Diagnostics.Logger(nameof(TokenWebRequestWrapper));
+        lp.ThrowException(new RequestTokenException("123213213"));
     }
 
     public void OnCompleted()
@@ -29,22 +28,9 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.color = Color.green;
     }
 
-    public void SetBadColor()
+    private void SetBadColor()
     {
         text.color = Color.red;
-    }
-
-    public void OnError(Authentication.RequestTokenException error)
-    {
-        var errorCode = int.Parse(error.Message);
-        if (errorCode == 303)
-        {
-            SetGoodColor();
-            text.text = "¬ход с неизвестного IP, ¬ам на почту пришло сообщение с подтверждением";
-            return;
-        }
-        SetBadColor();
-         text.text = _errors[errorCode] + $" ( од ошибки {error.Message})";
     }
 
     public void OnError(Exception error)
@@ -53,53 +39,7 @@ public class ErrorMessageView : UIBehaviour, IObserver<Exception>
         text.text = error.Message;
     }
 
-    public void OnNext(Authentication.RequestTokenException value) => OnError(value);
-
-    public void OnNext(Exception value) => OnError(value);
-
-    public static bool IsLoginError(string error)
+    public void OnNext(LogEntry value)
     {
-        var er = int.Parse(error);
-        return er == 1 || er == 2 || er == 100 || er == 101 || er == 102 || er == 200 || er == 201 || er == 202;
     }
-
-    private static Dictionary<int, string> _errors = new Dictionary<int, string>
-    {
-        { 0, "ќшибок нет"},
-        { 1, "¬нутренн€€ ошибка сервера"},
-        { 2, "¬нутренн€€ ошибка"},
-        { 100, "Email не был введен"},
-        { 101, "Email был введен с ошибкой"},
-        { 102, "Email не зарегстрирован"},
-        { 103, "“акой email уже зарегстрирован"},
-        { 200, "ѕароль не был введен"},
-        { 201, "ѕароль должен содержать хот€ бы 6 символов"},
-        { 202, "ѕароль неправильный"},
-        { 300, "¬нутренн€€ ошибка"},
-        { 301, "¬нутренн€€ ошибка"},
-        { 302, "¬нутренн€€ ошибка"},
-        { 303, "¬нутренн€€ ошибка"},
-        { 304, "¬нутренн€€ ошибка"},
-        { 400, "¬нутренн€€ ошибка"},
-        { 401, "¬нутренн€€ ошибка"},
-        { 402, "¬нутренн€€ ошибка"},
-        { 500, "¬нутренн€€ ошибка"},
-        { 501, "¬нутренн€€ ошибка"},
-        { 502, "¬нутренн€€ ошибка"},
-        { 503, "¬нутренн€€ ошибка"},
-        { 504, "¬нутренн€€ ошибка"},
-        { 505, "¬нутренн€€ ошибка"},
-        { 506, "¬нутренн€€ ошибка"},
-        { 507, "¬нутренн€€ ошибка"},
-        { 508, "¬нутренн€€ ошибка"},
-        { 509, "¬нутренн€€ ошибка"},
-        { 600, "¬нутренн€€ ошибка"},
-        { 601, "ƒанный €зык не может быть обработан"},
-        { 700, "¬нутренн€€ ошибка"},
-        { 701, "»м€ должно содержать менее 128 символов"},
-        { 800, "¬нутренн€€ ошибка"},
-        { 801, "¬нутренн€€ ошибка"},
-        { 802, "¬нутренн€€ ошибка"},
-        { 803, "¬нутренн€€ ошибка"},
-    };
 }

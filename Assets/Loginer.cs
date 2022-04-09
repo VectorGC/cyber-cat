@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Authentication;
 using Cysharp.Threading.Tasks;
-using Extensions.RestClientExt;
+using RestAPIWrapper;
 
 public class Loginer : MonoBehaviour
 {
@@ -29,11 +28,15 @@ public class Loginer : MonoBehaviour
         }
         catch (RequestTokenException ex)
         {
-            if (ErrorMessageView.IsLoginError(ex.Message))
+            Enum.TryParse<WebError>(ex.Message, out var er);
+            var isLoginError = er.HasFlag(WebError.LoginError);
+
+            if (isLoginError)
             {
                 return false;
             }
         }
+        
         return true;
     }
 

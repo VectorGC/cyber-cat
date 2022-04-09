@@ -12,6 +12,8 @@ namespace RestAPIWrapper
 {
     public static class RestAPI
     {
+        public static WebErrorLocalize ErrorLocalize { get; } = new WebErrorLocalize();
+
         public static async UniTask<TokenSession> GetToken(string login, string password,
             IProgress<float> progress = null)
         {
