@@ -14,6 +14,8 @@ public struct TMPSettings
 [CreateAssetMenu(fileName = "UIDialogs", menuName = "ScriptableObjects/UIDialogs", order = 1)]
 public class UIDialogs : ScriptableObject
 {
+    public SceneField IntroCartoon;
+    
     [SerializeField] private LoadingScreen _loadingScreenPrefab;
     private LoadingScreen _loadingScreen;
     public LoadingScreen LoadingScreen
