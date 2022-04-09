@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using RestAPIWrapper;
 
 public class CodeCheckingResult : ICodeConsoleMessage
 {
@@ -16,11 +17,11 @@ public class CodeCheckingResult : ICodeConsoleMessage
         switch ((WebError)Error)
         {
             case WebError.SolutionTestFail:
-                return $"Äàííûå äëÿ òåñòà: '{ErrorData.Params}'\nÂàø âûâîä: {ErrorData.Result}\nÎæèäàåòñÿ: '{ErrorData.Expected}'";
+                return $"Ð”Ð°Ð½Ð½Ñ‹Ðµ Ð´Ð»Ñ Ñ‚ÐµÑÑ‚Ð°: '{ErrorData.Params}'\nÐ’Ð°Ñˆ Ð²Ñ‹Ð²Ð¾Ð´: {ErrorData.Result}\nÐžÐ¶Ð¸Ð´Ð°ÐµÑ‚ÑÑ: '{ErrorData.Expected}'";
             case WebError.SolutionBuildFail:
                 return ErrorData.Msg;
             default:
-                return "Íåèçâåñòíàÿ îøèáêà. Îáðàòèòåñü ê àäìèíó";
+                return "ÐÐµÐ¸Ð·Ð²ÐµÑÑ‚Ð½Ð°Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ°. ÐžÐ±Ñ€Ð°Ñ‚Ð¸Ñ‚ÐµÑÑŒ Ðº Ð°Ð´Ð¼Ð¸Ð½Ñƒ";
         }
     }
     public ConsoleMessageType MessageType => ErrorData?.MessageType ?? new CodeCheckingSuccess().MessageType;
