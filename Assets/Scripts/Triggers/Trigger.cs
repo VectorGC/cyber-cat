@@ -44,9 +44,15 @@ public class Trigger : MonoBehaviour
         
         _activated = false;
         _player = GameObject.FindObjectOfType<Player>();
-        _modalPanel = ModalPanel.Instance;
+        _modalPanel = FindObjectOfType<ModalPanel>();
 
         GetComponent<SphereCollider>().isTrigger = true;
+        if (_onEnter == null)
+        {
+            _onEnter = new UnityEvent();
+           
+        }
+        _onEnter.AddListener(Activate);
         //_entered.AddListener(Activate);
     }
 
@@ -78,7 +84,7 @@ public class Trigger : MonoBehaviour
         {
             return;
         }
-        Activate();
+        
         switch (_eventType)
         {
             case EventType.EnterEvent:
@@ -94,8 +100,9 @@ public class Trigger : MonoBehaviour
     {
         UnityAction[] onUnshow = new UnityAction[]
         {
-            SetPlayerActive
-        };
+            SetPlayerActive,
+            Activate
+    };
 
         UnityAction[] onShow = new UnityAction[]
         {
