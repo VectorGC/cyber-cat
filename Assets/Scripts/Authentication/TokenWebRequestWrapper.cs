@@ -10,12 +10,29 @@ namespace Authentication
         public async UniTask<TokenSession> GetToken(string login, string password)
         {
             var token = await RestAPI.GetToken(login, password);
-            if (!string.IsNullOrEmpty(token.Error))
-            {
-                _logger.ThrowException(new RequestTokenException(token.Error));
-            }
+            ThrowIfTokenIsError(token);
 
             return token;
+        }
+
+        public async UniTask RegisterUser(string login, string password, string name)
+        {
+            var token = await RestAPI.RegisterUser(login, password, name);
+            ThrowIfTokenIsError(token);
+        }
+
+        public async UniTask RestorePassword(string login, string password)
+        {
+            var token = await RestAPI.RestorePassword(login, password);
+            ThrowIfTokenIsError(token);
+        }
+
+        private void ThrowIfTokenIsError(TokenSession token)
+        {
+            if (!string.IsNullOrEmpty(token.Error))
+            {
+                _logger.ThrowException(new TokenException(token.Error));
+            }
         }
     }
 }

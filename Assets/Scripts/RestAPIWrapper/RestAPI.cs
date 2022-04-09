@@ -12,8 +12,6 @@ namespace RestAPIWrapper
 {
     public static class RestAPI
     {
-        public static WebErrorLocalize ErrorLocalize { get; } = new WebErrorLocalize();
-
         public static async UniTask<TokenSession> GetToken(string login, string password,
             IProgress<float> progress = null)
         {
@@ -89,7 +87,7 @@ namespace RestAPIWrapper
             return response.Text;
         }
 
-        public static async UniTask<TokenSession> Registrate(string login, string password, string name)
+        public static async UniTask<TokenSession> RegisterUser(string login, string password, string name)
         {
             var request = new RequestHelper
             {
@@ -120,20 +118,6 @@ namespace RestAPIWrapper
             };
 
             return await RestClient.Post<TokenSession>(request).ToUniTask();
-        }
-
-        public static async UniTask<TokenSession> AutoLogin(string tocken)
-        {
-            var request = new RequestHelper
-            {
-                Uri = Endpoint.TASKSKFLAT,
-                Params =
-                {
-                    ["token"] = tocken
-                },
-            };
-
-            return await RestClient.Get<TokenSession>(request).ToUniTask();
         }
 
         public static async Task<JObject> GetTaskFolders(string token, IProgress<float> progress = null)

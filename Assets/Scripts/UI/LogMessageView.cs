@@ -1,11 +1,10 @@
 using System;
-using Authentication;
 using TMPro;
 using UniRx.Diagnostics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ErrorMessageView : UIBehaviour, IObserver<LogEntry>
+public class LogMessageView : UIBehaviour, IObserver<LogEntry>
 {
     [SerializeField] private TMP_Text text;
 
@@ -13,9 +12,6 @@ public class ErrorMessageView : UIBehaviour, IObserver<LogEntry>
     {
         text.text = string.Empty;
         ObservableLogger.Listener.Subscribe(this);
-
-        var lp = new UniRx.Diagnostics.Logger(nameof(TokenWebRequestWrapper));
-        lp.ThrowException(new RequestTokenException("123213213"));
     }
 
     public void OnCompleted()
@@ -35,11 +31,21 @@ public class ErrorMessageView : UIBehaviour, IObserver<LogEntry>
 
     public void OnError(Exception error)
     {
-        SetBadColor();
-        text.text = error.Message;
     }
 
     public void OnNext(LogEntry value)
     {
+        switch (value.LogType)
+        {
+            case LogType.Error:
+            case LogType.Exception:
+                SetBadColor();
+                break;
+            default:
+                SetGoodColor();
+                break;
+        }
+
+        text.text = value.Message;
     }
 }

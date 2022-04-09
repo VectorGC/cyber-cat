@@ -1,8 +1,5 @@
-using System;
-
 namespace RestAPIWrapper
 {
-    [Flags]
     public enum WebError
     {
         NoError = 0,

@@ -45,17 +45,14 @@ namespace Authentication
             return token;
         }
 
-        public static async UniTask<TokenSession> Register(string login, string password, string name)
+        public static async UniTask RegisterUser(string login, string password, string name)
         {
-            var token = await RestAPI.Registrate(login, password, name);
-
-            return token;
+            await RequestWrapper.RegisterUser(login, password, name);
         }
 
-        public static async UniTask<TokenSession> RestorePassword(string login, string password)
+        public static async UniTask RestorePassword(string login, string password)
         {
-            var token = await RestAPI.RestorePassword(login, password);
-            return token;
+            await RequestWrapper.RestorePassword(login, password);
         }
 
         private void SaveToPlayerPrefs()

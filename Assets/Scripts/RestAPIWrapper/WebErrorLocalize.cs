@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,15 +28,28 @@ namespace RestAPIWrapper
 
         public string this[int errorKey] => this[(WebError) errorKey];
 
+        private static WebErrorLocalize _instance = new WebErrorLocalize();
+
+        public static string Localize(string errorCode)
+        {
+            var success = Enum.TryParse<WebError>(errorCode, out var webError);
+            if (!success)
+            {
+                return $"Неизвестный код ошибки '{errorCode}'";
+            }
+
+            return _instance[webError];
+        }
+
         private string GetErrorLocalize(WebError webError)
         {
             var success = _dictionary.TryGetValue(webError, out var localized);
             if (!success)
             {
-                return $"Внутренняя ошибка ({webError})";
+                return $"Внутренняя ошибка ({(int) webError})";
             }
 
-            return $"{localized} ({webError})";
+            return $"{localized} ({(int) webError})";
         }
 
         #region | Delegate implementation |
