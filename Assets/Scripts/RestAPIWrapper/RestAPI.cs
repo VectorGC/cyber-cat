@@ -55,20 +55,9 @@ namespace RestAPIWrapper
             formData.AddField("source_text", code);
             formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]);
 
-            //formData.AddField("verbose", "false");
-
-            //formData.Add(new MultipartFormDataSection("source_text", _codeText));
-            //formData.Add(new MultipartFormDataSection("verbose", "false"));
-
-            //var url = new GetTasksRequest(token).GetUri();
-            // "https://kee-reel.com/cyber-cat/?" + _token.Token
-
-            //var y = ObservableWWW.Post(Endpoint.URI, formData);
-            //y.Do(x => Debug.LogError(y)).Subscribe();
-
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.SOLUTION,
                 Params =
                 {
                     ["token"] = token
@@ -119,11 +108,10 @@ namespace RestAPIWrapper
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.TASKS_HIERARCHY,
                 Params =
                 {
                     ["token"] = token,
-                    ["folders"] = true.ToString().ToLower()
                 },
                 ProgressCallback = value => progress?.Report(value),
                 EnableDebug = Debug.isDebugBuild
