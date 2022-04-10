@@ -611,6 +611,152 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c656d0fdd5b702e4db9db19261306d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &165277699 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7398486636018287259, guid: ce54f8afdca823640a2b2b0e2c4b3633, type: 3}
+  m_PrefabInstance: {fileID: 1353928865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &165277703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165277699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers:
+  - {fileID: 399547222}
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 0
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 0
+    Title: "\u0423\u0420\u0410!"
+    Description: "\u0422\u044B \u043D\u0430\u0448\u0435\u043B \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440,
+      \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u043E\u0434\u0434\u0430\u0435\u0442\u0441\u044F
+      \u0432\u0437\u043B\u043E\u043C\u0443! \u0422\u0435\u043F\u0435\u0440\u044C
+      \u043D\u0430\u0439\u0434\u0438 \u0447\u0435\u0440\u0435\u0437 \u043D\u0435\u0433\u043E
+      \u043C\u0435\u0442\u043E\u0434\u0438\u0447\u043A\u0443!"
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - "\u041F\u043E\u0433\u043D\u0430\u043B\u0438!"
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 38899408}
+          m_TargetAssemblyTypeName: TaskUnitFromFolderView, Assembly-CSharp
+          m_MethodName: OpenCodeEditor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _triggerType: 0
+  _eventType: 0
+  _keyCodes: 
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: UnShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &165277704
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165277699}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0.0723535, y: -0.0865703, z: 0.029011894}
+--- !u!114 &165277705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165277699}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers:
+  - {fileID: 165277703}
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 0
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 0
+    Title: 
+    Description: "\u041A\u0440\u0443\u0442\u043E! \u0422\u0435\u043F\u0435\u0440\u044C
+      \u0441\u043E\u043E\u0431\u0449\u0438 \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B
+      \u043C\u0430\u043B\u044C\u0447\u0438\u043A\u0443! "
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - "\u0418\u0434\u0443!"
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+  _triggerType: 0
+  _eventType: 0
+  _keyCodes: 
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &177149848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,22 +1534,10 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
     CountOfButtons: 1
     ButtonText:
-    - "\u041F\u043E\u043C\u043E\u0447\u044C "
+    - "\u041F\u043E\u043D\u044F\u0442\u043D\u043E "
     ButtonEvents:
     - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 38899408}
-          m_TargetAssemblyTypeName: TaskUnitFromFolderView, Assembly-CSharp
-          m_MethodName: OpenCodeEditor
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   _triggerType: 2
   _eventType: 0
   _keyCodes: 66000000
@@ -1453,6 +1587,75 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &399547224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399547218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers:
+  - {fileID: 399547222}
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 0
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 0.5
+    Title: "\u041F\u041E\u0414\u0421\u041A\u0410\u0417\u041A\u0410! "
+    Description: "\u0412\u043E\u0439\u0434\u0438 \u0432 \u0440\u0435\u0436\u0438\u043C
+      \u0445\u0430\u043A\u0435\u0440\u0430 (Q) \u0438 \u043D\u0430\u0439\u0434\u0438
+      \u0441\u043B\u043E\u043C\u0430\u043D\u043D\u044B\u0439 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440! "
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - "\u041E\u041A!"
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+  _triggerType: 0
+  _eventType: 0
+  _keyCodes: 
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: UnShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &422005924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2739,7 +2942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2678349081932347791, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.5643e-10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2678349081932347791, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3477,6 +3680,7 @@ Transform:
   - {fileID: 38899409}
   - {fileID: 1568417099}
   - {fileID: 1353928866}
+  - {fileID: 1310827746}
   m_Father: {fileID: 177149849}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3680,6 +3884,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea63d159e9abef74bbd9a0b17e5d612d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1310827745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1310827746}
+  - component: {fileID: 1310827748}
+  - component: {fileID: 1310827747}
+  m_Layer: 0
+  m_Name: QuestHint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1310827746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310827745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1238783291}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1310827747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310827745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers:
+  - {fileID: 165277703}
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 0
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 0
+    Title: "\u0423\u0441\u043F\u0435\u0445!"
+    Description: "\u0422\u0435\u043F\u0435\u0440\u044C \u0441\u043E\u043E\u0431\u0449\u0438
+      \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B \u043C\u0430\u043B\u044C\u0447\u0438\u043A\u0443!"
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 0
+    ButtonText:
+    - "\u0425\u043E\u0440\u043E\u0448\u043E!"
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+  _triggerType: 1
+  _eventType: 0
+  _keyCodes: 44010000
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &1310827748
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310827745}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1326534884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4797,6 +5090,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
   m_PrefabInstance: {fileID: 1523780052488386900}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1574491703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4465405118909785553, guid: 60445422102f14d69be79ade2844f27f, type: 3}
+  m_PrefabInstance: {fileID: 5049463813042136942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1574491708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574491703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers: []
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 0
+  _countOfModals: 0
+  _modalInfos: []
+  _triggerType: 0
+  _eventType: 0
+  _keyCodes: 
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &1574491709
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574491703}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3151057
+  m_Center: {x: -0.000686601, y: 0.31852534, z: -0.0055528446}
 --- !u!1 &1629643214
 GameObject:
   m_ObjectHideFlags: 0
@@ -6792,6 +7135,10 @@ PrefabInstance:
     - target: {fileID: 5049463812844183131, guid: 60445422102f14d69be79ade2844f27f, type: 3}
       propertyPath: m_Name
       value: Library
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289328037259204877, guid: 60445422102f14d69be79ade2844f27f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60445422102f14d69be79ade2844f27f, type: 3}
