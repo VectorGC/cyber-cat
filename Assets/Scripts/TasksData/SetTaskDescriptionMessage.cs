@@ -1,8 +1,10 @@
+using TasksData;
+
 public struct SetTaskDescriptionMessage
 {
-    public ITaskTicket TaskTicket { get; }
+    public ITaskData TaskTicket { get; }
 
-    public SetTaskDescriptionMessage(ITaskTicket taskTicket)
+    public SetTaskDescriptionMessage(ITaskData taskTicket)
     {
         TaskTicket = taskTicket;
     }

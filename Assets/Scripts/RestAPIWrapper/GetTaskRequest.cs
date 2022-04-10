@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Extensions.DotNetExt;
+using TasksData;
 
 namespace RestAPIWrapper
 {
@@ -16,7 +17,7 @@ namespace RestAPIWrapper
             _token = token;
         }
 
-        public async UniTask<ITaskTicket> SendRequest(IProgress<float> progress = null)
+        public async UniTask<ITaskData> SendRequest(IProgress<float> progress = null)
         {
             try
             {

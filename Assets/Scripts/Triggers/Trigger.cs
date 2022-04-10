@@ -108,7 +108,11 @@ public class Trigger : MonoBehaviour
         {
             SetPlayerInactive
         };
-        _modalPanel.MessageBos(_modalInfos, onUnshow, onShow);
+
+        if (_modalPanel)
+        {
+            _modalPanel.MessageBos(_modalInfos, onUnshow, onShow);
+        }
     }
 
     private void Activate()

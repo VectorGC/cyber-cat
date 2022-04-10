@@ -1,3 +1,4 @@
+using Legacy_do_not_use_it;
 using UnityEngine;
 
 public class HackModeObserver : MonoBehaviour
@@ -8,12 +9,12 @@ public class HackModeObserver : MonoBehaviour
         if (isHackModePressed)
         {
             Debug.Log("Hack mode pressed");
-            GameMode.HackMode = GameMode.HackMode == Mode.Default ? Mode.HackMode : Mode.Default;
+            GameMode.Vision = GameMode.Vision == VisionMode.Default ? VisionMode.HackVision : VisionMode.Default;
         }
     }
 
     private void OnDestroy()
     {
-        GameMode.HackMode = Mode.Default;
+        GameMode.Vision = VisionMode.Default;
     }
 }

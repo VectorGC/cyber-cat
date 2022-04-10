@@ -1,6 +1,12 @@
-public interface ITaskTicket
+using Cysharp.Threading.Tasks;
+
+namespace TasksData
 {
-    int Id { get; }
-    string Name { get; }
-    string Description { get; }
+    public interface ITaskData
+    {
+        int Id { get; }
+        string Name { get; }
+        string Description { get; }
+        bool IsSolved { get; }
+    }
 }

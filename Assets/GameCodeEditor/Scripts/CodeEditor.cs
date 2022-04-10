@@ -5,7 +5,9 @@ using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using Extensions.UniRxExt;
 using JetBrains.Annotations;
+using Legacy_do_not_use_it;
 using RestAPIWrapper;
+using TasksData;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -14,9 +16,9 @@ using UnityEngine.SceneManagement;
 
 public readonly struct SetTaskInEditor
 {
-    public ITaskTicket TaskTicket { get; }
+    public ITaskData TaskTicket { get; }
 
-    public SetTaskInEditor(ITaskTicket taskTicket)
+    public SetTaskInEditor(ITaskData taskTicket)
     {
         TaskTicket = taskTicket;
     }
@@ -28,44 +30,62 @@ public class CodeEditor : UIBehaviour
 
     [SerializeField] private TMP_InputField codeInputField;
 
-    private ITaskTicket _task;
+    private ITaskData _task;
 
     private IDisposable _setTaskInEditorUnsubcriber;
     private IDisposable _progLanguageChangedUnsubscriber;
 
-    public static ITaskTicket Task => Instance._task;
+    public static ITaskData Task => Instance._task;
 
     public static string Code => Instance.codeInputField.text;
     public static ProgLanguage Language { get; private set; }
 
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
-    public static async UniTask OpenSolution(ITaskTicket task, IProgress<float> progress = null)
+    public static async UniTask OpenSolution(ITaskUnit taskFolder)
     {
-        await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
-        SetTaskInEditor(task);
-    }
-
-    public static async UniTask OpenSolution(TaskFolder taskFolder, IProgress<float> progress = null)
-    {
+        Time.timeScale = 0f;
+        
+        var progress = new ScheduledNotifier<float>();
+        progress.ViaLoadingScreen();
+        
         var requestProgress = new ScheduledNotifier<float>();
         var openEditorProgress = new ScheduledNotifier<float>();
 
         requestProgress.Union(openEditorProgress).ReportTo(progress);
 
-        var token = TokenSession.FromPlayerPrefs();
-        var task = await taskFolder.GetTask(token, requestProgress);
-
+        var task = await taskFolder.GetTask(requestProgress);
         await OpenSolution(task, openEditorProgress);
+        
+        Time.timeScale = 1f;
+    }
+    
+    private static async UniTask OpenSolution(ITaskData task)
+    {
+        var progress = new ScheduledNotifier<float>();
+        progress.ViaLoadingScreen();
+
+        Time.timeScale = 0f;
+        
+        await OpenSolution(task, progress);
+        await WaitWhenEnable();
+        
+        Time.timeScale = 1f;
     }
 
-    public static async UniTask WaitWhenEnable()
+    private static async UniTask OpenSolution(ITaskData task, IProgress<float> progress)
+    {
+        await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
+        SetTaskInEditor(task);
+    }
+
+    private static async UniTask WaitWhenEnable()
     {
         var scene = SceneManager.GetSceneByName(CodeEditorScene);
         await UniTask.WaitWhile(() => scene.isLoaded);
     }
 
-    private static void SetTaskInEditor(ITaskTicket task)
+    private static void SetTaskInEditor(ITaskData task)
     {
         var message = new SetTaskInEditor(task);
         MessageBroker.Default.Publish(message);
@@ -90,7 +110,7 @@ public class CodeEditor : UIBehaviour
         SetDescription(_task);
     }
 
-    private void SetDescription(ITaskTicket task)
+    private void SetDescription(ITaskData task)
     {
         var message = new SetTaskDescriptionMessage(task);
         MessageBroker.Default.Publish(message);

@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using Extensions.RestClientExt;
 using Newtonsoft.Json.Linq;
 using Proyecto26;
+using TasksData;
 using UnityEngine;
 
 namespace RestAPIWrapper
@@ -46,7 +47,7 @@ namespace RestAPIWrapper
             return await RestClient.Get<TasksData.TasksData>(request).ToUniTask();
         }
 
-        public static UniTask<ITaskTicket> GetTask(string token, string taskId, IProgress<float> progress = null)
+        public static UniTask<ITaskData> GetTask(string token, string taskId, IProgress<float> progress = null)
         {
             return new GetTaskRequest(taskId, token).SendRequest(progress);
         }
