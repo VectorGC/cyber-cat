@@ -310,6 +310,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -401,6 +402,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -858,7 +860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &233655772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -920,8 +922,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4289219120
+  m_fontColor: {r: 0.19001423, g: 0.29119778, b: 0.6603774, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1346,6 +1348,111 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
+--- !u!1 &399547218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6013444349964317296, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
+  m_PrefabInstance: {fileID: 521179072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &399547222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399547218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
+  _requiredTriggers: []
+  _banTriggers: []
+  _transformOfTrigger: {fileID: 0}
+  _canBeActivatedMultipleTime: 1
+  _countOfModals: 1
+  _modalInfos:
+  - TimeBeforeShow: 0
+    Title: 
+    Description: "\u042F \u0432\u0447\u0435\u0440\u0430 \u0435\u0451 \u0432\u0438\u0434\u0435\u043B,
+      \u043E\u043D\u0430 \u0431\u044B\u043B\u0430 \u043F\u0435\u0440\u0435\u0434
+      \u0433\u043B\u0430\u0437\u0430\u043C\u0438. \u0422\u0435\u043F\u0435\u0440\u044C
+      \u044F \u043D\u0435 \u043C\u043E\u0433\u0443 \u043D\u0430\u0439\u0442\u0438
+      \u044D\u0442\u0443 \u043C\u0435\u0442\u043E\u0434\u0438\u0447\u043A\u0443.
+      \u0415\u0441\u043B\u0438 \u0432\u043E\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F
+      \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u0430\u043C\u0438, \u043C\u0435\u0442\u043E\u0434\u0438\u0447\u043A\u0443
+      \u043C\u043E\u0436\u043D\u043E \u043D\u0430\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437
+      \u043D\u0438\u0445. \u041D\u043E \u044F \u0437\u0430\u0431\u044B\u043B \u043F\u0430\u0440\u043E\u043B\u044C
+      \u043E\u0442 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u043E\u0432..."
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
+    CountOfButtons: 1
+    ButtonText:
+    - "\u041F\u043E\u043C\u043E\u0447\u044C "
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 38899408}
+          m_TargetAssemblyTypeName: TaskUnitFromFolderView, Assembly-CSharp
+          m_MethodName: OpenCodeEditor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _triggerType: 2
+  _eventType: 0
+  _keyCodes: 66000000
+  _onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onExit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 233655773}
+        m_TargetAssemblyTypeName: BottomTextController, Assembly-CSharp
+        m_MethodName: UnShow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &399547223
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399547218}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &422005924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,7 +2514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6013444349964317296, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6359042447426955466, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
       propertyPath: m_RootOrder
@@ -2503,6 +2610,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -3354,7 +3462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1238783291
 Transform:
   m_ObjectHideFlags: 0
@@ -3387,6 +3495,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -3407,7 +3516,11 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText:
     - "\u041F\u043E\u043D\u044F\u0442\u043D\u043E (\xAC\u203F\xAC)"
-    ButtonEvents: []
+    ButtonEvents:
+    - m_PersistentCalls:
+        m_Calls: []
+    - m_PersistentCalls:
+        m_Calls: []
   _triggerType: 1
   _eventType: 0
   _keyCodes: 66000000
@@ -4163,6 +4276,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -4343,6 +4457,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 233655773}
     - target: {fileID: -3654806603337436127, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: _onEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Show
+      objectReference: {fileID: 0}
+    - target: {fileID: -3654806603337436127, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: _modalInfos.Array.data[0].ButtonEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -4388,7 +4506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.27
+      value: 10.51
       objectReference: {fileID: 0}
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5996,6 +6114,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -6057,6 +6176,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
@@ -6203,6 +6323,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
