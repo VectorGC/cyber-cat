@@ -1032,6 +1032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 350967303}
   _transformOfTrigger: {fileID: 0}
@@ -1043,6 +1045,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0.8
@@ -1065,6 +1068,12 @@ MonoBehaviour:
   _onEnter:
     m_PersistentCalls:
       m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &199903156
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1076,7 +1085,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 4.86
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &199903157
 Transform:
@@ -1234,6 +1243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 212123128}
   _transformOfTrigger: {fileID: 0}
@@ -1245,6 +1256,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0.7
@@ -1265,6 +1277,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 6100000014010000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &205010710
@@ -1326,6 +1344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 199903155}
   _transformOfTrigger: {fileID: 0}
@@ -1337,6 +1357,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 2
@@ -1356,6 +1377,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 7700000011010000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &212123129
@@ -1490,6 +1517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 205010709}
   _transformOfTrigger: {fileID: 0}
@@ -1501,6 +1530,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0.7
@@ -1521,6 +1551,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 6400000013010000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &240724204
@@ -2062,7 +2098,6 @@ GameObject:
   - component: {fileID: 350967302}
   - component: {fileID: 350967304}
   - component: {fileID: 350967303}
-  - component: {fileID: 350967307}
   m_Layer: 0
   m_Name: StartTrigger
   m_TagString: Untagged
@@ -2101,6 +2136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers: []
   _transformOfTrigger: {fileID: 1775819544}
   _modalInfo:
@@ -2111,6 +2148,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
@@ -2130,6 +2168,12 @@ MonoBehaviour:
   _onEnter:
     m_PersistentCalls:
       m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!135 &350967304
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2143,50 +2187,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &350967307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 350967301}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _requiredTriggers: []
-  _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
-  _countOfModals: 1
-  _modalInfos:
-  - TimeBeforeShow: 0.5
-    Title: "\u0413\u0435\u0439\u043C\u043F\u043B\u0435\u0439!"
-    Description: "\u0441 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435\u043C
-      \u043F\u043E\u043A\u043E\u043D\u0447\u0435\u043D\u043E! \u0442\u0435\u043F\u0435\u0440\u044C
-      \u043F\u043E\u0434\u043E\u0439\u0442\u0438 \u043A \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u0443
-      (\u0438\u0434\u0451\u0448\u044C \u0432 \u0432\u0435\u0440\u043D\u043E\u043C
-      \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0438)"
-    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
-    CountOfButtons: 1
-    ButtonText:
-    - "\u0423\u0436\u0435 \u0438\u0434\u0443!"
-    ButtonEvents:
-    - m_PersistentCalls:
-        m_Calls: []
-  _triggerType: 1
-  _eventType: 0
-  _keyCodes: 73000000
-  _onEnter:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &353653190
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,6 +3817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 1835637985}
   _transformOfTrigger: {fileID: 0}
@@ -3828,6 +3830,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 1.5
@@ -3858,6 +3861,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 66000000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &792995160
@@ -5887,6 +5896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 2055825414}
   _transformOfTrigger: {fileID: 204111227}
@@ -5898,6 +5909,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
@@ -5917,6 +5929,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &1294664420
@@ -7760,6 +7778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 1294664419}
   _transformOfTrigger: {fileID: 0}
@@ -7771,6 +7791,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 1
@@ -7793,6 +7814,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 71000000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &1835637986
@@ -9007,6 +9034,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _activated: 0
+  _startActivated: 0
   _requiredTriggers:
   - {fileID: 240724203}
   _transformOfTrigger: {fileID: 0}
@@ -9018,6 +9047,7 @@ MonoBehaviour:
     CountOfButtons: 0
     ButtonText: []
     ButtonEvents: []
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0.8
@@ -9037,6 +9067,12 @@ MonoBehaviour:
   _eventType: 0
   _keyCodes: 7300000012010000
   _onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExit:
+    m_PersistentCalls:
+      m_Calls: []
+  _onStart:
     m_PersistentCalls:
       m_Calls: []
 --- !u!135 &2055825415
