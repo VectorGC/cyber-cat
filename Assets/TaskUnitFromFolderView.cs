@@ -1,29 +1,37 @@
 using System;
+using System.Collections.Generic;
+using Authentication;
 using Cysharp.Threading.Tasks;
 using Legacy_do_not_use_it;
 using TasksData;
+using UniRx;
 using UnityEngine;
 
-public class TaskUnitFromFolderView : TaskUnitController
+public class TaskUnitFromFolderView : MonoBehaviour, ITaskUnit
 {
     [SerializeField] private TaskUnitFolder taskUnitFolder = new TaskUnitFolder("unit-1", "task-1");
 
-    public override async UniTask<bool> IsTaskSolved(IProgress<float> progress = null)
+    [SerializeField] private List<MonoBehaviourObserver<ITaskData>> taskDataObservers;
+
+    private ITaskUnit _taskUnit;
+
+    private async void Start()
     {
-        return await taskUnitFolder.IsTaskSolved(progress);
+        var token = TokenSession.FromPlayerPrefs();
+        var taskUnit = await TaskUnit.CreateTaskUnit(token, taskUnitFolder);
+
+        var observable = taskUnit.StartWith(taskUnit); // All observers received data.
+        foreach (var observer in taskDataObservers)
+        {
+            observable.Subscribe(observer);
+        }
+
+        _taskUnit = taskUnit;
     }
 
-    public override async UniTask CallTaskChanged() => await taskUnitFolder.CallTaskChanged();
+    public UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
+        _taskUnit.GetTask(token, progress);
 
-    public override async UniTask<ITaskData> GetTask(IProgress<float> progress = null)
-    {
-        return await taskUnitFolder.GetTask(progress);
-    }
-
-    public override IDisposable Subscribe(IObserver<ITaskData> observer) => taskUnitFolder.Subscribe(observer);
-
-    public override void OpenCodeEditor()
-    {
-        CodeEditor.OpenSolution(taskUnitFolder).Forget();
-    }
+    public UniTask<bool> IsTaskSolved(string token, IProgress<float> progress = null) =>
+        _taskUnit.IsTaskSolved(token, progress);
 }

@@ -1,5 +1,6 @@
 namespace RestAPIWrapper
 {
+    // TODO: Add extension to parse json error with code to WebError & to WebError.ToLocalize().
     public enum WebError
     {
         NoError = 0,

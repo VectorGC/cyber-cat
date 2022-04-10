@@ -9,7 +9,7 @@ namespace TaskCodeCheckModels
 {
     public static class TaskCodeCheck
     {
-        public static async UniTask<CodeCheckingResult> CheckCodeAsync(int taskId, string code, ProgLanguage progLanguage)
+        public static async UniTask<CodeCheckingResult> CheckCodeAsync(string taskId, string code, ProgLanguage progLanguage)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace TaskCodeCheckModels
             }
         }
 
-        private static async UniTask<string> CheckCodeStringAsync(int taskId, string code, ProgLanguage progLanguage)
+        private static async UniTask<string> CheckCodeStringAsync(string taskId, string code, ProgLanguage progLanguage)
         {
             var token = TokenSession.FromPlayerPrefs();
             return await RestAPI.SendCodeToChecking(token, taskId, code, progLanguage); 
