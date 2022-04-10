@@ -9,7 +9,8 @@ public class Trigger : MonoBehaviour
 {
     private Player _player;
     private ModalPanel _modalPanel;
-    private bool _activated;
+    [SerializeField] private bool _activated;
+    [SerializeField] private bool _startActivated;
 
     public Player Player => _player;
     public ModalPanel ModalPanel => _modalPanel;
@@ -43,6 +44,7 @@ public class Trigger : MonoBehaviour
         }
         
         _activated = false;
+        _startActivated = false;
         _player = GameObject.FindObjectOfType<Player>();
         _modalPanel = FindObjectOfType<ModalPanel>();
 
@@ -50,15 +52,15 @@ public class Trigger : MonoBehaviour
         if (_onEnter == null)
         {
             _onEnter = new UnityEvent();
-           
         }
         _onEnter.AddListener(Activate);
+        
         //_entered.AddListener(Activate);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (_activated || _triggerType != TriggerType.Enter || !other.TryGetComponent<Player>(out _player))
+        if (_startActivated || _triggerType != TriggerType.Enter || !other.TryGetComponent<Player>(out _player))
         {
             return;
         }
@@ -67,13 +69,24 @@ public class Trigger : MonoBehaviour
         Do();
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.TryGetComponent<Player>(out _player))
+        {
+            return;
+        }
+    }
+
     private void Update()
     {
-        foreach (var t in _keyCodes)
+        if (!_startActivated)
         {
-            if (!_activated && Input.GetKeyDown(t))
+            foreach (var t in _keyCodes)
             {
-                Do();
+                if (Input.GetKeyDown(t))
+                {
+                    Do();
+                }
             }
         }
     }
@@ -84,7 +97,7 @@ public class Trigger : MonoBehaviour
         {
             return;
         }
-        
+        SetStartActivated();
         switch (_eventType)
         {
             case EventType.EnterEvent:
@@ -101,12 +114,12 @@ public class Trigger : MonoBehaviour
         UnityAction[] onUnshow = new UnityAction[]
         {
             SetPlayerActive,
-            Activate
-    };
+            Activate,
+        };
 
         UnityAction[] onShow = new UnityAction[]
         {
-            SetPlayerInactive
+            SetPlayerInactive,
         };
 
         if (_modalPanel)
@@ -123,6 +136,10 @@ public class Trigger : MonoBehaviour
 
     private bool CanBeActivated()
     {
+        if (_startActivated)
+        {
+            return false;
+        }
         for (var index = 0; index < _requiredTriggers.Count; index++)
         {
             var t = _requiredTriggers[index];
@@ -137,12 +154,24 @@ public class Trigger : MonoBehaviour
 
     private void SetPlayerActive()
     {
-        _player.gameObject.SetActive(true);
+        //_player.gameObject.SetActive(true);
+        Time.timeScale = 1.0f;
     }
 
     private void SetPlayerInactive()
     {
-        _player.gameObject.SetActive(false);
+        Time.timeScale = 0.0f;
+        //_player.gameObject.SetActive(false);
+    }
+
+    private void SetStartActivated()
+    {
+        _startActivated = true;
+    }
+
+    private void SetStartDeactivated()
+    {
+        _startActivated = false;
     }
 
     public enum TriggerType
@@ -150,7 +179,6 @@ public class Trigger : MonoBehaviour
         Enter = 0,
         ButtonPressed = 1
     }
-
 
     public enum EventType
     {
