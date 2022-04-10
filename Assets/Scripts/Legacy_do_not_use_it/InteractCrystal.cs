@@ -1,4 +1,5 @@
 using System;
+using Authentication;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
@@ -30,7 +31,9 @@ namespace Legacy_do_not_use_it
             var isHackModePressed = Input.GetKey(KeyCode.F);
             if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
             {
-                CodeEditor.OpenSolution(taskFolder).Forget();
+                var token = TokenSession.FromPlayerPrefs();
+                var task = await taskFolder.GetTask(token);
+                CodeEditor.OpenSolution(task).Forget();
             }
         }
     }

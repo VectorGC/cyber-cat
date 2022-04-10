@@ -2,11 +2,7 @@ using System;
 using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
-using Extensions.UniRxExt;
-using JetBrains.Annotations;
-using Legacy_do_not_use_it;
-using RestAPIWrapper;
+using GameCodeEditor.Scripts;
 using TasksData;
 using TMPro;
 using UniRx;
@@ -42,47 +38,28 @@ public class CodeEditor : UIBehaviour
 
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
-    public static async UniTask OpenSolution(ITaskUnit taskFolder)
+    public static async UniTask OpenSolution(ITaskData task, IProgress<float> progress = null)
     {
         Time.timeScale = 0f;
         
-        var progress = new ScheduledNotifier<float>();
-        progress.ViaLoadingScreen();
-        
-        var requestProgress = new ScheduledNotifier<float>();
-        var openEditorProgress = new ScheduledNotifier<float>();
-
-        requestProgress.Union(openEditorProgress).ReportTo(progress);
-
-        var task = await taskFolder.GetTask(requestProgress);
-        await OpenSolution(task, openEditorProgress);
-        
-        Time.timeScale = 1f;
-    }
-    
-    private static async UniTask OpenSolution(ITaskData task)
-    {
-        var progress = new ScheduledNotifier<float>();
-        progress.ViaLoadingScreen();
-
-        Time.timeScale = 0f;
-        
-        await OpenSolution(task, progress);
-        await WaitWhenEnable();
-        
-        Time.timeScale = 1f;
-    }
-
-    private static async UniTask OpenSolution(ITaskData task, IProgress<float> progress)
-    {
         await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
         SetTaskInEditor(task);
+
+        await WaitWhenEnable();
+
+        Time.timeScale = 1f;
     }
 
     private static async UniTask WaitWhenEnable()
     {
         var scene = SceneManager.GetSceneByName(CodeEditorScene);
         await UniTask.WaitWhile(() => scene.isLoaded);
+    }
+
+    protected override void OnDestroy()
+    {
+        var message = new NeedUpdateTaskData(_task.Id, TokenSession.FromPlayerPrefs());
+        AsyncMessageBroker.Default.PublishAsync(message);
     }
 
     private static void SetTaskInEditor(ITaskData task)
