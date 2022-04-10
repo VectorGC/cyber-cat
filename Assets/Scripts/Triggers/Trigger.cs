@@ -17,18 +17,23 @@ public class Trigger : MonoBehaviour
     public bool Activated => _activated;
 
     [SerializeField] private List<Trigger> _requiredTriggers;
+    [SerializeField] private List<Trigger> _banTriggers;
 
     [SerializeField] Transform _transformOfTrigger;
-    [SerializeField] ModalInfo _modalInfo;
 
+    [SerializeField] private bool _canBeActivatedMultipleTime;
     [SerializeField] private int _countOfModals;
     [SerializeField] private ModalInfo[] _modalInfos;
     [SerializeField] private TriggerType _triggerType;
     [SerializeField] private EventType _eventType;
     [SerializeField] private KeyCode[] _keyCodes;
 
-    private UnityEvent _entered;
     [SerializeField] private UnityEvent _onEnter;
+    [SerializeField] private UnityEvent _onExit;
+    [SerializeField] private UnityEvent _onStart;
+
+    private bool _playerInside;
+    private bool _buttonPressed;
 
 
     private void Start()
@@ -54,19 +59,36 @@ public class Trigger : MonoBehaviour
             _onEnter = new UnityEvent();
         }
         _onEnter.AddListener(Activate);
-        
-        //_entered.AddListener(Activate);
+        _onEnter.AddListener(Enter);
+
+        if (_onExit == null)
+        {
+            _onExit = new UnityEvent();
+        }
+        _onExit.AddListener(Exit);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_startActivated || _triggerType != TriggerType.Enter || !other.TryGetComponent<Player>(out _player))
+        if (!CanBeActivated() || (_triggerType != TriggerType.Enter && _triggerType != TriggerType.EnterAndPress) || !other.TryGetComponent<Player>(out _player))
         {
             return;
         }
-        _entered?.Invoke();
 
-        Do();
+        if (!_playerInside)
+        {
+            _onEnter?.Invoke();
+            
+        }
+
+        if (_triggerType == TriggerType.Enter)
+        {
+            Do();
+        }
+        if (_triggerType == TriggerType.EnterAndPress && _buttonPressed)
+        {
+            Do();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -75,17 +97,27 @@ public class Trigger : MonoBehaviour
         {
             return;
         }
+        _onExit?.Invoke();
+
+        if (_canBeActivatedMultipleTime)
+        {
+            SetStartDeactivated();
+        }
     }
 
     private void Update()
     {
-        if (!_startActivated)
+        if (CanBeActivated())
         {
             foreach (var t in _keyCodes)
             {
                 if (Input.GetKeyDown(t))
                 {
-                    Do();
+                    _buttonPressed = true;
+                    if (_triggerType != TriggerType.EnterAndPress)
+                    {
+                        Do();
+                    }
                 }
             }
         }
@@ -93,14 +125,11 @@ public class Trigger : MonoBehaviour
 
     private void Do()
     {
-        if (!CanBeActivated())
-        {
-            return;
-        }
+        _onStart?.Invoke();
         SetStartActivated();
         switch (_eventType)
         {
-            case EventType.EnterEvent:
+            case EventType.CustomScript:
                 _onEnter?.Invoke();
                 break;
             case EventType.Message:
@@ -111,11 +140,25 @@ public class Trigger : MonoBehaviour
 
     private void ShowMessage()
     {
-        UnityAction[] onUnshow = new UnityAction[]
+        UnityAction[] onUnshow;
+
+        if (_canBeActivatedMultipleTime)
         {
-            SetPlayerActive,
-            Activate,
-        };
+            onUnshow = new UnityAction[]
+            {
+                SetPlayerActive,
+                Activate,
+                SetStartDeactivated
+            };
+        }
+        else
+        {
+            onUnshow = new UnityAction[]
+            {
+                SetPlayerActive,
+                Activate,
+            };
+        }
 
         UnityAction[] onShow = new UnityAction[]
         {
@@ -130,8 +173,16 @@ public class Trigger : MonoBehaviour
 
     private void Activate()
     {
-        _activated = true;
-        //_player.gameObject.SetActive(false);
+        if (_triggerType != TriggerType.EnterAndPress)
+        {
+             _activated = true;
+        }
+
+        if (_playerInside && _buttonPressed)
+        {
+            _buttonPressed = false;
+            _activated = true;
+        }
     }
 
     private bool CanBeActivated()
@@ -149,19 +200,26 @@ public class Trigger : MonoBehaviour
             }
         }
 
+        for (var index = 0; index < _banTriggers.Count; index++)
+        {
+            var t = _banTriggers[index];
+            if (!t.Activated)
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 
     private void SetPlayerActive()
     {
-        //_player.gameObject.SetActive(true);
         Time.timeScale = 1.0f;
     }
 
     private void SetPlayerInactive()
     {
         Time.timeScale = 0.0f;
-        //_player.gameObject.SetActive(false);
     }
 
     private void SetStartActivated()
@@ -174,15 +232,26 @@ public class Trigger : MonoBehaviour
         _startActivated = false;
     }
 
+    private void Enter()
+    {
+        _playerInside = true;
+    }
+
+    private void Exit()
+    {
+        _playerInside = false;
+    }
+
     public enum TriggerType
     {
         Enter = 0,
-        ButtonPressed = 1
+        ButtonPressed = 1,
+        EnterAndPress = 2,
     }
 
     public enum EventType
     {
         Message = 0,
-        EnterEvent = 1,
+        CustomScript = 1,
     }
 }
