@@ -32,8 +32,11 @@ namespace Legacy_do_not_use_it
             if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
             {
                 var token = TokenSession.FromPlayerPrefs();
+
+                Time.timeScale = 0f;
                 var task = await taskFolder.GetTask(token);
-                CodeEditor.OpenSolution(task).Forget();
+                await CodeEditor.OpenSolution(task);
+                Time.timeScale = 1f;
             }
         }
     }
