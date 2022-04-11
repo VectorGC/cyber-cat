@@ -212,7 +212,6 @@ public class ModalPanel : MonoBehaviour
 				i++;
 			}
 		}
-		
     }
 
 	private void AddOnEndAndShow(UnityAction[] onEnd, UnityAction[] onShow)
