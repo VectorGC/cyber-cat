@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0a955a6baef27468893681ab13e59d, type: 3}
+  m_Name: Pascal Syntax
+  m_EditorClassIdentifier: 
+  languageName: Pascal
+  delimiterSymbols: '( ) [ ] { } : ; . , '' "'
+  keywordGroups:
+  - group: 
+    keywords: and array as begin case class const constructor destructor div do downto
+      else end event except file final finalization finally for foreach function
+      goto if implementation in inherited initialization interface is label lock
+      mod nil not of operator or procedure program property raise record repeat set
+      shl shr sizeof template then to try type typeof until uses using var where
+      while with xor
+    highlightColor: {r: 0.5660378, g: 0.46132082, b: 0, a: 0}
+    caseSensitive: 0
+  - group: 
+    keywords: writeln write read readln
+    highlightColor: {r: 0.4245283, g: 0.3481559, b: 0.006007465, a: 0}
+    caseSensitive: 0
+  symbolGroup:
+    symbols: '+ - * / : = < > $ @ # ; ^ _ ~ %'
+    highlightColor: {r: 0, g: 0.3072684, b: 0.6037736, a: 1}
+  numberGroup:
+    highlightNumbers: 1
+    highlightColor: {r: 0, g: 0.7264151, b: 0.4489074, a: 1}
+  commentGroup:
+    lineCommentStart: //
+    blockCommentStart: '{'
+    blockCommentEnd: '}'
+    highlightColor: {r: 0, g: 0.3207547, b: 0.027675286, a: 1}
+    lineCommentHasPresedence: 1
+  literalGroup:
+    highlightLiterals: 0
+    highlightColor: {r: 0, g: 0, b: 0, a: 1}
+  autoIndent:
+    autoIndentMode: 0
+    allowAutoIndent: 0
+    indentIncreaseCharacter: 0
+    indentDecreaseCharacter: 0
