@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 23763153}
   - component: {fileID: 23763152}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: thank u, sir!
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
-    Title: "\u0421\u041F\u0410\u0421\u0418\u0411\u041E"
+    Title: "\u0421\u041F\u0410 \u0421\u0418 \u0411\u041E"
     Description: "\u0427\u0435\u043B \u0445\u043E\u0440\u043E\u0448"
     Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
     CountOfButtons: 1
@@ -1094,7 +1094,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0413\u043E\u0432\u043E\u0440\u0438\u0442\u044C F"
+  m_text: "\u0412\u0437\u0430\u0438\u043C\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u0442\u044C
+    F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dcbd576cdce651b48bfc3475951aa5ed, type: 2}
   m_sharedMaterial: {fileID: 6563865059146887625, guid: dcbd576cdce651b48bfc3475951aa5ed, type: 2}
