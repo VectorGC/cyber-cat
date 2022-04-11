@@ -70,7 +70,7 @@ public class Trigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!CanBeActivated() || (_triggerType != TriggerType.Enter && _triggerType != TriggerType.EnterAndPress) || !other.TryGetComponent<Player>(out _player))
+        if (!CanBeActivated() || _playerInside || (_triggerType != TriggerType.Enter && _triggerType != TriggerType.EnterAndPress) || !other.TryGetComponent<Player>(out _player))
         {
             return;
         }
@@ -82,10 +82,6 @@ public class Trigger : MonoBehaviour
         }
 
         if (_triggerType == TriggerType.Enter)
-        {
-            Do();
-        }
-        if (_triggerType == TriggerType.EnterAndPress && _buttonPressed)
         {
             Do();
         }
@@ -114,7 +110,11 @@ public class Trigger : MonoBehaviour
                 if (Input.GetKeyDown(t))
                 {
                     _buttonPressed = true;
-                    if (_triggerType != TriggerType.EnterAndPress)
+                    if (_triggerType == TriggerType.ButtonPressed)
+                    {
+                        Do();
+                    }
+                    if (_triggerType == TriggerType.EnterAndPress && _playerInside)
                     {
                         Do();
                     }
@@ -203,7 +203,8 @@ public class Trigger : MonoBehaviour
         for (var index = 0; index < _banTriggers.Count; index++)
         {
             var t = _banTriggers[index];
-            if (!t.Activated)
+            var activated = t?.Activated;
+            if (activated is true)
             {
                 return false;
             }
