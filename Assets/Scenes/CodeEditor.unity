@@ -987,7 +987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &586187622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2464,6 +2464,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1797425561}
     m_Modifications:
+    - target: {fileID: 2827090326072844211, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
+      propertyPath: m_text
+      value: "#include <stdio.h>\r\nint main() {\r\n    double a, b, product;\r\n   
+        printf(\"Enter two integer numbers: \");\r\n    scanf(\"%lf %lf\", &a, &b); 
+        \r\n \r\n    // Calculating product\r\n    product = a * b;\r\n\r\n    //
+        %.d displays number up to 2\r\n    printf(\"Product = %.d\", product);\r\n   
+        \r\n    return 0;\r\n}"
+      objectReference: {fileID: 0}
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2487,6 +2495,22 @@ PrefabInstance:
     - target: {fileID: 2827090326594315400, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2827090326655230057, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
+      propertyPath: m_text
+      value: 'num1 = "2" # first integer variable
+
+        num2 = "2" # second integer
+        variable
+
+        output = num1*num2 # multiplied number
+
+
+
+        # Optional:
+        print multiplied number
+
+        print(output)'
       objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086784, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_Name
@@ -2813,7 +2837,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3325,7 +3349,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.8
+  m_fontSize: 18
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1

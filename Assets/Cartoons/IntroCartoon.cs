@@ -1,9 +1,13 @@
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class IntroCartoon : MonoBehaviour
 {
+    [SerializeField] private UnityEvent onComplete;
+    
     public static async UniTask Play()
     {
         var introCartoonScene = UIDialogs.Instance.IntroCartoon;
@@ -13,13 +17,9 @@ public class IntroCartoon : MonoBehaviour
         
         var inputInAnimatorState = FindObjectOfType<InputInAnimatorState>();
         await inputInAnimatorState.ToUniTask();
-    }
-
-    private async void OnGUI()
-    {
-        if (GUILayout.Button("Test Intro Scene"))
-        {
-            await Play();
-        }
+        
+        PlayerPrefs.SetInt("isCartoonWatched", 1);
+        var introCartoon = FindObjectOfType<IntroCartoon>();
+        introCartoon.onComplete.Invoke();
     }
 }
