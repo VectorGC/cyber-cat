@@ -248,6 +248,7 @@ MonoBehaviour:
   taskUnitFolder:
     _unit: unit-1
     _task: task-1
+  taskDataObservers: []
 --- !u!4 &38899409
 Transform:
   m_ObjectHideFlags: 0
@@ -600,17 +601,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 018e1208e201c0e498d6898df3192418, type: 3}
---- !u!114 &158959084 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 27337407769765639, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
-  m_PrefabInstance: {fileID: 1488368861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c656d0fdd5b702e4db9db19261306d16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &165277699 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7398486636018287259, guid: ce54f8afdca823640a2b2b0e2c4b3633, type: 3}
@@ -1006,7 +996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &233655772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1023,7 +1013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -440}
+  m_AnchoredPosition: {x: 0, y: -260}
   m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &233655773
@@ -4764,7 +4754,7 @@ PrefabInstance:
     - target: {fileID: -3654806603337436127, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: _modalInfos.Array.data[0].ButtonEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 158959084}
+      objectReference: {fileID: 0}
     - target: {fileID: -3654806603337436127, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: _modalInfos.Array.data[0].ButtonEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
