@@ -70,8 +70,6 @@ public class CodeEditor : UIBehaviour
 
     protected override void OnEnable()
     {
-        WebGLInput.captureAllKeyboardInput = true;
-        
         _setTaskInEditorUnsubcriber = MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
         _progLanguageChangedUnsubscriber =
             MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
@@ -79,8 +77,6 @@ public class CodeEditor : UIBehaviour
 
     protected override void OnDisable()
     {
-        WebGLInput.captureAllKeyboardInput = false;
-        
         _setTaskInEditorUnsubcriber.Dispose();
         _progLanguageChangedUnsubscriber.Dispose();
     }
