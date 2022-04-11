@@ -56,6 +56,7 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
     public string Id => _taskData.Id;
     public string Name => _taskData.Name;
     public string Description => _taskData.Description;
+    public string Output => _taskData.Output;
     public bool IsSolved => _taskData.IsSolved;
 
     public IDisposable Subscribe(IObserver<ITaskData> observer) => _subject.Subscribe(observer);
