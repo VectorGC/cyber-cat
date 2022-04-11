@@ -1724,7 +1724,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 2112049966}
-  _banTriggers: []
+  _banTriggers:
+  - {fileID: 1045096503}
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 1
   _countOfModals: 1
@@ -1801,7 +1802,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0.16623168, y: 0.10876223, z: 0.0061778435}
 --- !u!1 &422005924
 GameObject:
@@ -3032,7 +3033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &598515338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3811,7 +3812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1045096502
 Transform:
   m_ObjectHideFlags: 0
@@ -3844,7 +3845,7 @@ MonoBehaviour:
   - {fileID: 400285184}
   _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _canBeActivatedMultipleTime: 1
+  _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
@@ -3853,7 +3854,7 @@ MonoBehaviour:
       \u0441\u043E\u043E\u0431\u0449\u0438 \u043E\u0431 \u044D\u0442\u043E\u043C
       \u043C\u0430\u043B\u044C\u0447\u0438\u043A\u0443!"
     Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
-    CountOfButtons: 0
+    CountOfButtons: 1
     ButtonText:
     - "\u0418\u0434\u0443!"
     ButtonEvents:
@@ -4007,10 +4008,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
+    _unit: unit-2
     _task: task-1
   taskDataObservers:
-  - {fileID: 449821444}
+  - {fileID: 1479371113}
 --- !u!1 &1238783290
 GameObject:
   m_ObjectHideFlags: 0
