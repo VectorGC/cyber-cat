@@ -16,22 +16,31 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         _collider.enabled = false;
     }
 
-    private async void OnTriggerStay(Collider other)
+    //private async void OnTriggerStay(Collider other)
+    //{
+    //    if (!other.CompareTag("Player"))
+    //    {
+    //        return;
+    //    }
+
+    //    var isHackModePressed = Input.GetKey(KeyCode.F);
+    //    if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
+    //    {
+    //        var progress = new ScheduledNotifier<float>();
+    //        progress.ViaLoadingScreen();
+
+    //        await CodeEditor.OpenSolution(_taskData, progress);
+    //    }
+    //}
+
+    public async void Load()
     {
-        if (!other.CompareTag("Player"))
-        {
-            return;
-        }
+        var progress = new ScheduledNotifier<float>();
+        progress.ViaLoadingScreen();
 
-        var isHackModePressed = Input.GetKey(KeyCode.F);
-        if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
-        {
-            var progress = new ScheduledNotifier<float>();
-            progress.ViaLoadingScreen();
-
-            await CodeEditor.OpenSolution(_taskData, progress);
-        }
+        await CodeEditor.OpenSolution(_taskData, progress);
     }
+
 
     public override void OnNext(ITaskData taskData)
     {
