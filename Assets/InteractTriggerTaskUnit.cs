@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
 {
+    [SerializeField] private Trigger _triggerToActivate;
     private ITaskData _taskData;
     private Collider _collider;
 
@@ -53,6 +54,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             return;
         }
 
+        _triggerToActivate.gameObject.SetActive(true);
         _collider.enabled = false;
     }
 
