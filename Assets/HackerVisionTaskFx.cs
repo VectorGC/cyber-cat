@@ -4,50 +4,52 @@ using TasksData;
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class HackerVisionTaskFx : TaskUnitView
+public class HackerVisionTaskFx : MonoBehaviourObserver<ITaskData>
 {
     [SerializeField] private new ParticleSystem particleSystem;
 
-    protected override void Start()
-    {
-        base.Start();
-        TryGetComponent(out particleSystem);
-    }
+    private bool? _isTaskSolved;
 
-    protected override void UpdateTaskData(ITaskData taskData)
+    protected void Start()
     {
+        enabled = false;
+        TryGetComponent(out particleSystem);
     }
 
     private void Update()
     {
-        if (GameMode.Vision != VisionMode.HackVision)
+        if (GameMode.Vision == VisionMode.HackVision)
         {
-            if (!particleSystem.isPlaying)
+            if (_isTaskSolved is false)
             {
+                if (!particleSystem.isPlaying) particleSystem.Play();
                 return;
             }
-
-            particleSystem.Stop();
-            particleSystem.Clear();
-
-            return;
-        }
-
-        if (!IsTaskSolved)
-        {
-            if (!particleSystem.isPlaying) particleSystem.Play();
-            return;
         }
 
         particleSystem.Stop();
         particleSystem.Clear();
     }
 
-    public void OnCompleted()
+    public override void OnNext(ITaskData value)
     {
+        _isTaskSolved = value?.IsSolved;
+        if (_isTaskSolved is false)
+        {
+            enabled = true;
+            return;
+        }
+
+        enabled = false;
     }
 
-    public void OnError(Exception error)
+    public override void OnCompleted()
     {
+        Destroy(this);
+    }
+
+    public override void OnError(Exception error)
+    {
+        throw error;
     }
 }

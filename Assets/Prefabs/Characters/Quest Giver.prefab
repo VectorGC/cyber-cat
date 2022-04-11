@@ -242,7 +242,6 @@ GameObject:
   - component: {fileID: 2233802234970134947}
   - component: {fileID: 901043970611810721}
   - component: {fileID: -3654806603337436127}
-  - component: {fileID: 27337407769765639}
   m_Layer: 0
   m_Name: Quest Giver
   m_TagString: Untagged
@@ -313,6 +312,7 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
   _canBeActivatedMultipleTime: 1
   _countOfModals: 1
@@ -363,21 +363,6 @@ MonoBehaviour:
   _onStart:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &27337407769765639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423531785645388452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c656d0fdd5b702e4db9db19261306d16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskFolder:
-    _unit: 
-    _task: 
 --- !u!1 &1691962716663663637
 GameObject:
   m_ObjectHideFlags: 0

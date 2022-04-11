@@ -6,7 +6,6 @@ using Cysharp.Threading.Tasks;
 using Extensions.RestClientExt;
 using Newtonsoft.Json.Linq;
 using Proyecto26;
-using TasksData;
 using UnityEngine;
 
 namespace RestAPIWrapper
@@ -47,34 +46,18 @@ namespace RestAPIWrapper
             return await RestClient.Get<TasksData.TasksData>(request).ToUniTask();
         }
 
-        public static UniTask<ITaskData> GetTask(string token, string taskId, IProgress<float> progress = null)
-        {
-            return new GetTaskRequest(taskId, token).SendRequest(progress);
-        }
-
-        public static async UniTask<string> SendCodeToChecking(TokenSession token, int taskId, string code,
+        public static async UniTask<string> SendCodeToChecking(TokenSession token, string taskId, string code,
             ProgLanguage progLanguage, IProgress<float> progress = null)
         {
             var formData = new WWWForm();
 
             formData.AddField("task_id", taskId);
             formData.AddField("source_text", code);
-            formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]); // Dirty hack for playtest.
-
-            //formData.AddField("verbose", "false");
-
-            //formData.Add(new MultipartFormDataSection("source_text", _codeText));
-            //formData.Add(new MultipartFormDataSection("verbose", "false"));
-
-            //var url = new GetTasksRequest(token).GetUri();
-            // "https://kee-reel.com/cyber-cat/?" + _token.Token
-
-            //var y = ObservableWWW.Post(Endpoint.URI, formData);
-            //y.Do(x => Debug.LogError(y)).Subscribe();
+            formData.AddField("lang", RequestParam.ProgLanguages[progLanguage]);
 
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.SOLUTION,
                 Params =
                 {
                     ["token"] = token
@@ -125,11 +108,10 @@ namespace RestAPIWrapper
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.TASKS_HIERARCHY,
                 Params =
                 {
                     ["token"] = token,
-                    ["folders"] = true.ToString().ToLower()
                 },
                 ProgressCallback = value => progress?.Report(value),
                 EnableDebug = Debug.isDebugBuild
