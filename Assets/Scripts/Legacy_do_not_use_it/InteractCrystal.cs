@@ -14,6 +14,8 @@ namespace Legacy_do_not_use_it
 
         [SerializeField] private TaskUnitFolder taskFolder;
 
+        [SerializeField] private bool selfTriggerLogic = false;
+
         // Start is called before the first frame update
         void Start()
         {

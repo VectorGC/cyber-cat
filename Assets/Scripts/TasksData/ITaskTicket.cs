@@ -6,6 +6,6 @@ namespace TasksData
         string Name { get; }
         string Description { get; }
         string Output { get; }
-        bool IsSolved { get; }
+        bool? IsSolved { get; }
     }
 }

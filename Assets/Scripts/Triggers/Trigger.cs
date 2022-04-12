@@ -194,7 +194,7 @@ public class Trigger : MonoBehaviour
         for (var index = 0; index < _requiredTriggers.Count; index++)
         {
             var t = _requiredTriggers[index];
-            if (!t.Activated)
+            if (t == null || !t.Activated)
             {
                 return false;
             }

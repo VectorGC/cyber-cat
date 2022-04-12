@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out _navMeshAgent);
+        Time.timeScale = 1f;
     }
 
     private void Update()

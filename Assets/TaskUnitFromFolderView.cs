@@ -32,6 +32,6 @@ public class TaskUnitFromFolderView : MonoBehaviour, ITaskUnit
     public UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
         _taskUnit.GetTask(token, progress);
 
-    public UniTask<bool> IsTaskSolved(string token, IProgress<float> progress = null) =>
+    public UniTask<bool?> IsTaskSolved(string token, IProgress<float> progress = null) =>
         _taskUnit.IsTaskSolved(token, progress);
 }

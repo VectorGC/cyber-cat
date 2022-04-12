@@ -50,14 +50,14 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
     public async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
         await _taskUnitFolder.GetTask(token, progress);
 
-    public async UniTask<bool> IsTaskSolved(string token, IProgress<float> progress = null) =>
+    public async UniTask<bool?> IsTaskSolved(string token, IProgress<float> progress = null) =>
         await _taskUnitFolder.IsTaskSolved(token, progress);
 
     public string Id => _taskData.Id;
     public string Name => _taskData.Name;
     public string Description => _taskData.Description;
     public string Output => _taskData.Output;
-    public bool IsSolved => _taskData.IsSolved;
+    public bool? IsSolved => _taskData.IsSolved;
 
     public IDisposable Subscribe(IObserver<ITaskData> observer) => _subject.Subscribe(observer);
 }

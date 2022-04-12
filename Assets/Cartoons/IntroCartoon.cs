@@ -10,6 +10,9 @@ public class IntroCartoon : MonoBehaviour
     
     public static async UniTask Play()
     {
+        // Грязный хак из-за не желания и времени разбираться почему игра паузится сама
+        Time.timeScale = 1f;
+        
         var introCartoonScene = UIDialogs.Instance.IntroCartoon;
         await SceneManager.LoadSceneAsync(introCartoonScene)
             .ViaLoadingScreenObservable()
