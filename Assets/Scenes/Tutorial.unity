@@ -348,17 +348,6 @@ Transform:
   m_Father: {fileID: 353653191}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &41303920 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2647670336685950359, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
-  m_PrefabInstance: {fileID: 1966746569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &41846729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,15 +1025,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 350967303}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -1247,15 +1229,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 212123128}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -1348,15 +1323,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 199903155}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -1521,15 +1489,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 205010709}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -2139,15 +2100,8 @@ MonoBehaviour:
   _activated: 0
   _startActivated: 0
   _requiredTriggers: []
+  _banTriggers: []
   _transformOfTrigger: {fileID: 1775819544}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -2463,17 +2417,6 @@ Transform:
   m_Father: {fileID: 1407697768}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &390633827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2647670337094608001, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
-  m_PrefabInstance: {fileID: 1966746569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &402624851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3018,6 +2961,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &518559397 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2104517073407493184, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
+  m_PrefabInstance: {fileID: 1966746569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &537354468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,15 +3775,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 1835637985}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -4160,6 +4107,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 28405218034368523, guid: bce72156ec7f32943bf570e2ef2bd78a, type: 3}
+--- !u!114 &893231623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1799271619717634646, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
+  m_PrefabInstance: {fileID: 1966746569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &940838887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4774,17 +4732,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059866230}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1064750805 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2647670336747265670, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
-  m_PrefabInstance: {fileID: 1966746569}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1065711620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5208,15 +5155,15 @@ PrefabInstance:
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: Button1
       value: 
-      objectReference: {fileID: 1064750805}
+      objectReference: {fileID: 0}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: Button2
       value: 
-      objectReference: {fileID: 41303920}
+      objectReference: {fileID: 0}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: Button3
       value: 
-      objectReference: {fileID: 390633827}
+      objectReference: {fileID: 0}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: Question
       value: 
@@ -5224,15 +5171,15 @@ PrefabInstance:
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: _button1
       value: 
-      objectReference: {fileID: 1064750805}
+      objectReference: {fileID: 893231623}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: _button2
       value: 
-      objectReference: {fileID: 41303920}
+      objectReference: {fileID: 1620386442}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: _button3
       value: 
-      objectReference: {fileID: 390633827}
+      objectReference: {fileID: 518559397}
     - target: {fileID: 8640438879012197671, guid: 3a21f9034834dda4b8f91a0841881f7a, type: 3}
       propertyPath: IconImage
       value: 
@@ -5900,15 +5847,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 2055825414}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 204111227}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -7059,6 +6999,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1620386442 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1279571435117364712, guid: 33f663171129fdf48a3d04bea326adc9, type: 3}
+  m_PrefabInstance: {fileID: 1966746569}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1646935854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7782,15 +7733,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 1294664419}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
@@ -9038,15 +8982,8 @@ MonoBehaviour:
   _startActivated: 0
   _requiredTriggers:
   - {fileID: 240724203}
+  _banTriggers: []
   _transformOfTrigger: {fileID: 0}
-  _modalInfo:
-    TimeBeforeShow: 0
-    Title: 
-    Description: 
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText: []
-    ButtonEvents: []
   _canBeActivatedMultipleTime: 0
   _countOfModals: 1
   _modalInfos:
