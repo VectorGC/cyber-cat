@@ -65,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2959115169950158725
 RectTransform:
   m_ObjectHideFlags: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.02603239, g: 0.05007168, b: 0.3679245, a: 0.74509805}
+  m_Color: {r: 0.020469919, g: 0.032070547, b: 0.18867922, a: 0.25882354}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1377,15 +1377,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.b
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.g
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.r
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361802626945, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Pivot.x
@@ -1575,15 +1575,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.b
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.g
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361631923685, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Color.r
-      value: 0.23529412
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 855634361802626945, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_Pivot.x
