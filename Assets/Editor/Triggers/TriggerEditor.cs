@@ -39,7 +39,6 @@ public class TriggerEditor : UnityEditor.Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_banTriggers"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_triggerType"));
         TypeOfTrigger = (Trigger.TriggerType)serializedObject.FindProperty("_triggerType").enumValueIndex;
-        Debug.Log(TypeOfTrigger);
         EditorGUILayout.Space();
 
         switch (TypeOfTrigger)
