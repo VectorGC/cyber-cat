@@ -2951,6 +2951,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2827090326594315403, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2827090326594315403, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: Pascal
+      objectReference: {fileID: 0}
     - target: {fileID: 2827090326746086784, guid: 00d8b9ddca0852c48b489619d0a4870c, type: 3}
       propertyPath: m_Name
       value: ProgLanguagePicker
@@ -3141,6 +3149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2131099015477721800, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
+      propertyPath: pascalLanguageTheme
+      value: 
+      objectReference: {fileID: 11400000, guid: 038075ee37e124446b529904e2ecf655, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b24c17d208f2f49aabb5fe794988db, type: 3}
 --- !u!224 &1624113692 stripped
@@ -3686,7 +3698,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
+  m_fontSize: 23.8
   m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 1
