@@ -17,6 +17,13 @@ namespace Authentication
             var password = passwordTextField.text;
 
             await TokenSession.RequestAndSaveFromServer(login, password);
+
+            var isCartoonWatched = PlayerPrefs.GetInt("isCartoonWatched") == 1;
+            if (!isCartoonWatched)
+            {
+                await IntroCartoon.Play();
+            }
+            
             onComplete.Invoke();
         }
     }

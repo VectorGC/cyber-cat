@@ -56,7 +56,7 @@ namespace mikinel.easylogview
         {
             if (string.IsNullOrEmpty(hashcode))
             {
-                text.text += $"{logText} \n";
+                text.text = $"{logText} \n" + text.text;
                 return;
             }
 

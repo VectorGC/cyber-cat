@@ -7,8 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
 {
+    [SerializeField] private Trigger _triggerToActivate;
     private ITaskData _taskData;
     private Collider _collider;
+    
+    [SerializeField] private bool selfTriggerLogic = false;
 
     protected void Start()
     {
@@ -18,6 +21,11 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
 
     private async void OnTriggerStay(Collider other)
     {
+        if (!selfTriggerLogic)
+        {
+            return;
+        }
+        
         if (!other.CompareTag("Player"))
         {
             return;
@@ -33,18 +41,42 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         }
     }
 
+    public async void Load()
+    {
+        var progress = new ScheduledNotifier<float>();
+        progress.ViaLoadingScreen();
+
+        await CodeEditor.OpenSolution(_taskData, progress);
+    }
+
+
     public override void OnNext(ITaskData taskData)
     {
         _taskData = taskData;
         
-        var isTaskSolved = taskData?.IsSolved;
+        var isTaskSolved = taskData.IsSolved;
         if (isTaskSolved is false)
         {
+            if (selfTriggerLogic)
+            {
+                gameObject.SetActive(true);
+            }
+            
             _collider.enabled = true;
             return;
         }
 
+        if (_triggerToActivate)
+        {
+            _triggerToActivate.gameObject.SetActive(true);
+        }
+
         _collider.enabled = false;
+
+        if (selfTriggerLogic)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public override void OnCompleted()
