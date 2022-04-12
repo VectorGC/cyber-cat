@@ -4,6 +4,7 @@ namespace CodeEditorModels.ProgLanguages
     {
         None = 0,
         C = 1,
-        Python = 2
+        Python = 2,
+        Pascal = 3
     }
 }

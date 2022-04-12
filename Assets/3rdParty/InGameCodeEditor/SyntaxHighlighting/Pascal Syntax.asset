@@ -22,11 +22,11 @@ MonoBehaviour:
       mod nil not of operator or procedure program property raise record repeat set
       shl shr sizeof template then to try type typeof until uses using var where
       while with xor
-    highlightColor: {r: 0.5660378, g: 0.46132082, b: 0, a: 0}
+    highlightColor: {r: 0, g: 0.48669928, b: 0.8207547, a: 0}
     caseSensitive: 0
   - group: 
     keywords: writeln write read readln
-    highlightColor: {r: 0.4245283, g: 0.3481559, b: 0.006007465, a: 0}
+    highlightColor: {r: 0.7830189, g: 0.64266646, b: 0, a: 0}
     caseSensitive: 0
   symbolGroup:
     symbols: '+ - * / : = < > $ @ # ; ^ _ ~ %'
@@ -38,7 +38,7 @@ MonoBehaviour:
     lineCommentStart: //
     blockCommentStart: '{'
     blockCommentEnd: '}'
-    highlightColor: {r: 0, g: 0.3207547, b: 0.027675286, a: 1}
+    highlightColor: {r: 0, g: 0.5566038, b: 0.04751491, a: 1}
     lineCommentHasPresedence: 1
   literalGroup:
     highlightLiterals: 0
