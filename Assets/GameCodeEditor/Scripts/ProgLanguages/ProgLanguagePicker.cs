@@ -7,6 +7,7 @@ public class ProgLanguagePicker : UIBehaviour
     // TODO: Move to ScriptableObject.
     public TMP_Text pythonTemplateText;
     public TMP_Text cTemplateText;
+    public TMP_Text pascalTemplateText;
 
     protected override void Start()
     {
@@ -22,6 +23,9 @@ public class ProgLanguagePicker : UIBehaviour
                 break;
             case 1:
                 SelectLanguage(ProgLanguage.Python, pythonTemplateText.text);
+                break;
+            case 2:
+                SelectLanguage(ProgLanguage.Pascal, pascalTemplateText.text);
                 break;
         }
     }

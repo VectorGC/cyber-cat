@@ -1226,6 +1226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cLanguageTheme: {fileID: 11400000, guid: 4fd1ce3a61e5631478883e158c51892b, type: 2}
   pythonLanguageTheme: {fileID: 11400000, guid: 63a8c50211de78b449051004cd01a03d, type: 2}
+  pascalLanguageTheme: {fileID: 0}
 --- !u!114 &114104653646104232
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     // TODO: Use SerializableDictionary here.
     [SerializeField] private CodeLanguageTheme cLanguageTheme;
     [SerializeField] private CodeLanguageTheme pythonLanguageTheme;
+    [SerializeField] private CodeLanguageTheme pascalLanguageTheme;
 
     private IDisposable _unsubscriber;
 
@@ -46,6 +47,9 @@ public class InGameCodeEditorAdapter : MonoBehaviour
                 break;
             case ProgLanguage.Python:
                 _inGameCodeEditor.LanguageTheme = pythonLanguageTheme;
+                break;
+            case ProgLanguage.Pascal:
+                _inGameCodeEditor.LanguageTheme = pascalLanguageTheme;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
