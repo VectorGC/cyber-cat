@@ -650,6 +650,7 @@ MonoBehaviour:
   taskDataObservers:
   - {fileID: 449821444}
   - {fileID: 165277700}
+  - {fileID: 399547219}
 --- !u!4 &38899409
 Transform:
   m_ObjectHideFlags: 0
@@ -6412,6 +6413,7 @@ MonoBehaviour:
     _task: task-2
   taskDataObservers:
   - {fileID: 1686819947}
+  - {fileID: 1206558180}
 --- !u!1001 &334086418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7358,6 +7360,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6013444349964317296, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
   m_PrefabInstance: {fileID: 521179072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &399547219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399547218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49cebc6ab7a1e2438fe3d2404cc2106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerToDisable: {fileID: 399547222}
 --- !u!4 &399547221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6359042447426955466, guid: c0c12d59f53090a4698efe3a12ca959c, type: 3}
@@ -15667,6 +15682,7 @@ MonoBehaviour:
   taskDataObservers:
   - {fileID: 1479371113}
   - {fileID: 400285183}
+  - {fileID: 2112049968}
 --- !u!1 &1199840678
 GameObject:
   m_ObjectHideFlags: 0
@@ -15878,6 +15894,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1206558180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206558177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49cebc6ab7a1e2438fe3d2404cc2106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerToDisable: {fileID: 1206558178}
 --- !u!4 &1206993956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1091199587743942511, guid: 5bce66f7433474e4ebaf06e4434835be, type: 3}
@@ -36553,6 +36582,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2112049968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112049965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49cebc6ab7a1e2438fe3d2404cc2106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _triggerToDisable: {fileID: 2112049966}
 --- !u!4 &2112049970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1768426127202625566, guid: 447acd6056db59243a15c32a854f383c, type: 3}
