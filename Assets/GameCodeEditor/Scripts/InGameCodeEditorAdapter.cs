@@ -30,15 +30,12 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     {
         _unsubscriber.Dispose();
     }
-    
-    private void Start()
-    {
-        _inGameCodeEditor.Refresh();
-    }
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)
     {
-        _inGameCodeEditor.Text = msg.Text;
+        var value = msg.Text;
+        value = value.Replace("\r", "");
+        _inGameCodeEditor.Text = value;
 
         switch (msg.Language)
         {
@@ -54,5 +51,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        _inGameCodeEditor.Refresh();
     }
 }
