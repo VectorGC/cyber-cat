@@ -23,6 +23,10 @@ public class QuestDisabler : MonoBehaviourObserver<ITaskData>
         if (value.IsSolved is true)
         {
             _triggerToDisable.enabled = false;
+            if (_triggerToDisable.gameObject.TryGetComponent<SphereCollider>(out SphereCollider collider))
+            {
+                collider.radius = 0;
+            }
         }
         
     }
