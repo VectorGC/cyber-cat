@@ -38,7 +38,7 @@ public class CodeEditor : UIBehaviour
 
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
-    public static async UniTask OpenSolution(ITaskData task, IProgress<float> progress = null)
+    public static async UniTaskVoid OpenSolution(ITaskData task, IProgress<float> progress = null)
     {
         Time.timeScale = 0f;
         

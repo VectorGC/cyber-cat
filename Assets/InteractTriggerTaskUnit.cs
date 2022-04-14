@@ -19,7 +19,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         _collider.enabled = false;
     }
 
-    private async void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!selfTriggerLogic)
         {
@@ -37,16 +37,16 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             var progress = new ScheduledNotifier<float>();
             progress.ViaLoadingScreen();
 
-            await CodeEditor.OpenSolution(_taskData, progress);
+            CodeEditor.OpenSolution(_taskData, progress).Forget();
         }
     }
 
-    public async void Load()
+    public void Load()
     {
         var progress = new ScheduledNotifier<float>();
         progress.ViaLoadingScreen();
 
-        await CodeEditor.OpenSolution(_taskData, progress);
+        CodeEditor.OpenSolution(_taskData, progress).Forget();
     }
 
 
