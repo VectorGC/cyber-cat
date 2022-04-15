@@ -15,6 +15,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     [SerializeField] private CodeLanguageTheme pascalLanguageTheme;
 
     private IDisposable _unsubscriber;
+    private IDisposable _setTaskInEditorUnsubcriber;
 
     private void Awake()
     {
@@ -24,18 +25,31 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     private void OnEnable()
     {
         _unsubscriber = MessageBroker.Default.Receive<ProgLanguageChanged>().Subscribe(OnProgLanguageChanged);
+        _setTaskInEditorUnsubcriber = MessageBroker.Default.Receive<SetTaskInEditor>().Subscribe(OnSetTaskInEditor);
+    }
+
+    private void OnSetTaskInEditor(SetTaskInEditor msg)
+    {
+        var value = msg.LastSavedCode;
+        value = value.Replace("\r", "");
+        _inGameCodeEditor.Text = value;
+        _inGameCodeEditor.Refresh();
     }
 
     private void OnDisable()
     {
         _unsubscriber.Dispose();
+        _setTaskInEditorUnsubcriber.Dispose();
     }
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)
     {
-        var value = msg.Text;
-        value = value.Replace("\r", "");
-        _inGameCodeEditor.Text = value;
+        if (string.IsNullOrEmpty(_inGameCodeEditor.Text))
+        {
+            var value = msg.Text;
+            value = value.Replace("\r", "");
+            _inGameCodeEditor.Text = value;
+        }
 
         switch (msg.Language)
         {
@@ -51,7 +65,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        
+
         _inGameCodeEditor.Refresh();
     }
 }

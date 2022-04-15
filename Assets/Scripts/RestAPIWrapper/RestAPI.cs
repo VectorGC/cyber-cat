@@ -71,6 +71,26 @@ namespace RestAPIWrapper
             return response.Text;
         }
 
+        public static async UniTask<string> GetLastSavedCode(string token, string taskId, IProgress<float> progress = null)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.SOLUTION,
+                Params =
+                {
+                    ["token"] = token,
+                    ["task_id"] = taskId
+                },
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = true
+            };
+
+            var jObj = await RestClient.Get<JObject>(request).ToUniTask();
+            var code = jObj["text"].ToString();
+
+            return code;
+        }
+
         public static async UniTask<TokenSession> RegisterUser(string login, string password, string name)
         {
             var request = new RequestHelper
