@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using TMPro;
 
 public class ModalPanel : MonoBehaviour
   {
@@ -53,7 +54,7 @@ public class ModalPanel : MonoBehaviour
 		if (MessageType == "Ok")           //If the user has asked for the Message Box type "Ok"
 		  {
 			_button1.onClick.RemoveAllListeners();
-			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(OkEvent);     _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<Text>().text = "Ok";
+			_button2.onClick.RemoveAllListeners(); _button2.onClick.AddListener(OkEvent);     _button2.onClick.AddListener(ClosePanel); _button2.GetComponentInChildren<TMP_Text>().text = "Ok";
 			_button3.onClick.RemoveAllListeners();
 			_button1.gameObject.SetActive(false);
 			_button2.gameObject.SetActive(true);

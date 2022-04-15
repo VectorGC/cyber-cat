@@ -34,7 +34,7 @@ namespace RestAPIWrapper
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.TASKS_FLAT,
                 Params =
                 {
                     ["token"] = token

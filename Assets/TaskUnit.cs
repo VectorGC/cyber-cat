@@ -8,7 +8,7 @@ using UniRx;
 public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
 {
     private ITaskData _taskData;
-    
+
     private readonly TaskUnitFolder _taskUnitFolder;
     private readonly Subject<ITaskData> _subject = new Subject<ITaskData>();
 
@@ -39,12 +39,30 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
         var token = message.Token;
         var observable = GetTask(token)
             .ToObservable()
-            .Do(taskData => _taskData = taskData)
+            .Do(taskData =>
+            {
+                _taskData = taskData;
+                CallNotifyTaskUpdate(taskData);
+            })
             .AsUnitObservable();
 
         observable.Subscribe();
 
         return observable;
+    }
+
+    private void CallNotifyTaskUpdate(ITaskData taskData)
+    {
+        _subject.OnNext(taskData);
+        if (taskData?.IsSolved == true)
+        {
+            _subject.OnCompleted();
+        }
+
+        if (taskData?.IsSolved == null)
+        {
+            _subject.OnError(new Exception());
+        }
     }
 
     public async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
@@ -58,6 +76,14 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
     public string Description => _taskData.Description;
     public string Output => _taskData.Output;
     public bool? IsSolved => _taskData.IsSolved;
+    public float ReceivedScore => _taskData.ReceivedScore;
+    public float TotalScore => _taskData.TotalScore;
 
-    public IDisposable Subscribe(IObserver<ITaskData> observer) => _subject.Subscribe(observer);
+    public IDisposable Subscribe(IObserver<ITaskData> observer)
+    {
+        var unsubscriber = _subject.Subscribe(observer);
+        CallNotifyTaskUpdate(_taskData);
+
+        return unsubscriber;
+    }
 }

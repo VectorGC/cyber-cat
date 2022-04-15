@@ -7,5 +7,7 @@ namespace TasksData
         string Description { get; }
         string Output { get; }
         bool? IsSolved { get; }
+        float ReceivedScore { get; }
+        float TotalScore { get; }
     }
 }

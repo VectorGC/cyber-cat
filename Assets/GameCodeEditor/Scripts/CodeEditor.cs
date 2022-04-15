@@ -3,6 +3,7 @@ using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using GameCodeEditor.Scripts;
+using Legacy_do_not_use_it;
 using TasksData;
 using TMPro;
 using UniRx;
@@ -47,6 +48,8 @@ public class CodeEditor : UIBehaviour
 
         await WaitWhenEnable();
 
+        GameMode.Vision = VisionMode.Default;
+        
         Time.timeScale = 1f;
     }
 
