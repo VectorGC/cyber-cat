@@ -10886,6 +10886,10 @@ PrefabInstance:
       propertyPath: _onEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Show
       objectReference: {fileID: 0}
+    - target: {fileID: 17968535905205579, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1423531785645388452, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_Name
       value: ServerRoomQuestGiver
@@ -10933,6 +10937,22 @@ PrefabInstance:
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572009153750363961, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337413069498117518, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797612249141690555, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6434029748066515364, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
@@ -13923,7 +13943,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1048939984}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &936524167 stripped
 Transform:
@@ -15041,6 +15061,10 @@ PrefabInstance:
       propertyPath: _onEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Show
       objectReference: {fileID: 0}
+    - target: {fileID: 17968535905205579, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1423531785645388452, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_Name
       value: PhysicsRoomQuestGiver
@@ -15088,6 +15112,22 @@ PrefabInstance:
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3572009153750363961, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337413069498117518, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4797612249141690555, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6434029748066515364, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
@@ -26610,7 +26650,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.19
+      value: -0.1236
       objectReference: {fileID: 0}
     - target: {fileID: 1768426127202625566, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33804,7 +33844,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1132170882}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2049177828
 MonoBehaviour:
