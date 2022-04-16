@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: 60c752edc49bf044684ef6e0738eaddd
   - enabled: 1
-    path: Assets/Scenes/CodeEditorForTutorial.unity
-    guid: 0188962a075e56444a51b71e3a0d0637
-  - enabled: 1
     path: Assets/GameScene/Scene/Game.unity
     guid: 416a8e36df97b454a8e5af691788a9b3
   - enabled: 1
