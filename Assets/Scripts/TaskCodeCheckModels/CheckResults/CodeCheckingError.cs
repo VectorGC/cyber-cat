@@ -12,7 +12,14 @@ public class CodeCheckingError : ICodeConsoleMessage
 
     public override string ToString()
     {
-        return  $"Данные для теста: '{Params}'\nВаш вывод: {Result}\nОжидается: '{Expected}'. Тестов пройдено {TestsPassed} / {TestsTotal}";
+        switch (Stage)
+        {
+            case "build":
+                return Msg;
+            default:
+                return
+                    $"Данные для теста: '{Params}'\nВаш вывод: {Result}\nОжидается: '{Expected}'. Тестов пройдено {TestsPassed} / {TestsTotal}";
+        }
     }
 
     public string Message => ToString();
