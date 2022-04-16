@@ -20,7 +20,7 @@ public class CodeCheckingError : ICodeConsoleMessage
             case "build":
                 return Msg;
             default:
-                return "Неизвестная ошибка. Обратитесь к админу";
+                return $"Неизвестная ошибка. Обратитесь к админу. Stage '{Stage}'";
         }
     }
 
