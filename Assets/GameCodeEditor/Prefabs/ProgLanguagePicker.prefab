@@ -929,10 +929,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: C
+  m_text: "\u042F\u0437\u044B\u043A \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F
+    C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
-  m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dcbd576cdce651b48bfc3475951aa5ed, type: 2}
+  m_sharedMaterial: {fileID: 6563865059146887625, guid: dcbd576cdce651b48bfc3475951aa5ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1457,11 +1458,14 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: C
+    - m_Text: "\u042F\u0437\u044B\u043A \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F
+        C"
       m_Image: {fileID: 0}
-    - m_Text: Python
+    - m_Text: "\u042F\u0437\u044B\u043A \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F
+        Python"
       m_Image: {fileID: 0}
-    - m_Text: Pascal
+    - m_Text: "\u042F\u0437\u044B\u043A \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F
+        Pascal"
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
