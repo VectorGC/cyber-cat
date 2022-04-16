@@ -17,9 +17,9 @@ public class CodeCheckingResult : ICodeConsoleMessage
         switch ((WebError)Error)
         {
             case WebError.SolutionTestFail:
-                return $"Данные для теста: '{ErrorData.Params}'\nВаш вывод: {ErrorData.Result}\nОжидается: '{ErrorData.Expected}'";
+                return ErrorData?.ToString();
             case WebError.SolutionBuildFail:
-                return ErrorData.Msg;
+                return ErrorData?.Msg;
             default:
                 return "Неизвестная ошибка. Обратитесь к админу";
         }

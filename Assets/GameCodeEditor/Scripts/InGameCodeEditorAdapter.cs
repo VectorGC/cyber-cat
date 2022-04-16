@@ -32,10 +32,13 @@ public class InGameCodeEditorAdapter : MonoBehaviour
 
     private void OnSetTaskInEditor(SetTaskInEditor msg)
     {
-        var value = msg.LastSavedCode;
-        value = value.Replace("\r", "");
-        _inGameCodeEditor.Text = value;
-        _inGameCodeEditor.Refresh();
+        if (!string.IsNullOrEmpty(msg.LastSavedCode))
+        {
+            var value = msg.LastSavedCode;
+            value = value.Replace("\r", "");
+            _inGameCodeEditor.Text = value;
+            _inGameCodeEditor.Refresh();
+        }
     }
 
     private void OnDisable()
@@ -46,17 +49,9 @@ public class InGameCodeEditorAdapter : MonoBehaviour
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)
     {
-        // Do not apllied template from startup.
-        if (!_isChangedOnStartup)
-        {
-            var value = msg.Text;
-            value = value.Replace("\r", "");
-            _inGameCodeEditor.Text = value;
-        }
-        else
-        {
-            _isChangedOnStartup = false;
-        }
+        var value = msg.Text;
+        value = value.Replace("\r", "");
+        _inGameCodeEditor.Text = value;
 
         switch (msg.Language)
         {
