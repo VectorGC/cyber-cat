@@ -13,7 +13,9 @@ GameObject:
   - component: {fileID: 2375059412060071100}
   - component: {fileID: 2375059412060071101}
   - component: {fileID: 2375059412060071102}
-  - component: {fileID: 2375059412060071103}
+  - component: {fileID: 204111229}
+  - component: {fileID: 204111230}
+  - component: {fileID: 204111231}
   m_Layer: 0
   m_Name: Flash Drive
   m_TagString: Untagged
@@ -30,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 2375059412060071096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.689, y: 1.52, z: -6.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.6878, y: 1.6878, z: 1.6878}
   m_Children:
   - {fileID: 2846097456663373714}
   m_Father: {fileID: 0}
@@ -93,7 +95,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.98
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2375059412060071103
+--- !u!114 &204111229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,10 +104,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 2375059412060071096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed864a12a836a44ab48e982d71a745b, type: 3}
+  m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Task: 0
+  _triggerToActivate: {fileID: 0}
+  selfTriggerLogic: 1
+--- !u!114 &204111230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375059412060071096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5013cb3ad9f3042893116889107e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskUnitFolder:
+    _unit: unit-0
+    _task: task-1
+  taskDataObservers:
+  - {fileID: 204111229}
+  - {fileID: 204111231}
+--- !u!114 &204111231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375059412060071096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32194c7cdcd53144295a831b6be394ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RigidbodyToDisable: {fileID: 2375059412060071101}
+  HoverComponent: {fileID: 2375059412060071100}
+  RotateComponent: {fileID: 2375059412060071075}
+  ActiveRidigbodyColliderOnDisable: {fileID: 1447888799}
 --- !u!1001 &2375059412628619385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,8 +204,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc003e51d517a484590429410b17b2eb, type: 3}
+--- !u!1 &3185327113777478952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bc003e51d517a484590429410b17b2eb, type: 3}
+  m_PrefabInstance: {fileID: 2375059412628619385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2846097456663373714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bc003e51d517a484590429410b17b2eb, type: 3}
   m_PrefabInstance: {fileID: 2375059412628619385}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1447888799
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185327113777478952}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21424215, y: 0.700883, z: 0.08817563}
+  m_Center: {x: 0, y: 0.07865421, z: 0}

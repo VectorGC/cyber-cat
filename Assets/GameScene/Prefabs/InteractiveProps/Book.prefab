@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8544562787218623647}
   - component: {fileID: 6194421423506226732}
   - component: {fileID: 5547651161472147106}
+  - component: {fileID: 245131834}
   m_Layer: 0
   m_Name: Boole_4
   m_TagString: Untagged
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &245131834
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001415881680744083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.11727597, y: 0.4640398, z: 0.295798}
+  m_Center: {x: -0.006669633, y: 0.22739667, z: 0.015538223}
 --- !u!1 &2375059412060071096
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +108,8 @@ GameObject:
   - component: {fileID: 2375059412060071100}
   - component: {fileID: 2375059412060071101}
   - component: {fileID: 2375059412060071102}
-  - component: {fileID: 2375059412060071103}
+  - component: {fileID: 501186221}
+  - component: {fileID: 501186222}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -174,7 +189,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.98
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2375059412060071103
+--- !u!114 &501186221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,7 +198,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2375059412060071096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed864a12a836a44ab48e982d71a745b, type: 3}
+  m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Task: 0
+  _triggerToActivate: {fileID: 0}
+  selfTriggerLogic: 1
+--- !u!114 &501186222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375059412060071096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32194c7cdcd53144295a831b6be394ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RigidbodyToDisable: {fileID: 2375059412060071101}
+  HoverComponent: {fileID: 2375059412060071100}
+  RotateComponent: {fileID: 2375059412060071075}
+  ActiveRidigbodyColliderOnDisable: {fileID: 245131834}

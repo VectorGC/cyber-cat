@@ -14,6 +14,8 @@ namespace Legacy_do_not_use_it
         [SerializeField] private string _unit;
         [SerializeField] private string _task;
 
+        public string Unit => _unit;
+
         public TaskUnitFolder(string unit, string task)
         {
             _unit = unit;
