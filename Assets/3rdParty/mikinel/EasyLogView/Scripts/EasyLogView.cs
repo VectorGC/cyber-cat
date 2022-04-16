@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -56,7 +57,8 @@ namespace mikinel.easylogview
         {
             if (string.IsNullOrEmpty(hashcode))
             {
-                text.text = $"{logText} \n" + text.text;
+                var seconds = $"{DateTime.Now:hh:mm:ss}";
+                text.text = $"[{seconds}] {logText} \n" + text.text;
                 return;
             }
 

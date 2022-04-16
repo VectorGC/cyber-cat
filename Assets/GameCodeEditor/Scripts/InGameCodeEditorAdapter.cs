@@ -17,6 +17,8 @@ public class InGameCodeEditorAdapter : MonoBehaviour
     private IDisposable _unsubscriber;
     private IDisposable _setTaskInEditorUnsubcriber;
 
+    private bool _isChangedOnStartup = true;
+
     private void Awake()
     {
         TryGetComponent(out _inGameCodeEditor);
@@ -44,11 +46,16 @@ public class InGameCodeEditorAdapter : MonoBehaviour
 
     private void OnProgLanguageChanged(ProgLanguageChanged msg)
     {
-        if (string.IsNullOrEmpty(_inGameCodeEditor.Text))
+        // Do not apllied template from startup.
+        if (!_isChangedOnStartup)
         {
             var value = msg.Text;
             value = value.Replace("\r", "");
             _inGameCodeEditor.Text = value;
+        }
+        else
+        {
+            _isChangedOnStartup = false;
         }
 
         switch (msg.Language)

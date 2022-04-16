@@ -42,5 +42,7 @@ namespace Legacy_do_not_use_it
             var taskJToken = jObject.SelectToken($"sample_tests.units.{_unit}.tasks.{_task}");
             return taskJToken;
         }
+
+        public override string ToString() => $"Unit: {_unit}, Task: {_task}";
     }
 }

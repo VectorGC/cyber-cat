@@ -4,6 +4,7 @@ using GameCodeEditor.Scripts;
 using Legacy_do_not_use_it;
 using TasksData;
 using UniRx;
+using UnityEngine;
 
 public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
 {
@@ -61,9 +62,12 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
 
         if (taskData?.IsSolved == null)
         {
+            Debug.LogError($"Not found task from folder '{this}'");
             _subject.OnError(new Exception());
         }
     }
+
+    public override string ToString() => _taskUnitFolder.ToString();
 
     public async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
         await _taskUnitFolder.GetTask(token, progress);
