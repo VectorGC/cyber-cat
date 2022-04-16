@@ -60,7 +60,7 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
             _subject.OnCompleted();
         }
 
-        if (taskData == null)
+        if (taskData == null || taskData is EmptyTaskData)
         {
             Debug.LogError($"Not found task from folder '{this}'");
             _subject.OnError(new Exception());
@@ -86,7 +86,7 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
                 return false;
             }
 
-            return _taskData.IsSolved;
+            return _taskData?.IsSolved;
         }
     } 
     
