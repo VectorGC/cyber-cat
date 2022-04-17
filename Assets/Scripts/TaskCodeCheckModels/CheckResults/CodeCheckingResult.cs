@@ -13,16 +13,7 @@ public class CodeCheckingResult : ICodeConsoleMessage
     }
     private string GetErrorMsg()
     {
-        
-        switch ((WebError)Error)
-        {
-            case WebError.SolutionTestFail:
-                return ErrorData?.ToString();
-            case WebError.SolutionBuildFail:
-                return ErrorData?.Msg;
-            default:
-                return "Неизвестная ошибка. Обратитесь к админу";
-        }
+        return $"Ошибка: '{ErrorData}'";
     }
     public ConsoleMessageType MessageType => ErrorData?.MessageType ?? new CodeCheckingSuccess().MessageType;
 }
