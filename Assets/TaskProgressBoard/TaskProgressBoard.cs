@@ -5,11 +5,7 @@ using Authentication;
 using Cysharp.Threading.Tasks;
 using RestAPIWrapper;
 using TasksData;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Object = System.Object;
 
 public class TasksProgress
 {

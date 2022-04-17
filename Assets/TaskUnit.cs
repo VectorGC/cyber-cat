@@ -62,8 +62,10 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
 
         if (taskData == null || taskData is EmptyTaskData)
         {
-            Debug.LogError($"Not found task from folder '{this}'");
-            _subject.OnError(new Exception());
+            var ex = new Exception($"Not found task from folder '{this}'. Maybe server error");
+            _subject.OnError(ex);
+            
+            throw ex;
         }
     }
 

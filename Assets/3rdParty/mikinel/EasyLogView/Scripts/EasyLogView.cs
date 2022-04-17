@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -55,14 +56,14 @@ namespace mikinel.easylogview
 
         private void PrintMessage(string logText, string hashcode)
         {
+            var seconds = $"{DateTime.Now:hh:mm:ss}";
             if (string.IsNullOrEmpty(hashcode))
             {
-                var seconds = $"{DateTime.Now:hh:mm:ss}";
                 text.text = $"[{seconds}] {logText} \n" + text.text;
                 return;
             }
 
-            text.text += $"<color=#{hashcode}>{logText}</color> \n";
+            text.text = $"<color=#{hashcode}>[{seconds}] {logText}</color> \n" + text.text;
         }
 
         private string GetColorHashCode(ConsoleMessageType type)

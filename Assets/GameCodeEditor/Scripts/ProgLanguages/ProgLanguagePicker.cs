@@ -11,7 +11,7 @@ public class ProgLanguagePicker : UIBehaviour
 
     protected override void Start()
     {
-        SelectLanguage(ProgLanguage.C, cTemplateText.text);
+        SelectLanguage(ProgLanguage.Cpp, cTemplateText.text);
     }
 
     public void SelectLanguage(int value)
@@ -19,7 +19,7 @@ public class ProgLanguagePicker : UIBehaviour
         switch (value)
         {
             case 0:
-                SelectLanguage(ProgLanguage.C, cTemplateText.text);
+                SelectLanguage(ProgLanguage.Cpp, cTemplateText.text);
                 break;
             case 1:
                 SelectLanguage(ProgLanguage.Python, pythonTemplateText.text);

@@ -55,7 +55,7 @@ public class InGameCodeEditorAdapter : MonoBehaviour
 
         switch (msg.Language)
         {
-            case ProgLanguage.C:
+            case ProgLanguage.Cpp:
                 _inGameCodeEditor.LanguageTheme = cLanguageTheme;
                 break;
             case ProgLanguage.Python:

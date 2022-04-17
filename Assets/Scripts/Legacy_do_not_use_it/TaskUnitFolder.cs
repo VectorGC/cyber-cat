@@ -1,10 +1,13 @@
 using System;
+using System.Net;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestAPIWrapper;
 using TasksData;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Legacy_do_not_use_it
 {
@@ -31,6 +34,22 @@ namespace Legacy_do_not_use_it
         public readonly async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null)
         {
             var folders = await RestAPI.GetTaskFolders(token, progress);
+
+            if (folders.GetValue("error") != null)
+            {
+                var error = folders.GetValue("error").ToString();
+                var code = folders.GetValue("error").ToString();
+                var localizedError = WebErrorLocalize.Localize(code);
+                
+                ModalPanel.ShowModalDialog("Непредвиденная ошибка",
+                    $"Пожалуйста, сообщите организатору ошибку:\n{localizedError}", () =>
+                    {
+                        var async = SceneManager.LoadSceneAsync("StartScene");
+                        async.ViaLoadingScreen();
+                    });
+
+                throw new WebException(error);
+            }
 
             var taskJToken = GetTaskJToken(folders);
             var task = taskJToken?.ToObject<TaskData>();
