@@ -1,12 +1,15 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Proyecto26;
+using RestAPIWrapper;
 using UnityEngine;
 
-namespace RestAPIWrapper
+namespace TaskCodeCheckModels
 {
     public struct CodeCheckingRequest : ICodeCheckingRequest
     {
+        private const string Solution = Endpoint.MainEndpoint.Uri + "/solution";
+
         public async UniTask<string> SendCodeToChecking(string token, string taskId, string code,
             string progLanguage, IProgress<float> progress = null)
         {
@@ -18,7 +21,7 @@ namespace RestAPIWrapper
 
             var request = new RequestHelper
             {
-                Uri = Endpoint.SOLUTION,
+                Uri = Solution,
                 Params =
                 {
                     ["token"] = token

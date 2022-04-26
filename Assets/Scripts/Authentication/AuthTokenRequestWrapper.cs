@@ -7,12 +7,16 @@ namespace Authentication
 {
     public struct AuthTokenRequestWrapper : IAuthTokenRequestWrapper
     {
+        private const string Login = Endpoint.MainEndpoint.Uri + "/login";
+        private const string Register = Endpoint.MainEndpoint.Uri + "/register";
+        private const string Restore = Endpoint.MainEndpoint.Uri + "/restore";
+
         public async UniTask<TokenSession> GetAuthData(string login, string password,
             IProgress<float> progress = null)
         {
             var request = new RequestHelper
             {
-                Uri = RestAPIWrapper.Endpoint.LOGIN,
+                Uri = Login,
                 Params =
                 {
                     ["email"] = login,
@@ -29,7 +33,7 @@ namespace Authentication
         {
             var request = new RequestHelper
             {
-                Uri = RestAPIWrapper.Endpoint.REGISTER,
+                Uri = Register,
                 Params =
                 {
                     ["email"] = login,
@@ -46,7 +50,7 @@ namespace Authentication
         {
             var request = new RequestHelper
             {
-                Uri = RestAPIWrapper.Endpoint.RESTORE,
+                Uri = Restore,
                 Params =
                 {
                     ["email"] = login,

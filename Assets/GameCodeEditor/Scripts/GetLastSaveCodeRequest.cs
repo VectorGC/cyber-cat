@@ -2,17 +2,20 @@ using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Proyecto26;
+using RestAPIWrapper;
 
-namespace RestAPIWrapper
+namespace GameCodeEditor.Scripts
 {
     public class GetLastSaveCodeRequest : IGetLastSaveCodeRequest
     {
+        private const string Solution = Endpoint.MainEndpoint.Uri + "/solution";
+        
         public async UniTask<string> GetLastSavedCode(string token, string taskId,
             IProgress<float> progress = null)
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.SOLUTION,
+                Uri = Solution,
                 Params =
                 {
                     ["token"] = token,
