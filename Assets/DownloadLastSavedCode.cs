@@ -17,7 +17,8 @@ public class DownloadLastSavedCode : MonoBehaviour
     {
         var taskId = CodeEditor.Task.Id;
         var token = TokenSession.FromPlayerPrefs();
-        var lastSavedCode = await RestAPI.GetLastSavedCode(token, taskId);
+
+        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, taskId);
 
         var message = new SetTaskInEditor(CodeEditor.Task, lastSavedCode);
         MessageBroker.Default.Publish(message);

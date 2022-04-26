@@ -12,18 +12,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public readonly struct SetTaskInEditor
-{
-    public ITaskData TaskTicket { get; }
-    public string LastSavedCode { get; }
-
-    public SetTaskInEditor(ITaskData taskTicket, string lastSavedCode)
-    {
-        TaskTicket = taskTicket;
-        LastSavedCode = lastSavedCode;
-    }
-}
-
 public class CodeEditor : UIBehaviour
 {
     private const string CodeEditorScene = "CodeEditor";
@@ -71,8 +59,8 @@ public class CodeEditor : UIBehaviour
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
         var token = TokenSession.FromPlayerPrefs();
-        var lastSavedCode = await RestAPI.GetLastSavedCode(token, task.Id);
-        
+        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, task.Id);
+
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);
     }

@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using RestAPIWrapper;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,8 +25,14 @@ namespace Authentication
 
         public static bool IsNoneToken => FromPlayerPrefs(false).IsNone;
 
-        private static readonly ITokenRequestWrapper RequestWrapper = new TokenWebRequestWrapper();
+        private static readonly IAuthTokenRequestWrapper RequestWrapper = new AuthTokenRequestWrapper();
 
+        public TokenSession(string token)
+        {
+            _token = token;
+            _name = string.Empty;
+            Error = string.Empty;
+        }
 
         public TokenSession(string token, string name)
         {
@@ -40,7 +45,7 @@ namespace Authentication
 
         public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
         {
-            var token = await RequestWrapper.GetToken(login, password);
+            var token = await RequestWrapper.GetAuthData(login, password);
             token.SaveToPlayerPrefs();
 
             return token;
@@ -73,7 +78,7 @@ namespace Authentication
             var token = PlayerPrefs.GetString(PlayerPrefsKey);
             var name = PlayerPrefs.GetString(PlayerPrefsKeyName);
             var tokenSession = new TokenSession(token, name);
-            
+
             if (token.IsNullOrEmpty() && checkToken)
             {
                 ModalPanel.ShowModalDialog("Вы не зарегестрированы", "Пожалуйста, зарегестируйтесь", () =>

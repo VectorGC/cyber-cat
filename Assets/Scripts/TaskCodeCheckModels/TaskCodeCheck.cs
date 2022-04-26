@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
@@ -9,7 +10,15 @@ namespace TaskCodeCheckModels
 {
     public static class TaskCodeCheck
     {
-        public static async UniTask<CodeCheckingResult> CheckCodeAsync(string taskId, string code, ProgLanguage progLanguage)
+        private static readonly Dictionary<ProgLanguage, string> ProgLanguages = new Dictionary<ProgLanguage, string>()
+        {
+            [ProgLanguage.Cpp] = "cpp",
+            [ProgLanguage.Python] = "py",
+            [ProgLanguage.Pascal] = "pas"
+        };
+
+        public static async UniTask<CodeCheckingResult> CheckCodeAsync(string taskId, string code,
+            ProgLanguage progLanguage)
         {
             try
             {
@@ -26,7 +35,9 @@ namespace TaskCodeCheckModels
         private static async UniTask<string> CheckCodeStringAsync(string taskId, string code, ProgLanguage progLanguage)
         {
             var token = TokenSession.FromPlayerPrefs();
-            return await RestAPI.SendCodeToChecking(token, taskId, code, progLanguage); 
+
+            var progLanguageString = ProgLanguages[progLanguage];
+            return await new CodeCheckingRequest().SendCodeToChecking(token, taskId, code, progLanguageString);
         }
     }
 }

@@ -33,14 +33,14 @@ namespace Legacy_do_not_use_it
 
         public readonly async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null)
         {
-            var folders = await RestAPI.GetTaskFolders(token, progress);
+            var folders = await TaskUnitFacade.GetTaskFolders(token, progress);
 
             if (folders.GetValue("error") != null)
             {
                 var error = folders.GetValue("error").ToString();
                 var code = folders.GetValue("error").ToString();
                 var localizedError = WebErrorLocalize.Localize(code);
-                
+
                 ModalPanel.ShowModalDialog("Непредвиденная ошибка",
                     $"Пожалуйста, сообщите организатору ошибку:\n{localizedError}", () =>
                     {
