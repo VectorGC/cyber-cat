@@ -1,0 +1,21 @@
+{
+    "name": "TaskJudge",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:fc909bd4758fb8a4987f94a19b5e7ca1",
+        "GUID:0e80d15fcd54dc6449e8ef36b3c10c8a",
+        "GUID:221db3aaeda0c7447b8bd17553983482",
+        "GUID:c5fc7656c655850499749ca726c250c9",
+        "GUID:f4113365f11c42942b4c3ecc47e69ed7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

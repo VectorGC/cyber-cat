@@ -35,7 +35,7 @@ namespace mikinel.easylogview
             text.text = string.Empty;
         }
 
-        protected void OnLogMessage(string logText, ConsoleMessageType type)
+        protected void OnLogMessage(string logText, LogMessageType type)
         {
             if (text == null)
                 return;
@@ -66,15 +66,15 @@ namespace mikinel.easylogview
             text.text = $"<color=#{hashcode}>[{seconds}] {logText}</color> \n" + text.text;
         }
 
-        private string GetColorHashCode(ConsoleMessageType type)
+        private string GetColorHashCode(LogMessageType type)
         {
             switch (type)
             {
-                case ConsoleMessageType.Warning:
+                case LogMessageType.Warning:
                     return "ffff00";
-                case ConsoleMessageType.Error:
+                case LogMessageType.Error:
                     return "ff0000";
-                case ConsoleMessageType.Success:
+                case LogMessageType.Success:
                     return "10FD1F";
                 default:
                     return string.Empty;

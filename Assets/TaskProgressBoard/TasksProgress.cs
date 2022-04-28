@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using TasksData;
+using TaskUnits;
 
 public class TasksProgress
 {
     public static async UniTask<TasksProgress> GetFromServer(string token, IProgress<float> progress = null)
     {
-        var tasks = await TaskUnitFacade.GetAllTasks(token, progress);
+        var tasks = await TaskFacade.GetAllTasks(token, progress);
         var tasksProgress = GetTasksProgress(tasks);
 
         return new TasksProgress(tasksProgress);
