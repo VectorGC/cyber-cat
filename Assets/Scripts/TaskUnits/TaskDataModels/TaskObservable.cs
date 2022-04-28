@@ -1,10 +1,9 @@
 using System;
 using Cysharp.Threading.Tasks;
-using TasksData;
 using TaskUnits.Messages;
 using UniRx;
 
-namespace TaskUnits.TasksData
+namespace TaskUnits.TaskDataModels
 {
     internal class TaskObservable : IObservable<ITaskData>
     {

@@ -8,7 +8,7 @@ namespace GameCodeEditor.Scripts
 {
     public class GetLastSaveCodeRequest : IGetLastSaveCodeRequest
     {
-        private const string Solution = Endpoint.MainEndpoint.Uri + "/solution";
+        private const string Solution = Endpoint.ROOT + "/solution";
         
         public async UniTask<string> GetLastSavedCode(string token, string taskId,
             IProgress<float> progress = null)

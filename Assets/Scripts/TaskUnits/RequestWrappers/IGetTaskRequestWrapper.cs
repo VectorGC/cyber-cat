@@ -1,9 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using TaskUnits;
 
-namespace TasksData.RequestWrappers
+namespace TaskUnits.RequestWrappers
 {
     internal interface IGetTaskRequestWrapper
     {

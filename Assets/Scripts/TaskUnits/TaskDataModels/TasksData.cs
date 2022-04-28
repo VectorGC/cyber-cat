@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace TaskUnits.TasksData
+namespace TaskUnits.TaskDataModels
 {
     [JsonObject]
     internal class TasksData : ITaskDataCollection

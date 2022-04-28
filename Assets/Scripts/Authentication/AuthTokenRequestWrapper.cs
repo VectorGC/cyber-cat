@@ -1,15 +1,16 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Proyecto26;
+using RestAPIWrapper;
 using UnityEngine;
 
 namespace Authentication
 {
     public struct AuthTokenRequestWrapper : IAuthTokenRequestWrapper
     {
-        private const string Login = Endpoint.MainEndpoint.Uri + "/login";
-        private const string Register = Endpoint.MainEndpoint.Uri + "/register";
-        private const string Restore = Endpoint.MainEndpoint.Uri + "/restore";
+        private const string Login = Endpoint.ROOT + "/login";
+        private const string Register = Endpoint.ROOT + "/register";
+        private const string Restore = Endpoint.ROOT + "/restore";
 
         public async UniTask<TokenSession> GetAuthData(string login, string password,
             IProgress<float> progress = null)

@@ -1,4 +1,4 @@
-namespace TaskUnits.TasksData
+namespace TaskUnits.TaskDataModels
 {
     internal class EmptyTaskData : ITaskData
     {

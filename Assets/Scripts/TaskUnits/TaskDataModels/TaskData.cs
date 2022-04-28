@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace TaskUnits.TasksData
+namespace TaskUnits.TaskDataModels
 {
     internal class TaskData : ITaskData
     {

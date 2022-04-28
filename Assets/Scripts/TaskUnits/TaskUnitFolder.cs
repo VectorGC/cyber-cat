@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using RestAPIWrapper;
-using TaskUnits.TasksData;
+using TaskUnits.TaskDataModels;
 using UnityEngine;
 
 namespace TaskUnits

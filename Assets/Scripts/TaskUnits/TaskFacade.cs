@@ -1,9 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using TasksData;
-using TasksData.RequestWrappers;
-using TaskUnits.TasksData;
+using TaskUnits.RequestWrappers;
+using TaskUnits.TaskDataModels;
 
 namespace TaskUnits
 {
