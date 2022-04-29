@@ -13,15 +13,18 @@ public class CodeCheckingResult : ICodeConsoleMessage
     }
     private string GetErrorMsg()
     {
-        
         switch ((WebError)Error)
         {
             case WebError.SolutionTestFail:
-                return $"Данные для теста: '{ErrorData.Params}'\nВаш вывод: {ErrorData.Result}\nОжидается: '{ErrorData.Expected}'";
+                return ErrorData?.ToString();
             case WebError.SolutionBuildFail:
-                return ErrorData.Msg;
+                return ErrorData?.Msg;
+            case WebError.SolutionRuntimeFail:
+                return WebErrorLocalize.Localize((WebError) Error) + $". {ErrorData?.Msg}";
+            case WebError.SolutionTimeoutFail:
+                return WebErrorLocalize.Localize((WebError) Error);
             default:
-                return "Неизвестная ошибка. Обратитесь к админу";
+                return ErrorData?.Msg;
         }
     }
     public ConsoleMessageType MessageType => ErrorData?.MessageType ?? new CodeCheckingSuccess().MessageType;

@@ -7,8 +7,9 @@ namespace RestAPIWrapper
     {
         public static Dictionary<ProgLanguage, string> ProgLanguages = new Dictionary<ProgLanguage, string>()
         {
-            [ProgLanguage.C] = "c",
-            [ProgLanguage.Python] = "py"
+            [ProgLanguage.Cpp] = "cpp",
+            [ProgLanguage.Python] = "py",
+            [ProgLanguage.Pascal] = "pas"
         };
     }
 }

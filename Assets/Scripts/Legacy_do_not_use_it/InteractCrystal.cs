@@ -1,6 +1,5 @@
 using System;
 using Authentication;
-using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace Legacy_do_not_use_it
             _collider.OnCollisionStayAsObservable().Subscribe(x => Debug.Log("123"));
         }
 
-        private async void OnTriggerStay(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (!other.CompareTag("Player"))
             {
@@ -35,10 +34,10 @@ namespace Legacy_do_not_use_it
             {
                 var token = TokenSession.FromPlayerPrefs();
 
-                Time.timeScale = 0f;
-                var task = await taskFolder.GetTask(token);
-                await CodeEditor.OpenSolution(task);
-                Time.timeScale = 1f;
+                //Time.timeScale = 0f;
+                //var task = await taskFolder.GetTask(token);
+                //CodeEditor.OpenSolution(task).Forget();
+                //Time.timeScale = 1f;
             }
         }
     }

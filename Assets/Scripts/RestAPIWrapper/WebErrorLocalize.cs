@@ -24,6 +24,9 @@ namespace RestAPIWrapper
             {WebError.LanguageNotSupported, "Данный язык не может быть обработан"},
 
             {WebError.NameInvalid, "Имя должно содержать менее 128 символов"},
+
+            {WebError.SolutionTimeoutFail, "Время выполнение программы превышено"},
+            {WebError.SolutionRuntimeFail, "Во время выполнения возникла ошибка"}
         };
 
         public string this[int errorKey] => this[(WebError) errorKey];
@@ -38,7 +41,12 @@ namespace RestAPIWrapper
                 return $"Неизвестный код ошибки '{errorCode}'";
             }
 
-            return _instance[webError];
+            return Localize(webError);
+        }
+        
+        public static string Localize(WebError errorCode)
+        {
+            return _instance[errorCode];
         }
 
         private string GetErrorLocalize(WebError webError)

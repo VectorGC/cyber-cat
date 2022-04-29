@@ -4,11 +4,12 @@ using GameCodeEditor.Scripts;
 using Legacy_do_not_use_it;
 using TasksData;
 using UniRx;
+using UnityEngine;
 
 public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
 {
     private ITaskData _taskData;
-    
+
     private readonly TaskUnitFolder _taskUnitFolder;
     private readonly Subject<ITaskData> _subject = new Subject<ITaskData>();
 
@@ -39,7 +40,11 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
         var token = message.Token;
         var observable = GetTask(token)
             .ToObservable()
-            .Do(taskData => _taskData = taskData)
+            .Do(taskData =>
+            {
+                _taskData = taskData;
+                CallNotifyTaskUpdate(taskData);
+            })
             .AsUnitObservable();
 
         observable.Subscribe();
@@ -47,17 +52,54 @@ public class TaskUnit : ITaskUnit, ITaskData, IObservable<ITaskData>
         return observable;
     }
 
+    private void CallNotifyTaskUpdate(ITaskData taskData)
+    {
+        _subject.OnNext(this);
+        if (IsSolved == true)
+        {
+            _subject.OnCompleted();
+        }
+
+        if (taskData == null || taskData is EmptyTaskData)
+        {
+            var ex = new Exception($"Not found task from folder '{this}'. Maybe server error");
+            _subject.OnError(ex);
+            
+            throw ex;
+        }
+    }
+
+    public override string ToString() => _taskUnitFolder.ToString();
+
     public async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null) =>
         await _taskUnitFolder.GetTask(token, progress);
-
-    public async UniTask<bool?> IsTaskSolved(string token, IProgress<float> progress = null) =>
-        await _taskUnitFolder.IsTaskSolved(token, progress);
 
     public string Id => _taskData.Id;
     public string Name => _taskData.Name;
     public string Description => _taskData.Description;
     public string Output => _taskData.Output;
-    public bool? IsSolved => _taskData.IsSolved;
 
-    public IDisposable Subscribe(IObserver<ITaskData> observer) => _subject.Subscribe(observer);
+    public bool? IsSolved
+    {
+        get
+        {
+            if (_taskUnitFolder.Unit == "unit-0")
+            {
+                return false;
+            }
+
+            return _taskData?.IsSolved;
+        }
+    } 
+    
+    public float ReceivedScore => _taskData.ReceivedScore;
+    public float TotalScore => _taskData.TotalScore;
+
+    public IDisposable Subscribe(IObserver<ITaskData> observer)
+    {
+        var unsubscriber = _subject.Subscribe(observer);
+        CallNotifyTaskUpdate(_taskData);
+
+        return unsubscriber;
+    }
 }

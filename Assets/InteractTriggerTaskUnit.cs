@@ -10,7 +10,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
     [SerializeField] private Trigger _triggerToActivate;
     private ITaskData _taskData;
     private Collider _collider;
-    
+
     [SerializeField] private bool selfTriggerLogic = false;
 
     protected void Start()
@@ -19,13 +19,13 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         _collider.enabled = false;
     }
 
-    private async void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (!selfTriggerLogic)
         {
             return;
         }
-        
+
         if (!other.CompareTag("Player"))
         {
             return;
@@ -37,23 +37,23 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             var progress = new ScheduledNotifier<float>();
             progress.ViaLoadingScreen();
 
-            await CodeEditor.OpenSolution(_taskData, progress);
+            CodeEditor.OpenSolution(_taskData, progress).Forget();
         }
     }
 
-    public async void Load()
+    public void Load()
     {
         var progress = new ScheduledNotifier<float>();
         progress.ViaLoadingScreen();
 
-        await CodeEditor.OpenSolution(_taskData, progress);
+        CodeEditor.OpenSolution(_taskData, progress).Forget();
     }
 
 
     public override void OnNext(ITaskData taskData)
     {
         _taskData = taskData;
-        
+
         var isTaskSolved = taskData.IsSolved;
         if (isTaskSolved is false)
         {
@@ -61,31 +61,27 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             {
                 gameObject.SetActive(true);
             }
-            
-            _collider.enabled = true;
-            return;
-        }
 
+            _collider.enabled = true;
+        }
+    }
+
+    public override void OnCompleted()
+    {
         if (_triggerToActivate)
         {
             _triggerToActivate.gameObject.SetActive(true);
         }
 
         _collider.enabled = false;
-
-        if (selfTriggerLogic)
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
-    public override void OnCompleted()
-    {
-        Destroy(this);
     }
 
     public override void OnError(Exception error)
     {
-        throw error;
+        _collider.enabled = false;
+        if (selfTriggerLogic)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

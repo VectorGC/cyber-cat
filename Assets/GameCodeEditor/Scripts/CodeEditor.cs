@@ -3,6 +3,8 @@ using Authentication;
 using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using GameCodeEditor.Scripts;
+using Legacy_do_not_use_it;
+using RestAPIWrapper;
 using TasksData;
 using TMPro;
 using UniRx;
@@ -13,10 +15,12 @@ using UnityEngine.SceneManagement;
 public readonly struct SetTaskInEditor
 {
     public ITaskData TaskTicket { get; }
+    public string LastSavedCode { get; }
 
-    public SetTaskInEditor(ITaskData taskTicket)
+    public SetTaskInEditor(ITaskData taskTicket, string lastSavedCode)
     {
         TaskTicket = taskTicket;
+        LastSavedCode = lastSavedCode;
     }
 }
 
@@ -38,15 +42,17 @@ public class CodeEditor : UIBehaviour
 
     private static CodeEditor Instance => FindObjectOfType<CodeEditor>();
 
-    public static async UniTask OpenSolution(ITaskData task, IProgress<float> progress = null)
+    public static async UniTaskVoid OpenSolution(ITaskData task, IProgress<float> progress = null)
     {
         Time.timeScale = 0f;
         
         await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
-        SetTaskInEditor(task);
+        await SetTaskInEditor(task);
 
         await WaitWhenEnable();
 
+        GameMode.Vision = VisionMode.Default;
+        
         Time.timeScale = 1f;
     }
 
@@ -62,9 +68,12 @@ public class CodeEditor : UIBehaviour
         AsyncMessageBroker.Default.PublishAsync(message);
     }
 
-    private static void SetTaskInEditor(ITaskData task)
+    private static async UniTask SetTaskInEditor(ITaskData task)
     {
-        var message = new SetTaskInEditor(task);
+        var token = TokenSession.FromPlayerPrefs();
+        var lastSavedCode = await RestAPI.GetLastSavedCode(token, task.Id);
+        
+        var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);
     }
 

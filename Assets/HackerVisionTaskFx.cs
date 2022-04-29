@@ -37,19 +37,10 @@ public class HackerVisionTaskFx : MonoBehaviourObserver<ITaskData>
         if (_isTaskSolved is false)
         {
             enabled = true;
-            return;
         }
-
-        enabled = false;
     }
 
-    public override void OnCompleted()
-    {
-        Destroy(this);
-    }
+    public override void OnCompleted() => enabled = false;
 
-    public override void OnError(Exception error)
-    {
-        throw error;
-    }
+    public override void OnError(Exception error) => enabled = false;
 }

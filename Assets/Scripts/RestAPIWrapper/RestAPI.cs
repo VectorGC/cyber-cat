@@ -34,7 +34,7 @@ namespace RestAPIWrapper
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.URI,
+                Uri = Endpoint.TASKS_FLAT,
                 Params =
                 {
                     ["token"] = token
@@ -69,6 +69,26 @@ namespace RestAPIWrapper
 
             var response = await RestClient.Post(request).ToUniTask();
             return response.Text;
+        }
+
+        public static async UniTask<string> GetLastSavedCode(string token, string taskId, IProgress<float> progress = null)
+        {
+            var request = new RequestHelper
+            {
+                Uri = Endpoint.SOLUTION,
+                Params =
+                {
+                    ["token"] = token,
+                    ["task_id"] = taskId
+                },
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = true
+            };
+
+            var jObj = await RestClient.Get<JObject>(request).ToUniTask();
+            var code = jObj["text"].ToString();
+
+            return code;
         }
 
         public static async UniTask<TokenSession> RegisterUser(string login, string password, string name)

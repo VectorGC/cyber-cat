@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using RestAPIWrapper;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Authentication
 {
@@ -23,7 +24,7 @@ namespace Authentication
 
         private bool IsNone => string.IsNullOrEmpty(_token);
 
-        public static bool IsNoneToken => FromPlayerPrefs().IsNone;
+        public static bool IsNoneToken => FromPlayerPrefs(false).IsNone;
 
         private static readonly ITokenRequestWrapper RequestWrapper = new TokenWebRequestWrapper();
 
@@ -67,11 +68,21 @@ namespace Authentication
             Debug.Log("Token saved to player prefs");
         }
 
-        public static TokenSession FromPlayerPrefs()
+        public static TokenSession FromPlayerPrefs(bool checkToken = true)
         {
             var token = PlayerPrefs.GetString(PlayerPrefsKey);
             var name = PlayerPrefs.GetString(PlayerPrefsKeyName);
             var tokenSession = new TokenSession(token, name);
+            
+            if (token.IsNullOrEmpty() && checkToken)
+            {
+                ModalPanel.ShowModalDialog("Вы не зарегестрированы", "Пожалуйста, зарегестируйтесь", () =>
+                {
+                    var async = SceneManager.LoadSceneAsync("StartScene");
+                    async.ViaLoadingScreen();
+                });
+                throw new ArgumentNullException("Token is empty");
+            }
 
             return tokenSession;
         }

@@ -36,6 +36,8 @@ namespace RestAPIWrapper
         SolutionTestsInvalid = 503,
         SolutionBuildFail = 504,
         SolutionTestFail = 505,
+        SolutionTimeoutFail = 506,
+        SolutionRuntimeFail = 507,
 
         LanguageNotProvided = 600,
         LanguageNotSupported = 601,
