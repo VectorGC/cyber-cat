@@ -90,9 +90,9 @@
 | ФИО | Роль | Контакты для связи |
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | Кимсанбаев Карим | Team Lead | karim.kimsanbaev@gmail.com |
-| Крылов Кирилл | Серверный программист | ? |
-| Карпинский Артем (И904Б)    | Programmer of Gameplay | ? |
-| Ермолаев Святослав (И503Б)  | Programmer of code editor | ? |
-| Востриков Виталий (И594)    | 3D Artist | ? |
-| Слава Снегирев (И508Б)      | Leve Designer | ? |
-| Миша Лукашев (И507Б)        | Game Designer | ? |
+| Крылов Кирилл | Серверный программист | https://kee-reel.com/ |
+| Карпинский Артем (И904Б)    | Programmer of Gameplay | artem19051664@gmail.com |
+| Ермолаев Святослав (И503Б)  | Programmer of code editor | ledumblasphemus@gmail.com |
+| Востриков Виталий (И594)    | 3D Artist | talytriko@gmail.com |
+| Слава Снегирев (И508Б)      | Leve Designer | slavick.snegirev@icloud.com |
+| Миша Лукашев (И507Б)        | Game Designer | boyskyfall@vk.com |
