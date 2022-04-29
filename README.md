@@ -1,5 +1,5 @@
 # Cyber Cat (Кибер кот)
-- Лицензия проекта: Apache v2.0 (Kimsanabev Karim) и Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity.com/packages/tools/gui/ingame-code-editor-144254)
+- Лицензия проекта: Apache v2.0 ([Kimsanabev Karim](https://www.linkedin.com/in/karim-kimsanbaev-013851203/)) и Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity.com/packages/tools/gui/ingame-code-editor-144254)
 
 Проект, интерактивная игра для проведения олимпиад по программированию среди школьников и студентов. Формат проведения олимпиады - заочное и очное.
 
@@ -89,7 +89,7 @@
 
 | ФИО | Роль | Контакты для связи |
 | ----------------------------- | ----------------------------- | ----------------------------- |
-| Кимсанбаев Карим | Team Lead | karim.kimsanbaev@gmail.com |
+| Кимсанбаев Карим | Team Lead | https://www.linkedin.com/in/karim-kimsanbaev-013851203/ или karim.kimsanbaev@gmail.com |
 | Крылов Кирилл | Backend Programmer | https://kee-reel.com/ |
 | Карпинский Артем (И904Б)    | Programmer of Gameplay | artem19051664@gmail.com |
 | Ермолаев Святослав (И503Б)  | Programmer of code editor | ledumblasphemus@gmail.com |
