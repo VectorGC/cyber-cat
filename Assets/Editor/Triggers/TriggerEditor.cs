@@ -22,7 +22,7 @@ public class TriggerEditor : UnityEditor.Editor
                 DisplayMessagesInfo();
                 break;
 
-            case Trigger.EventType.EnterEvent:
+            case Trigger.EventType.CustomScript:
                 DisplayEvent();
                 break;
         }
@@ -34,7 +34,9 @@ public class TriggerEditor : UnityEditor.Editor
 
     private void DisplayCommonInfo()
     {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_canBeActivatedMultipleTime"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_requiredTriggers"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_banTriggers"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("_triggerType"));
         TypeOfTrigger = (Trigger.TriggerType)serializedObject.FindProperty("_triggerType").enumValueIndex;
         Debug.Log(TypeOfTrigger);
@@ -44,10 +46,18 @@ public class TriggerEditor : UnityEditor.Editor
         {
             case Trigger.TriggerType.Enter:
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_transformOfTrigger"));
-                
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_onEnter"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_onExit"));
+
                 break;
 
             case Trigger.TriggerType.ButtonPressed:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_keyCodes"));
+                break;
+            case Trigger.TriggerType.EnterAndPress:
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_transformOfTrigger"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_onEnter"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_onExit"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_keyCodes"));
                 break;
         }
@@ -61,8 +71,6 @@ public class TriggerEditor : UnityEditor.Editor
     private void DisplayMessagesInfo()
     {
         countOfDialogs = serializedObject.FindProperty("_countOfModals");
-        //count = countOfDialogs.intValue;
-        //count = EditorGUILayout.IntSlider("Count of messages", count, 0, 10);
         countOfDialogs.intValue = EditorGUILayout.IntField("Count", countOfDialogs.intValue);
         if (countOfDialogs.intValue > 0)
         {
@@ -74,7 +82,7 @@ public class TriggerEditor : UnityEditor.Editor
 
     private void DisplayEvent()
     {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("_onEnter"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_onStart"));
         EditorGUILayout.Space();
     }
 }

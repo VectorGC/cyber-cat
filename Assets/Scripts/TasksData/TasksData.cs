@@ -19,11 +19,11 @@ namespace TasksData
             return Tasks.GetEnumerator();
         }
 
-        IEnumerator<ITaskTicket> IEnumerable<ITaskTicket>.GetEnumerator() => Tasks.Values.GetEnumerator();
+        IEnumerator<ITaskData> IEnumerable<ITaskData>.GetEnumerator() => Tasks.Values.GetEnumerator();
 
-        IEnumerator<KeyValuePair<string, ITaskTicket>> IEnumerable<KeyValuePair<string, ITaskTicket>>.GetEnumerator()
+        IEnumerator<KeyValuePair<string, ITaskData>> IEnumerable<KeyValuePair<string, ITaskData>>.GetEnumerator()
         {
-            return ((IEnumerable<KeyValuePair<string, ITaskTicket>>) Tasks).GetEnumerator();
+            return ((IEnumerable<KeyValuePair<string, ITaskData>>) Tasks).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable) Tasks).GetEnumerator();
@@ -31,7 +31,7 @@ namespace TasksData
         public int Count => Tasks.Count;
         public bool ContainsKey(string key) => Tasks.ContainsKey(key);
 
-        public bool TryGetValue(string key, out ITaskTicket value)
+        public bool TryGetValue(string key, out ITaskData value)
         {
             var success = Tasks.TryGetValue(key, out var taskData);
             value = taskData;
@@ -39,11 +39,11 @@ namespace TasksData
             return success;
         }
 
-        public ITaskTicket this[string key] => Tasks[key];
+        public ITaskData this[string key] => Tasks[key];
 
         public IEnumerable<string> Keys => Tasks.Keys;
 
-        public IEnumerable<ITaskTicket> Values => Tasks.Values;
+        public IEnumerable<ITaskData> Values => Tasks.Values;
 
         #endregion
     }

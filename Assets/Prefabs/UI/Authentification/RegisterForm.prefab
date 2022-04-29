@@ -2276,11 +2276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6694471730757702254, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_text
-      value: "\u0417\u0430\u0440\u0435\u0433\u0435\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F"
+      value: "\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F"
       objectReference: {fileID: 0}
     - target: {fileID: 6694471730757702254, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_fontSize
-      value: 34
+      value: 33.6
       objectReference: {fileID: 0}
     - target: {fileID: 6694471730757702254, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
       propertyPath: m_fontStyle
@@ -2640,6 +2640,10 @@ PrefabInstance:
     - target: {fileID: 9073817236785013456, guid: 055befe6d8f04d443a8829fe738e44cb, type: 3}
       propertyPath: m_fontSize
       value: 42.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073817237093423908, guid: 055befe6d8f04d443a8829fe738e44cb, type: 3}
+      propertyPath: m_text
+      value: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0438\u043C\u044F"
       objectReference: {fileID: 0}
     - target: {fileID: 9073817237093423908, guid: 055befe6d8f04d443a8829fe738e44cb, type: 3}
       propertyPath: m_fontSize

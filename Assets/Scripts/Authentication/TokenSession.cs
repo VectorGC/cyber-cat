@@ -1,9 +1,7 @@
 using System;
-using System.Runtime.Serialization;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using RestAPIWrapper;
-using UniRx;
 using UnityEngine;
 
 namespace Authentication
@@ -13,14 +11,11 @@ namespace Authentication
         private const string PlayerPrefsKey = "token";
         private const string PlayerPrefsKeyName = "name";
 
-        [JsonProperty("token")] 
-        private string _token;
+        [JsonProperty("token")] private string _token;
 
-        [JsonProperty("name")]
-        private string _name;
+        [JsonProperty("name")] private string _name;
 
-        [JsonProperty("error")]
-        public string Error { get; set; }
+        [JsonProperty("error")] public string Error { get; set; }
 
         public string Token => _token;
 
@@ -29,6 +24,9 @@ namespace Authentication
         private bool IsNone => string.IsNullOrEmpty(_token);
 
         public static bool IsNoneToken => FromPlayerPrefs().IsNone;
+
+        private static readonly ITokenRequestWrapper RequestWrapper = new TokenWebRequestWrapper();
+
 
         public TokenSession(string token, string name)
         {
@@ -41,25 +39,20 @@ namespace Authentication
 
         public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
         {
-            var token = await RestAPI.GetToken(login, password);
-            if (token.IsNone)
-            {
-                var requestException = new RequestTokenException(token.Error);
-                MessageBroker.Default.Publish<Exception>(requestException);
-
-                throw requestException;
-            }
-
+            var token = await RequestWrapper.GetToken(login, password);
             token.SaveToPlayerPrefs();
 
             return token;
         }
 
-        public static async UniTask<TokenSession> Register(string login, string password, string name)
+        public static async UniTask RegisterUser(string login, string password, string name)
         {
-            var token = await RestAPI.Registrate(login, password, name);
+            await RequestWrapper.RegisterUser(login, password, name);
+        }
 
-            return token;
+        public static async UniTask RestorePassword(string login, string password)
+        {
+            await RequestWrapper.RestorePassword(login, password);
         }
 
         private void SaveToPlayerPrefs()

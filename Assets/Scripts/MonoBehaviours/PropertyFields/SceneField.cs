@@ -25,7 +25,7 @@ namespace MonoBehaviours.PropertyFields
             SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).AsAsyncOperationObservable().Subscribe();
 
         public IDisposable LoadAsyncViaLoadingScreen(LoadSceneMode loadSceneMode = default) =>
-            SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).ViaLoadingScreenObservable().Subscribe();
+            SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).ViaLoadingScreen();
 
         public IObservable<AsyncOperation> ViaLoadingScreen(LoadSceneMode loadSceneMode = default) =>
             SceneManager.LoadSceneAsync(m_SceneName, loadSceneMode).ViaLoadingScreenObservable();
