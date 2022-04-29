@@ -4,25 +4,13 @@ using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using GameCodeEditor.Scripts;
 using Legacy_do_not_use_it;
-using RestAPIWrapper;
-using TasksData;
+using TaskUnits;
+using TaskUnits.Messages;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-
-public readonly struct SetTaskInEditor
-{
-    public ITaskData TaskTicket { get; }
-    public string LastSavedCode { get; }
-
-    public SetTaskInEditor(ITaskData taskTicket, string lastSavedCode)
-    {
-        TaskTicket = taskTicket;
-        LastSavedCode = lastSavedCode;
-    }
-}
 
 public class CodeEditor : UIBehaviour
 {
@@ -71,8 +59,8 @@ public class CodeEditor : UIBehaviour
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
         var token = TokenSession.FromPlayerPrefs();
-        var lastSavedCode = await RestAPI.GetLastSavedCode(token, task.Id);
-        
+        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, task.Id);
+
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);
     }
