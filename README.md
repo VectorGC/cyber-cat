@@ -90,7 +90,7 @@
 | ФИО | Роль | Контакты для связи |
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | Кимсанбаев Карим | Team Lead | karim.kimsanbaev@gmail.com |
-| Крылов Кирилл | Серверный программист | https://kee-reel.com/ |
+| Крылов Кирилл | Backend Programmer | https://kee-reel.com/ |
 | Карпинский Артем (И904Б)    | Programmer of Gameplay | artem19051664@gmail.com |
 | Ермолаев Святослав (И503Б)  | Programmer of code editor | ledumblasphemus@gmail.com |
 | Востриков Виталий (И594)    | 3D Artist | talytriko@gmail.com |
