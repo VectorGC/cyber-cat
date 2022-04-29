@@ -1,6 +1,6 @@
 using System;
 using Legacy_do_not_use_it;
-using TasksData;
+using TaskUnits;
 using UniRx;
 using UnityEngine;
 
@@ -62,7 +62,10 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
                 gameObject.SetActive(true);
             }
 
-            _collider.enabled = true;
+            if (_collider)
+            {
+                _collider.enabled = true;
+            }
         }
     }
 
