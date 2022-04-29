@@ -1,5 +1,3 @@
-#define SERVERLESS
-
 namespace RestAPIWrapper
 {
     public static class RestAPI
