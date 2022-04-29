@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0a955a6baef27468893681ab13e59d, type: 3}
+  m_Name: Python Synthax
+  m_EditorClassIdentifier: 
+  languageName: Python
+  delimiterSymbols: '[ ] ( ) { } ; : , . ` '
+  keywordGroups:
+  - group: 
+    keywords: and as assert break class continue def del elif else except False finally
+      for from global if import in is lambda None nonlocal not or pass raise return
+      True try while with yield
+    highlightColor: {r: 0, g: 0.4481918, b: 0.9245283, a: 0}
+    caseSensitive: 1
+  - group: 
+    keywords: class def return print
+    highlightColor: {r: 0, g: 0.4481918, b: 0.9245283, a: 0}
+    caseSensitive: 1
+  symbolGroup:
+    symbols: + - * ** / // % << >> & | ^ ~ < > <= >= == ! = <> += -= *= /= //= %=
+      **= &= |= ^= >>= <<=
+    highlightColor: {r: 0, g: 0.7169812, b: 0.7099606, a: 1}
+  numberGroup:
+    highlightNumbers: 0
+    highlightColor: {r: 0, g: 0.7176471, b: 0.70980394, a: 1}
+  commentGroup:
+    lineCommentStart: '#'
+    blockCommentStart: 
+    blockCommentEnd: 
+    highlightColor: {r: 0, g: 0.6603774, b: 0.053133853, a: 1}
+    lineCommentHasPresedence: 1
+  literalGroup:
+    highlightLiterals: 1
+    highlightColor: {r: 0.735849, g: 0.35142085, b: 0, a: 1}
+  autoIndent:
+    autoIndentMode: 0
+    allowAutoIndent: 0
+    indentIncreaseCharacter: 123
+    indentDecreaseCharacter: 125
