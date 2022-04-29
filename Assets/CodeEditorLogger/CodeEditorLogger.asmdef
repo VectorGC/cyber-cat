@@ -2,7 +2,6 @@
     "name": "CodeEditorLogger",
     "rootNamespace": "",
     "references": [
-        "GUID:fc909bd4758fb8a4987f94a19b5e7ca1",
         "GUID:560b04d1a97f54a4e82edc0cbbb69285",
         "GUID:f4113365f11c42942b4c3ecc47e69ed7"
     ],

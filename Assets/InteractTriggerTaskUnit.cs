@@ -62,7 +62,10 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
                 gameObject.SetActive(true);
             }
 
-            _collider.enabled = true;
+            if (_collider)
+            {
+                _collider.enabled = true;
+            }
         }
     }
 

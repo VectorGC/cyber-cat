@@ -46,9 +46,10 @@ namespace Authentication
         public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
         {
             var token = await RequestWrapper.GetAuthData(login, password);
-            token.SaveToPlayerPrefs();
+            var tokenSession = new TokenSession(token); 
+            tokenSession.SaveToPlayerPrefs();
 
-            return token;
+            return tokenSession;
         }
 
         public static async UniTask RegisterUser(string login, string password, string name)

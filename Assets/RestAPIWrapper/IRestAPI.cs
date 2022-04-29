@@ -11,5 +11,11 @@ namespace RestAPIWrapper
 
         UniTask<string> GetTasks(string token, IProgress<float> progress = null);
         UniTask<JObject> GetTaskFolders(string token, IProgress<float> progress = null);
+
+        UniTask<string> GetLastSavedCode(string token, string taskId, IProgress<float> progress = null);
+        
+        UniTask<string> GetAuthData(string login, string password, IProgress<float> progress = null);
+        UniTask RegisterUser(string login, string password, string name);
+        UniTask RestorePassword(string login, string password);
     }
 }

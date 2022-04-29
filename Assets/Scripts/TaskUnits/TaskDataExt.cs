@@ -1,5 +1,6 @@
 using System;
 using TaskUnits.TaskDataModels;
+using UniRx;
 
 namespace TaskUnits
 {
@@ -7,7 +8,8 @@ namespace TaskUnits
     {
         public static IObservable<ITaskData> ToObservable(this ITaskData taskData)
         {
-            return new TaskObservable(taskData);
+            // All observers receivers task data on subscribe.
+            return new TaskObservable(taskData).StartWith(taskData);
         }
     }
 }

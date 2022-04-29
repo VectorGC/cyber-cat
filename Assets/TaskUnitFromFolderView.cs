@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Authentication;
 using TaskUnits;
+using TaskUnits.Messages;
 using UnityEngine;
 
 public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
