@@ -1,5 +1,6 @@
 # Cyber Cat (Кибер кот)
 - Лицензия проекта: Apache v2.0 ([Kimsanabev Karim](https://www.linkedin.com/in/karim-kimsanbaev-013851203/)) и Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity.com/packages/tools/gui/ingame-code-editor-144254)
+- Live Demo: [Ссылка на itch.io](https://karim3d.itch.io/cyber-cat-serverless)
 
 Проект, интерактивная игра для проведения олимпиад по программированию среди школьников и студентов. Формат проведения олимпиады - заочное и очное.
 
