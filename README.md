@@ -18,12 +18,36 @@
 ## С участниками олимпиады
 При регистрации на мероприятие олимпиады - каждый участник дает согласие на предоставление нам учетных записей и пароля, который он вводить в игре
 
+# Контент проекта
+- Tutorial
+- Client-Server API
+- Documentation
+- Code Editor
+- Adventures Cat ^_^
+
+# Внешние зависимости
+- [UniTask](https://github.com/Cysharp/UniTask) для упрощения коллбэков и асинхронных запросов на сервер
+- [UniRx v7.1.0](https://github.com/neuecc/UniRx) для связи логики и UI через использования RX архитектуры
+- [Json .NET for Unity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) для сериализации клиен-серверных запросов
+- [RestClient v2.6.2](https://github.com/proyecto26/RestClient) менеджмент клиент-серверных запросов. Содержит кастомный патч, чтобы работал продвинутым Json пакетом
+- Code Editor Plugin Apache v2.0 ([InGameCodeEditor - payment asset](https://forum.unity.com/threads/released-ingame-code-editor.663256/) - редактор кода
+- Web GL Support фиксы и нструменты для полей ввода для корректной работы в браузере
+
 # Ссылки
 - [Проект сервера](https://github.com/kee-reel/LATE)
 - [API для общения с сервером](https://kee-reel.com/cyber-api/)
 - [Коды серверных ошибок](https://github.com/kee-reel/LATEST/blob/main/web/api/errors.go)
 - [Как настраивать триггеры](https://gitlab.com/karim.kimsanbaev/cyber-cat/-/wikis/%D0%9A%D0%B0%D0%BA-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F-%D1%82%D1%80%D0%B8%D0%B3%D0%B3%D0%B5%D1%80%D0%B0%D0%BC%D0%B8)
 - [Модальные окна](https://gitlab.com/karim.kimsanbaev/cyber-cat/-/wikis/%D0%9C%D0%BE%D0%B4%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%BE%D0%BA%D0%BD%D0%B0)
+
+# UI, арт контент
+- [Slim UI](https://assetstore.unity.com/publishers/35968) - с него брался и дорабатывался UI
+- [Snapshot Shaders](https://assetstore.unity.com/packages/vfx/shaders/fullscreen-camera-effects/snapshot-shader-collection-146666) - неоновый эффект. Шейдеры дописывались, чтобы сделать их легкими для WebGL
+- [Modal Dialog](https://assetstore.unity.com/packages/tools/gui/modal-dialog-78454) - модальные диалоги
+
+# Авторский контент проекта
+- Система триггеров на которой построен туториал
+
 
 # Как запустить
 1. Установите Unity версии 2020.3.27f ([тут](https://unity3d.com/ru/unity/whats-new/2020.3.27) нажмите на Install this version with Unity Hub или найдите версию и установите самостоятельно [здесь](https://unity3d.com/ru/get-unity/download/archive))
