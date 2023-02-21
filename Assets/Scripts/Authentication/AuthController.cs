@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using RequestAPI.Proxy;
 
 namespace Authentication
 {
@@ -16,7 +17,9 @@ namespace Authentication
             var login = loginTextField.text;
             var password = passwordTextField.text;
 
-            await TokenSession.RequestAndSaveFromServer(login, password);
+            await RequestAPIProxy.Authenticate(login, password);
+
+            //await TokenSession.RequestAndSaveFromServer(login, password);
 
             var isCartoonWatched = PlayerPrefs.GetInt("isCartoonWatched") == 1;
             if (!isCartoonWatched)

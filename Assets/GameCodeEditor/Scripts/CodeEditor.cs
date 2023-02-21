@@ -11,6 +11,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using RequestAPI.Proxy;
 
 public class CodeEditor : UIBehaviour
 {
@@ -59,7 +60,9 @@ public class CodeEditor : UIBehaviour
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
         var token = TokenSession.FromPlayerPrefs();
-        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, task.Id);
+        var lastSavedCode = await RequestAPIProxy.GetSavedCode(token, task.Id);
+
+        //var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, task.Id);
 
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);
