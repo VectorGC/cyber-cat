@@ -36,6 +36,11 @@ namespace RequestAPI.Proxy
         {
             return await new GetLastSaveCodeRequest().GetLastSavedCode(token, taskId);
         }
+
+        public static async UniTask<TokenSession> GetTokenFromServer(string login, string password)
+        {
+            return await TokenSession.RequestFromServer(login, password);
+        }
     }
 }
 

@@ -43,13 +43,19 @@ namespace Authentication
 
         public static implicit operator string(TokenSession tokenSession) => tokenSession.Token;
 
-        public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
+        public static async UniTask<TokenSession> RequestFromServer(string login, string password)
         {
             var token = await RequestWrapper.GetAuthData(login, password);
-            var tokenSession = new TokenSession(token); 
-            tokenSession.SaveToPlayerPrefs();
-
+            var tokenSession = new TokenSession(token);
             return tokenSession;
+        }
+
+        public static async UniTask<TokenSession> RequestAndSaveFromServer(string login, string password)
+        {
+            var token = await RequestFromServer(login, password);
+            token.SaveToPlayerPrefs();
+
+            return token;
         }
 
         public static async UniTask RegisterUser(string login, string password, string name)
