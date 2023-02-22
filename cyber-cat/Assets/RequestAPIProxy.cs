@@ -27,7 +27,7 @@ namespace RequestAPI.Proxy
             return await TokenSession.RequestAndSaveFromServer(login, password);
         }
 
-        public static async UniTask<ICodeConsoleMessage> CheckCodeAsync(ITaskData task, string token, string code, string progLanguage)
+        public static async UniTask<ICodeConsoleMessage> CheckCode(ITaskData task, string token, string code, string progLanguage)
         {
             return await task.CheckCodeAsync(token, code, progLanguage);
         }

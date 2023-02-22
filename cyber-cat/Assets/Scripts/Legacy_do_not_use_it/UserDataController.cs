@@ -26,8 +26,6 @@ namespace Authentication
 
             await RequestAPIProxy.Register(login, password, userName);
 
-            //await TokenSession.RegisterUser(login, password, userName);
-
             _logger.Log("Вам на почту пришло сообщение с подтверждением!");
         }
 
@@ -42,8 +40,6 @@ namespace Authentication
             var password = passwordTextField.text;
 
             await RequestAPIProxy.RestorePassword(login, password);
-
-            //await TokenSession.RestorePassword(login, password);
 
             _logger.Log("Вам на почту пришло сообщение с подтверждением!");
         }

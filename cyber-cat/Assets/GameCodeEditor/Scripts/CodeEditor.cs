@@ -62,8 +62,6 @@ public class CodeEditor : UIBehaviour
         var token = TokenSession.FromPlayerPrefs();
         var lastSavedCode = await RequestAPIProxy.GetSavedCode(token, task.Id);
 
-        //var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, task.Id);
-
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);
     }
