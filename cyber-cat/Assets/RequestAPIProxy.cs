@@ -1,12 +1,9 @@
 using Authentication;
 using Cysharp.Threading.Tasks;
 using GameCodeEditor.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TaskChecker;
 using TaskUnits;
-using UnityEngine;
-using static UnityEditor.PlayerSettings.Switch;
 
 namespace RequestAPI.Proxy
 {
@@ -40,6 +37,11 @@ namespace RequestAPI.Proxy
         public static async UniTask<TokenSession> GetTokenFromServer(string login, string password)
         {
             return await TokenSession.RequestFromServer(login, password);
+        }
+
+        public static async UniTask<ITaskDataCollection> GetTasks(string token, IProgress<float> progress = null)
+        {
+            return await TaskFacade.GetAllTasks(token, progress);
         }
     }
 }
