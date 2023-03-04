@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  api-gateway:
+    image: api-gateway
+    build:
+      context: ../ApiGateway/ApiGateway/
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=$API_GATEWAY_URL
+      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017"
+    ports:
+      - "5050:${API_GATEWAY_PORT}"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0.15
+    container_name: $MONGO_DB_NAME
+    ports:
+      - "27017:27017"
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: user3
+      ME_CONFIG_BASICAUTH_PASSWORD: 123
+    depends_on:
+      - mongo
