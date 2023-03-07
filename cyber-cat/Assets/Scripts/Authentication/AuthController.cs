@@ -19,8 +19,6 @@ namespace Authentication
 
             await RequestAPIProxy.Authenticate(login, password);
 
-            //await TokenSession.RequestAndSaveFromServer(login, password);
-
             var isCartoonWatched = PlayerPrefs.GetInt("isCartoonWatched") == 1;
             if (!isCartoonWatched)
             {
