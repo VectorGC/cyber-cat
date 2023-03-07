@@ -22,9 +22,8 @@ public class SendCodeHandler : MonoBehaviour
 
         var token = TokenSession.FromPlayerPrefs();
 
-        var checkingResult = await RequestAPIProxy.CheckCodeAsync(task, token, code, ProgLanguages[language]);
+        var checkingResult = await RequestAPIProxy.CheckCode(task, token, code, ProgLanguages[language]);
 
-        //var checkingResult = await task.CheckCodeAsync(token, code, ProgLanguages[language]);
         CodeConsole.WriteLine(checkingResult);
     }
 }
