@@ -1,28 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj": {}
+    "C:\\Users\\SMC\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj": {
+    "C:\\Users\\SMC\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj",
+        "projectUniqueName": "C:\\Users\\SMC\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj",
         "projectName": "ApiGateway",
-        "projectPath": "D:\\Projects\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj",
-        "packagesPath": "C:\\Users\\karim.kimsanbaev\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\obj\\",
+        "projectPath": "C:\\Users\\SMC\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\ApiGateway.csproj",
+        "packagesPath": "C:\\Users\\SMC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SMC\\cyber-cat\\backend\\CyberCatServer\\ApiGateway\\ApiGateway\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\karim.kimsanbaev\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\SMC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\PROGRAM FILES\\DOTNET\\library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -41,6 +45,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.17.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.19.0, )"
@@ -69,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\PROGRAM FILES\\DOTNET\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
