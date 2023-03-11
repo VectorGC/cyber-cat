@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,16 @@ public class TasksController : ControllerBase
         _hostEnvironment = hostEnvironment;
     }
 
+    /// <summary>
+    /// Возвращает таски в виде иерархии.
+    /// </summary>
     [HttpGet("hierarchy")]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public IActionResult GetTasksHierarchy(string token)
     {
         if (AuthenticationController.TOKEN != token)
         {
-            return Forbid();
+            return Unauthorized();
         }
 
         var rootPath = _hostEnvironment.ContentRootPath;
@@ -32,12 +37,16 @@ public class TasksController : ControllerBase
         return Ok(tasks);
     }
 
+    /// <summary>
+    /// Возвращает таски в плоском виде
+    /// </summary>
     [HttpGet("flat")]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public IActionResult GetTasksFlat(string token)
     {
         if (AuthenticationController.TOKEN != token)
         {
-            return Forbid();
+            return Unauthorized();
         }
 
         var rootPath = _hostEnvironment.ContentRootPath;
