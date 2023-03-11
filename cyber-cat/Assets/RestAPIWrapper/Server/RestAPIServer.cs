@@ -6,8 +6,15 @@ using UnityEngine;
 
 namespace RestAPIWrapper.Server
 {
-    public class RestAPIKeeReel : IRestAPI
+    public class RestAPIServer : IRestAPI
     {
+        private static async UniTask<string> ServerUrl()
+        {
+            //var baseServer = Resources.Load<BaseServer>("Base server");
+            //_root = await baseServer.GetActualServerURL();
+            return "http://localhost:5000";
+        }
+
         public async UniTask<string> SendCodeToChecking(string token, string taskId, string code, string progLanguage,
             IProgress<float> progress = null)
         {
@@ -19,7 +26,7 @@ namespace RestAPIWrapper.Server
 
             var request = new RequestHelper
             {
-                Uri = Endpoint.SOLUTION,
+                Uri = await ServerUrl() + "/solution",
                 Params =
                 {
                     ["token"] = token
@@ -37,7 +44,7 @@ namespace RestAPIWrapper.Server
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.TASKS_FLAT,
+                Uri = await ServerUrl() + "/tasks/flat",
                 Params =
                 {
                     ["token"] = token
@@ -54,7 +61,7 @@ namespace RestAPIWrapper.Server
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.TASKS_HIERARCHY,
+                Uri = await ServerUrl() + "/tasks/hierarchy",
                 Params =
                 {
                     ["token"] = token,
@@ -63,7 +70,8 @@ namespace RestAPIWrapper.Server
                 EnableDebug = Debug.isDebugBuild
             };
 
-            return await RestClient.Get<JObject>(request).ToUniTask();
+            var tasks =  await RestClient.Get<JObject>(request).ToUniTask();
+            return tasks;
         }
 
         public async UniTask<string> GetLastSavedCode(string token, string taskId,
@@ -71,7 +79,7 @@ namespace RestAPIWrapper.Server
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.SOLUTION,
+                Uri = await ServerUrl() + "/solution",
                 Params =
                 {
                     ["token"] = token,
@@ -87,16 +95,16 @@ namespace RestAPIWrapper.Server
             return code;
         }
 
-        public async UniTask<string> GetAuthData(string login, string password,
+        public async UniTask<string> GetAuthData(string email, string password,
             IProgress<float> progress = null)
         {
             var request = new RequestHelper
             {
-                Uri = Endpoint.LOGIN,
+                Uri = await ServerUrl() + "/authentication/login",
                 Params =
                 {
-                    ["email"] = login,
-                    ["pass"] = password
+                    ["email"] = email,
+                    ["password"] = password
                 },
                 ProgressCallback = value => progress?.Report(value),
                 EnableDebug = Debug.isDebugBuild
@@ -108,35 +116,12 @@ namespace RestAPIWrapper.Server
 
         public async UniTask RegisterUser(string login, string password, string name)
         {
-            var request = new RequestHelper
-            {
-                Uri = Endpoint.REGISTER,
-                Params =
-                {
-                    ["email"] = login,
-                    ["pass"] = password,
-                    ["name"] = name
-                },
-                EnableDebug = Debug.isDebugBuild
-            };
-
-            await RestClient.Post(request).ToUniTask();
+            throw new NotImplementedException();
         }
 
         public async UniTask RestorePassword(string login, string password)
         {
-            var request = new RequestHelper
-            {
-                Uri = Endpoint.RESTORE,
-                Params =
-                {
-                    ["email"] = login,
-                    ["pass"] = password,
-                },
-                EnableDebug = Debug.isDebugBuild
-            };
-
-            await RestClient.Post(request).ToUniTask();
+            throw new NotImplementedException();
         }
     }
 }

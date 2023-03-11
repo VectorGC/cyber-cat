@@ -54,7 +54,7 @@ namespace RestAPIWrapper.Serverless
             return UniTask.FromResult(string.Empty);
         }
 
-        public UniTask<string> GetAuthData(string login, string password, IProgress<float> progress = null)
+        public UniTask<string> GetAuthData(string email, string password, IProgress<float> progress = null)
         {
             return UniTask.FromResult("serverless_token");
         }
