@@ -4,7 +4,7 @@ services:
   api-gateway:
     image: api-gateway
     build:
-      context: ../ApiGateway/ApiGateway/
+      context: ./ApiGateway/
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_URLS=$API_GATEWAY_URL
