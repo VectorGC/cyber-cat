@@ -7,7 +7,7 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    public const string TOKEN = "test_token";
+    public const string Token = "test_token";
 
     /// <summary>
     /// Выдача токена по email и паролю.
@@ -17,6 +17,6 @@ public class AuthenticationController : ControllerBase
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     public IActionResult Login(string email, string password)
     {
-        return Ok(TOKEN);
+        return Ok(Token);
     }
 }

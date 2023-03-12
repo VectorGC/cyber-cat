@@ -1,5 +1,7 @@
 using System.Net;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using ApiGateway.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers;
@@ -19,10 +21,11 @@ public class TasksController : ControllerBase
     /// Возвращает таски в виде иерархии.
     /// </summary>
     [HttpGet("hierarchy")]
+    [ProducesResponseType(typeof(JsonObject), (int) HttpStatusCode.Forbidden)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public IActionResult GetTasksHierarchy(string token)
     {
-        if (AuthenticationController.TOKEN != token)
+        if (AuthenticationController.Token != token)
         {
             return Unauthorized();
         }
@@ -32,7 +35,7 @@ public class TasksController : ControllerBase
 
         var jsonData = System.IO.File.ReadAllText(fullPath);
 
-        var tasks = JsonSerializer.Deserialize<object>(jsonData);
+        var tasks = JsonSerializer.Deserialize<JsonObject>(jsonData);
 
         return Ok(tasks);
     }
@@ -41,10 +44,11 @@ public class TasksController : ControllerBase
     /// Возвращает таски в плоском виде
     /// </summary>
     [HttpGet("flat")]
+    [ProducesResponseType(typeof(TasksData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public IActionResult GetTasksFlat(string token)
     {
-        if (AuthenticationController.TOKEN != token)
+        if (AuthenticationController.Token != token)
         {
             return Unauthorized();
         }
@@ -54,7 +58,7 @@ public class TasksController : ControllerBase
 
         var jsonData = System.IO.File.ReadAllText(fullPath);
 
-        var tasks = JsonSerializer.Deserialize<object>(jsonData);
+        var tasks = JsonSerializer.Deserialize<TasksData>(jsonData);
 
         return Ok(tasks);
     }
