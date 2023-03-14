@@ -13,7 +13,7 @@ public class AuthenticationController : ControllerBase
     /// Выдача токена по email и паролю.
     /// </summary>
     /// <returns>Токен</returns>
-    [HttpGet]
+    [HttpGet("login")]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     public IActionResult Login(string email, string password)
     {
