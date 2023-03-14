@@ -13,8 +13,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Если мы в режиме разработки. В Release это работать не будет.
-if (app.Environment.IsDevelopment())
+// Если мы в режиме разработки. В Release это работать не будет. Пока делаем поведение одинаковым везде.
+if (app.Environment.IsDevelopment() || true)
 {
     // Показываем API спецификацию через swagger.
     app.UseSwagger();

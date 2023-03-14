@@ -9,8 +9,8 @@ services:
       context: ./ApiGateway/
       dockerfile: Dockerfile
     environment:
-      - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
+      # - ASPNETCORE_ENVIRONMENT=Development # Чтобы переопределять окуржение и показывать сваггер.
       - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
     ports:
       - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
