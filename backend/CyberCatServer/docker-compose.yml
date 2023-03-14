@@ -3,16 +3,69 @@ version: '3.4'
 services:
   api-gateway:
     image: api-gateway
+    container_name: api-gateway
     build:
+      # Для докер файла устаналиваем контекст, какбудто мы запускаем Dockerfile из папки в которой этот файл лежит.
       context: ./ApiGateway/
       dockerfile: Dockerfile
     environment:
-      - ASPNETCORE_URLS=$API_GATEWAY_URL
-      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017"
+      - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
     ports:
-      - "5050:${API_GATEWAY_PORT}"
+      - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
     depends_on:
-      - mongo
+      - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
+
+  # Рестарт nginx для перечитки конфигов:
+  # docker compose exec nginx nginx -s reload
+  nginx:
+    # image: nginx:latest
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      # Осторожно, nginx смотрит адрес и порт входящего запроса из интернета, а не входящего запроса в контейнер. Поэтому порт должен быть одинаковым по обе стороны.
+      - "100:100" # Порт по умолчанию для http запросов.
+      - "443:443" # Порт по умолчанию для https запросов.
+    volumes:
+      # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
+      # Слева - локальный путь на хост машине, где расположен сервер (!). Справа - путь, который создастся внутри докер контейнера.
+      # rw - права на чтение и запись. Запись нужна, чтобы перезаписать конфиг файл по template.
+      #- /etc/nginx/conf:/etc/nginx/conf.d/:ro
+      # - nginx-conf:/etc/nginx/conf.d:ro
+      # Настройка файловых хранилищ для взаимодействия нескольких контейнеров.
+      # Папки сертификатов, которые нужно читать nginx, чтобы обеспечивать https. ro - только чтение.
+      # - ./certbot/www:/var/www/certbot/:ro
+      #- ./certbot/www:/var/www/certbot/:ro
+      #- ./certbot/conf:/etc/nginx/ssl/:ro
+      - www-certbot:/var/www/certbot/:ro
+      - etc-letsencrypt:/etc/letsencrypt:ro
+
+  # При развертывании на целевой машине, нужно проверить и получить сертификаты.
+  # Проверка certbot из контейнера командой в терминале:
+  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d server.cyber-cat.pro (тут адрес сервера).
+  # --rm - удалить контейнер после завершения
+  # --webroot --webroot-path - путь куда кладутся сертификаты
+  # --dry-run - тестовый прогон. Проверяет, что можно выдать сертификат, но не выдает его. Потому что можно получить не больше N сертификатов в неделю
+  # -d - адрес, который проверяем
+  # Ещё доп. параметры:
+  # --email email@email
+  # --agree-tos - авто-принятие всех лицензий
+  # --no-eff-email - не делиться имейлом с EEF
+
+  # Получение сертификата (не забудьте потом перезапустить nginx) Да вроде бы не надо?:
+  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d server.cyber-cat.pro
+  # То же что и выше, но без --dry-run
+  certbot:
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    volumes:
+      # Папки, куда certbot положит сертификаты после проверки. rw - чтение и запись.
+      - www-certbot:/var/www/certbot/:rw
+      - etc-letsencrypt:/etc/letsencrypt/:rw
 
   mongo:
     image: mongo:5.0.15
@@ -20,7 +73,7 @@ services:
     ports:
       - "27017:27017"
 
-  mongo-express:
+  mongo-express: # Веб интерфейс СУБД для управления монгой.
     image: mongo-express:0.54.0
     ports:
       - "8081:8081"
@@ -29,3 +82,8 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: 123
     depends_on:
       - mongo
+
+volumes:
+  nginx-conf:
+  www-certbot:
+  etc-letsencrypt:

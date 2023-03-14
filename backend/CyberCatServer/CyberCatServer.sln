@@ -7,6 +7,16 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{9597278A-70BB-43B1-882F-CC5F8EEBDC05}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{46F24FCC-5926-4D85-B2D6-042A033369B9}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\Dockerfile = nginx\Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config.d", "config.d", "{296A288F-EFC4-470B-8357-23E4E2744677}"
+	ProjectSection(SolutionItems) = preProject
+		nginx\config.d\nginx.conf = nginx\config.d\nginx.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +36,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{296A288F-EFC4-470B-8357-23E4E2744677} = {46F24FCC-5926-4D85-B2D6-042A033369B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}
