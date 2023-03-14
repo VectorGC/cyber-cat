@@ -12,7 +12,7 @@ namespace RestAPIWrapper.Server
         {
             //var baseServer = Resources.Load<BaseServer>("Base server");
             //_root = await baseServer.GetActualServerURL();
-            return "http://localhost:5000";
+            return "https://server.cyber-cat.pro";
         }
 
         public async UniTask<string> SendCodeToChecking(string token, string taskId, string code, string progLanguage,
