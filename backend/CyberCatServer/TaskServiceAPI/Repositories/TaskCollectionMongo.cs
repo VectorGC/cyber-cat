@@ -11,7 +11,9 @@ namespace TaskServiceAPI.Repositories
         public TaskCollectionMongo(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("Database");
+            Console.WriteLine(connectionString);
             var mongoClient = new MongoClient(connectionString);
+            
             var cyberCatDB = mongoClient.GetDatabase("CyberCat");
             _taskCollection = cyberCatDB.GetCollection<ProgTask>("Tasks");
         }
