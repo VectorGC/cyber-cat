@@ -1,6 +1,8 @@
+using ApiGateway.Exceptions;
 using ApiGateway.Models;
 using ApiGateway.Repositories.Migrations;
 using ApiGateway.Repositories.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ApiGateway.Repositories;
@@ -12,6 +14,7 @@ public interface IUserRepository
     Task Add(IEnumerable<IUser> users);
     Task<IUser> FindByEmailSlowly(string email);
     Task<long> GetCount();
+    Task<IUser> FindByTokenSlowly(string token);
 }
 
 public class UserRepositoryMongoDb : IUserRepository
@@ -45,13 +48,30 @@ public class UserRepositoryMongoDb : IUserRepository
 
     public async Task<IUser> FindByEmailSlowly(string email)
     {
-        return await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync(GetCT());
+        var user = await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync(GetCT());
+        if (user == null)
+        {
+            throw new UserNotFound();
+        }
+
+        return user;
     }
 
     public async Task<long> GetCount()
     {
         // Используем Estimated... вместо Count. Потому что Estimated работает в разы быстрее на больших коллекциях. Но иногда имеет неточности.
         return await _userCollection.EstimatedDocumentCountAsync(cancellationToken: GetCT());
+    }
+
+    public async Task<IUser> FindByTokenSlowly(string token)
+    {
+        var user = await _userCollection.Find(u => u.Token == token).FirstOrDefaultAsync(GetCT());
+        if (user == null)
+        {
+            throw new UserNotFound();
+        }
+
+        return user;
     }
 
     private CancellationToken GetCT()

@@ -1,12 +1,14 @@
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using ApiGateway.Authorization;
 using ApiGateway.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
+[AuthorizeRequireToken]
 [Route("[controller]")]
 public class TasksController : ControllerBase
 {
@@ -23,13 +25,8 @@ public class TasksController : ControllerBase
     [HttpGet("hierarchy")]
     [ProducesResponseType(typeof(JsonObject), (int) HttpStatusCode.Forbidden)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public IActionResult GetTasksHierarchy(string token)
+    public IActionResult GetTasksHierarchy()
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
         var rootPath = _hostEnvironment.ContentRootPath;
         var fullPath = Path.Combine(rootPath, "TaskExamples/tasks_hierarchy.json");
 
@@ -46,13 +43,8 @@ public class TasksController : ControllerBase
     [HttpGet("flat")]
     [ProducesResponseType(typeof(TasksData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public IActionResult GetTasksFlat(string token)
+    public IActionResult GetTasksFlat()
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
         var rootPath = _hostEnvironment.ContentRootPath;
         var fullPath = Path.Combine(rootPath, "TaskExamples/tasks_flat.json");
 

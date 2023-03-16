@@ -8,7 +8,7 @@ namespace ApiGateway.Repositories;
 public interface IAuthUserRepository
 {
     Task<string?> GetTokenOrEmpty(IUser user);
-    Task<string?> CreateToken(IUser user);
+    Task<string> CreateToken(IUser user);
 }
 
 public class AuthUserRepositoryMongoDb : IAuthUserRepository
@@ -25,22 +25,19 @@ public class AuthUserRepositoryMongoDb : IAuthUserRepository
 
     public async Task<string?> GetTokenOrEmpty(IUser user)
     {
-        var token = await _userCollection
-            .Find(u => u.Email == user.Email)
-            .Project(u => u.Token).FirstOrDefaultAsync();
-
-        return token;
+        var userDbModel = await _userCollection.Find(u => u.Email == user.Email).FirstOrDefaultAsync();
+        return userDbModel.Token;
     }
 
-    public async Task<string?> CreateToken(IUser user)
+    public async Task<string> CreateToken(IUser user)
     {
         var token = Guid.NewGuid().ToString();
         var update = Builders<UserDbModel>.Update.Set(u => u.Token, token);
 
         try
         {
-            var resultModel = await _userCollection.FindOneAndUpdateAsync(u => u.Email == user.Email, update);
-            return resultModel.Token;
+            await _userCollection.FindOneAndUpdateAsync(u => u.Email == user.Email, update);
+            return token;
         }
         catch (MongoException e)
         {

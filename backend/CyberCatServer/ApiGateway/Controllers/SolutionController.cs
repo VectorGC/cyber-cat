@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using ApiGateway.Authorization;
 using ApiGateway.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace ApiGateway.Controllers;
 /// Контроллер отвечает за все что связано с кодом и решениями участников. Он много на себя берет, надо рефакторить.
 /// </summary>
 [Controller]
+[AuthorizeRequireToken]
 [Route("[controller]")]
 public class SolutionController : ControllerBase
 {
@@ -19,13 +21,8 @@ public class SolutionController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(SavedCodeDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public IActionResult GetLastSavedCode(string token, [FromQuery(Name = "task_id")] string taskId)
+    public IActionResult GetLastSavedCode([FromQuery(Name = "task_id")] string taskId)
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
         var jsonData = "{\"text\" : \"Hallo world!\"}";
         var savedCode = JsonSerializer.Deserialize<SavedCodeDto>(jsonData);
 
@@ -43,16 +40,11 @@ public class SolutionController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(VerdictResult), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-    public IActionResult VerifyCodeSolution(string token,
+    public IActionResult VerifyCodeSolution(
         [FromForm(Name = "task_id")] string taskId,
         [FromForm(Name = "source_text")] string sourceCode,
         [FromForm(Name = "lang")] string language)
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
         var verdict = new VerdictResult
         {
             Error = 0,

@@ -9,13 +9,11 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    public const string Token = "test_token";
+    private readonly IAuthenticationUserService _authenticationUserService;
 
-    private readonly IAuthUserService _authUserService;
-
-    public AuthenticationController(IAuthUserService authUserService)
+    public AuthenticationController(IAuthenticationUserService authenticationUserService)
     {
-        _authUserService = authUserService;
+        _authenticationUserService = authenticationUserService;
     }
 
     /// <summary>
@@ -30,7 +28,7 @@ public class AuthenticationController : ControllerBase
     {
         try
         {
-            var token = await _authUserService.Authenticate(email, password);
+            var token = await _authenticationUserService.Authenticate(email, password);
             return Ok(token);
         }
         catch (UserNotFound notFound)
