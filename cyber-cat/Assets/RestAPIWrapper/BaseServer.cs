@@ -25,14 +25,22 @@ namespace RestAPIWrapper.Server
                 Uri = URL,
                 EnableDebug = Debug.isDebugBuild
             };
-            var task = await RestClient.Post(request).ToUniTask();
+            ResponseHelper task = null;
+            if (_requestType == HttpRequest.POST)
+            {
+                task = await RestClient.Post(request).ToUniTask();
+            }
+            else if (_requestType == HttpRequest.GET)
+            {
+                task = await RestClient.Get(request).ToUniTask();
+            }
             return task.Text;
         }
 
         private enum HttpRequest
         {
             GET,
-            SET
+            POST
         }
     }
 }

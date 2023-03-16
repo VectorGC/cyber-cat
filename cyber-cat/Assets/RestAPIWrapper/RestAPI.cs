@@ -6,7 +6,7 @@ namespace RestAPIWrapper
 #if SERVERLESS
             new Serverless.RestAPIServerless();
 #else
-            new Server.RestAPIKeeReel();
+            new Server.RestAPIServer();
 #endif
     }
 }

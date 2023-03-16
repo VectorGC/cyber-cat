@@ -1,0 +1,5 @@
+# IDE cache directories
+.idea/
+.vs/
+.vscode/
+.vsconfig
