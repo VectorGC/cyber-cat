@@ -1,4 +1,6 @@
 using System.Net;
+using ApiGateway.Exceptions;
+using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers;
@@ -9,14 +11,35 @@ public class AuthenticationController : ControllerBase
 {
     public const string Token = "test_token";
 
+    private readonly IAuthUserService _authUserService;
+
+    public AuthenticationController(IAuthUserService authUserService)
+    {
+        _authUserService = authUserService;
+    }
+
     /// <summary>
     /// Выдача токена по email и паролю.
     /// </summary>
     /// <returns>Токен</returns>
     [HttpGet("login")]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public IActionResult Login(string email, string password)
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    [ProducesResponseType((int) HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Login(string email, string password)
     {
-        return Ok(Token);
+        try
+        {
+            var token = await _authUserService.Authenticate(email, password);
+            return Ok(token);
+        }
+        catch (UserNotFound notFound)
+        {
+            return Forbid(notFound.Message);
+        }
+        catch (UnprocessableTokenException tokenException)
+        {
+            return UnprocessableEntity(tokenException);
+        }
     }
 }
