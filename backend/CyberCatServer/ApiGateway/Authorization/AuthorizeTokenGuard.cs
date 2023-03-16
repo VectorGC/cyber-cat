@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ApiGateway.Authorization;
 
-public class AuthorizeRequireToken : ControllerBase, IAsyncAuthorizationFilter
+public class AuthorizeTokenGuard : ControllerBase, IAsyncAuthorizationFilter
 {
     private readonly IAuthenticationUserService _authenticationUserService;
 
-    public AuthorizeRequireToken(IAuthenticationUserService authenticationUserService)
+    public AuthorizeTokenGuard(IAuthenticationUserService authenticationUserService)
     {
         _authenticationUserService = authenticationUserService;
     }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiGateway.Controllers;
 
 [Controller]
-[AuthorizeRequireToken]
+[AuthorizeTokenGuard]
 [Route("[controller]")]
 public class TasksController : ControllerBase
 {
