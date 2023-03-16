@@ -5,8 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwagger();
 
-builder.Services.AddUserService();
-builder.Services.AddAuthUserService();
+builder.Services.AddUserServices();
+builder.Services.AddAuthUserServices();
+builder.Services.AddTaskServices();
 
 var app = builder.Build();
 

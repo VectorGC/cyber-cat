@@ -40,7 +40,7 @@ public class SolutionController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(VerdictResult), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
-    public IActionResult VerifyCodeSolution(
+    public IActionResult VerifyCodeSolution(string token,
         [FromForm(Name = "task_id")] string taskId,
         [FromForm(Name = "source_text")] string sourceCode,
         [FromForm(Name = "lang")] string language)

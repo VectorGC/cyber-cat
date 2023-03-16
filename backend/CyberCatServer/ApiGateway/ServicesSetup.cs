@@ -6,7 +6,7 @@ namespace ApiGateway;
 
 public static class ServicesSetup
 {
-    public static IServiceCollection AddUserService(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddUserServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IUserRepository, UserRepositoryMongoDb>();
         serviceCollection.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
@@ -14,10 +14,19 @@ public static class ServicesSetup
         return serviceCollection;
     }
 
-    public static IServiceCollection AddAuthUserService(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddAuthUserServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IAuthenticationUserService, AuthenticationUserService>();
         serviceCollection.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddTaskServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<ITaskRepository, TasksHierarchyRepository>();
+        serviceCollection.AddScoped<ITaskRepository, TasksFlatRepository>();
+
+        serviceCollection.AddScoped<ITaskService, TaskService>();
         return serviceCollection;
     }
 }
