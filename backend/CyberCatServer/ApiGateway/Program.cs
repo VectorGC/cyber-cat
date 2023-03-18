@@ -8,6 +8,7 @@ builder.Services.AddSwagger();
 builder.Services.AddUserServices();
 builder.Services.AddAuthUserServices();
 builder.Services.AddTaskServices();
+builder.Services.AddSolutionServices();
 
 var app = builder.Build();
 

@@ -9,11 +9,11 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthenticationUserService _authenticationUserService;
+    private readonly IAuthUserService _authUserService;
 
-    public AuthenticationController(IAuthenticationUserService authenticationUserService)
+    public AuthenticationController(IAuthUserService authUserService)
     {
-        _authenticationUserService = authenticationUserService;
+        _authUserService = authUserService;
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class AuthenticationController : ControllerBase
     {
         try
         {
-            var token = await _authenticationUserService.Authenticate(email, password);
+            var token = await _authUserService.Authenticate(email, password);
             return Ok(token);
         }
         catch (UserNotFound notFound)
@@ -38,6 +38,10 @@ public class AuthenticationController : ControllerBase
         catch (UnprocessableTokenException tokenException)
         {
             return UnprocessableEntity(tokenException);
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            return Unauthorized(exception);
         }
     }
 }

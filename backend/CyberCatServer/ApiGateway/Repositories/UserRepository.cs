@@ -2,19 +2,19 @@ using ApiGateway.Exceptions;
 using ApiGateway.Models;
 using ApiGateway.Repositories.Migrations;
 using ApiGateway.Repositories.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ApiGateway.Repositories;
 
 public interface IUserRepository
 {
+    Task<IUser> GetUser(UserId id);
     Task ApplyMigration(IUserRepositoryMigration migration);
     Task Add(IUser user);
     Task Add(IEnumerable<IUser> users);
-    Task<IUser> FindByEmailSlowly(string email);
-    Task<long> GetCount();
-    Task<IUser> FindByTokenSlowly(string token);
+    Task<long> GetEstimatedCount();
+    Task<UserId> FindByEmailSlowly(string email);
+    Task<UserId> FindByTokenSlowly(string token);
 }
 
 public class UserRepositoryMongoDb : IUserRepository
@@ -27,6 +27,17 @@ public class UserRepositoryMongoDb : IUserRepository
         var client = new MongoClient(connectionString);
         var cyberCatDb = client.GetDatabase("CyberCat");
         _userCollection = cyberCatDb.GetCollection<UserDbModel>("Users");
+    }
+
+    public async Task<IUser> GetUser(UserId id)
+    {
+        var user = await _userCollection.Find(u => u.Id == id).FirstOrDefaultAsync();
+        if (user == null)
+        {
+            throw new UserNotFound();
+        }
+
+        return user;
     }
 
     public async Task ApplyMigration(IUserRepositoryMigration migration)
@@ -46,7 +57,7 @@ public class UserRepositoryMongoDb : IUserRepository
         await _userCollection.InsertManyAsync(userDbModels, cancellationToken: GetCT());
     }
 
-    public async Task<IUser> FindByEmailSlowly(string email)
+    public async Task<UserId> FindByEmailSlowly(string email)
     {
         var user = await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync(GetCT());
         if (user == null)
@@ -54,16 +65,10 @@ public class UserRepositoryMongoDb : IUserRepository
             throw new UserNotFound();
         }
 
-        return user;
+        return new UserId(user.Id);
     }
 
-    public async Task<long> GetCount()
-    {
-        // Используем Estimated... вместо Count. Потому что Estimated работает в разы быстрее на больших коллекциях. Но иногда имеет неточности.
-        return await _userCollection.EstimatedDocumentCountAsync(cancellationToken: GetCT());
-    }
-
-    public async Task<IUser> FindByTokenSlowly(string token)
+    public async Task<UserId> FindByTokenSlowly(string token)
     {
         var user = await _userCollection.Find(u => u.Token == token).FirstOrDefaultAsync(GetCT());
         if (user == null)
@@ -71,7 +76,13 @@ public class UserRepositoryMongoDb : IUserRepository
             throw new UserNotFound();
         }
 
-        return user;
+        return new UserId(user.Id);
+    }
+
+    public async Task<long> GetEstimatedCount()
+    {
+        // Используем Estimated... вместо Count. Потому что Estimated работает в разы быстрее на больших коллекциях. Но иногда имеет неточности.
+        return await _userCollection.EstimatedDocumentCountAsync(cancellationToken: GetCT());
     }
 
     private CancellationToken GetCT()

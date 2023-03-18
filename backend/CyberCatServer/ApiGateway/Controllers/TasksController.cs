@@ -12,12 +12,10 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class TasksController : ControllerBase
 {
-    private readonly IHostEnvironment _hostEnvironment;
     private readonly ITaskService _taskService;
 
-    public TasksController(IHostEnvironment hostEnvironment, ITaskService taskService)
+    public TasksController(ITaskService taskService)
     {
-        _hostEnvironment = hostEnvironment;
         _taskService = taskService;
     }
 

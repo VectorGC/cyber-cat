@@ -16,7 +16,7 @@ public static class ServicesSetup
 
     public static IServiceCollection AddAuthUserServices(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<IAuthenticationUserService, AuthenticationUserService>();
+        serviceCollection.AddScoped<IAuthUserService, AuthUserService>();
         serviceCollection.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
         return serviceCollection;
     }
