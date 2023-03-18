@@ -1,5 +1,6 @@
 using System.Net;
 using ApiGateway.Exceptions;
+using ApiGateway.Repositories;
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace ApiGateway.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly IAuthUserService _authUserService;
+    private readonly IUserRepository _userRepository;
 
-    public AuthenticationController(IAuthUserService authUserService)
+    public AuthenticationController(IAuthUserService authUserService, IUserRepository userRepository)
     {
         _authUserService = authUserService;
+        _userRepository = userRepository;
     }
 
     /// <summary>
@@ -28,8 +31,15 @@ public class AuthenticationController : ControllerBase
     {
         try
         {
-            var token = await _authUserService.Authenticate(email, password);
-            return Ok(token);
+            var tokenUser = await _authUserService.Authenticate(email, password);
+            var userId = await _authUserService.Authorize(tokenUser);
+            var user = await _userRepository.GetUser(userId);
+
+            return Ok(new
+            {
+                token = tokenUser,
+                name = user.Name
+            });
         }
         catch (UserNotFound notFound)
         {
