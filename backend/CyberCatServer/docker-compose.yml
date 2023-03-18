@@ -29,6 +29,8 @@ services:
       # Осторожно, nginx смотрит адрес и порт входящего запроса из интернета, а не входящего запроса в контейнер. Поэтому порт должен быть одинаковым по обе стороны.
       - "100:100" # Порт по умолчанию для http запросов.
       - "443:443" # Порт по умолчанию для https запросов.
+    depends_on:
+      - api-gateway
     volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
       # Настройка файловых хранилищ для взаимодействия нескольких контейнеров.
@@ -69,10 +71,11 @@ services:
 
   mongo-express: # Веб интерфейс СУБД для управления монгой.
     image: mongo-express:0.54.0
+    container_name: mongo-express
     ports:
       - "8081:8081"
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: user3
+      ME_CONFIG_BASICAUTH_USERNAME: cyber-dog
       ME_CONFIG_BASICAUTH_PASSWORD: 123
     depends_on:
       - mongo
