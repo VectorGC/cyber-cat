@@ -29,4 +29,12 @@ public static class ServicesSetup
         serviceCollection.AddScoped<ITaskService, TaskService>();
         return serviceCollection;
     }
+
+    public static IServiceCollection AddSolutionServices(this IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddScoped<ISolutionService, SolutionService>();
+        serviceCollection.AddScoped<ISolutionRepository, SolutionRepository>();
+
+        return serviceCollection;
+    }
 }
