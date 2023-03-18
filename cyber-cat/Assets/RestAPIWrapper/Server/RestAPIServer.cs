@@ -12,6 +12,8 @@ namespace RestAPIWrapper.Server
         {
             //var baseServer = Resources.Load<BaseServer>("Base server");
             //_root = await baseServer.GetActualServerURL();
+
+            //return "http://localhost:5000";
             return "https://server.cyber-cat.pro";
         }
 
@@ -70,7 +72,7 @@ namespace RestAPIWrapper.Server
                 EnableDebug = Debug.isDebugBuild
             };
 
-            var tasks =  await RestClient.Get<JObject>(request).ToUniTask();
+            var tasks = await RestClient.Get<JObject>(request).ToUniTask();
             return tasks;
         }
 

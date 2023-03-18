@@ -4,6 +4,6 @@ public class IntroCartoonPlayer : MonoBehaviour
 {
     public async void Play()
     {
-        await IntroCartoon.Play();
+        //await IntroCartoon.Play();
     }
 }
