@@ -12,63 +12,63 @@ public class AddDevPlayers : IUserRepositoryMigration
 {
     public async Task Apply(IUserRepository repository)
     {
-        if (await repository.GetCount() > 0)
+        if (await repository.GetEstimatedCount() > 0)
         {
             return;
         }
 
         var users = new List<IUser>
         {
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Alkon",
                 Name = "Иван",
                 LastName = "Алкон",
                 Password = "1"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Lukashev",
                 Name = "Михаил",
                 LastName = "Лукашев",
                 Password = "12"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Karpik",
                 Name = "Артем",
                 LastName = "Карпинский",
                 Password = "123"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Snegirev",
                 Name = "Снегирев",
                 LastName = "Святослав",
                 Password = "1234"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Pekush",
                 Name = "Даниил",
                 LastName = "Пекуш",
                 Password = "12345"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Ustinovskiy",
                 Name = "Устиновский",
                 LastName = "Георгий",
                 Password = "123456"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Mazhaicev",
                 Name = "Евгений",
                 LastName = "Мажайцев",
                 Password = "1234567"
             },
-            new UserApiDto()
+            new UserDto()
             {
                 Email = "Kimsanbaev",
                 Name = "Карим",

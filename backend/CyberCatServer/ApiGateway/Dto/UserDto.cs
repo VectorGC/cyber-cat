@@ -2,7 +2,7 @@ using ApiGateway.Models;
 
 namespace ApiGateway.Dto;
 
-public struct UserApiDto : IUser
+public class UserDto : IUser
 {
     public string Email { get; set; }
     public string Name { get; set; }
