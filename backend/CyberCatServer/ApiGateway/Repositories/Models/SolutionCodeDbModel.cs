@@ -8,15 +8,10 @@ namespace ApiGateway.Repositories.Models;
 public class SolutionCodeDbModel : ISolutionCode
 {
     public ObjectId AuthorId { get; set; }
-    public string TaskId { get; set; }
-    public string SourceCode { get; set; }
+    public string TaskId { get; set; } = null!;
+    public string SourceCode { get; set; } = null!;
 
     // Используем явное определение интерфейса, чтобы в БД репозиториях нельзя было использовать это поле.
     // А любое приведение типов бросалось в глаза.
     UserId ISolutionCode.Author => new UserId(AuthorId);
-
-    // Все классы БД моделей, должны иметь пустой конструктор для десериализации.
-    public SolutionCodeDbModel()
-    {
-    }
 }
