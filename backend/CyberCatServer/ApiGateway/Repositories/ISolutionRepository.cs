@@ -25,7 +25,7 @@ public class SolutionRepository : ISolutionRepository
     public async Task<string> GetSavedCode(UserId userId, string taskId)
     {
         var code = await _solutionCollection
-            .Find(s => s.AuthorId == userId && s.TaskId == taskId)
+            .Find(s => s.AuthorEmail == userId && s.TaskId == taskId)
             .Project(s => s.SourceCode)
             .FirstOrDefaultAsync(GetCT());
 
@@ -41,7 +41,7 @@ public class SolutionRepository : ISolutionRepository
         };
 
         await _solutionCollection.FindOneAndUpdateAsync<SolutionCodeDbModel>(
-            s => s.AuthorId == userId && s.TaskId == taskId,
+            s => s.AuthorEmail == userId && s.TaskId == taskId,
             update, options);
     }
 

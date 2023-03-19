@@ -4,21 +4,21 @@ namespace ApiGateway.Models;
 
 public readonly struct UserId : IEquatable<UserId>
 {
-    private readonly ObjectId _id;
+    private readonly string _id;
 
-    public UserId(ObjectId id)
+    public UserId(string email)
     {
-        _id = id;
+        _id = email;
     }
 
-    public static implicit operator ObjectId(UserId userId)
+    public static implicit operator string(UserId userId)
     {
         return userId._id;
     }
 
     public override string ToString()
     {
-        return _id.ToString();
+        return _id;
     }
 
     public bool Equals(UserId other)

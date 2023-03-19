@@ -10,7 +10,6 @@ public interface IUserRepository
 {
     Task<IUser> GetUser(UserId id);
     Task ApplyMigration(IUserRepositoryMigration migration);
-    Task Add(IUser user);
     Task Add(IEnumerable<IUser> users);
     Task<long> GetEstimatedCount();
     Task<UserId> FindByEmailSlowly(string email);
@@ -31,7 +30,7 @@ public class UserRepositoryMongoDb : IUserRepository
 
     public async Task<IUser> GetUser(UserId id)
     {
-        var user = await _userCollection.Find(u => u.Id == id).FirstOrDefaultAsync();
+        var user = await _userCollection.Find(u => u.Email == id).FirstOrDefaultAsync();
         if (user == null)
         {
             throw new UserNotFound();
@@ -65,7 +64,7 @@ public class UserRepositoryMongoDb : IUserRepository
             throw new UserNotFound();
         }
 
-        return new UserId(user.Id);
+        return new UserId(user.Email);
     }
 
     public async Task<UserId> FindByTokenSlowly(string token)
@@ -76,7 +75,7 @@ public class UserRepositoryMongoDb : IUserRepository
             throw new UserNotFound();
         }
 
-        return new UserId(user.Id);
+        return new UserId(user.Email);
     }
 
     public async Task<long> GetEstimatedCount()
