@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{46F24FCC-5926-4D85-B2D6-042A033369B9}"
 	ProjectSection(SolutionItems) = preProject
 		nginx\Dockerfile = nginx\Dockerfile
+		nginx\dhparam = nginx\dhparam
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config.d", "config.d", "{296A288F-EFC4-470B-8357-23E4E2744677}"

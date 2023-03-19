@@ -22,9 +22,9 @@ namespace Authentication
             var isCartoonWatched = PlayerPrefs.GetInt("isCartoonWatched") == 1;
             if (!isCartoonWatched)
             {
-                await IntroCartoon.Play();
+                //await IntroCartoon.Play();
             }
-            
+
             onComplete.Invoke();
         }
     }

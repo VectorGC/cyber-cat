@@ -45,8 +45,8 @@ namespace Authentication
 
         public static async UniTask<TokenSession> RequestFromServer(string login, string password)
         {
-            var token = await RequestWrapper.GetAuthData(login, password);
-            var tokenSession = new TokenSession(token);
+            var tokenObj = await RequestWrapper.GetAuthData(login, password);
+            var tokenSession = JsonConvert.DeserializeObject<TokenSession>(tokenObj);
             return tokenSession;
         }
 

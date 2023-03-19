@@ -1,4 +1,7 @@
 using System.Net;
+using ApiGateway.Exceptions;
+using ApiGateway.Repositories;
+using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers;
@@ -7,7 +10,14 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class AuthenticationController : ControllerBase
 {
-    public const string Token = "test_token";
+    private readonly IAuthUserService _authUserService;
+    private readonly IUserRepository _userRepository;
+
+    public AuthenticationController(IAuthUserService authUserService, IUserRepository userRepository)
+    {
+        _authUserService = authUserService;
+        _userRepository = userRepository;
+    }
 
     /// <summary>
     /// Выдача токена по email и паролю.
@@ -15,8 +25,33 @@ public class AuthenticationController : ControllerBase
     /// <returns>Токен</returns>
     [HttpGet("login")]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public IActionResult Login(string email, string password)
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    [ProducesResponseType((int) HttpStatusCode.UnprocessableEntity)]
+    public async Task<IActionResult> Login(string email, string password)
     {
-        return Ok(Token);
+        try
+        {
+            var tokenUser = await _authUserService.Authenticate(email, password);
+            var userId = await _authUserService.Authorize(tokenUser);
+            var user = await _userRepository.GetUser(userId);
+
+            return Ok(new
+            {
+                token = tokenUser,
+                name = user.Name
+            });
+        }
+        catch (UserNotFound notFound)
+        {
+            return NotFound(notFound.Message);
+        }
+        catch (UnprocessableTokenException tokenException)
+        {
+            return UnprocessableEntity(tokenException.Message);
+        }
+        catch (UnauthorizedAccessException exception)
+        {
+            return Unauthorized(exception.Message);
+        }
     }
 }

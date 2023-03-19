@@ -4,9 +4,9 @@ namespace TaskChecker.Verdicts
     {
         public override string ToString()
         {
-            return "Задача решена";
+            return "Ваш код сохранен. Приступайте к следующей задаче ^_^";
         }
-    
+
         public string Message => ToString();
         public LogMessageType MessageType => LogMessageType.Success;
     }

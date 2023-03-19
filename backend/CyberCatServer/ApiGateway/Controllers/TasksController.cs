@@ -1,20 +1,22 @@
 using System.Net;
-using System.Text.Json;
 using System.Text.Json.Nodes;
+using ApiGateway.Authorization;
 using ApiGateway.Dto;
+using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
+[AuthorizeTokenGuard]
 [Route("[controller]")]
 public class TasksController : ControllerBase
 {
-    private readonly IHostEnvironment _hostEnvironment;
+    private readonly ITaskService _taskService;
 
-    public TasksController(IHostEnvironment hostEnvironment)
+    public TasksController(ITaskService taskService)
     {
-        _hostEnvironment = hostEnvironment;
+        _taskService = taskService;
     }
 
     /// <summary>
@@ -23,20 +25,9 @@ public class TasksController : ControllerBase
     [HttpGet("hierarchy")]
     [ProducesResponseType(typeof(JsonObject), (int) HttpStatusCode.Forbidden)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public IActionResult GetTasksHierarchy(string token)
+    public async Task<IActionResult> GetTasksHierarchy(string token)
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
-        var rootPath = _hostEnvironment.ContentRootPath;
-        var fullPath = Path.Combine(rootPath, "TaskExamples/tasks_hierarchy.json");
-
-        var jsonData = System.IO.File.ReadAllText(fullPath);
-
-        var tasks = JsonSerializer.Deserialize<JsonObject>(jsonData);
-
+        var tasks = await _taskService.GetTasksAsHierarchy();
         return Ok(tasks);
     }
 
@@ -46,20 +37,9 @@ public class TasksController : ControllerBase
     [HttpGet("flat")]
     [ProducesResponseType(typeof(TasksData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public IActionResult GetTasksFlat(string token)
+    public async Task<IActionResult> GetTasksFlat(string token)
     {
-        if (AuthenticationController.Token != token)
-        {
-            return Unauthorized();
-        }
-
-        var rootPath = _hostEnvironment.ContentRootPath;
-        var fullPath = Path.Combine(rootPath, "TaskExamples/tasks_flat.json");
-
-        var jsonData = System.IO.File.ReadAllText(fullPath);
-
-        var tasks = JsonSerializer.Deserialize<TasksData>(jsonData);
-
+        var tasks = await _taskService.GetTasksAsFlat();
         return Ok(tasks);
     }
 }
