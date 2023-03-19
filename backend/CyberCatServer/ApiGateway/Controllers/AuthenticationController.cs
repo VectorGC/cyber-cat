@@ -43,15 +43,15 @@ public class AuthenticationController : ControllerBase
         }
         catch (UserNotFound notFound)
         {
-            return Forbid(notFound.Message);
+            return NotFound(notFound.Message);
         }
         catch (UnprocessableTokenException tokenException)
         {
-            return UnprocessableEntity(tokenException);
+            return UnprocessableEntity(tokenException.Message);
         }
         catch (UnauthorizedAccessException exception)
         {
-            return Unauthorized(exception);
+            return Unauthorized(exception.Message);
         }
     }
 }
