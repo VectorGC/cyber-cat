@@ -418,6 +418,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1019467815}
+    - target: {fileID: 4186498405883454736, guid: d0eab72747deb394c898b140d06f4c29, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4186498405883454736, guid: d0eab72747deb394c898b140d06f4c29, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0eab72747deb394c898b140d06f4c29, type: 3}
 --- !u!1001 &7299432127885494146
@@ -823,6 +831,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ForgotPassword
       objectReference: {fileID: 0}
+    - target: {fileID: 7967738777239877421, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877422, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -837,27 +849,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 728.00006
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 364.00003
       objectReference: {fileID: 0}
     - target: {fileID: 7967738777239877426, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -310.575
       objectReference: {fileID: 0}
     - target: {fileID: 8128323518888098510, guid: b951f234d7af47f4d91cbd6cbccde8ac, type: 3}
       propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
