@@ -41,13 +41,13 @@ public class LogMessageView : UIBehaviour
     {
         switch (message)
         {
-            case "Proyecto26.RequestException: HTTP/1.1 401 Unauthorized":
+            case "RequestException: HTTP/1.1 401 Unauthorized":
                 return "Не авторизован. Не правильный пароль";
-            case "Proyecto26.RequestException: HTTP/1.1 500 Internal Server Error":
+            case "RequestException: HTTP/1.1 500 Internal Server Error":
                 return "Внутренняя ошибка сервера. Обратитесь к организатору";
-            case "Proyecto26.RequestException: HTTP/1.1 404 Not Found":
+            case "RequestException: HTTP/1.1 404 Not Found":
                 return "Пользователь не найден. Проверьте логин";
-            case "Proyecto26.RequestException: SSL CA certificate error":
+            case "RequestException: SSL CA certificate error":
                 return "Ошибка сертификата. Обратитесь к организаторам";
             default:
                 return string.Empty;
