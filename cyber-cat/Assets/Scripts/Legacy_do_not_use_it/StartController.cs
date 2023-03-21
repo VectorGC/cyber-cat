@@ -7,12 +7,12 @@ public class StartController : MonoBehaviour
     [SerializeField] private SceneField authScene;
     [SerializeField] private SceneField menu;
 
-    private void Start()
+    private async void Start()
     {
         if (TokenSession.IsNoneToken)
         {
-            authScene.LoadAsyncViaLoadingScreen();
-            return;
+            await TokenSession.RequestAndSaveFromServer("user", "user");
+            //authScene.LoadAsyncViaLoadingScreen();
         }
 
         menu.LoadAsyncViaLoadingScreen();
