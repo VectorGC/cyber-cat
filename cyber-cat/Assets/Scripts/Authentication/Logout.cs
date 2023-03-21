@@ -8,4 +8,9 @@ public class Logout : MonoBehaviour
         TokenSession.DeleteFromPlayerPrefs();
         UIDialogs.Instance.StartScene.LoadAsyncViaLoadingScreen();
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
