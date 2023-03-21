@@ -56,7 +56,12 @@ namespace RestAPIWrapper.Serverless
 
         public UniTask<string> GetAuthData(string email, string password, IProgress<float> progress = null)
         {
-            return UniTask.FromResult("serverless_token");
+            var tokenObj = new
+            {
+                token = "serverless_token",
+                name = "Кибер Кот"
+            };
+            return UniTask.FromResult(JsonConvert.SerializeObject(tokenObj));
         }
 
         public UniTask RegisterUser(string login, string password, string name)
