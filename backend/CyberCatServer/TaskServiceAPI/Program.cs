@@ -25,3 +25,4 @@ app.MapGet("/", (context) =>
 app.MapControllers();
 
 app.Run();
+

@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskServiceAPI", "TaskServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskServiceAPI", "TaskServiceAPI\TaskServiceAPI.csproj", "{F479AA8B-DE7E-4B14-9565-573C23C464A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CompilerServiceAPI", "CompilerServiceAPI", "{BA0A6261-CB86-4419-80B0-0821E3F33C4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompilerServiceAPI", "CompilerServiceAPI\CompilerServiceAPI.csproj", "{9FCE2359-AD33-415D-82BC-2C537E5269E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,10 @@ Global
 		{F479AA8B-DE7E-4B14-9565-573C23C464A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F479AA8B-DE7E-4B14-9565-573C23C464A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F479AA8B-DE7E-4B14-9565-573C23C464A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCE2359-AD33-415D-82BC-2C537E5269E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCE2359-AD33-415D-82BC-2C537E5269E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCE2359-AD33-415D-82BC-2C537E5269E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCE2359-AD33-415D-82BC-2C537E5269E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A9B1F51F-F827-4CDF-8790-26E861773542} = {F4EF0A91-DF15-4F81-87E6-9B57AAB34501}
 		{F479AA8B-DE7E-4B14-9565-573C23C464A9} = {6375697B-E441-404C-A984-F6643F50DDB9}
+		{9FCE2359-AD33-415D-82BC-2C537E5269E0} = {BA0A6261-CB86-4419-80B0-0821E3F33C4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}
