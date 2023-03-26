@@ -17552,7 +17552,7 @@ MonoBehaviour:
   _banTriggers:
   - {fileID: 0}
   _transformOfTrigger: {fileID: 0}
-  _canBeActivatedMultipleTime: 0
+  _canBeActivatedMultipleTime: 1
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
