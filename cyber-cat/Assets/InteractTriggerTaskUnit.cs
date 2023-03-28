@@ -9,14 +9,16 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
 {
     [SerializeField] private Trigger _triggerToActivate;
     private ITaskData _taskData;
-    private Collider _collider;
 
     [SerializeField] private bool selfTriggerLogic = false;
 
     protected void Start()
     {
-        TryGetComponent(out _collider);
-        _collider.enabled = false;
+        var collider = GetComponent<Collider>();
+        if (_taskData == null)
+        {
+            collider.enabled = false;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -62,10 +64,8 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
                 gameObject.SetActive(true);
             }
 
-            if (_collider)
-            {
-                _collider.enabled = true;
-            }
+            var collider = GetComponent<Collider>();
+            collider.enabled = true;
         }
     }
 
@@ -76,12 +76,15 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             _triggerToActivate.gameObject.SetActive(true);
         }
 
-        _collider.enabled = false;
+        var collider = GetComponent<Collider>();
+        collider.enabled = false;
     }
 
     public override void OnError(Exception error)
     {
-        _collider.enabled = false;
+        var collider = GetComponent<Collider>();
+        collider.enabled = false;
+
         if (selfTriggerLogic)
         {
             gameObject.SetActive(false);
