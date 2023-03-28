@@ -1,5 +1,6 @@
 using System;
 using Authentication;
+using RequestAPI.Proxy;
 using TaskUnits;
 using UniRx;
 using UniRx.Triggers;
@@ -33,7 +34,7 @@ namespace Legacy_do_not_use_it
             var isHackModePressed = Input.GetKey(KeyCode.F);
             if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
             {
-                var token = TokenSession.FromPlayerPrefs();
+                var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
 
                 //Time.timeScale = 0f;
                 //var task = await taskFolder.GetTask(token);

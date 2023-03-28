@@ -13,14 +13,14 @@ public class SendCodeHandler : MonoBehaviour
         [ProgLanguage.Python] = "py",
         [ProgLanguage.Pascal] = "pas"
     };
-    
+
     public async void SendCodeToChecking()
     {
         var task = CodeEditor.Task;
         var code = CodeEditor.Code;
         var language = CodeEditor.Language;
 
-        var token = TokenSession.FromPlayerPrefs();
+        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
 
         var checkingResult = await RequestAPIProxy.CheckCode(task, token, code, ProgLanguages[language]);
 
