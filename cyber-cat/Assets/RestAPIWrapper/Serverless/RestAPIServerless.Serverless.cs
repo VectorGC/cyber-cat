@@ -1,4 +1,5 @@
 using System;
+using Authentication;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -56,7 +57,8 @@ namespace RestAPIWrapper.Serverless
 
         public UniTask<string> GetAuthData(string email, string password, IProgress<float> progress = null)
         {
-            return UniTask.FromResult("serverless_token");
+            var token = new TokenSession("serverless_token", "Cyber Cat");
+            return UniTask.FromResult(JsonConvert.SerializeObject(token));
         }
 
         public UniTask RegisterUser(string login, string password, string name)
