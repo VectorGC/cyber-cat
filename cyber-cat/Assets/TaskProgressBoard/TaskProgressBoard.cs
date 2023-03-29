@@ -1,12 +1,13 @@
 using Authentication;
 using Cysharp.Threading.Tasks;
+using RequestAPI.Proxy;
 using UnityEngine;
 
 public static class TaskProgressBoard
 {
     public static async UniTask ShowTaskProgressBoard()
     {
-        var token = TokenSession.FromPlayerPrefs();
+        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
         var tasksProgress = await TasksProgress.GetFromServer(token);
 
         OnTaskProgressReceived(tasksProgress);
