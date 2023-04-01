@@ -10,6 +10,7 @@
 /[Bb]uild.zip
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Cc]odeCoverage/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
