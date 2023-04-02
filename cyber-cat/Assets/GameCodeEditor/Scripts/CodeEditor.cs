@@ -34,14 +34,14 @@ public class CodeEditor : UIBehaviour
     public static async UniTaskVoid OpenSolution(ITaskData task, IProgress<float> progress = null)
     {
         Time.timeScale = 0f;
-        
+
         await SceneManager.LoadSceneAsync(CodeEditorScene, LoadSceneMode.Additive).ToUniTask(progress);
         await SetTaskInEditor(task);
 
         await WaitWhenEnable();
 
         GameMode.Vision = VisionMode.Default;
-        
+
         Time.timeScale = 1f;
     }
 
@@ -53,13 +53,13 @@ public class CodeEditor : UIBehaviour
 
     protected override void OnDestroy()
     {
-        var message = new NeedUpdateTaskData(_task.Id, TokenSession.FromPlayerPrefs());
+        var message = new NeedUpdateTaskData(_task.Id, RequestAPIProxy.GetTokenFromPlayerPrefs());
         AsyncMessageBroker.Default.PublishAsync(message);
     }
 
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
-        var token = TokenSession.FromPlayerPrefs();
+        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
         var lastSavedCode = await RequestAPIProxy.GetSavedCode(token, task.Id);
 
         var message = new SetTaskInEditor(task, lastSavedCode);

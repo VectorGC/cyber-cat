@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Authentication;
+using RequestAPI.Proxy;
 using TaskUnits;
-using TaskUnits.Messages;
 using UnityEngine;
 
 public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
@@ -15,7 +14,7 @@ public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
 
     private async void Start()
     {
-        var token = TokenSession.FromPlayerPrefs();
+        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
 
         var task = await taskUnitFolder.GetTask(token);
 

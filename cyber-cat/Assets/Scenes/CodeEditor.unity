@@ -732,12 +732,20 @@ PrefabInstance:
       value: TestEditor, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 963884507}
+      objectReference: {fileID: 249954026}
+    - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SendCodeToChecking
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5788300726589845146, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2961,7 +2969,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690061335}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3119,15 +3127,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_text
-      value: "\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C"
+      value: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043D\u0430
+        \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0443"
       objectReference: {fileID: 0}
     - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_fontSize
-      value: 39.05
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 534930742596987753, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2389297106188213654, guid: 304dc89ae1e63cc4ba3ff4c48c9808e3, type: 3}
       propertyPath: m_Name

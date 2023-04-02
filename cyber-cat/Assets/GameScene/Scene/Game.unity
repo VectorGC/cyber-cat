@@ -3094,7 +3094,6 @@ GameObject:
   m_Component:
   - component: {fileID: 58754942}
   - component: {fileID: 58754944}
-  - component: {fileID: 58754943}
   - component: {fileID: 58754945}
   m_Layer: 0
   m_Name: PhysicsRoomQuest Unit-1 Task-6
@@ -3115,58 +3114,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1048939984}
-  - {fileID: 197922913}
   - {fileID: 1290705931}
   m_Father: {fileID: 177149849}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &58754943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58754941}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3706758f2c787324eaecab9859d8389c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _activated: 0
-  _startActivated: 0
-  _requiredTriggers: []
-  _banTriggers:
-  - {fileID: 1290705934}
-  _transformOfTrigger: {fileID: 0}
-  _canBeActivatedMultipleTime: 0
-  _countOfModals: 1
-  _modalInfos:
-  - TimeBeforeShow: 0
-    Title: 
-    Description: "\u0423\u0447\u0438\u0442\u0435\u043B\u044C \u0437\u0430\u0434\u0430\u043B
-      \u043C\u043D\u0435 \u0437\u0430\u0434\u0430\u0447\u0443 \u0438 \u044F \u0432\u0441\u0435
-      \u0435\u0449\u0451 \u043D\u0435 \u043F\u043E\u043D\u0438\u043C\u0430\u044E
-      \u043A\u0430\u043A \u0435\u0451 \u0440\u0435\u0448\u0438\u0442\u044C. \u041C\u043E\u0436\u0435\u0448\u044C
-      \u043C\u043D\u0435 \u043F\u043E\u043C\u043E\u0447\u044C, \u043F\u043E\u043A\u0430
-      \u0443\u0447\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u0438\u0434\u0438\u0442..."
-    Icon: {fileID: 0}
-    CountOfButtons: 0
-    ButtonText:
-    - "\u0414\u0430\u0432\u0430\u0439 \u043F\u043E\u043C\u043E\u0433\u0443"
-    - "\u0414\u0443\u043C\u0430\u044E \u0442\u044B \u0438 \u0441\u0430\u043C \u0441\u043F\u0440\u0430\u0432\u0438\u0448\u044C\u0441\u044F"
-    ButtonEvents: []
-  _triggerType: 1
-  _eventType: 0
-  _keyCodes: 66000000
-  _onEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  _onExit:
-    m_PersistentCalls:
-      m_Calls: []
-  _onStart:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!135 &58754944
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3196,9 +3147,8 @@ MonoBehaviour:
     _unit: unit-1
     _task: task-6
   taskDataObservers:
-  - {fileID: 1290705933}
   - {fileID: 1048939985}
-  - {fileID: 197922915}
+  - {fileID: 1290705933}
 --- !u!4 &59934031 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2478961553079219844, guid: b4f729d9618a65543baedfac3b0a7311, type: 3}
@@ -4577,22 +4527,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4958332315337656, guid: 5a652a60006d6ec46980e623412396f9, type: 3}
   m_PrefabInstance: {fileID: 904658957}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &197922913 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-  m_PrefabInstance: {fileID: 747652798}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &197922915 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-  m_PrefabInstance: {fileID: 747652798}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &199313267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4958332315337656, guid: 5a652a60006d6ec46980e623412396f9, type: 3}
@@ -9872,7 +9806,7 @@ MonoBehaviour:
     Description: "\u0414\u0430, \u044D\u0442\u043E \u0442\u043E\u0442 \u0441\u0430\u043C\u044B\u0439
       \u0441\u0435\u0440\u0432\u0430\u043A! \u041F\u043E\u0447\u0438\u043D\u0438
       \u043A\u0430 \u0435\u0433\u043E!"
-    Icon: {fileID: 0}
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
     CountOfButtons: 1
     ButtonText:
     - "\u041F\u043E\u0447\u0438\u043D\u0438\u0442\u044C!"
@@ -11782,71 +11716,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6198975063232573576, guid: 0e16475e464050141a1bf64d51b46d48, type: 3}
   m_PrefabInstance: {fileID: 5876519685440337820}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &747652798
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 58754942}
-    m_Modifications:
-    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: taskUnit
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: _triggerToActivate
-      value: 
-      objectReference: {fileID: 925812410}
-    - target: {fileID: 1523780051627760670, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_Name
-      value: InteractTaskUnit
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.9589987
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 18.138004
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.0230045
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.19449322
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.45064557
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.81401026
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.31060967
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1523780051627760671, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
 --- !u!4 &759241891 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3229117168138947905, guid: 5eb59992ccf63a945806038868d7263a, type: 3}
@@ -17552,7 +17421,7 @@ MonoBehaviour:
   _banTriggers:
   - {fileID: 0}
   _transformOfTrigger: {fileID: 0}
-  _canBeActivatedMultipleTime: 0
+  _canBeActivatedMultipleTime: 1
   _countOfModals: 1
   _modalInfos:
   - TimeBeforeShow: 0
@@ -18455,7 +18324,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18501,6 +18370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Book
       objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071102, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: m_Radius
+      value: 1.29
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2375059412060071103, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
@@ -18514,11 +18387,10 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2375059412060071096, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
   m_PrefabInstance: {fileID: 1290705930}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1290705933
+--- !u!114 &1290705933 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 501186221, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+  m_PrefabInstance: {fileID: 1290705930}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290705932}
   m_Enabled: 1
@@ -18526,8 +18398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _triggerToActivate: {fileID: 0}
-  selfTriggerLogic: 1
 --- !u!114 &1290705934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18554,8 +18424,8 @@ MonoBehaviour:
     Title: "\u0417\u0430\u0434\u0430\u0447\u0430!"
     Description: "\u041D\u0430\u0439\u0434\u0438 \u0438 \u0440\u0435\u0448\u0438
       \u0437\u0430\u0434\u0430\u0447\u043A\u0443 ,\u0447\u0442\u043E\u0431\u044B
-      \u043F\u043E\u043C\u043E\u0447\u044C \u043C\u0430\u043B\u044C\u0447\u0438\u043A\u0443!"
-    Icon: {fileID: 0}
+      \u043F\u043E\u043C\u043E\u0447\u044C \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0443!"
+    Icon: {fileID: 21300000, guid: a234e7565d8b8b94fbda6530f7991a2f, type: 3}
     CountOfButtons: 1
     ButtonText:
     - "\u0440\u0435\u0448\u0438\u0442\u044C!"
@@ -26937,7 +26807,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1508196584}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -37491,7 +37361,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104573944}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
