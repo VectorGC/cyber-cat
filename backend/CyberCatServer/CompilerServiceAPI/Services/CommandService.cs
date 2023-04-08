@@ -10,17 +10,42 @@ namespace CompilerServiceAPI.Services
     public class CommandService : ICommandService
     {
         public CommandService() { }
+
         public void RunDockerCommand(string filename, string arguments)
         {
+            //Запуск команды в Docker контейнере (работает как терминал в линуксе)
             ProcessStartInfo startInfo = new()
             {
                 FileName = filename,
                 Arguments = arguments,
-                UseShellExecute = false, //Import in Linux environments
+                UseShellExecute = false,
             };
             Process process = new() { StartInfo = startInfo };
             process.Start();
             process.WaitForExit();
+            process.Close();
         }
+
+        public string RunDockerCommandWithOverrideOutput(string filename, string arguments)
+        {
+            //Аналогично, но с перегрузкой потока вывода
+            ProcessStartInfo startInfo = new()
+            {
+                FileName = filename,
+                Arguments = arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+            Process process = new() { StartInfo = startInfo };
+            process.Start();
+            process.WaitForExit();
+            if (process.ExitCode != 0)
+            {
+                return process.StandardError.ReadToEnd();
+            }
+            else
+                return process.StandardOutput.ReadToEnd();
+        }
+
     }
 }

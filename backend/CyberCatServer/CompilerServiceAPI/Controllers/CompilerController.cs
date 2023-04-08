@@ -1,8 +1,5 @@
 ﻿using CompilerServiceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
 
 namespace CompilerServiceAPI.Controllers
 {
@@ -21,32 +18,22 @@ namespace CompilerServiceAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CheckVersion(TaskCode code)
+        public IActionResult CompileCode(string code)
         {
+            //Запрос для компиляции кода
+
+            //Создаем cpp файл с кодом из запроса
             using (StreamWriter writer = System.IO.File.CreateText("code.cpp"))
             {
-                writer.Write(code.Code);
+                writer.Write(code);
             }
-            _commandService.RunDockerCommand("x86_64-w64-mingw32-g++", "code.cpp -o code.exe -static-libgcc -static-libstdc++");
-            _commandService.RunDockerCommand("wine64", "code.exe");
-            //System.IO.File.Delete("code.txt");
-            return Ok();
-        }
+            
+            //Компилируем cpp файл с помощью mingw
+            var res = _commandService.RunDockerCommandWithOverrideOutput("x86_64-w64-mingw32-g++", "code.cpp -Wall -o code.exe -static-libgcc -static-libstdc++");
 
-        [HttpGet]
-        public IActionResult Get(int id)
-        {
-            return Ok(id);
-        }
-
-        [HttpPut]
-        public void Put(int id)
-        {
-            _commandService.RunDockerCommand("apt", "update");
-            _commandService.RunDockerCommand("apt", "-y install mingw-w64");
-            _commandService.RunDockerCommand("apt", "-y install wine64");
-            _commandService.RunDockerCommand("x86_64-w64-mingw32-g++", "--version");
-            _commandService.RunDockerCommand("wine64", "--version");
+            //Запускаем полученный exe с помощью wine и получаем строку из стандартного потока вывода процесса
+            //var res = _commandService.RunDockerCommandWithOverrideOutput("wine", "code.exe");
+            return Ok(res);
         }
     }
 }

@@ -1,6 +1,6 @@
 version: '3.4'
 
-services:
+services:  
   api-gateway:
     image: api-gateway
     container_name: api-gateway
@@ -39,29 +39,15 @@ services:
       - www-certbot:/var/www/certbot/:ro
       - etc-letsencrypt:/etc/letsencrypt:ro
 
-  # При развертывании на целевой машине, нужно проверить и получить сертификаты.
-  # Проверка certbot из контейнера командой в терминале:
-  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d server.cyber-cat.pro (тут адрес сервера).
-  # --rm - удалить контейнер после завершения
-  # --webroot --webroot-path - путь куда кладутся сертификаты
-  # --dry-run - тестовый прогон. Проверяет, что можно выдать сертификат, но не выдает его. Потому что можно получить не больше N сертификатов в неделю
-  # -d - адрес, который проверяем
-  # Ещё доп. параметры:
-  # --email email@email
-  # --agree-tos - авто-принятие всех лицензий
-  # --no-eff-email - не делиться имейлом с EEF
-
-  # Получение сертификата (не забудьте потом перезапустить nginx) Да вроде бы не надо?:
-  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d server.cyber-cat.pro
-  # То же что и выше, но без --dry-run
-  certbot:
-    image: certbot/certbot:latest
-    depends_on:
-      - nginx
-    volumes:
-      # Папки, куда certbot положит сертификаты после проверки. rw - чтение и запись.
-      - www-certbot:/var/www/certbot/:rw
-      - etc-letsencrypt:/etc/letsencrypt/:rw
+  compiler-service:
+    image: compiler-service
+    build: 
+      context: /CompilerServiceAPI/
+      dockerfile: Dockerfile
+    environment:
+      -  ASPNETCORE_URLS=$COMPILER_SERVICE_API_URL
+    ports:
+      - "7070:${COMPILER_SERVICE_API_PORT}"
 
   mongo:
     image: mongo:5.0.15
