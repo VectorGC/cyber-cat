@@ -25,6 +25,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CompilerServiceAPI.dll"]
 
-RUN dpkg --add-architecture i386
 RUN apt-get update
-RUN apt-get -y install mingw-w64
+RUN apt-get -y install g++
