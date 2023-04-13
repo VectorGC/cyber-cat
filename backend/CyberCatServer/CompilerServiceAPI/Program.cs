@@ -1,28 +1,24 @@
-using CompilerServiceAPI.Services;
+using CompilerServiceAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
-builder.Services.AddScoped<ICommandService, CommandService>();
+builder.Services.AddCompilationServices();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-
-app.MapGet("/", (context) =>
+if (app.Environment.IsDevelopment() || true)
 {
-    context.Response.Redirect("/swagger");
-    return Task.CompletedTask;
-});
+    app.UseSwaggerSwashbuckle();
+    app.FallbackToSwaggerPage();
 
+    // Подробные ошибки в режиме разработки.
+    app.UseDeveloperExceptionPage();
+}
 app.MapControllers();
 
 app.Run();

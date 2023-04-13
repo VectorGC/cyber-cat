@@ -1,21 +1,21 @@
 version: '3.4'
 
 services:  
-  api-gateway:
-    image: api-gateway
-    container_name: api-gateway
-    build:
+  #api-gateway:
+   # image: api-gateway
+    #container_name: api-gateway
+    #build:
       # Для докер файла устаналиваем контекст, какбудто мы запускаем Dockerfile из папки в которой этот файл лежит.
-      context: ./ApiGateway/
-      dockerfile: Dockerfile
-    environment:
-      - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
+     # context: ./ApiGateway/
+      #dockerfile: Dockerfile
+    #environment:
+     # - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
       # - ASPNETCORE_ENVIRONMENT=Development # Чтобы переопределять окуржение и показывать сваггер.
-      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
-    ports:
-      - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
-    depends_on:
-      - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
+      #- "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
+    #ports:
+     # - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    #depends_on:
+    #  - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
 
   # Рестарт nginx для перечитки конфигов:
   # docker compose exec nginx nginx -s reload
@@ -29,7 +29,7 @@ services:
       - "80:80" # Порт по умолчанию для http запросов.
       - "443:443" # Порт по умолчанию для https запросов.
     depends_on:
-      - api-gateway
+     # - api-gateway
       - mongo-express
     volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
@@ -47,7 +47,7 @@ services:
     environment:
       -  ASPNETCORE_URLS=$COMPILER_SERVICE_API_URL
     ports:
-      - "7070:${COMPILER_SERVICE_API_PORT}"
+      - "${COMPILER_SERVICE_API_PORT}:${COMPILER_SERVICE_API_PORT}"
 
   mongo:
     image: mongo:5.0.15
