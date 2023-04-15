@@ -45,9 +45,22 @@ services:
       context: /CompilerServiceAPI/
       dockerfile: Dockerfile
     environment:
-      -  ASPNETCORE_URLS=$COMPILER_SERVICE_API_URL
+      -  ASPNETCORE_URLS=$COMPILER_SERVICE_URL
     ports:
-      - "${COMPILER_SERVICE_API_PORT}:${COMPILER_SERVICE_API_PORT}"
+      - "${COMPILER_SERVICE_PORT}:${COMPILER_SERVICE_PORT}"
+
+  task-service:
+    image: task-service
+    build:
+      context: /TaskServiceAPI/
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=$TASK_SERVICE_URL
+      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017"
+    ports:
+      - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:5.0.15

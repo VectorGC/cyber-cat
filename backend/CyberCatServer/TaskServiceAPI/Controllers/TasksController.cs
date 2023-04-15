@@ -11,16 +11,16 @@ namespace TaskServiceAPI.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ITaskService _taskService;
-        private readonly ITaskCollection _taskCollection;
+        private readonly ITaskRepository _taskRepository;
 
-        public TasksController(ITaskService taskService, ITaskCollection taskCollection)
+        public TasksController(ITaskService taskService, ITaskRepository taskRepository)
         {
             _taskService = taskService;
-            _taskCollection = taskCollection;
+            _taskRepository = taskRepository;
         }
 
-        [HttpPut]
-        public async Task<IActionResult> AddTask(ProgTask task) 
+        [HttpPost]
+        public async Task<IActionResult> AddTask(ProgTaskDbModel task) 
         {
             await _taskService.Add(task);
             return Ok(task);
@@ -29,7 +29,7 @@ namespace TaskServiceAPI.Controllers
         [HttpGet]
         public async Task <IActionResult> GetTask(int id)
         {
-            var task = await _taskCollection.GetTask(id);
+            var task = await _taskRepository.GetTask(id);
             return Ok(task);
         }
     }

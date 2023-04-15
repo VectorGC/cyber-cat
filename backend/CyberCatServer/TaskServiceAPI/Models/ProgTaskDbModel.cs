@@ -1,6 +1,6 @@
 ﻿namespace TaskServiceAPI.Models
 {
-    public class ProgTask
+    public class ProgTaskDbModel
     {
         public int Id { get; set; }
         public string Language { get; set; }
