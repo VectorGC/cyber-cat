@@ -7,18 +7,18 @@ EXPOSE $TASK_SERVICE_PORT
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TaskServiceAPI.csproj", "TaskServiceAPI/"]
-RUN dotnet restore "TaskServiceAPI/TaskServiceAPI.csproj"
+COPY ["TaskService.csproj", "TaskService/"]
+RUN dotnet restore "TaskService/TaskService.csproj"
 
-WORKDIR "/src/TaskServiceAPI"
+WORKDIR "/src/TaskService"
 COPY . .
 
-RUN dotnet build "TaskServiceAPI.csproj" -c Release -o /app/build
+RUN dotnet build "TaskService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TaskServiceAPI.csproj" -c Release -o /app/publish 
+RUN dotnet publish "TaskService.csproj" -c Release -o /app/publish 
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "TaskServiceAPI.dll"]
+ENTRYPOINT ["dotnet", "TaskService.dll"]

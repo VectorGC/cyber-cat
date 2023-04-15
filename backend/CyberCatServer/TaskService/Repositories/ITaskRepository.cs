@@ -1,6 +1,6 @@
-﻿using TaskServiceAPI.Models;
+﻿using TaskService.Models;
 
-namespace TaskServiceAPI.Repositories
+namespace TaskService.Repositories
 {
     public interface ITaskRepository
     {

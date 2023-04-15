@@ -1,12 +1,12 @@
-﻿using TaskServiceAPI.Models;
-using TaskServiceAPI.Repositories;
+﻿using TaskService.Models;
+using TaskService.Repositories;
 
-namespace TaskServiceAPI.Services
+namespace TaskService.Services
 {
-    public class TaskService : ITaskService
+    public class TasksService : ITasksService
     {
         private readonly ITaskRepository _taskCollection;
-        public TaskService(ITaskRepository taskCollection)
+        public TasksService(ITaskRepository taskCollection)
         {
             _taskCollection = taskCollection;
         }

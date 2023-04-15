@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TaskServiceAPI.Repositories;
-using TaskServiceAPI.Services;
-using TaskServiceAPI.Models;
+using TaskService.Repositories;
+using TaskService.Services;
+using TaskService.Models;
 
-namespace TaskServiceAPI.Controllers
+namespace TaskService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
-        private readonly ITaskService _taskService;
+        private readonly ITasksService _taskService;
         private readonly ITaskRepository _taskRepository;
 
-        public TasksController(ITaskService taskService, ITaskRepository taskRepository)
+        public TasksController(ITasksService taskService, ITaskRepository taskRepository)
         {
             _taskService = taskService;
             _taskRepository = taskRepository;

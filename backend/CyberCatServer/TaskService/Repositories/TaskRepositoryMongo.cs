@@ -1,13 +1,13 @@
-﻿using TaskServiceAPI.Models;
+﻿using TaskService.Models;
 using MongoDB;
 using MongoDB.Driver;
 using System.Linq;
 
-namespace TaskServiceAPI.Repositories
+namespace TaskService.Repositories
 {
     public class TaskRepositoryMongo : ITaskRepository
     {
-        private readonly IMongoCollection<ProgTaskDbModel> _taskCollection;
+        private readonly IMongoCollection<ProgTaskDbModel> _taskRepository;
         public TaskRepositoryMongo(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("Database");
@@ -15,17 +15,17 @@ namespace TaskServiceAPI.Repositories
             var mongoClient = new MongoClient(connectionString);
             
             var cyberCatDB = mongoClient.GetDatabase("CyberCat");
-            _taskCollection = cyberCatDB.GetCollection<ProgTaskDbModel>("Tasks");
+            _taskRepository = cyberCatDB.GetCollection<ProgTaskDbModel>("Tasks");
         }
 
         public async Task Add(ProgTaskDbModel task)
         {
-            await _taskCollection.InsertOneAsync(task);
+            await _taskRepository.InsertOneAsync(task);
         }
 
         public async Task<ProgTaskDbModel> GetTask(int id)
         {
-           var cursor = await _taskCollection.FindAsync(t => t.Id == id);
+           var cursor = await _taskRepository.FindAsync(t => t.Id == id);
            return cursor.FirstOrDefault();
         }
     }
