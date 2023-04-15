@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Authentication;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -9,7 +10,7 @@ namespace RestAPIWrapper.EditorTests
     public class AuthTests
     {
         [Test]
-        public async Task ShouldGetToken_WhenPassEmailAndPassword()
+        public async Task WhenAuth_AndCorrectEmailAndPassword_ThenTokenIsNotEmpty()
         {
             //Arrange. Подготовка данных
             var login = "Karpik";
@@ -26,7 +27,7 @@ namespace RestAPIWrapper.EditorTests
         }
 
         [Test]
-        public async Task ShouldGetToken_Serverless()
+        public async Task WhenAuth_AndCorrectEmailAndPasswordAndServerless_ThenTokenIsNotEmpty()
         {
             //Arrange. Подготовка данных
             var login = "Karpik";
@@ -43,7 +44,23 @@ namespace RestAPIWrapper.EditorTests
             Assert.IsEmpty(token.Error);
         }
 
+        [Test]
+        public async Task WhenAuth_AndCorrectEmailAndPasswordAndServer_ThenTokenIsNotEmpty()
+        {
+            //Arrange. Подготовка данных
+            var login = "Karpik";
+            var password = "123";
+            var server = new Server.RestAPIServer();
 
+            //Act. Совершение действия.
+            var tokenJsonObj = await server.GetAuthData(login, password);
+            var token = JsonConvert.DeserializeObject<TokenSession>(tokenJsonObj);
+
+            //Assert. Проверка результата.
+            Assert.IsNotEmpty(token.Token);
+            Assert.IsNotEmpty(token.Name);
+            Assert.IsEmpty(token.Error);
+        }
     }
 }
 
