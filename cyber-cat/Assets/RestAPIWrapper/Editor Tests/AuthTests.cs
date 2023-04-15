@@ -3,6 +3,7 @@ using Authentication;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using UnityEngine.TestTools;
 
 namespace RestAPIWrapper.EditorTests
 {
@@ -45,6 +46,7 @@ namespace RestAPIWrapper.EditorTests
         }
 
         [Test]
+        [RequiresPlayMode]
         public async Task WhenAuth_AndCorrectEmailAndPasswordAndServer_ThenTokenIsNotEmpty()
         {
             //Arrange. Подготовка данных
