@@ -11,6 +11,7 @@ namespace RestAPIWrapper.EditorTests
     public class AuthTests
     {
         [Test]
+        [RequiresPlayMode]
         public async Task WhenAuth_AndCorrectEmailAndPassword_ThenTokenIsNotEmpty()
         {
             //Arrange. Подготовка данных
