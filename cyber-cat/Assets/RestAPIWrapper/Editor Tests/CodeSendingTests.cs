@@ -61,7 +61,7 @@ namespace RestAPIWrapper.EditorTests
             var lang = "Cpp";
 
             //Act
-            var jsonToken = await RestAPI.Instance.SendCodeToChecking(playerToken, taskID, code, lang);
+            var jsonToken = await new Server.RestAPIServer().SendCodeToChecking(playerToken, taskID, code, lang);
             var token = JsonConvert.DeserializeObject<TokenSession>(jsonToken);
 
             //Assert
