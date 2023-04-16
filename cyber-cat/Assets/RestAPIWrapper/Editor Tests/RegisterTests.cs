@@ -23,5 +23,35 @@ namespace RestAPIWrapper.EditorTests
             //Assert. Проверка результата.
             Assert.IsNotNull(uniTask);
         }
+
+        [Test]
+        public void WhenRegisteringUser_AndCorrectLoginAndPasswordAndNameServer_ThenTaskIsNotNull()
+        {
+            //Arrange. Подготовка данных
+            var login = "Karpik";
+            var password = "123";
+            var name = "Karpik";
+
+            //Act. Совершение действия.
+            var uniTask = new Server.RestAPIServer().RegisterUser(login, password, name);
+
+            //Assert. Проверка результата.
+            Assert.IsNotNull(uniTask);
+        }
+
+        [Test]
+        public void WhenRegisteringUser_AndServerless_ThenTaskIsNotNull()
+        {
+            //Arrange. Подготовка данных
+            var login = "Karpik";
+            var password = "123";
+            var name = "Karpik";
+
+            //Act. Совершение действия.
+            var uniTask = new Serverless.RestAPIServerless().RegisterUser(login, password, name);
+
+            //Assert. Проверка результата.
+            Assert.IsNotNull(uniTask);
+        }
     }
 }
