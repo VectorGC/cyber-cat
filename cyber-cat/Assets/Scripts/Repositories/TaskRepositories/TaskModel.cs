@@ -5,8 +5,7 @@ namespace Repositories.TaskRepositories
 {
     public class TaskModel : ITask
     {
-        [JsonProperty("id")] public string Id { get; set; }
-        [JsonProperty("name")] public string Name { get; set; }
-        [JsonProperty("desc")] public string Description { get; set; }
+        [JsonProperty("name")] public string Name { get; set; } = string.Empty;
+        [JsonProperty("desc")] public string Description { get; set; } = string.Empty;
     }
 }
