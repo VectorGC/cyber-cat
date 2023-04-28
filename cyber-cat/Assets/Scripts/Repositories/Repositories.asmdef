@@ -1,14 +1,10 @@
 {
-    "name": "TaskUnits",
+    "name": "Repositories",
     "rootNamespace": "",
     "references": [
-        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:0e80d15fcd54dc6449e8ef36b3c10c8a",
-        "GUID:d99ae67dbb84b0746b97a668ebd6e4c4",
         "GUID:b3793389d983a85428458394eb28e901",
-        "GUID:578d0a8f8628eb4439aafedec791b470"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:8d3f3272db9974b4baa5defcafbf164b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

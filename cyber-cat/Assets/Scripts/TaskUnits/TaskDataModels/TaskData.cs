@@ -1,3 +1,5 @@
+using System;
+using Models;
 using Newtonsoft.Json;
 
 namespace TaskUnits.TaskDataModels
@@ -14,5 +16,17 @@ namespace TaskUnits.TaskDataModels
 
         public float ReceivedScore => _completion * TotalScore;
         public bool? IsSolved => _completion >= 1f;
+
+        // TODO:
+        [Obsolete("Не используйте его, он будет удален. Он нужен только для совеместимости старой ITaskData с новой сервисной архитекутрой ITask")]
+        public static ITaskData ConvertFrom(ITask task)
+        {
+            return new TaskData
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Description = task.Description
+            };
+        }
     }
 }

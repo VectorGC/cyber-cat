@@ -23,20 +23,29 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null)
         {
-            var folders = await TaskFacade.GetTaskFolders(token, progress);
-
-            if (folders.GetValue("error") != null)
+            if (FeatureFlags.UseServicesArchitecture)
             {
-                var errorCode = folders.GetValue("error").ToString();
-                var localizedError = WebErrorLocalize.Localize(errorCode);
-
-                throw new WebException($"Пожалуйста, сообщите организатору ошибку:\n{localizedError}");
+                var taskId = GameManager.GetTaskIdFromUnitAndTask(_unit, _task);
+                var task = await GameManager.Instance.TaskRepository.GetTask(taskId);
+                return TaskData.ConvertFrom(task);
             }
+            else
+            {
+                var folders = await TaskFacade.GetTaskFolders(token, progress);
 
-            var taskJToken = GetTaskJToken(folders);
-            var task = taskJToken?.ToObject<TaskData>();
+                if (folders.GetValue("error") != null)
+                {
+                    var errorCode = folders.GetValue("error").ToString();
+                    var localizedError = WebErrorLocalize.Localize(errorCode);
 
-            return (ITaskData) task ?? new EmptyTaskData();
+                    throw new WebException($"Пожалуйста, сообщите организатору ошибку:\n{localizedError}");
+                }
+
+                var taskJToken = GetTaskJToken(folders);
+                var task = taskJToken?.ToObject<TaskData>();
+
+                return (ITaskData) task ?? new EmptyTaskData();
+            }
         }
 
         [CanBeNull]
