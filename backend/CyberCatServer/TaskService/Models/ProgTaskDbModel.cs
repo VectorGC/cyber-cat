@@ -1,4 +1,4 @@
-﻿namespace TaskServiceAPI.Models
+﻿namespace TaskService.Models
 {
     public class ProgTaskDbModel
     {

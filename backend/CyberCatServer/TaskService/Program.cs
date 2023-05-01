@@ -1,12 +1,12 @@
-using TaskServiceAPI.Services;
-using TaskServiceAPI.Repositories;
+using TaskService.Services;
+using TaskService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ITasksService, TasksService>();
 builder.Services.AddScoped<ITaskRepository, TaskRepositoryMongo>();
 
 var app = builder.Build();

@@ -1,8 +1,8 @@
-﻿using TaskServiceAPI.Models;
+﻿using TaskService.Models;
 
-namespace TaskServiceAPI.Services
+namespace TaskService.Services
 {
-    public interface ITaskService
+    public interface ITasksService
     {
         Task Add(ProgTaskDbModel task);
         Task<ProgTaskDbModel> GetTask(int id);

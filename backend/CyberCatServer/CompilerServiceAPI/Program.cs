@@ -1,4 +1,5 @@
 using CompilerServiceAPI;
+using CompilerServiceAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwagger();
 
-builder.Services.AddCompilationServices();
+builder.Services.AddScoped<ICommandService, CommandService>();
+builder.Services.AddScoped<ICompileService>(serviceProvider =>
+{
+    return Environment.OSVersion.Platform == PlatformID.Win32NT
+        ? ActivatorUtilities.CreateInstance<WinCompileService>(serviceProvider)
+        : ActivatorUtilities.CreateInstance<LinuxCompileService>(serviceProvider);
+});
 
 var app = builder.Build();
 
@@ -16,10 +23,10 @@ if (app.Environment.IsDevelopment() || true)
     app.UseSwaggerSwashbuckle();
     app.FallbackToSwaggerPage();
 
-    // Подробные ошибки в режиме разработки.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     app.UseDeveloperExceptionPage();
 }
+
 app.MapControllers();
 
 app.Run();
-

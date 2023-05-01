@@ -52,7 +52,7 @@ services:
   task-service:
     image: task-service
     build:
-      context: /TaskServiceAPI/
+      context: /TaskService/
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_URLS=$TASK_SERVICE_URL

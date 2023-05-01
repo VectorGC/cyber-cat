@@ -9,17 +9,9 @@ namespace CompilerServiceAPI.Controllers
     public class CompilerController : ControllerBase
     {
         private readonly ICompileService _compileService;
-        public CompilerController(ICommandService commandService)
+        public CompilerController(ICompileService compileService)
         {
-            OperatingSystem os = Environment.OSVersion;
-            if (os.Platform == PlatformID.Win32NT)
-            {
-                _compileService = new WinCompileService(commandService);
-            }
-            else
-            {
-                _compileService = new LinuxCompileService(commandService);
-            }
+            _compileService = compileService;
         }
 
         [HttpPost]
