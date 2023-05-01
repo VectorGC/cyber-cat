@@ -1,21 +1,21 @@
 version: '3.4'
 
-services:
-  api-gateway:
-    image: api-gateway
-    container_name: api-gateway
-    build:
+services:  
+  #api-gateway:
+   # image: api-gateway
+    #container_name: api-gateway
+    #build:
       # Для докер файла устаналиваем контекст, какбудто мы запускаем Dockerfile из папки в которой этот файл лежит.
-      context: ./ApiGateway/
-      dockerfile: Dockerfile
-    environment:
-      - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
+     # context: ./ApiGateway/
+      #dockerfile: Dockerfile
+    #environment:
+     # - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
       # - ASPNETCORE_ENVIRONMENT=Development # Чтобы переопределять окуржение и показывать сваггер.
-      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
-    ports:
-      - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
-    depends_on:
-      - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
+      #- "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
+    #ports:
+     # - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    #depends_on:
+    #  - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
 
   # Рестарт nginx для перечитки конфигов:
   # docker compose exec nginx nginx -s reload
@@ -29,7 +29,7 @@ services:
       - "80:80" # Порт по умолчанию для http запросов.
       - "443:443" # Порт по умолчанию для https запросов.
     depends_on:
-      - api-gateway
+     # - api-gateway
       - mongo-express
     volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
@@ -39,29 +39,28 @@ services:
       - www-certbot:/var/www/certbot/:ro
       - etc-letsencrypt:/etc/letsencrypt:ro
 
-  # При развертывании на целевой машине, нужно проверить и получить сертификаты.
-  # Проверка certbot из контейнера командой в терминале:
-  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d server.cyber-cat.pro (тут адрес сервера).
-  # --rm - удалить контейнер после завершения
-  # --webroot --webroot-path - путь куда кладутся сертификаты
-  # --dry-run - тестовый прогон. Проверяет, что можно выдать сертификат, но не выдает его. Потому что можно получить не больше N сертификатов в неделю
-  # -d - адрес, который проверяем
-  # Ещё доп. параметры:
-  # --email email@email
-  # --agree-tos - авто-принятие всех лицензий
-  # --no-eff-email - не делиться имейлом с EEF
+  compiler-service:
+    image: compiler-service
+    build: 
+      context: /CompilerServiceAPI/
+      dockerfile: Dockerfile
+    environment:
+      -  ASPNETCORE_URLS=$COMPILER_SERVICE_URL
+    ports:
+      - "${COMPILER_SERVICE_PORT}:${COMPILER_SERVICE_PORT}"
 
-  # Получение сертификата (не забудьте потом перезапустить nginx) Да вроде бы не надо?:
-  # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d server.cyber-cat.pro
-  # То же что и выше, но без --dry-run
-  certbot:
-    image: certbot/certbot:latest
+  task-service:
+    image: task-service
+    build:
+      context: /TaskServiceAPI/
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=$TASK_SERVICE_URL
+      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017"
+    ports:
+      - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
     depends_on:
-      - nginx
-    volumes:
-      # Папки, куда certbot положит сертификаты после проверки. rw - чтение и запись.
-      - www-certbot:/var/www/certbot/:rw
-      - etc-letsencrypt:/etc/letsencrypt/:rw
+      - mongo
 
   mongo:
     image: mongo:5.0.15
