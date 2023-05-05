@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Proyecto26;
 using UnityEngine;
+using ServerAPIBase;
 
 namespace RestAPIWrapper.Server
 {

@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Proyecto26;
 using UniRx;
 using UnityEngine;
+using ServerAPIBase;
 
 namespace RestAPIWrapper.Serverless
 {

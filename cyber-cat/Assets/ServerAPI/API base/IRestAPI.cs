@@ -2,7 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace RestAPIWrapper
+namespace ServerAPIBase
 {
     public interface IRestAPI
     {
