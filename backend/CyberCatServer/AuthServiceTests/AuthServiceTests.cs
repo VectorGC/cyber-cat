@@ -10,6 +10,7 @@ using ProtoBuf.Grpc.Client;
 using Shared;
 using Shared.Configurations;
 using Shared.Dto;
+using Shared.Services;
 
 namespace AuthServiceTests;
 

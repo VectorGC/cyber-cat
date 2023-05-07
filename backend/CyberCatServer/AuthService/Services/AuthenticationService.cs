@@ -3,6 +3,7 @@ using AuthService.Repositories;
 using Shared;
 using Shared.Dto;
 using Shared.Exceptions;
+using Shared.Services;
 
 namespace AuthService.Services;
 
