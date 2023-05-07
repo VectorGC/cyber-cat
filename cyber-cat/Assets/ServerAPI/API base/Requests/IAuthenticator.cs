@@ -12,6 +12,7 @@ namespace ServerAPIBase
     {
         string Login { get; }
         string Password { get; }
+        string Email { get; }
         string Token { get; }
     }
 
@@ -20,14 +21,14 @@ namespace ServerAPIBase
         public string Login { get; }
         public string Password { get; }
         public string Token { get; }
+        public string Email { get; }
 
-        IAuthenticator<string> auth;
-
-        public AuthenticatorData(string login, string password, string token = null)
+        public AuthenticatorData(string login, string password, string email, string token = null)
         {
             Login = login;
             Password = password;
             Token = token;
+            Email = email;
         }
     }
 }

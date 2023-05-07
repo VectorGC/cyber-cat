@@ -9,5 +9,6 @@ namespace ServerAPIBase
         IRegistrator<T> Registrator { get; }
         IAuthenticator<T> Authenticator { get; }
         IPasswordRestorer<T> PasswordRestorer { get; }
+        ITokenReceiver<T> TokenReceiver { get; }
     }
 }

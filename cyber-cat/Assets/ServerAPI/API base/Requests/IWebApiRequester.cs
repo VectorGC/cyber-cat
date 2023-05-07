@@ -11,6 +11,6 @@ namespace ServerAPIBase
     public interface IWebApiRequester<T1, T2>
     {
         void Request(T1 data, Action<T2> callback);
-        UniTask<T2> Request(T1 data);
+        UniTask<T2> RequestAsync(T1 data, IProgress<float> progress = null);
     }
 }
