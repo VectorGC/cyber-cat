@@ -1,3 +1,4 @@
+using Authentication;
 using ServerAPIBase;
 
 namespace RestAPIWrapper.V1
@@ -8,7 +9,7 @@ namespace RestAPIWrapper.V1
         public IAuthenticator<string> Authenticator { get; }
         public IPasswordRestorer<string> PasswordRestorer { get; }
         public ITokenReceiver<string> TokenReceiver { get; }
-        public ITokenReceiver<string> LocalTokenReceiver { get; }
+        public ITokenReceiver<TokenSession> LocalTokenReceiver { get; }
 
         public WebApiAggregatorV1()
         {

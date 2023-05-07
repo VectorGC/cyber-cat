@@ -1,3 +1,4 @@
+using Authentication;
 using ServerAPIBase;
 
 namespace RestAPIWrapper.V1
@@ -24,7 +25,7 @@ namespace RestAPIWrapper.V1
             return new TokenReceiverV1();
         }
 
-        public ITokenReceiver<string> CreateLocalTokenReceiver()
+        public ITokenReceiver<TokenSession> CreateLocalTokenReceiver()
         {
             return new LocalTokenReceiverV1();
         }
