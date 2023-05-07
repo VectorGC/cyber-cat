@@ -1,8 +1,8 @@
 using System.Net;
-using ApiGateway.Exceptions;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Exceptions;
 
 namespace ApiGateway.Controllers;
 

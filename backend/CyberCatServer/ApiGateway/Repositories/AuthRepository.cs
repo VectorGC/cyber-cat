@@ -1,7 +1,7 @@
-using ApiGateway.Exceptions;
 using ApiGateway.Models;
 using ApiGateway.Repositories.Models;
 using MongoDB.Driver;
+using Shared.Exceptions;
 
 namespace ApiGateway.Repositories;
 

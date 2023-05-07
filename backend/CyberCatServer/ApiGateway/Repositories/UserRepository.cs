@@ -1,8 +1,8 @@
-using ApiGateway.Exceptions;
 using ApiGateway.Models;
 using ApiGateway.Repositories.Migrations;
 using ApiGateway.Repositories.Models;
 using MongoDB.Driver;
+using Shared.Exceptions;
 
 namespace ApiGateway.Repositories;
 
@@ -28,12 +28,12 @@ public class UserRepositoryMongoDb : IUserRepository
         _userCollection = cyberCatDb.GetCollection<UserDbModel>("Users");
     }
 
-    public async Task<IUser> GetUser(UserId id)
+    public async Task<IUser> GetUser(UserId email)
     {
-        var user = await _userCollection.Find(u => u.Email == id).FirstOrDefaultAsync();
+        var user = await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync();
         if (user == null)
         {
-            throw new UserNotFound();
+            throw UserNotFound.NotFoundEmail(email);
         }
 
         return user;
@@ -61,7 +61,7 @@ public class UserRepositoryMongoDb : IUserRepository
         var user = await _userCollection.Find(u => u.Email == email).FirstOrDefaultAsync(GetCT());
         if (user == null)
         {
-            throw new UserNotFound();
+            throw UserNotFound.NotFoundEmail(email);
         }
 
         return new UserId(user.Email);
@@ -72,7 +72,7 @@ public class UserRepositoryMongoDb : IUserRepository
         var user = await _userCollection.Find(u => u.Token == token).FirstOrDefaultAsync(GetCT());
         if (user == null)
         {
-            throw new UserNotFound();
+            throw UserNotFound.NotFoundToken(token);
         }
 
         return new UserId(user.Email);

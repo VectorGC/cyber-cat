@@ -1,8 +1,8 @@
-using ApiGateway.Exceptions;
 using ApiGateway.Models;
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Shared.Exceptions;
 
 namespace ApiGateway.Authorization;
 
