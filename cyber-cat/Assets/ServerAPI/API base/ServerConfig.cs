@@ -4,6 +4,7 @@ namespace ServerAPIBase
     {
         public static APIVersion VersionOfAPI { get; private set; } = APIVersion.V1;
 
+
         public enum APIVersion
         {
             Serverless,
