@@ -29,7 +29,7 @@ namespace RestAPIWrapper.EditorTests
             var name = "Karpik";
 
             //Act. Совершение действия.
-            var uniTask = new Server.RestAPIServer().RegisterUser(login, password, name);
+            var uniTask = new V1.RestAPIV1().RegisterUser(login, password, name);
 
             //Assert. Проверка результата.
             Assert.IsNotNull(uniTask);

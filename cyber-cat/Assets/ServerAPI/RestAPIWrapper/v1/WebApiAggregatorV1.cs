@@ -9,7 +9,11 @@ namespace RestAPIWrapper.V1
         public IAuthenticator<string> Authenticator { get; }
         public IPasswordRestorer<string> PasswordRestorer { get; }
         public ITokenReceiver<string> TokenReceiver { get; }
+        public ICodeSender<string> CodeSender { get; }
+        public ICodeReceiver<string> CodeReceiver { get; }
+        public ITasksGetter<string> TasksGetter { get; }
         public ITokenReceiver<TokenSession> LocalTokenReceiver { get; }
+
 
         public WebApiAggregatorV1()
         {
@@ -20,6 +24,8 @@ namespace RestAPIWrapper.V1
             PasswordRestorer = factory.CreatePasswordRestorer();
             TokenReceiver = factory.CreateTokenReceiver();
             LocalTokenReceiver = factory.CreateLocalTokenReceiver();
+            CodeSender = factory.CreateCodeSender();
+            TasksGetter = factory.CreateTasksGetter();
         }
     }
 }

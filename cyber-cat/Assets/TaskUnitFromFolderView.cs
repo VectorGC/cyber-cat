@@ -1,6 +1,6 @@
+using RestAPIWrapper;
 using System;
 using System.Collections.Generic;
-using RequestAPI.Proxy;
 using TaskUnits;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
 
     private async void Start()
     {
-        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
+        var token = PlayerPrefsInfo.GetToken();
 
         var task = await taskUnitFolder.GetTask(token);
 

@@ -1,21 +1,20 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace ServerAPIBase
 {
-    public interface IRestAPI
+    public interface IRestAPI<AuthT, RegisterT, RestorePasswordT, LastSavedCodeT, TasksT, TaskFoldersT, SendCodeT>
     {
-        UniTask<string> SendCodeToChecking(string token, string taskId, string code, string progLanguage,
+        UniTask<SendCodeT> SendCodeToChecking(string token, string taskId, string code, string progLanguage,
             IProgress<float> progress = null);
 
-        UniTask<string> GetTasks(string token, IProgress<float> progress = null);
-        UniTask<JObject> GetTaskFolders(string token, IProgress<float> progress = null);
+        UniTask<TasksT> GetTasks(string token, IProgress<float> progress = null);
+        UniTask<TaskFoldersT> GetTaskFolders(string token, IProgress<float> progress = null);
 
-        UniTask<string> GetLastSavedCode(string token, string taskId, IProgress<float> progress = null);
+        UniTask<LastSavedCodeT> GetLastSavedCode(string token, string taskId, IProgress<float> progress = null);
 
-        UniTask<string> GetAuthData(string email, string password, IProgress<float> progress = null);
-        UniTask RegisterUser(string login, string password, string name);
-        UniTask RestorePassword(string login, string password);
+        UniTask<AuthT> GetAuthData(string email, string password, IProgress<float> progress = null);
+        UniTask<RegisterT> RegisterUser(string login, string password, string name);
+        UniTask<RestorePasswordT> RestorePassword(string login, string password);
     }
 }

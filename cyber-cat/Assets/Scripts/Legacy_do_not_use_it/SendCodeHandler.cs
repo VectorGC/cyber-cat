@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Authentication;
 using CodeEditorModels.ProgLanguages;
-using RequestAPI.Proxy;
-using TaskChecker;
+using RestAPIWrapper;
 using UnityEngine;
 
 public class SendCodeHandler : MonoBehaviour
@@ -20,9 +19,9 @@ public class SendCodeHandler : MonoBehaviour
         var code = CodeEditor.Code;
         var language = CodeEditor.Language;
 
-        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
+        TokenSession token = PlayerPrefsInfo.GetToken();
 
-        var checkingResult = await RequestAPIProxy.CheckCode(task, token, code, ProgLanguages[language]);
+        var checkingResult = await RestAPI.Instance.SendCodeToChecking(token.Token, task.Id, code, ProgLanguages[language]);
 
         CodeConsole.WriteLine(checkingResult);
     }

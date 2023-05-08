@@ -19,8 +19,7 @@ namespace RestAPIWrapper.EditorTests
             var password = "123";
 
             //Act. Совершение действия.
-            var tokenJsonObj = await RestAPI.Instance.GetAuthData(login, password);
-            var token = JsonConvert.DeserializeObject<TokenSession>(tokenJsonObj);
+            var token = await RestAPI.Instance.GetAuthData(login, password);
 
             //Assert. Проверка результата.
             Assert.IsNotEmpty(token.Token);
@@ -37,8 +36,7 @@ namespace RestAPIWrapper.EditorTests
             var serverless = new Serverless.RestAPIServerless();
 
             //Act. Совершение действия.
-            var tokenJsonObj = await serverless.GetAuthData(login, password);
-            var token = JsonConvert.DeserializeObject<TokenSession>(tokenJsonObj);
+            var token = await serverless.GetAuthData(login, password);
 
             //Assert. Проверка результата.
             Assert.IsNotEmpty(token.Token);
@@ -53,11 +51,10 @@ namespace RestAPIWrapper.EditorTests
             //Arrange. Подготовка данных
             var login = "Karpik";
             var password = "123";
-            var server = new Server.RestAPIServer();
+            var server = new V1.RestAPIV1();
 
             //Act. Совершение действия.
-            var tokenJsonObj = await server.GetAuthData(login, password);
-            var token = JsonConvert.DeserializeObject<TokenSession>(tokenJsonObj);
+            var token = await server.GetAuthData(login, password);
 
             //Assert. Проверка результата.
             Assert.IsNotEmpty(token.Token);

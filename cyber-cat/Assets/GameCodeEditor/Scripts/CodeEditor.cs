@@ -4,6 +4,7 @@ using CodeEditorModels.ProgLanguages;
 using Cysharp.Threading.Tasks;
 using GameCodeEditor.Scripts;
 using Legacy_do_not_use_it;
+using RestAPIWrapper;
 using TaskUnits;
 using TaskUnits.Messages;
 using TMPro;
@@ -11,7 +12,6 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using RequestAPI.Proxy;
 
 public class CodeEditor : UIBehaviour
 {
@@ -53,14 +53,14 @@ public class CodeEditor : UIBehaviour
 
     protected override void OnDestroy()
     {
-        var message = new NeedUpdateTaskData(_task.Id, RequestAPIProxy.GetTokenFromPlayerPrefs());
+        var message = new NeedUpdateTaskData(_task.Id, PlayerPrefsInfo.GetToken());
         AsyncMessageBroker.Default.PublishAsync(message);
     }
 
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
-        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
-        var lastSavedCode = await RequestAPIProxy.GetSavedCode(token, task.Id);
+        var token = PlayerPrefsInfo.GetToken();
+        var lastSavedCode = await RestAPI.Instance.GetLastSavedCode(token, task.Id);
 
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);

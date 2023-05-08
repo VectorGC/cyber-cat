@@ -21,13 +21,12 @@ namespace RestAPIWrapper.EditorTests
             var lang = "";
 
             //Act
-            var jsonToken = await new Serverless.RestAPIServerless()
+            var consoleMessage = await new Serverless.RestAPIServerless()
                 .SendCodeToChecking(playerToken, taskID, code, lang);
-            var token = JsonConvert.DeserializeObject<TokenSession>(jsonToken);
 
             //Assert
-            Assert.IsNull(token.Token);
-            Assert.IsNotEmpty(token.Error);
+            Assert.IsNotNull(consoleMessage.Message);
+            Assert.IsNotEmpty(consoleMessage.Message);
         }
 
         [RequiresPlayMode]
@@ -41,13 +40,11 @@ namespace RestAPIWrapper.EditorTests
             var lang = "Cpp";
 
             //Act
-            var jsonToken = await RestAPI.Instance.SendCodeToChecking(playerToken, taskID, code, lang);
-            var token = JsonConvert.DeserializeObject<TokenSession>(jsonToken);
+            var consoleMessage = await RestAPI.Instance.SendCodeToChecking(playerToken, taskID, code, lang);
 
             //Assert
-            Assert.IsNotNull(token.Name);
-            Assert.IsNotNull(token.Token);
-            Assert.IsEmpty(token.Error);
+            Assert.IsNotNull(consoleMessage.Message);
+            Assert.IsNotEmpty(consoleMessage.Message);
         }
 
         [RequiresPlayMode]
@@ -61,13 +58,11 @@ namespace RestAPIWrapper.EditorTests
             var lang = "Cpp";
 
             //Act
-            var jsonToken = await new Server.RestAPIServer().SendCodeToChecking(playerToken, taskID, code, lang);
-            var token = JsonConvert.DeserializeObject<TokenSession>(jsonToken);
+            var consoleMessage = await new V1.RestAPIV1().SendCodeToChecking(playerToken, taskID, code, lang);
 
             //Assert
-            Assert.IsNotNull(token.Name);
-            Assert.IsNotNull(token.Token);
-            Assert.IsEmpty(token.Error);
+            Assert.IsNotNull(consoleMessage.Message);
+            Assert.IsNotEmpty(consoleMessage.Message);
         }
     }
 }

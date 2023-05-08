@@ -6,9 +6,12 @@ namespace ServerAPIBase
     /// <typeparam name="T">Requests return type</typeparam>
     public interface IWebApiAggregator<T>
     {
-        IRegistrator<T> Registrator { get; }
-        IAuthenticator<T> Authenticator { get; }
-        IPasswordRestorer<T> PasswordRestorer { get; }
-        ITokenReceiver<T> TokenReceiver { get; }
+        IRegistrator<string> Registrator { get; }
+        IAuthenticator<string> Authenticator { get; }
+        IPasswordRestorer<string> PasswordRestorer { get; }
+        ITokenReceiver<string> TokenReceiver { get; }
+        ICodeSender<string> CodeSender { get; }
+        ICodeReceiver<string> CodeReceiver { get; }
+        ITasksGetter<string> TasksGetter { get; }
     }
 }

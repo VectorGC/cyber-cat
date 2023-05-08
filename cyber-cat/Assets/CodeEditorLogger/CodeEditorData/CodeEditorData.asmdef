@@ -1,8 +1,8 @@
 {
-    "name": "ServerAPIBase",
+    "name": "CodeEditorData",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:f4113365f11c42942b4c3ecc47e69ed7",
         "GUID:4fe9431d1ccca41499409915c70bc857"
     ],
     "includePlatforms": [],

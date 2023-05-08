@@ -3,7 +3,6 @@ using System.Net;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
-using RestAPIWrapper;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
 
@@ -36,7 +35,7 @@ namespace TaskUnits
                 if (folders.GetValue("error") != null)
                 {
                     var errorCode = folders.GetValue("error").ToString();
-                    var localizedError = WebErrorLocalize.Localize(errorCode);
+                    var localizedError = RestAPIWrapper.WebErrorLocalize.Localize(errorCode);
 
                     throw new WebException($"Пожалуйста, сообщите организатору ошибку:\n{localizedError}");
                 }

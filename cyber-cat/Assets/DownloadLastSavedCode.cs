@@ -1,5 +1,5 @@
 using GameCodeEditor.Scripts;
-using RequestAPI.Proxy;
+using RestAPIWrapper;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +16,7 @@ public class DownloadLastSavedCode : MonoBehaviour
     private static async void OnClickHandle()
     {
         var taskId = CodeEditor.Task.Id;
-        var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
+        var token = PlayerPrefsInfo.GetToken();
 
         var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, taskId);
 

@@ -1,11 +1,11 @@
-using Authentication;
 using ServerAPIBase;
 using System;
 using Cysharp.Threading.Tasks;
+using TaskUnits;
 
 namespace RestAPIWrapper
 {
-    public abstract class WebApiProxy<AggregatorT, AuthentificateT, RegisterT, RestorePasswordT, GetTokenT>
+    public abstract class WebApiProxy<AggregatorT, AuthentificateT, RegisterT, RestorePasswordT, GetTokenT, SendCodeT, ReceiveCodeT, GetTasksT>
     {
         public IWebApiAggregator<AggregatorT> WebApiAggregator { get; protected set; }
 
@@ -20,5 +20,14 @@ namespace RestAPIWrapper
 
         public abstract void GetToken(string login, string password, string email, Action<GetTokenT> callback = null, bool local = false);
         public abstract UniTask<GetTokenT> GetToken(string login, string password, string email, bool local = false);
+
+        public abstract void SendCode(ITaskData taskData, string token, string code, string progLanguage, Action<SendCodeT> callback = null);
+        public abstract UniTask<SendCodeT> SendCode(ITaskData taskData, string token, string code, string progLanguage);
+
+        public abstract void ReceiveCode(string token, string taskID, Action<ReceiveCodeT> callback = null);
+        public abstract UniTask<ReceiveCodeT> ReceiveCode(string token, string taskID);
+
+        public abstract void GetTasks(string token, Action<GetTasksT> callback = null);
+        public abstract UniTask<GetTasksT> GetTasks(string token);
     }
 }

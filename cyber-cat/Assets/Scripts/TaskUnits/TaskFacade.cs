@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using ServerAPIBase;
 using TaskUnits.RequestWrappers;
 using TaskUnits.TaskDataModels;
 
@@ -28,7 +29,7 @@ namespace TaskUnits
                 return new EmptyTaskData();
             }
 
-            return taskData;
+            return (ITaskData)taskData;
         }
     }
 }

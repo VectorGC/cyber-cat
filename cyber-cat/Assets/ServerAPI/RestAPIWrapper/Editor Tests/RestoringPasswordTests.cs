@@ -45,7 +45,7 @@ namespace RestAPIWrapper.EditorTests
             var pass = "123";
 
             //Act
-            var uniTask = new Server.RestAPIServer().RestorePassword(login, pass);
+            var uniTask = new V1.RestAPIV1().RestorePassword(login, pass);
 
             //Assert
             Assert.IsNotNull(uniTask);

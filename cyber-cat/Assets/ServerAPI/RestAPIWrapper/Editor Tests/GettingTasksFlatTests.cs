@@ -1,8 +1,9 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using TaskUnits;
 using UnityEngine;
+using ServerAPIBase;
+using TaskUnits;
 
 namespace RestAPIWrapper.EditorTests
 {
@@ -15,8 +16,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = PlayerPrefs.GetString("token");
 
             //Act
-            var jsonToken = await RestAPI.Instance.GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await RestAPI.Instance.GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);
@@ -30,8 +30,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = PlayerPrefs.GetString("token");
 
             //Act
-            var jsonToken = await new Serverless.RestAPIServerless().GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await new Serverless.RestAPIServerless().GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);
@@ -45,8 +44,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = PlayerPrefs.GetString("token");
 
             //Act
-            var jsonToken = await new Server.RestAPIServer().GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await new V1.RestAPIV1().GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);
@@ -60,8 +58,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = "Absolutly wrong token";
 
             //Act
-            var jsonToken = await RestAPI.Instance.GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await RestAPI.Instance.GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);
@@ -75,8 +72,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = "Absolutly wrong token";
 
             //Act
-            var jsonToken = await RestAPI.Instance.GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await RestAPI.Instance.GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);
@@ -90,8 +86,7 @@ namespace RestAPIWrapper.EditorTests
             var playerToken = "Absolutly wrong token";
 
             //Act
-            var jsonToken = await new Server.RestAPIServer().GetTasks(playerToken);
-            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(jsonToken);
+            var list = await new V1.RestAPIV1().GetTasks(playerToken);
 
             //Assert
             Assert.IsNotNull(list);

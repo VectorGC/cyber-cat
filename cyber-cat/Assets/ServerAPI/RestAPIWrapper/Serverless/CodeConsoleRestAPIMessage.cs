@@ -1,3 +1,5 @@
+using ServerAPIBase;
+
 namespace RestAPIWrapper.Serverless
 {
     public class CodeConsoleRestAPIMessage : ICodeConsoleMessage

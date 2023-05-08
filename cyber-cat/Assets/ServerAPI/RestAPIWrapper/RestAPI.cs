@@ -1,11 +1,12 @@
+using RestAPIWrapper.V1;
 using ServerAPIBase;
 
 namespace RestAPIWrapper
 {
     public static class RestAPI
     {
-        private static IRestAPI _instance;
-        public static IRestAPI Instance
+        private static IRestAPIWrapper _instance;
+        public static IRestAPIWrapper Instance
         {
             get
             {
@@ -14,11 +15,11 @@ namespace RestAPIWrapper
                     switch (ServerConfig.VersionOfAPI)
                     {
                         case ServerConfig.APIVersion.V1:
-                            _instance = new Server.RestAPIServer();
+                            _instance = new RestAPIV1();
                             break;
-                        case ServerConfig.APIVersion.V2:
-                            _instance = new Server.RestAPIServer();
-                            break;
+                        //case ServerConfig.APIVersion.V2:
+                        //    _instance = new Server.RestAPIServer();
+                        //    break;
 
                         case ServerConfig.APIVersion.Serverless:
                             _instance = new Serverless.RestAPIServerless();
