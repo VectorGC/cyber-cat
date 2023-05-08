@@ -42,7 +42,8 @@ namespace RestAPIWrapper.Serverless
         {
             ITasksGetterData data = new TasksGetterData(token);
             var json = await WebApiAggregator.TasksGetter.RequestAsync(data);
-            return JsonConvert.DeserializeObject<ITaskDataCollection>(json);
+            var list = JsonConvert.DeserializeObject<ITaskDataCollection>(json);
+            return list;
         }
 
 
@@ -109,10 +110,7 @@ namespace RestAPIWrapper.Serverless
 
         public async override UniTask<ICodeConsoleMessage> SendCode(ITaskData taskData, string token, string code, string progLanguage)
         {
-            ICodeSenderData data = new CodeSenderData(taskData, token, code, progLanguage);
-            var json = await WebApiAggregator.CodeSender.RequestAsync(data);
-            ICodeConsoleMessage message = JsonConvert.DeserializeObject<VerdictResult>(json);
-            return message;
+            return new VerdictError();
         }
     }
 }

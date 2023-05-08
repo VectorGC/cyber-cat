@@ -14,7 +14,15 @@ namespace RestAPIWrapper.Serverless
 
         public WebApiAggregatorServerless()
         {
+            WebApiRequestFactoryServerless factory = new WebApiRequestFactoryServerless();
 
+            Registrator = factory.CreateRegistrator();
+            Authenticator = factory.CreateAuthentificator();
+            PasswordRestorer = factory.CreatePasswordRestorer();
+            TokenReceiver = factory.CreateTokenReceiver();
+            CodeSender = factory.CreateCodeSender();
+            CodeReceiver = factory.CreateCodeReceiver();
+            TasksGetter = factory.CreateTasksGetter();
         }
     }
 }
