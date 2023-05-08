@@ -30,7 +30,7 @@ namespace RestAPIWrapper.V1
                     ["password"] = data.Password
                 },
                 ProgressCallback = value => progress?.Report(value),
-                EnableDebug = Debug.isDebugBuild
+                EnableDebug = ServerData.DebugBuild
             };
             return RestClient.Get(request);
         }

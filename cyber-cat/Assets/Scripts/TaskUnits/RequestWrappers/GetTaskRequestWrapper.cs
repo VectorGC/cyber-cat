@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestAPIWrapper;
 
@@ -10,8 +9,7 @@ namespace TaskUnits.RequestWrappers
     {
         public async UniTask<ITaskDataCollection> GetTasks(string token, IProgress<float> progress = null)
         {
-            var responseText = await RestAPI.Instance.GetTasks(token, progress);
-            return JsonConvert.DeserializeObject<TaskDataModels.TasksData>(responseText);
+            return await RestAPI.Instance.GetTasks(token, progress);
         }
 
         public async UniTask<JObject> GetTaskFolders(string token, IProgress<float> progress = null)

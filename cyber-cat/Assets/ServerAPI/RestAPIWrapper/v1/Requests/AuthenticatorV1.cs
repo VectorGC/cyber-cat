@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Proyecto26;
 using ServerAPIBase;
-using UnityEngine;
 using System;
 
 namespace RestAPIWrapper.V1
@@ -30,7 +29,7 @@ namespace RestAPIWrapper.V1
                     ["password"] = data.Password
                 },
                 ProgressCallback = value => progress?.Report(value),
-                EnableDebug = Debug.isDebugBuild
+                EnableDebug = ServerData.DebugBuild
             };
             return RestClient.Get(request);
         }
