@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace RestAPIWrapper
+namespace ServerAPIBase
 {
     public static class ServerData
     {
