@@ -1,8 +1,6 @@
 using Authentication;
-using AuthService;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
-using RestAPIWrapper.V1;
 using ServerAPIBase;
 using System;
 using TaskUnits;
@@ -18,14 +16,17 @@ namespace RestAPIWrapper.Serverless
 
         public override void Authentificate(string login, string password, string email, string token, Action<TokenSession> callback = null)
         {
-            var tokenSession = new MockAuthService().Authenticate(login, password);
-            callback?.Invoke(tokenSession);
+            IAuthenticatorData data = new AuthenticatorData(login, password, email, token);
+            WebApiAggregator.Authenticator.Request(data, x =>
+            callback?.Invoke(JsonConvert.DeserializeObject<TokenSession>(x)));
         }
 
         public async override UniTask<TokenSession> Authentificate(string login, string password, string email, string token)
         {
-            var tokenSession = new MockAuthService().Authenticate(login, password);
-            return await UniTask.FromResult(tokenSession);
+            IAuthenticatorData data = new AuthenticatorData(login, password, email, token);
+            var json = await WebApiAggregator.Authenticator.RequestAsync(data);
+            var tokenSession = JsonConvert.DeserializeObject<TokenSession>(json);
+            return tokenSession;
         }
 
 

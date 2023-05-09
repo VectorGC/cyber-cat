@@ -1,5 +1,5 @@
 using Authentication;
-using ServerAPIBase;
+using RestAPIWrapper.Serverless;
 
 namespace AuthService
 {
@@ -7,9 +7,9 @@ namespace AuthService
     {
         public TokenSession Authenticate(string login, string password)
         {
+            WebAPIProxyServerless proxy = new WebAPIProxyServerless();
             TokenSession token = new TokenSession();
-            IAuthenticatorData data = new AuthenticatorData(login, password, login);
-            new MockServiceAuthenticator().Request(data, x => token = x);
+            proxy.Authentificate(login, password, login, null, x => token = x);
             return token;
         }
     }
