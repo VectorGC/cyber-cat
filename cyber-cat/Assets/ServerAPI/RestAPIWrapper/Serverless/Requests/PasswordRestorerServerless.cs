@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+п»їusing Cysharp.Threading.Tasks;
 using ServerAPIBase;
 using System;
 
@@ -9,7 +9,7 @@ namespace RestAPIWrapper.Serverless
         public void Request(IPasswordRestorerData data, Action<string> callback)
         {
             const string messageText =
-                "Это режим 'без сервера', чтобы активировать загрузку последнего сохраненного кода - пожалуйста включите сервер";
+                "Р­С‚Рѕ СЂРµР¶РёРј 'Р±РµР· СЃРµСЂРІРµСЂР°', С‡С‚РѕР±С‹ Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ Р·Р°РіСЂСѓР·РєСѓ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕС…СЂР°РЅРµРЅРЅРѕРіРѕ РєРѕРґР° - РїРѕР¶Р°Р»СѓР№СЃС‚Р° РІРєР»СЋС‡РёС‚Рµ СЃРµСЂРІРµСЂ";
             callback?.Invoke(messageText);
         }
 

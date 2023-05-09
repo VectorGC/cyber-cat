@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+п»їusing Cysharp.Threading.Tasks;
 using ServerAPIBase;
 using System;
 
@@ -8,13 +8,13 @@ namespace RestAPIWrapper.Serverless
     {
         public void Request(ICodeSenderData data, Action<string> callback)
         {
-            callback?.Invoke("{\"error\":\"Это режим 'без сервера', чтобы тесировать задачи - подключите сервер и уберите директиву SERVERLESS при сборке проекта\"}");
+            callback?.Invoke("{\"error\":\"Р­С‚Рѕ СЂРµР¶РёРј 'Р±РµР· СЃРµСЂРІРµСЂР°', С‡С‚РѕР±С‹ С‚РµСЃРёСЂРѕРІР°С‚СЊ Р·Р°РґР°С‡Рё - РїРѕРґРєР»СЋС‡РёС‚Рµ СЃРµСЂРІРµСЂ Рё СѓР±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РёРІСѓ SERVERLESS РїСЂРё СЃР±РѕСЂРєРµ РїСЂРѕРµРєС‚Р°\"}");
         }
 
         public async UniTask<string> RequestAsync(ICodeSenderData data, IProgress<float> progress = null)
         {
             return await UniTask.FromResult(
-                "{\"error\":\"Это режим 'без сервера', чтобы тесировать задачи - подключите сервер и уберите директиву SERVERLESS при сборке проекта\"}");
+                "{\"error\":\"Р­С‚Рѕ СЂРµР¶РёРј 'Р±РµР· СЃРµСЂРІРµСЂР°', С‡С‚РѕР±С‹ С‚РµСЃРёСЂРѕРІР°С‚СЊ Р·Р°РґР°С‡Рё - РїРѕРґРєР»СЋС‡РёС‚Рµ СЃРµСЂРІРµСЂ Рё СѓР±РµСЂРёС‚Рµ РґРёСЂРµРєС‚РёРІСѓ SERVERLESS РїСЂРё СЃР±РѕСЂРєРµ РїСЂРѕРµРєС‚Р°\"}");
         }
     }
 }

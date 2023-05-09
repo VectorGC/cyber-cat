@@ -1,10 +1,10 @@
-namespace RestAPIWrapper
+ï»¿namespace RestAPIWrapper
 {
     internal struct VerdictSuccess : ICodeConsoleMessage
     {
         public override string ToString()
         {
-            return "Âàø êîä ñîõðàíåí. Ïðèñòóïàéòå ê ñëåäóþùåé çàäà÷å ^_^";
+            return "Ð’Ð°Ñˆ ÐºÐ¾Ð´ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½. ÐŸÑ€Ð¸ÑÑ‚ÑƒÐ¿Ð°Ð¹Ñ‚Ðµ Ðº ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ Ð·Ð°Ð´Ð°Ñ‡Ðµ ^_^";
         }
 
         public string Message => ToString();
