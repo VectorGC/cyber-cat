@@ -16,17 +16,14 @@ namespace RestAPIWrapper.V1
 
         public override void Authentificate(string login, string password, string email, string token, Action<TokenSession> callback = null)
         {
-            IAuthenticatorData data = new AuthenticatorData(login, password, email, token);
-            WebApiAggregator.Authenticator.Request(data, x =>
-            callback?.Invoke(JsonConvert.DeserializeObject<TokenSession>(x)));
+            var tokenSession = new AuthService.AuthService().Authenticate(email, password);
+            callback?.Invoke(tokenSession);
         }
 
         public override async UniTask<TokenSession> Authentificate(string login, string password, string email, string token)
         {
-            IAuthenticatorData data = new AuthenticatorData(login, password, email, token);
-            var json = await WebApiAggregator.Authenticator.RequestAsync(data);
-            var tokenSession = JsonConvert.DeserializeObject<TokenSession>(json);
-            return tokenSession;
+            var tokenSession = new AuthService.AuthService().Authenticate(email, password);
+            return await UniTask.FromResult(tokenSession);
         }
 
 
