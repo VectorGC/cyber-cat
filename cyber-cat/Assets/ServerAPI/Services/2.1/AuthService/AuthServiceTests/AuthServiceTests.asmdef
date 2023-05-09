@@ -1,0 +1,18 @@
+{
+    "name": "AuthServiceTests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:759cf016a7c48954f868c9a2992ab7e1",
+        "GUID:87d054412e5b89f479c52b3174238e73",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
