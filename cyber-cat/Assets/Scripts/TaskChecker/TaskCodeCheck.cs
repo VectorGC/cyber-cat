@@ -26,7 +26,7 @@ namespace TaskChecker
         private static async UniTask<string> CheckCodeStringAsync(string token, string taskId, string code,
             string progLanguage)
         {
-            return await new CodeCheckingRequest().SendCodeToChecking(token, taskId, code, progLanguage);
+            return (await new CodeCheckingRequest().SendCodeToChecking(token, taskId, code, progLanguage)).Message;
         }
     }
 }

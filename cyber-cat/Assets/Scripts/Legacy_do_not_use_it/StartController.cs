@@ -1,7 +1,7 @@
 using UnityEngine;
 using Authentication;
 using MonoBehaviours.PropertyFields;
-using RequestAPI.Proxy;
+using RestAPIWrapper;
 
 public class StartController : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class StartController : MonoBehaviour
 
     private void Start()
     {
-        if (string.IsNullOrEmpty(RequestAPIProxy.GetTokenFromPlayerPrefs(false).Token))
+        if (string.IsNullOrEmpty(PlayerPrefsInfo.Token))
         {
             authScene.LoadAsyncViaLoadingScreen();
             return;

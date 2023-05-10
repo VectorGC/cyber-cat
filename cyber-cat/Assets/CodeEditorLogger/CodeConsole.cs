@@ -46,7 +46,7 @@ public class CodeConsole : EasyLogView
         var message = msg.Message;
         var type = msg.MessageType;
 
-        base.OnLogMessage(message, type);
+        base.OnLogMessage(message, (LogMessageType)type);
     }
 
     // ReSharper disable once Unity.RedundantEventFunction

@@ -1,6 +1,7 @@
-using System;
 using Authentication;
-using RequestAPI.Proxy;
+using RestAPIWrapper;
+using RestAPIWrapper.V1;
+using System;
 using TaskUnits;
 using UniRx;
 using UniRx.Triggers;
@@ -17,7 +18,6 @@ namespace Legacy_do_not_use_it
 
         [SerializeField] private bool selfTriggerLogic = false;
 
-        // Start is called before the first frame update
         void Start()
         {
             _collider = GetComponent<SphereCollider>();
@@ -34,12 +34,7 @@ namespace Legacy_do_not_use_it
             var isHackModePressed = Input.GetKey(KeyCode.F);
             if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
             {
-                var token = RequestAPIProxy.GetTokenFromPlayerPrefs();
-
-                //Time.timeScale = 0f;
-                //var task = await taskFolder.GetTask(token);
-                //CodeEditor.OpenSolution(task).Forget();
-                //Time.timeScale = 1f;
+                TokenSession token = PlayerPrefsInfo.GetToken();
             }
         }
     }

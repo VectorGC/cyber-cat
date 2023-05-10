@@ -1,12 +1,11 @@
-using Authentication;
-using RequestAPI.Proxy;
+using RestAPIWrapper;
 using UnityEngine;
 
 public class Logout : MonoBehaviour
 {
     public void LogoutAsync()
     {
-        RequestAPIProxy.DeleteTokenFromPlayerPrefs();
+        PlayerPrefs.DeleteKey(PlayerPrefsInfo.Key);
         UIDialogs.Instance.StartScene.LoadAsyncViaLoadingScreen();
     }
 }
