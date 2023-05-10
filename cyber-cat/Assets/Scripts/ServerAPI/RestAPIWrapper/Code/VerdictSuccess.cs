@@ -1,6 +1,6 @@
-﻿namespace RestAPIWrapper
+namespace TaskChecker.Verdicts
 {
-    internal struct VerdictSuccess : ICodeConsoleMessage
+    public struct VerdictSuccess : ICodeConsoleMessage
     {
         public override string ToString()
         {

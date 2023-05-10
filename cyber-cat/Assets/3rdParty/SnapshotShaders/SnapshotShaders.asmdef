@@ -1,0 +1,16 @@
+{
+    "name": "SnapshotShaders",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1b7050c257c8cfd4b8264ab90ebe6f52"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

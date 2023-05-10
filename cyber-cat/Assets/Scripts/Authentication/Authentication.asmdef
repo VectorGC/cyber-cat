@@ -1,15 +1,14 @@
 {
-    "name": "TaskChecker",
+    "name": "Authentication",
     "rootNamespace": "",
     "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:fc909bd4758fb8a4987f94a19b5e7ca1",
         "GUID:0e80d15fcd54dc6449e8ef36b3c10c8a",
-        "GUID:f4113365f11c42942b4c3ecc47e69ed7",
         "GUID:923464c5558f6f546be46f18f4aad54b",
         "GUID:87d054412e5b89f479c52b3174238e73",
         "GUID:4fe9431d1ccca41499409915c70bc857",
-        "GUID:2c3d3609f4ff9e747a7363d24dc20725"
+        "GUID:0133c66b33ac12d4b96ab8f4865784c1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

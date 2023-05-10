@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using ServerAPIBase;
+using TaskChecker.Verdicts;
 
 namespace RestAPIWrapper
 {
