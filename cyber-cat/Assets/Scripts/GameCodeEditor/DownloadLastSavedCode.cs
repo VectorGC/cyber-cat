@@ -1,3 +1,4 @@
+using System;
 using GameCodeEditor.Scripts;
 using RestAPIWrapper;
 using UniRx;
@@ -18,7 +19,8 @@ public class DownloadLastSavedCode : MonoBehaviour
         var taskId = CodeEditor.Task.Id;
         var token = PlayerPrefsInfo.GetToken();
 
-        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode(token, taskId);
+        throw new NotImplementedException("token");
+        var lastSavedCode = await new GetLastSaveCodeRequest().GetLastSavedCode("123", taskId);
 
         var message = new SetTaskInEditor(CodeEditor.Task, lastSavedCode);
         MessageBroker.Default.Publish(message);

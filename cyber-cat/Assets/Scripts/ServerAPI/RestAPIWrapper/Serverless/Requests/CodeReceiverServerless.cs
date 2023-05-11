@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using ServerAPIBase;
 using System;
-using UniRx;
 
 namespace RestAPIWrapper.Serverless
 {

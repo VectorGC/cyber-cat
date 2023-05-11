@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using ServerAPIBase;
 
 namespace RestAPIWrapper
 {
@@ -21,7 +20,7 @@ namespace RestAPIWrapper
                     return Msg;
                 default:
                     return
-                        $"Данные для теста: '{Params}'\nВаш вывод: {Result}\nОжидается: '{Expected}'. Тестов пройдено {TestsPassed} / {TestsTotal}";
+                        $"Р”Р°РЅРЅС‹Рµ РґР»СЏ С‚РµСЃС‚Р°: '{Params}'\nР’Р°С€ РІС‹РІРѕРґ: {Result}\nРћР¶РёРґР°РµС‚СЃСЏ: '{Expected}'. РўРµСЃС‚РѕРІ РїСЂРѕР№РґРµРЅРѕ {TestsPassed} / {TestsTotal}";
             }
         }
 

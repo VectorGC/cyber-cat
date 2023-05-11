@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Models;
-using Newtonsoft.Json;
+using RestAPI;
 
 namespace Repositories.TaskRepositories
 {
@@ -19,10 +19,8 @@ namespace Repositories.TaskRepositories
 
         public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
-            var tasksJson = await restAPI.GetTasks(progress);
-            var tasks = JsonConvert.DeserializeObject<TaskModels>(tasksJson);
-
-            return tasks.Tasks[taskId];
+            var tasks = await restAPI.GetTasks(progress);
+            return tasks[taskId];
         }
     }
 }

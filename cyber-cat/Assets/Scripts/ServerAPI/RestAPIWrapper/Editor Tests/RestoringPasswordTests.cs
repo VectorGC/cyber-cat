@@ -1,8 +1,3 @@
-using System.Threading.Tasks;
-using Authentication;
-using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace RestAPIWrapper.EditorTests

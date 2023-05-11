@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using Authentication;
 using CodeEditorModels.ProgLanguages;
 using RestAPIWrapper;
 using UnityEngine;
@@ -21,7 +21,8 @@ public class SendCodeHandler : MonoBehaviour
 
         TokenSession token = PlayerPrefsInfo.GetToken();
 
-        var checkingResult = await RestAPI.Instance.SendCodeToChecking(token.Token, task.Id, code, ProgLanguages[language]);
+        throw new NotImplementedException("token");
+        var checkingResult = await RestAPI.Instance.SendCodeToChecking("123", task.Id, code, ProgLanguages[language]);
 
         CodeConsole.WriteLine(checkingResult);
     }

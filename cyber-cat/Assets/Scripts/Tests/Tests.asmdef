@@ -2,11 +2,11 @@
     "name": "Tests",
     "rootNamespace": "",
     "references": [
-        "GUID:578d0a8f8628eb4439aafedec791b470",
+        "GUID:7bf8b54fa0bb36440890447e8071f5a9",
         "GUID:b3793389d983a85428458394eb28e901",
-        "GUID:d99ae67dbb84b0746b97a668ebd6e4c4",
+        "GUID:578d0a8f8628eb4439aafedec791b470",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:8d3f3272db9974b4baa5defcafbf164b"
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
     ],
     "includePlatforms": [
         "Editor"

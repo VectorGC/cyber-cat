@@ -1,4 +1,3 @@
-using Authentication;
 using Cysharp.Threading.Tasks;
 using ServerAPIBase;
 using System;
@@ -24,7 +23,7 @@ namespace RestAPIWrapper.V1
         {
             var token = PlayerPrefs.GetString(PlayerPrefsInfo.Key);
             var name = PlayerPrefs.GetString(PlayerPrefsInfo.Name);
-            return new TokenSession(token, name);
+            return new TokenSession();
         }
     }
 }

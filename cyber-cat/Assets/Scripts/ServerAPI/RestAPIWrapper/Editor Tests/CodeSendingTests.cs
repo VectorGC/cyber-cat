@@ -1,7 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Authentication;
-using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

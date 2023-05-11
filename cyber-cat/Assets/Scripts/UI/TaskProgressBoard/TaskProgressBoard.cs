@@ -8,7 +8,7 @@ public static class TaskProgressBoard
     public static async UniTask ShowTaskProgressBoard()
     {
         var token = PlayerPrefsInfo.GetToken();
-        var tasksProgress = await TasksProgress.GetFromServer(token);
+        var tasksProgress = await TasksProgress.GetFromServer("123");
 
         OnTaskProgressReceived(tasksProgress);
     }

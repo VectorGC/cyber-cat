@@ -16,7 +16,8 @@ public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
     {
         var token = PlayerPrefsInfo.GetToken();
 
-        var task = await taskUnitFolder.GetTask(token);
+        throw new NotImplementedException("token");
+        var task = await taskUnitFolder.GetTask("123");
 
         _observableTask = task.ToObservable();
         foreach (var observer in taskDataObservers)

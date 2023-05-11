@@ -1,11 +1,23 @@
 using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Models;
 using NUnit.Framework;
 using Repositories.TaskRepositories;
+using RestAPI;
 
 public class MockRestApi : IRestAPI
 {
+    public UniTask<ITokenSession> Authenticate(string login, string password, IProgress<float> progress = null)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<ITasks> IRestAPI.GetTasks(IProgress<float> progress)
+    {
+        throw new NotImplementedException();
+    }
+
     public UniTask<string> GetTasks(IProgress<float> progress = null)
     {
         // TODO: Хз как сделать красивее.
@@ -29,7 +41,9 @@ public class TaskRepositoryTests
     [SetUp]
     public void Setup()
     {
+        /*
         _taskRepository = new TaskRepositoryRestProxy(new MockRestApi());
+        */
     }
 
     [Test]

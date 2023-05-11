@@ -1,4 +1,3 @@
-using Authentication;
 using UnityEngine;
 
 namespace RestAPIWrapper
@@ -13,7 +12,7 @@ namespace RestAPIWrapper
         {
             var token = PlayerPrefs.GetString(Key);
             var name = PlayerPrefs.GetString(Name);
-            return new TokenSession(token, name);
+            return new TokenSession();
         }
     }
 }

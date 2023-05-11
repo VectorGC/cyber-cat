@@ -1,4 +1,3 @@
-using Authentication;
 using ServerAPIBase;
 
 namespace RestAPIWrapper.V1

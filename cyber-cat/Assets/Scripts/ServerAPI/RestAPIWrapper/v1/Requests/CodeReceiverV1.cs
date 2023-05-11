@@ -3,8 +3,6 @@ using Newtonsoft.Json.Linq;
 using Proyecto26;
 using ServerAPIBase;
 using System;
-using System.Diagnostics;
-using UnityEditor;
 
 namespace RestAPIWrapper.V1
 {
