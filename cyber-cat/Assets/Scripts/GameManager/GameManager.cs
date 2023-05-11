@@ -1,8 +1,11 @@
+using AuthService;
 using Repositories.TaskRepositories;
+using Services.AuthService;
 
 public class GameManager
 {
-    public readonly ITaskRepository TaskRepository = FeatureFlags.UseMockTaskRepository ? (ITaskRepository) new MockTaskRepository() : new TaskRepositoryRestProxy(RestAPIFacade.Create());
+    public readonly ITaskRepository TaskRepository = new TaskRepositoryRestProxy(RestAPIFacade.Create());
+    public readonly IAuthService AuthService = new AuthServiceRestProxy(RestAPIFacade.Create());
 
     // TODO: Удали это, после рефаторинга айдишников задач.
     public static string GetTaskIdFromUnitAndTask(string unit, string task)

@@ -1,4 +1,3 @@
-using System;
 using AuthService;
 using TMPro;
 using UnityEngine;
@@ -14,6 +13,8 @@ namespace Controllers
 
         [SerializeField] private Button _signIn;
 
+        private IAuthService _authService = GameManager.Instance.AuthService;
+
         protected override void OnEnable()
         {
             _signIn.onClick.AddListener(SignIn);
@@ -23,20 +24,16 @@ namespace Controllers
         {
             _signIn.onClick.RemoveListener(SignIn);
         }
-        
-        public void Construct(IAuthService authService)
-        {
-            throw new NotImplementedException();
-        }
 
         private async void SignIn()
         {
             var login = _loginTextField.text;
             var password = _passwordTextField.text;
 
-            //var token = await GameManager.Instance.AuthService.Authenticate(login, password);
-            //PlayerPrefs.SetString("token", token.Value);
-            //PlayerPrefs.Save();
+            var token = await _authService.Authenticate(login, password);
+
+            PlayerPrefs.SetString("token", token.Value);
+            PlayerPrefs.Save();
         }
     }
 }
