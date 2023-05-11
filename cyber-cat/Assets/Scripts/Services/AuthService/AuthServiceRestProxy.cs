@@ -1,21 +1,21 @@
 using AuthService;
 using Cysharp.Threading.Tasks;
+using RestAPI;
 
 namespace Services.AuthService
 {
     public class AuthServiceRestProxy : IAuthService
     {
-        UniTask<ITokenSession> IAuthService.Authenticate(string login, string password)
+        private readonly IRestAPI _restAPI;
+
+        public AuthServiceRestProxy(IRestAPI restAPI)
         {
-            /*
-            new RestAPI()
-            
-            WebApiProxyV1 proxy = new WebApiProxyV1();
-            TokenSession token = new TokenSession();
-            proxy.Authentificate(login, password, login, null, x => token = x);
-            return token;
-            */
-            throw new System.NotImplementedException();
+            _restAPI = restAPI;
+        }
+
+        public async UniTask<ITokenSession> Authenticate(string login, string password)
+        {
+            return await _restAPI.Authenticate(login, password);
         }
     }
 }

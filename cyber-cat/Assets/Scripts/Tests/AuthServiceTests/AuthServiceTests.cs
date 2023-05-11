@@ -1,63 +1,21 @@
+using System.Threading.Tasks;
+using AuthService;
 using NUnit.Framework;
+using Services.AuthService;
 
-namespace AuthService.Tests
+namespace Tests.AuthServiceTests
 {
+    [TestFixture]
     public class AuthServiceTests
     {
-        private IAuthService _service;
-
-        [SetUp]
-        public void Setup()
-        {
-            //_service = new AuthService();
-        }
+        private readonly IAuthService _service = new AuthServiceRestProxy(RestAPIFacade.Create());
 
         [Test]
-        public void WhenAuth_AndCorrectData_ThenTokenIsNotEmpty()
+        public async Task ShouldTokenIsNotEmpty_WhenCorrectCredentials([Values("test@test.com")] string login, [Values("test")] string password)
         {
-            //Arrange
-            var login = "Karpik";
-            var password = "123";
+            var token = await _service.Authenticate(login, password);
 
-            //Act
-            var token = _service.Authenticate(login, password);
-
-            //Assert
-            /*
-            Assert.IsNotEmpty(token.Token);
-            Assert.IsNotEmpty(token.Name);
-            Assert.IsEmpty(token.Error);
-            */
-        }
-
-        [Test]
-        public void WhenAuth_AndWrongLogin_ThenErrorIsNotEmpty([Values("Karpik1337", "dfgdfgerg")] string login)
-        {
-            //Arrange
-            var password = "123";
-
-            //Act
-            var token = _service.Authenticate(login, password);
-
-            //Assert
-            /*
-            Assert.IsNotEmpty(token.Error);
-            */
-        }
-
-        [Test]
-        public void WhenAuth_AndWrongPassword_ThenErrorIsNotEmpty([Values("123456", "qwerty", "sdfergrtj")] string password)
-        {
-            //Arrange
-            var login = "Karpik";
-
-            //Act
-            var token = _service.Authenticate(login, password);
-
-            //Assert
-            /*
-            Assert.IsNotEmpty(token.Error);
-            */
+            Assert.IsNotEmpty(token.Value);
         }
     }
 }

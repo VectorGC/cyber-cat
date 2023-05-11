@@ -1,11 +1,8 @@
 using Repositories.TaskRepositories;
-using RestAPI;
 
 public class GameManager
 {
-    private static readonly IRestAPI RestApi = new RestAPI.RestAPI();
-
-    public readonly ITaskRepository TaskRepository = FeatureFlags.UseMockTaskRepository ? (ITaskRepository) new MockTaskRepository() : new TaskRepositoryRestProxy(RestApi);
+    public readonly ITaskRepository TaskRepository = FeatureFlags.UseMockTaskRepository ? (ITaskRepository) new MockTaskRepository() : new TaskRepositoryRestProxy(RestAPIFacade.Create());
 
     // TODO: Удали это, после рефаторинга айдишников задач.
     public static string GetTaskIdFromUnitAndTask(string unit, string task)
