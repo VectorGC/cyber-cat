@@ -1,7 +1,10 @@
+using System;
 using AuthService;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Controllers
@@ -10,10 +13,15 @@ namespace Controllers
     {
         [SerializeField] private TMP_InputField _loginTextField;
         [SerializeField] private TMP_InputField _passwordTextField;
-
+        [SerializeField] private TMP_Text _errorMessage;
         [SerializeField] private Button _signIn;
 
-        private IAuthService _authService = GameManager.Instance.AuthService;
+        private IAuthService _authService;
+
+        protected override void Start()
+        {
+            _authService = GameManager.Instance.AuthService;
+        }
 
         protected override void OnEnable()
         {
@@ -27,13 +35,24 @@ namespace Controllers
 
         private async void SignIn()
         {
-            var login = _loginTextField.text;
-            var password = _passwordTextField.text;
-
-            var token = await _authService.Authenticate(login, password);
+            ITokenSession token;
+            try
+            {
+                var login = _loginTextField.text;
+                var password = _passwordTextField.text;
+                token = await _authService.Authenticate(login, password);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                _errorMessage.text = e.ToString();
+                return;
+            }
 
             PlayerPrefs.SetString("token", token.Value);
             PlayerPrefs.Save();
+
+            SceneManager.LoadSceneAsync("MainMenu").ToUniTask().Forget();
         }
     }
 }

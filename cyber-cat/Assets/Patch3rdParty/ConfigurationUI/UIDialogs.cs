@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using MonoBehaviours.PropertyFields;
 using TMPro;
 using UnityEngine;
+using Utils;
 
 [Serializable]
 public struct TMPSettings
