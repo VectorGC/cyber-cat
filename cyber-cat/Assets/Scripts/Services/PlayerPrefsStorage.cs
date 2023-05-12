@@ -12,6 +12,12 @@ namespace Services
             set => SavePlayer(value);
         }
 
+        public void RemoveAll()
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+        }
+
         private IPlayer GetPlayer()
         {
             var playerName = PlayerPrefs.GetString("player_name");

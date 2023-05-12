@@ -1,6 +1,5 @@
 using System;
 using AuthService;
-using Cysharp.Threading.Tasks;
 using Services;
 using TMPro;
 using UnityEngine;
@@ -54,7 +53,7 @@ namespace Controllers
                 return;
             }
 
-            SceneManager.LoadSceneAsync("MainMenu").ToUniTask().Forget();
+            SceneManager.LoadSceneAsync("MainMenu");
         }
     }
 }

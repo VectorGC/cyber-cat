@@ -5,7 +5,7 @@ using RestAPI;
 using Services.AuthService;
 using Tests.InternalMockModels;
 
-namespace Tests.AuthServiceTests
+namespace Tests
 {
     [TestFixture]
     public class AuthServiceTests
