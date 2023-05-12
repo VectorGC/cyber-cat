@@ -1,11 +1,14 @@
 using AuthService;
 using Repositories.TaskRepositories;
+using RestAPI;
+using Services;
 using Services.AuthService;
 
 public class GameManager
 {
     public readonly ITaskRepository TaskRepository = new TaskRepositoryRestProxy(RestAPIFacade.Create());
     public readonly IAuthService AuthService = new AuthServiceRestProxy(RestAPIFacade.Create());
+    public readonly ILocalStorageService LocalStorage = new PlayerPrefsStorage();
 
     // TODO: Удали это, после рефаторинга айдишников задач.
     public static string GetTaskIdFromUnitAndTask(string unit, string task)

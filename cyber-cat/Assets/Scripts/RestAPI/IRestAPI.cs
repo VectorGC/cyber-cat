@@ -8,6 +8,7 @@ namespace RestAPI
     public interface IRestAPI
     {
         UniTask<ITokenSession> Authenticate(string login, string password, IProgress<float> progress = null);
-        Task<ITasks> GetTasks(IProgress<float> progress = null);
+        UniTask<ITasks> GetTasks(IProgress<float> progress = null);
+        UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token);
     }
 }

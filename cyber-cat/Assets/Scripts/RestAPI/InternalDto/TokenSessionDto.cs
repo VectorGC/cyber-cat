@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 
-namespace RestAPI.Dto
+namespace RestAPI.InternalDto
 {
-    public class TokenSessionDto : ITokenSession
+    internal class TokenSessionDto : ITokenSession
     {
         [JsonProperty("token")] public string Token { get; set; }
 

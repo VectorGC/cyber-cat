@@ -1,9 +1,9 @@
 using Models;
 using Newtonsoft.Json;
 
-namespace RestAPI.Dto
+namespace RestAPI.InternalDto
 {
-    public class TaskDto : ITask
+    internal class TaskDto : ITask
     {
         [JsonProperty("name")] public string Name { get; set; } = string.Empty;
         [JsonProperty("desc")] public string Description { get; set; } = string.Empty;

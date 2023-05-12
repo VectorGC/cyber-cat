@@ -1,9 +1,8 @@
 using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Models;
 
-namespace RestAPI
+namespace RestAPI.RestAPIImplements
 {
     public class RestAPI : IRestAPI
     {
@@ -12,7 +11,12 @@ namespace RestAPI
             throw new NotImplementedException();
         }
 
-        public Task<ITasks> GetTasks(IProgress<float> progress = null)
+        public UniTask<ITasks> GetTasks(IProgress<float> progress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token)
         {
             throw new NotImplementedException();
         }

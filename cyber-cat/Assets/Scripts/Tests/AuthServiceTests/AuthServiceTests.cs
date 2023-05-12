@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using AuthService;
 using NUnit.Framework;
+using RestAPI;
 using Services.AuthService;
+using Tests.InternalMockModels;
 
 namespace Tests.AuthServiceTests
 {
@@ -16,6 +18,15 @@ namespace Tests.AuthServiceTests
             var token = await _service.Authenticate(login, password);
 
             Assert.IsNotEmpty(token.Value);
+        }
+
+        [Test]
+        public async Task ShouldAuthorizeAsPlayer_WhenCorrectToken([Values("correct_token")] string token)
+        {
+            var player = await _service.AuthorizeAsPlayer(new MockToken(token));
+
+            Assert.IsNotEmpty(player.Name);
+            Assert.AreEqual(token, player.Token.Value);
         }
     }
 }

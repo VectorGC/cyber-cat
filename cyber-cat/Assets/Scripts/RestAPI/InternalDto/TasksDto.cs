@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using Models;
 using Newtonsoft.Json;
 
-namespace RestAPI.Dto
+namespace RestAPI.InternalDto
 {
     [JsonObject]
-    public class TasksDto : ITasks
+    internal class TasksDto : ITasks
     {
         [JsonProperty("tasks")] public Dictionary<string, TaskDto> Tasks { get; set; } = new Dictionary<string, TaskDto>();
 

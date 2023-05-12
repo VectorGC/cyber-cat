@@ -1,5 +1,8 @@
-public enum ServerEnvironment
+namespace RestAPI
 {
-    Serverless = 0,
-    LocalServer
+    public enum ServerEnvironment
+    {
+        Serverless = 0,
+        LocalServer
+    }
 }

@@ -1,29 +1,32 @@
 using System;
-using RestAPI;
+using RestAPI.RestAPIImplements;
 using UnityEngine;
 
-public static class RestAPIFacade
+namespace RestAPI
 {
-    public static ServerEnvironment ServerEnvironment
+    public static class RestAPIFacade
     {
-        get => (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
-        set
+        public static ServerEnvironment ServerEnvironment
         {
-            PlayerPrefs.SetInt("server_environment", (int) value);
-            PlayerPrefs.Save();
+            get => (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
+            set
+            {
+                PlayerPrefs.SetInt("server_environment", (int) value);
+                PlayerPrefs.Save();
+            }
         }
-    }
 
-    public static IRestAPI Create()
-    {
-        switch (ServerEnvironment)
+        public static IRestAPI Create()
         {
-            case ServerEnvironment.Serverless:
-                return new ServerlessRestAPI();
-            case ServerEnvironment.LocalServer:
-                return new RestAPI.RestAPI();
-            default:
-                throw new ArgumentOutOfRangeException();
+            switch (ServerEnvironment)
+            {
+                case ServerEnvironment.Serverless:
+                    return new ServerlessRestAPI();
+                case ServerEnvironment.LocalServer:
+                    return new RestAPIImplements.RestAPI();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

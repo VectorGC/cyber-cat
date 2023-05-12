@@ -1,6 +1,7 @@
 using System;
 using AuthService;
 using Cysharp.Threading.Tasks;
+using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,10 +18,12 @@ namespace Controllers
         [SerializeField] private Button _signIn;
 
         private IAuthService _authService;
+        private ILocalStorageService _localStorage;
 
         protected override void Start()
         {
             _authService = GameManager.Instance.AuthService;
+            _localStorage = GameManager.Instance.LocalStorage;
         }
 
         protected override void OnEnable()
@@ -35,12 +38,14 @@ namespace Controllers
 
         private async void SignIn()
         {
-            ITokenSession token;
             try
             {
                 var login = _loginTextField.text;
                 var password = _passwordTextField.text;
-                token = await _authService.Authenticate(login, password);
+                var token = await _authService.Authenticate(login, password);
+                var player = await _authService.AuthorizeAsPlayer(token);
+
+                _localStorage.Player = player;
             }
             catch (Exception e)
             {
@@ -48,9 +53,6 @@ namespace Controllers
                 _errorMessage.text = e.ToString();
                 return;
             }
-
-            PlayerPrefs.SetString("token", token.Value);
-            PlayerPrefs.Save();
 
             SceneManager.LoadSceneAsync("MainMenu").ToUniTask().Forget();
         }

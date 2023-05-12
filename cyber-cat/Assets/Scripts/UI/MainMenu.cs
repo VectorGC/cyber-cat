@@ -1,24 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class MainMenu : MonoBehaviour
+namespace UI
 {
-    public TextMeshPro_TextShared greetingstext;
-    public void Start()
+    public class MainMenu : UIBehaviour
     {
-        greetingstext.text = ("������, <color=green>" + PlayerPrefs.GetString("name") + "</color>!");
-    }
-    public void Run()
-    {
-        SceneManager.LoadScene("GlobalMap");
-    }
+        [SerializeField] private TextMeshPro_TextShared _greetingsText;
 
-    public void Exit()
-    {
-        Debug.Log("Exit");
-        Application.Quit();
+        protected override void Start()
+        {
+            var playerName = PlayerPrefs.GetString("player_name");
+            _greetingsText.text = $"Доступ получен: <color=green>{playerName}";
+        }
     }
 }
