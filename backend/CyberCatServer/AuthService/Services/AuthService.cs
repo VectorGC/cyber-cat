@@ -7,12 +7,12 @@ using Shared.Services;
 
 namespace AuthService.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthService : IAuthService
 {
     private readonly IAuthUserRepository _authUserRepository;
     private readonly ITokenService _tokenService;
 
-    public AuthenticationService(IAuthUserRepository authUserRepository, ITokenService tokenService)
+    public AuthService(IAuthUserRepository authUserRepository, ITokenService tokenService)
     {
         _authUserRepository = authUserRepository;
         _tokenService = tokenService;

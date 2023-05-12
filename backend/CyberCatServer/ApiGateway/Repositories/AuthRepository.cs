@@ -17,7 +17,7 @@ public class AuthUserRepositoryMongoDb : IAuthUserRepository
 
     public AuthUserRepositoryMongoDb(IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+        var connectionString = configuration.GetConnectionString("MongoDatabase");
         var client = new MongoClient(connectionString);
         var cyberCatDb = client.GetDatabase("CyberCat");
         _userCollection = cyberCatDb.GetCollection<UserDbModel>("Users");

@@ -11,7 +11,7 @@ namespace Controllers
 {
     public class AuthController : UIBehaviour
     {
-        [SerializeField] private TMP_InputField _loginTextField;
+        [SerializeField] private TMP_InputField _emailTextField;
         [SerializeField] private TMP_InputField _passwordTextField;
         [SerializeField] private TMP_Text _errorMessage;
         [SerializeField] private Button _signIn;
@@ -39,9 +39,9 @@ namespace Controllers
         {
             try
             {
-                var login = _loginTextField.text;
+                var email = _emailTextField.text;
                 var password = _passwordTextField.text;
-                var token = await _authService.Authenticate(login, password);
+                var token = await _authService.Authenticate(email, password);
                 var player = await _authService.AuthorizeAsPlayer(token);
 
                 _localStorage.Player = player;

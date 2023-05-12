@@ -16,7 +16,7 @@ public class SolutionRepository : ISolutionRepository
 
     public SolutionRepository(IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Database");
+        var connectionString = configuration.GetConnectionString("MongoDatabase");
         var client = new MongoClient(connectionString);
         var cyberCatDb = client.GetDatabase("CyberCat");
         _solutionCollection = cyberCatDb.GetCollection<SolutionCodeDbModel>("Solutions");

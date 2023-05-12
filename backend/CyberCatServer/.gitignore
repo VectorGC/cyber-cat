@@ -4,6 +4,3 @@
 
 # Dev certificates folder
 **/%USERPROFILE%
-
-# Ignore auto-generated files
-**/launchSettings.json

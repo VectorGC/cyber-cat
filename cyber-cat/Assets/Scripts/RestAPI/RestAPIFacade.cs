@@ -23,7 +23,9 @@ namespace RestAPI
                 case ServerEnvironment.Serverless:
                     return new ServerlessRestAPI();
                 case ServerEnvironment.LocalServer:
-                    return new RestAPIImplements.RestAPI();
+                    return new RestAPIImplements.RestAPI("https://localhost:5000");
+                case ServerEnvironment.Production:
+                    return new RestAPIImplements.RestAPI("https://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }

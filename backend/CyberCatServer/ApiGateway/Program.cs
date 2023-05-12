@@ -1,28 +1,61 @@
-using ApiGateway;
+using ApiGateway.Extensions;
+using ApiGateway.Repositories;
+using ApiGateway.Services;
+using ApiGateway.Services.BackgroundServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Shared.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSwagger();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.CreateTokenParameters(); });
 
-builder.Services.AddUserServices();
-builder.Services.AddAuthUserServices();
-builder.Services.AddTaskServices();
-builder.Services.AddSolutionServices();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(option => { option.AddJwtSecurityDefinition(); });
+
+builder.Services.AddScoped<IUserRepository, UserRepositoryMongoDb>();
+builder.Services.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
+
+builder.Services.AddScoped<IAuthUserService, AuthUserService>();
+builder.Services.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
+
+builder.Services.AddScoped<ITaskRepository, TasksHierarchyRepository>();
+builder.Services.AddScoped<ITaskRepository, TasksFlatRepository>();
+builder.Services.AddScoped<ITaskService, TaskService>();
+
+builder.Services.AddScoped<ISolutionService, SolutionService>();
+builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
 
 var app = builder.Build();
 
-// Если мы в режиме разработки. В Release это работать не будет. Пока делаем поведение одинаковым везде.
-if (app.Environment.IsDevelopment() || true)
+// Если мы в режиме разработки (ASPNETCORE_ENVIRONMENT = Development).
+if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerSwashbuckle();
-    app.FallbackToSwaggerPage();
+    // Показываем API спецификацию через swagger.
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.OAuthClientId("swagger-ui");
+        //c.OAuthClientSecret("swagger-ui-secret");
+        //c.OAuthRealm("swagger-ui-realm");
+        //c.OAuthAppName("Swagger UI");
+    });
+
+    app.MapFallback((context) =>
+        {
+            Console.WriteLine(context.Request.QueryString.ToString());
+            context.Response.Redirect("/swagger");
+            return Task.CompletedTask;
+        }
+    );
 
     // Подробные ошибки в режиме разработки.
     app.UseDeveloperExceptionPage();
 }
 
-// Размечаем методы контроллеров как ендпоинты.
+// Логирование Http запросов.
+app.UseHttpLogging();
+
+// Используем методы контроллеров как ендпоинты.
 app.MapControllers();
 
 app.Run();

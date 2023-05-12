@@ -14,9 +14,9 @@ namespace Services.AuthService
             _restAPI = restAPI;
         }
 
-        public async UniTask<ITokenSession> Authenticate(string login, string password)
+        public async UniTask<ITokenSession> Authenticate(string email, string password)
         {
-            return await _restAPI.Authenticate(login, password);
+            return await _restAPI.Authenticate(email, password);
         }
 
         public async UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token)

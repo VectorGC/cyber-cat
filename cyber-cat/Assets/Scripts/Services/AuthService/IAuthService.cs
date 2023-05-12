@@ -5,7 +5,7 @@ namespace AuthService
 {
     public interface IAuthService
     {
-        UniTask<ITokenSession> Authenticate(string login, string password);
+        UniTask<ITokenSession> Authenticate(string email, string password);
         UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token);
     }
 }

@@ -41,7 +41,7 @@ public class AuthServiceTests
     public async Task ShouldGetToken_WhenPassValidUserCredentials()
     {
         using var channel = _factory.CreateGrpcChannel();
-        var authenticationService = channel.CreateGrpcService<IAuthenticationService>();
+        var authenticationService = channel.CreateGrpcService<IAuthService>();
 
         var args = new GetAccessTokenArgsDto
         {
