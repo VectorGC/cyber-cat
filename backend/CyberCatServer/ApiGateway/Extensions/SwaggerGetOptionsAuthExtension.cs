@@ -7,22 +7,17 @@ namespace ApiGateway.Extensions;
 
 public static class SwaggerGetOptionsAuthExtensions
 {
-    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options)
+    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options, string httpHostUrl)
     {
-        /*
-        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+        if (string.IsNullOrEmpty(httpHostUrl))
         {
-            In = ParameterLocation.Header,
-            Description = "Please enter a valid token",
-            Name = "Authorization",
-            Type = SecuritySchemeType.Http,
-            BearerFormat = JwtConstants.TokenType,
-            Scheme = JwtBearerDefaults.AuthenticationScheme
-        });*/
+            throw new ArgumentNullException(nameof(httpHostUrl));
+        }
+
         // Делаем в сваггере удобный виджет, чтобы авторизоваться по логину и паролю, а не по JWT токену.
         // https://stackoverflow.com/questions/38784537/use-jwt-authorization-bearer-in-swagger-in-asp-net-core/47709074#47709074
         // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1257
-        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme()
+        options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.OAuth2,
@@ -32,7 +27,7 @@ public static class SwaggerGetOptionsAuthExtensions
             {
                 Password = new OpenApiOAuthFlow
                 {
-                    TokenUrl = new Uri("auth/login", UriKind.Relative)
+                    TokenUrl = new Uri($"{httpHostUrl}/Auth/login")
                 }
             }
         });
@@ -44,9 +39,8 @@ public static class SwaggerGetOptionsAuthExtensions
                 {
                     Reference = new OpenApiReference
                     {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = JwtBearerDefaults.AuthenticationScheme
-                        //Id = "oauth2"
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
                     }
                 },
                 new string[] { }

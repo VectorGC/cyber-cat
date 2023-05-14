@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Models;
 using Newtonsoft.Json;
 
-namespace RestAPI.InternalDto
+namespace ServerAPI.InternalDto
 {
     [JsonObject]
     internal class TasksDto : ITasks

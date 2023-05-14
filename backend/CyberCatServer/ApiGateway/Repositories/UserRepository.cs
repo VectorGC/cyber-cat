@@ -1,6 +1,7 @@
 using ApiGateway.Models;
 using ApiGateway.Repositories.Migrations;
 using ApiGateway.Repositories.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Shared.Exceptions;
 
@@ -20,10 +21,9 @@ public class UserRepositoryMongoDb : IUserRepository
 {
     private readonly IMongoCollection<UserDbModel> _userCollection;
 
-    public UserRepositoryMongoDb(IConfiguration configuration)
+    public UserRepositoryMongoDb(IOptions<ApiGatewayAppSettings> appSettings)
     {
-        var connectionString = configuration.GetConnectionString("MongoDatabase");
-        var client = new MongoClient(connectionString);
+        var client = new MongoClient(appSettings.Value.ConnectionStrings.MongoDatabase);
         var cyberCatDb = client.GetDatabase("CyberCat");
         _userCollection = cyberCatDb.GetCollection<UserDbModel>("Users");
     }

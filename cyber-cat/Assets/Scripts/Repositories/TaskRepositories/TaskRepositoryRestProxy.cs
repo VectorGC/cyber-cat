@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Models;
-using RestAPI;
+using ServerAPI;
 
 namespace Repositories.TaskRepositories
 {
@@ -10,16 +10,16 @@ namespace Repositories.TaskRepositories
     /// </summary>
     public class TaskRepositoryRestProxy : ITaskRepository
     {
-        private readonly IRestAPI restAPI;
+        private readonly IServerAPI serverAPI;
 
-        public TaskRepositoryRestProxy(IRestAPI restAPI)
+        public TaskRepositoryRestProxy(IServerAPI serverAPI)
         {
-            this.restAPI = restAPI;
+            this.serverAPI = serverAPI;
         }
 
         public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
-            var tasks = await restAPI.GetTasks(progress);
+            var tasks = await serverAPI.GetTasks(progress);
             return tasks[taskId];
         }
     }

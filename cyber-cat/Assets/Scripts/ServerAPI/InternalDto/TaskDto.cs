@@ -1,7 +1,7 @@
 using Models;
 using Newtonsoft.Json;
 
-namespace RestAPI.InternalDto
+namespace ServerAPI.InternalDto
 {
     internal class TaskDto : ITask
     {

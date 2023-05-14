@@ -1,27 +1,27 @@
 using AuthService;
 using Cysharp.Threading.Tasks;
 using Models;
-using RestAPI;
+using ServerAPI;
 
 namespace Services.AuthService
 {
     public class AuthServiceRestProxy : IAuthService
     {
-        private readonly IRestAPI _restAPI;
+        private readonly IServerAPI serverAPI;
 
-        public AuthServiceRestProxy(IRestAPI restAPI)
+        public AuthServiceRestProxy(IServerAPI serverAPI)
         {
-            _restAPI = restAPI;
+            this.serverAPI = serverAPI;
         }
 
         public async UniTask<ITokenSession> Authenticate(string email, string password)
         {
-            return await _restAPI.Authenticate(email, password);
+            return await serverAPI.Authenticate(email, password);
         }
 
-        public async UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token)
+        public async UniTask<IPlayer> AuthorizePlayer(ITokenSession token)
         {
-            return await _restAPI.AuthorizeAsPlayer(token);
+            return await serverAPI.AuthorizePlayer(token);
         }
     }
 }

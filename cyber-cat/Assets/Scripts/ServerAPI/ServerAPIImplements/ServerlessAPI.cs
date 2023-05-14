@@ -1,17 +1,17 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Models;
-using RestAPI.InternalDto;
+using ServerAPI.InternalDto;
 
-namespace RestAPI.RestAPIImplements
+namespace ServerAPI.ServerAPIImplements
 {
-    public class ServerlessRestAPI : IRestAPI
+    public class ServerlessAPI : IServerAPI
     {
         public UniTask<ITokenSession> Authenticate(string login, string password, IProgress<float> progress = null)
         {
             var token = new TokenSessionDto
             {
-                Token = "serverless"
+                AccessToken = "serverless"
             };
 
             return UniTask.FromResult<ITokenSession>(token);
@@ -22,7 +22,7 @@ namespace RestAPI.RestAPIImplements
             throw new NotImplementedException();
         }
 
-        public UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token)
+        public UniTask<IPlayer> AuthorizePlayer(ITokenSession token, IProgress<float> progress = null)
         {
             var player = new PlayerDto
             {

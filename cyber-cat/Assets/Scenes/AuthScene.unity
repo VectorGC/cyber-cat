@@ -721,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4427872fe8a8485799e436f35649d4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loginTextField: {fileID: 436041012}
+  _emailTextField: {fileID: 436041012}
   _passwordTextField: {fileID: 1386024129}
   _errorMessage: {fileID: 7299432128064029981}
   _signIn: {fileID: 1880875281}
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 31.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

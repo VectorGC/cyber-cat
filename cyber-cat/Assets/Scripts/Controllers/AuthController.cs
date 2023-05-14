@@ -42,14 +42,14 @@ namespace Controllers
                 var email = _emailTextField.text;
                 var password = _passwordTextField.text;
                 var token = await _authService.Authenticate(email, password);
-                var player = await _authService.AuthorizeAsPlayer(token);
+                var player = await _authService.AuthorizePlayer(token);
 
                 _localStorage.Player = player;
             }
             catch (Exception e)
             {
                 Debug.LogError(e);
-                _errorMessage.text = e.ToString();
+                _errorMessage.text = e.Message;
                 return;
             }
 

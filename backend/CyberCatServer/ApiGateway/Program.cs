@@ -1,3 +1,4 @@
+using ApiGateway;
 using ApiGateway.Extensions;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
@@ -7,10 +8,13 @@ using Shared.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Используем строготипизированный класс, чтобы считать appsettings.json и удобно с ним работать.
+builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.CreateTokenParameters(); });
 
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(option => { option.AddJwtSecurityDefinition(); });
+builder.Services.AddSwaggerGen(option => { option.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
 
 builder.Services.AddScoped<IUserRepository, UserRepositoryMongoDb>();
 builder.Services.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
@@ -32,17 +36,10 @@ if (app.Environment.IsDevelopment())
 {
     // Показываем API спецификацию через swagger.
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.OAuthClientId("swagger-ui");
-        //c.OAuthClientSecret("swagger-ui-secret");
-        //c.OAuthRealm("swagger-ui-realm");
-        //c.OAuthAppName("Swagger UI");
-    });
+    app.UseSwaggerUI();
 
     app.MapFallback((context) =>
         {
-            Console.WriteLine(context.Request.QueryString.ToString());
             context.Response.Redirect("/swagger");
             return Task.CompletedTask;
         }

@@ -6,6 +6,9 @@ namespace Services
 {
     public class PlayerPrefsStorage : ILocalStorageService
     {
+        private const string PlayerNamePrefsKey = "player_name";
+        private const string TokenPrefsKey = "token";
+
         public IPlayer Player
         {
             get => GetPlayer();
@@ -20,8 +23,8 @@ namespace Services
 
         private IPlayer GetPlayer()
         {
-            var playerName = PlayerPrefs.GetString("player_name");
-            var tokenValue = PlayerPrefs.GetString("token");
+            var playerName = PlayerPrefs.GetString(PlayerNamePrefsKey);
+            var tokenValue = PlayerPrefs.GetString(TokenPrefsKey);
 
             var token = new TokenSession(tokenValue);
 
@@ -33,8 +36,8 @@ namespace Services
             var playerName = player.Name;
             var tokenValue = player.Token.Value;
 
-            PlayerPrefs.SetString("player_name", playerName);
-            PlayerPrefs.SetString("token", tokenValue);
+            PlayerPrefs.SetString(PlayerNamePrefsKey, playerName);
+            PlayerPrefs.SetString(TokenPrefsKey, tokenValue);
 
             PlayerPrefs.Save();
         }

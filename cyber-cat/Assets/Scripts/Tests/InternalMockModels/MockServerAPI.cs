@@ -1,21 +1,26 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Models;
-using RestAPI;
+using ServerAPI;
 
-internal class MockRestApi : IRestAPI
+internal class MockServerAPI : IServerAPI
 {
     public UniTask<ITokenSession> Authenticate(string login, string password, IProgress<float> progress = null)
     {
         throw new NotImplementedException();
     }
 
-    UniTask<ITasks> IRestAPI.GetTasks(IProgress<float> progress)
+    UniTask<ITasks> IServerAPI.GetTasks(IProgress<float> progress)
     {
         throw new NotImplementedException();
     }
 
-    public UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token)
+    public UniTask<IPlayer> AuthorizePlayer(ITokenSession token)
+    {
+        throw new NotImplementedException();
+    }
+
+    public UniTask<IPlayer> AuthorizePlayer(ITokenSession token, IProgress<float> progress = null)
     {
         throw new NotImplementedException();
     }

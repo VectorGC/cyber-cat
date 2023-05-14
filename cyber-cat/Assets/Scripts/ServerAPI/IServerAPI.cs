@@ -2,12 +2,12 @@ using System;
 using Cysharp.Threading.Tasks;
 using Models;
 
-namespace RestAPI
+namespace ServerAPI
 {
-    public interface IRestAPI
+    public interface IServerAPI
     {
         UniTask<ITokenSession> Authenticate(string email, string password, IProgress<float> progress = null);
-        UniTask<IPlayer> AuthorizeAsPlayer(ITokenSession token);
+        UniTask<IPlayer> AuthorizePlayer(ITokenSession token, IProgress<float> progress = null);
         UniTask<ITasks> GetTasks(IProgress<float> progress = null);
     }
 }

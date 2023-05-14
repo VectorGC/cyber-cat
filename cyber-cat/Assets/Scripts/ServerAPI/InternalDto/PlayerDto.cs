@@ -1,6 +1,6 @@
 using Models;
 
-namespace RestAPI.InternalDto
+namespace ServerAPI.InternalDto
 {
     internal class PlayerDto : IPlayer
     {

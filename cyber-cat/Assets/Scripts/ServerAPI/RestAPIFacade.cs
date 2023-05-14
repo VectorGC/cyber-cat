@@ -1,8 +1,8 @@
 using System;
-using RestAPI.RestAPIImplements;
+using ServerAPI.ServerAPIImplements;
 using UnityEngine;
 
-namespace RestAPI
+namespace ServerAPI
 {
     public static class RestAPIFacade
     {
@@ -16,16 +16,20 @@ namespace RestAPI
             }
         }
 
-        public static IRestAPI Create()
+        public static IServerAPI Create()
         {
             switch (ServerEnvironment)
             {
                 case ServerEnvironment.Serverless:
-                    return new ServerlessRestAPI();
+                    return new ServerlessAPI();
                 case ServerEnvironment.LocalServer:
-                    return new RestAPIImplements.RestAPI("https://localhost:5000");
+                    // Send to Api Gateway local instance directly.
+                    return new ServerAPIImplements.ServerAPI("http://localhost:5000");
+                case ServerEnvironment.DockerLocalServer:
+                    // Send to Nginx in local docker engine.
+                    return new ServerAPIImplements.ServerAPI("http://localhost");
                 case ServerEnvironment.Production:
-                    return new RestAPIImplements.RestAPI("https://server.cyber-cat.pro");
+                    return new ServerAPIImplements.ServerAPI("https://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }
