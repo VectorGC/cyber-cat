@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C817C1D8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServiceTests", "AuthServiceTests\AuthServiceTests.csproj", "{D6FC7798-0878-454A-8DAD-8C416750FC4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServiceTests", "AuthServiceTests\AuthServiceTests.csproj", "{DEBDC025-98F9-470A-A2CC-D13F496C0532}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServiceTests", "AuthServiceTests\AuthServiceTests.csproj", "{59E9D5A0-FFC1-4179-BEE0-9149C148EF1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,10 +66,10 @@ Global
 		{D6FC7798-0878-454A-8DAD-8C416750FC4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6FC7798-0878-454A-8DAD-8C416750FC4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6FC7798-0878-454A-8DAD-8C416750FC4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEBDC025-98F9-470A-A2CC-D13F496C0532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEBDC025-98F9-470A-A2CC-D13F496C0532}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEBDC025-98F9-470A-A2CC-D13F496C0532}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEBDC025-98F9-470A-A2CC-D13F496C0532}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E9D5A0-FFC1-4179-BEE0-9149C148EF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E9D5A0-FFC1-4179-BEE0-9149C148EF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E9D5A0-FFC1-4179-BEE0-9149C148EF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E9D5A0-FFC1-4179-BEE0-9149C148EF1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
