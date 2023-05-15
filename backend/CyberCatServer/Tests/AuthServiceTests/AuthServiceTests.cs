@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using AuthService;
 using AuthService.Models;
 using AuthService.Repositories;
 using AuthServiceTests.Mocks;

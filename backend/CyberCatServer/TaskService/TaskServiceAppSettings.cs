@@ -1,3 +1,5 @@
+namespace TaskService;
+
 public class TaskServiceAppSettings
 {
     public class MongoTaskRepositorySettings

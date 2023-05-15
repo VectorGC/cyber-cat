@@ -1,3 +1,4 @@
+using AuthService;
 using AuthService.Models;
 using AuthService.Repositories;
 using AuthServiceTests.Mocks;

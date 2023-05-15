@@ -1,5 +1,3 @@
-using MongoDB.Bson;
-
 namespace ApiGateway.Models;
 
 public readonly struct UserId : IEquatable<UserId>

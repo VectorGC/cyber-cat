@@ -3,9 +3,7 @@ using ApiGateway.Extensions;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.ClientFactory;
-using ProtoBuf.Grpc.Server;
 using Shared.Configurations;
 using Shared.Services;
 
@@ -59,6 +57,9 @@ app.MapControllers();
 app.Run();
 
 // Чтобы подцепить сюда тесты.
-public partial class Program
+namespace ApiGateway
 {
+    public partial class Program
+    {
+    }
 }

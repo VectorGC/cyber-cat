@@ -24,6 +24,9 @@ app.MapGrpcService<AuthService.Services.AuthGrpcService>();
 
 app.Run();
 
-public partial class Program
+namespace AuthService
 {
+    public partial class Program
+    {
+    }
 }

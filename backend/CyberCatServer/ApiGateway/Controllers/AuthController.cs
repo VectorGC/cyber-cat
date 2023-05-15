@@ -1,10 +1,7 @@
 using ApiGateway.Dto;
-using Grpc.Net.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using ProtoBuf.Grpc.Client;
 using Shared.Dto;
 using Shared.Services;
 
