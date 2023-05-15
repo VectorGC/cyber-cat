@@ -1,0 +1,6 @@
+{
+  "tutorial": {
+    "name": "Hello world!",
+    "description": "Вывести строку: Hello world!"
+  }
+}

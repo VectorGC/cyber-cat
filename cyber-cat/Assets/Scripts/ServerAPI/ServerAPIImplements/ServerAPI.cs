@@ -54,7 +54,7 @@ namespace ServerAPI.ServerAPIImplements
             };
         }
 
-        public UniTask<ITasks> GetTasks(IProgress<float> progress = null)
+        public UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
             throw new NotImplementedException();
         }

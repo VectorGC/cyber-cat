@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ServerAPI.InternalDto
 {
     [JsonObject]
-    internal class TasksDto : ITasks
+    internal class TasksDto
     {
         [JsonProperty("tasks")] public Dictionary<string, TaskDto> Tasks { get; set; } = new Dictionary<string, TaskDto>();
 

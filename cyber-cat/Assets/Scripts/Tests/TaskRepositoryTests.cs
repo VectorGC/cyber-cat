@@ -1,26 +1,22 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Repositories.TaskRepositories;
+using ServerAPI;
 
-[TestFixture]
-public class TaskRepositoryTests
+namespace Tests
 {
-    private ITaskRepository _taskRepository;
-
-    [SetUp]
-    public void Setup()
+    [TestFixture]
+    public class TaskRepositoryTests
     {
-        /*
-        _taskRepository = new TaskRepositoryRestProxy(new MockRestApi());
-        */
-    }
+        private readonly ITaskRepository _taskRepository = new TaskRepositoryProxy(RestAPIFacade.Create());
 
-    [Test]
-    public async Task HasTasks_WhenRequestTasks([Values("0")] string taskId)
-    {
-        var task = await _taskRepository.GetTask(taskId);
-        
-        Assert.AreEqual("stub_task", task.Name);
-        Assert.AreEqual(string.Empty, task.Description);
+        [Test]
+        public async Task HasTutorialTasks_InRepository([Values("tutorial")] string taskId)
+        {
+            var task = await _taskRepository.GetTask(taskId);
+
+            Assert.AreEqual("Hello world!", task.Name);
+            Assert.IsNotEmpty(task.Description);
+        }
     }
 }

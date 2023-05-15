@@ -8,19 +8,19 @@ namespace Repositories.TaskRepositories
     /// <summary>
     /// Хранилище задач. Под капотом общается с сервером и никто снаружи об это не знает.
     /// </summary>
-    public class TaskRepositoryRestProxy : ITaskRepository
+    public class TaskRepositoryProxy : ITaskRepository
     {
         private readonly IServerAPI serverAPI;
 
-        public TaskRepositoryRestProxy(IServerAPI serverAPI)
+        public TaskRepositoryProxy(IServerAPI serverAPI)
         {
             this.serverAPI = serverAPI;
         }
 
         public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
-            var tasks = await serverAPI.GetTasks(progress);
-            return tasks[taskId];
+            var task = await serverAPI.GetTask(taskId, progress);
+            return task;
         }
     }
 }

@@ -6,16 +6,9 @@ using Services.AuthService;
 
 public class GameManager
 {
-    public readonly ITaskRepository TaskRepository = new TaskRepositoryRestProxy(RestAPIFacade.Create());
-    public readonly IAuthService AuthService = new AuthServiceRestProxy(RestAPIFacade.Create());
+    public readonly ITaskRepository TaskRepository = new TaskRepositoryProxy(RestAPIFacade.Create());
+    public readonly IAuthService AuthService = new AuthServiceProxy(RestAPIFacade.Create());
     public readonly ILocalStorageService LocalStorage = new PlayerPrefsStorage();
-
-    // TODO: Удали это, после рефаторинга айдишников задач.
-    public static string GetTaskIdFromUnitAndTask(string unit, string task)
-    {
-        // Конвертирование составного айдишника в один какой-то.
-        return $"{unit}{task}";
-    }
 
     public static GameManager Instance
     {

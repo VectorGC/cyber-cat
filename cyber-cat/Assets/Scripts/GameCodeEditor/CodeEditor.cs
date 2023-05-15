@@ -51,16 +51,15 @@ public class CodeEditor : UIBehaviour
 
     protected override void OnDestroy()
     {
-        throw new NotImplementedException("token");
-        var message = new NeedUpdateTaskData(_task.Id, string.Empty);
+        var token = PlayerPrefs.GetString("token");
+        var message = new NeedUpdateTaskData(_task.Id, token);
         AsyncMessageBroker.Default.PublishAsync(message);
     }
 
     private static async UniTask SetTaskInEditor(ITaskData task)
     {
-        var token = PlayerPrefsInfo.GetToken();
-        throw new NotImplementedException("token");
-        var lastSavedCode = await RestAPI.Instance.GetLastSavedCode("123", task.Id);
+        var token = PlayerPrefs.GetString("token");
+        var lastSavedCode = await RestAPI.Instance.GetLastSavedCode(token, task.Id);
 
         var message = new SetTaskInEditor(task, lastSavedCode);
         MessageBroker.Default.Publish(message);

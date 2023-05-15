@@ -1,4 +1,3 @@
-using RestAPIWrapper;
 using System;
 using System.Collections.Generic;
 using TaskUnits;
@@ -6,7 +5,7 @@ using UnityEngine;
 
 public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
 {
-    [SerializeField] private TaskUnitFolder taskUnitFolder = new TaskUnitFolder("unit-1", "task-1");
+    [SerializeField] private TaskUnitFolder taskUnitFolder;
 
     [SerializeField] private List<MonoBehaviourObserver<ITaskData>> taskDataObservers;
 
@@ -14,10 +13,7 @@ public class TaskUnitFromFolderView : MonoBehaviour, IObservable<ITaskData>
 
     private async void Start()
     {
-        var token = PlayerPrefsInfo.GetToken();
-
-        throw new NotImplementedException("token");
-        var task = await taskUnitFolder.GetTask("123");
+        var task = await taskUnitFolder.GetTask();
 
         _observableTask = task.ToObservable();
         foreach (var observer in taskDataObservers)

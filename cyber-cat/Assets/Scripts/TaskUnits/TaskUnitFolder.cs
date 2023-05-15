@@ -1,8 +1,5 @@
 using System;
-using System.Net;
 using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
-using Newtonsoft.Json.Linq;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
 
@@ -11,49 +8,17 @@ namespace TaskUnits
     [Serializable]
     public struct TaskUnitFolder
     {
-        [SerializeField] private string _unit;
         [SerializeField] private string _task;
 
-        public TaskUnitFolder(string unit, string task)
+        public TaskUnitFolder(string task)
         {
-            _unit = unit;
             _task = task;
         }
 
-        public readonly async UniTask<ITaskData> GetTask(string token, IProgress<float> progress = null)
+        public readonly async UniTask<ITaskData> GetTask(IProgress<float> progress = null)
         {
-            if (FeatureFlags.UseServicesArchitecture)
-            {
-                var taskId = GameManager.GetTaskIdFromUnitAndTask(_unit, _task);
-                var task = await GameManager.Instance.TaskRepository.GetTask(taskId);
-                return TaskData.ConvertFrom(task);
-            }
-            else
-            {
-                var folders = await TaskFacade.GetTaskFolders(token, progress);
-
-                if (folders.GetValue("error") != null)
-                {
-                    var errorCode = folders.GetValue("error").ToString();
-                    var localizedError = RestAPIWrapper.WebErrorLocalize.Localize(errorCode);
-
-                    throw new WebException($"Пожалуйста, сообщите организатору ошибку:\n{localizedError}");
-                }
-
-                var taskJToken = GetTaskJToken(folders);
-                var task = taskJToken?.ToObject<TaskData>();
-
-                return (ITaskData) task ?? new EmptyTaskData();
-            }
+            var task = await GameManager.Instance.TaskRepository.GetTask(_task, progress);
+            return TaskData.ConvertFrom(task);
         }
-
-        [CanBeNull]
-        private readonly JToken GetTaskJToken(JObject jObject)
-        {
-            var taskJToken = jObject.SelectToken($"sample_tests.units.{_unit}.tasks.{_task}");
-            return taskJToken;
-        }
-
-        public override string ToString() => $"Unit: {_unit}, Task: {_task}";
     }
 }

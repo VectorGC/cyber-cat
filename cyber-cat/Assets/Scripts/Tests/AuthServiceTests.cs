@@ -10,7 +10,7 @@ namespace Tests
     [TestFixture]
     public class AuthServiceTests
     {
-        private readonly IAuthService _service = new AuthServiceRestProxy(RestAPIFacade.Create());
+        private readonly IAuthService _service = new AuthServiceProxy(RestAPIFacade.Create());
 
         [Test]
         public async Task ShouldTokenIsNotEmpty_WhenCorrectCredentials([Values("test@test.com")] string login, [Values("test")] string password)

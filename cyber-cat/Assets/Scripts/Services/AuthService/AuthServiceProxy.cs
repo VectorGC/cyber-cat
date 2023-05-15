@@ -5,11 +5,11 @@ using ServerAPI;
 
 namespace Services.AuthService
 {
-    public class AuthServiceRestProxy : IAuthService
+    public class AuthServiceProxy : IAuthService
     {
         private readonly IServerAPI serverAPI;
 
-        public AuthServiceRestProxy(IServerAPI serverAPI)
+        public AuthServiceProxy(IServerAPI serverAPI)
         {
             this.serverAPI = serverAPI;
         }
