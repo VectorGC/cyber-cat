@@ -1,4 +1,4 @@
-namespace ApiGateway.Models;
+namespace Shared.Models;
 
 public interface ITask
 {

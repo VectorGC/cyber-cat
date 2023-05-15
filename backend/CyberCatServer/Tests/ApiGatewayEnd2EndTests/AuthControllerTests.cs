@@ -15,7 +15,7 @@ public class AuthControllerTests
     }
 
     [Test]
-    public async Task Login()
+    public async Task ShouldLogin_WhenPassValidCredentials()
     {
         var token = await AuthHttpClientExtensions.GetToken(_client, "karo@test.ru", "12qw!@QW");
 
@@ -23,7 +23,7 @@ public class AuthControllerTests
     }
 
     [Test]
-    public async Task AuthorizePlayer()
+    public async Task AuthorizePlayer_WhenPassValidCredentials()
     {
         await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
 

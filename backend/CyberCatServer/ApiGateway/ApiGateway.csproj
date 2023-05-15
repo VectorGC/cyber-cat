@@ -14,8 +14,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Grpc.Net.Client" Version="2.52.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
       <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+      <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,6 +25,10 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="ApiGateway" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
 </Project>

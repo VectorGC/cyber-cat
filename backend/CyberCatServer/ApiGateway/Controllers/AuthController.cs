@@ -15,24 +15,18 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AuthController : ControllerBase
 {
-    private readonly string _authServiceGrpcEndpoint;
+    private readonly IAuthGrpcService _authService;
 
-    public AuthController(IOptions<ApiGatewayAppSettings> appSettings)
+    public AuthController(IAuthGrpcService authService)
     {
-        _authServiceGrpcEndpoint = appSettings.Value.ConnectionStrings.AuthServiceGrpcEndpoint;
-        if (string.IsNullOrEmpty(_authServiceGrpcEndpoint))
-        {
-            throw new ArgumentNullException(nameof(_authServiceGrpcEndpoint));
-        }
+        _authService = authService;
     }
 
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<TokenResponseDto>> Login(string username, string password)
     {
-        using var channel = GrpcChannel.ForAddress(_authServiceGrpcEndpoint);
-        var service = channel.CreateGrpcService<IAuthService>();
-        var access = await service.GetAccessToken(new GetAccessTokenArgsDto
+        var response = await _authService.GetAccessToken(new GetAccessTokenArgsDto
         {
             Email = username,
             Password = password
@@ -40,7 +34,7 @@ public class AuthController : ControllerBase
 
         return new TokenResponseDto
         {
-            AccessToken = access.Value
+            AccessToken = response.AccessToken
         };
     }
 

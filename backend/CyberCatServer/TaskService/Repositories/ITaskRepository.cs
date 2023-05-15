@@ -1,10 +1,9 @@
-﻿using TaskService.Models;
+﻿using Shared.Models;
 
 namespace TaskService.Repositories
 {
     public interface ITaskRepository
     {
-        Task Add(ProgTaskDbModel task);
-        Task<ProgTaskDbModel> GetTask(int id);
+        Task<ITask> GetTask(string taskId);
     }
 }

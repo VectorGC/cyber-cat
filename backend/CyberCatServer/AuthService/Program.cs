@@ -13,33 +13,14 @@ builder.Services.AddIdentity<User, Role>().AddMongoDbStores<User, Role, Guid>(ap
 
 #endregion
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthUserRepository, AuthUserManagerRepository>();
 
-builder.Services.AddCodeFirstGrpc(options =>
-{
-    options.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.Optimal;
-    options.EnableDetailedErrors = true;
-});
+builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
 
-    app.UseDeveloperExceptionPage();
-}
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapGrpcService<AuthService.Services.AuthService>();
+app.MapGrpcService<AuthService.Services.AuthGrpcService>();
 
 app.Run();
 

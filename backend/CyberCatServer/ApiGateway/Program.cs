@@ -3,7 +3,11 @@ using ApiGateway.Extensions;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using ProtoBuf.Grpc.ClientFactory;
+using ProtoBuf.Grpc.Server;
 using Shared.Configurations;
+using Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +18,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddControllers();
 // "Kestrel:Endpoints:Http:Url" - взятие url для api gateway.
-builder.Services.AddSwaggerGen(option => { option.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
+builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
 
-builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
+var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
+builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
 
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
@@ -43,6 +49,9 @@ if (app.Environment.IsDevelopment())
 
 // Логирование Http запросов.
 app.UseHttpLogging();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Используем методы контроллеров как ендпоинты.
 app.MapControllers();

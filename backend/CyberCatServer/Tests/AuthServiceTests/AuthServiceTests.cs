@@ -1,10 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using AuthService.Controllers;
 using AuthService.Models;
 using AuthService.Repositories;
 using AuthServiceTests.Mocks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Client;
@@ -42,7 +40,7 @@ public class AuthServiceTests
     public async Task ShouldGetToken_WhenPassValidUserCredentials()
     {
         using var channel = _factory.CreateGrpcChannel();
-        var authenticationService = channel.CreateGrpcService<IAuthService>();
+        var authenticationService = channel.CreateGrpcService<IAuthGrpcService>();
 
         var args = new GetAccessTokenArgsDto
         {
@@ -51,12 +49,12 @@ public class AuthServiceTests
         };
         var token = await authenticationService.GetAccessToken(args);
 
-        Assert.IsNotEmpty(token.Value);
+        Assert.IsNotEmpty(token.AccessToken);
 
         var parameters = JwtTokenValidation.CreateTokenParameters();
         var tokenHandler = new JwtSecurityTokenHandler();
 
-        var claims = tokenHandler.ValidateToken(token.Value, parameters, out _);
+        var claims = tokenHandler.ValidateToken(token.AccessToken, parameters, out _);
 
         Assert.AreEqual(_user.Email, claims.FindFirst(ClaimTypes.Email)!.Value);
         Assert.AreEqual(_user.UserName, claims.FindFirst(ClaimTypes.Name)!.Value);

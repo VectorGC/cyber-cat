@@ -1,12 +1,24 @@
 using ApiGateway.Models;
 using ApiGateway.Repositories;
+using Grpc.Net.Client;
+using ProtoBuf.Grpc.Client;
+using Shared.Services;
 
 namespace ApiGateway.Services;
 
-public interface ISolutionService
+public static class AddGrpcServiceExtension
 {
-    Task<string> GetLastSavedCode(UserId userId, string taskId);
-    Task SaveCode(UserId userId, string taskId, string code);
+    public static IServiceCollection AddGrpcClientService(this IServiceCollection serviceCollection, string grpcHost)
+    {
+        serviceCollection.AddScoped<ITaskGrpcService>(provider =>
+        {
+            using var channel = GrpcChannel.ForAddress("http://localhost:7001");
+            var service = channel.CreateGrpcService<ITaskGrpcService>();
+            return service;
+        });
+
+        return serviceCollection;
+    }
 }
 
 public class SolutionService : ISolutionService

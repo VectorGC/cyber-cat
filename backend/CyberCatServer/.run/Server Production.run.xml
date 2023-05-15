@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Server Production" type="CompoundRunConfigurationType">
+    <toRun name="ApiGateway: Production" type="LaunchSettings" />
+    <toRun name="AuthService: Production" type="LaunchSettings" />
+    <toRun name="TaskService: Production" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>

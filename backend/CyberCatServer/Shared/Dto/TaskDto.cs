@@ -1,12 +1,19 @@
 using System.Text.Json.Serialization;
-using ApiGateway.Models;
+using ProtoBuf;
+using Shared.Models;
 
-namespace ApiGateway.Dto;
+namespace Shared.Dto;
 
+[ProtoContract]
 public class TaskDto : ITask
 {
-    [JsonPropertyName("name")] public string? Name { get; set; }
-    [JsonPropertyName("description")] public string? Description { get; set; }
+    [ProtoMember(1)]
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
+
+    [ProtoMember(2)]
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
 
     public static TaskDto FromTask(ITask task)
     {

@@ -1,13 +1,17 @@
-using TaskService.Services;
+using ProtoBuf.Grpc.Server;
 using TaskService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<TaskServiceAppSettings>(builder.Configuration);
+
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ITasksService, TasksService>();
-builder.Services.AddScoped<ITaskRepository, TaskRepositoryMongo>();
+//builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
+builder.Services.AddScoped<ITaskRepository, TaskMongoRepository>();
+
+builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 
 var app = builder.Build();
 
@@ -20,7 +24,8 @@ app.MapGet("/", (context) =>
     return Task.CompletedTask;
 });
 
+app.MapGrpcService<TaskService.Services.TaskGrpcService>();
+
 app.MapControllers();
 
 app.Run();
-
