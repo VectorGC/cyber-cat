@@ -10,8 +10,8 @@ namespace ApiGateway.Controllers;
 /// <summary>
 /// Контроллер отвечает за все что связано с кодом и решениями участников. Он много на себя берет, надо рефакторить.
 /// </summary>
-[Controller]
-[Route("[controller]")]
+//[Controller]
+//[Route("[controller]")]
 public class SolutionController : ControllerBase
 {
     private readonly ISolutionService _solutionService;

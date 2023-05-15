@@ -2,7 +2,6 @@ using ApiGateway;
 using ApiGateway.Extensions;
 using ApiGateway.Repositories;
 using ApiGateway.Services;
-using ApiGateway.Services.BackgroundServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Shared.Configurations;
 
@@ -16,12 +15,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddControllers();
 // "Kestrel:Endpoints:Http:Url" - взятие url для api gateway.
 builder.Services.AddSwaggerGen(option => { option.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
-
-builder.Services.AddScoped<IUserRepository, UserRepositoryMongoDb>();
-builder.Services.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
-
-builder.Services.AddScoped<IAuthUserService, AuthUserService>();
-builder.Services.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
 
 builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
 
