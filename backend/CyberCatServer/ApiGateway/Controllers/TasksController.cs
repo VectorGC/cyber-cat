@@ -1,8 +1,6 @@
 using System.Net;
-using System.Text.Json.Nodes;
 using ApiGateway.Dto;
 using ApiGateway.Repositories;
-using ApiGateway.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +12,6 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TasksController : ControllerBase
 {
-    private readonly ITaskService _taskService;
     private readonly ITaskRepository _taskRepository;
 
     public TasksController(ITaskRepository taskRepository)
@@ -23,7 +20,7 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(JsonObject), (int) HttpStatusCode.Forbidden)]
+    [ProducesResponseType(typeof(TaskDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskDto>> GetTask(string id)
     {

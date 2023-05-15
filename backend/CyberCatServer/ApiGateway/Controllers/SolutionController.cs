@@ -1,5 +1,4 @@
 using System.Net;
-using ApiGateway.Authorization;
 using ApiGateway.Dto;
 using ApiGateway.Models;
 using ApiGateway.Repositories;
@@ -12,7 +11,6 @@ namespace ApiGateway.Controllers;
 /// Контроллер отвечает за все что связано с кодом и решениями участников. Он много на себя берет, надо рефакторить.
 /// </summary>
 [Controller]
-[AuthorizeTokenGuard]
 [Route("[controller]")]
 public class SolutionController : ControllerBase
 {

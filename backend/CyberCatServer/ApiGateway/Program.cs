@@ -23,10 +23,7 @@ builder.Services.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
 builder.Services.AddScoped<IAuthUserService, AuthUserService>();
 builder.Services.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
 
-//builder.Services.AddScoped<ITaskRepository, TasksHierarchyRepository>();
-//builder.Services.AddScoped<ITaskRepository, TasksFlatRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
-builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
