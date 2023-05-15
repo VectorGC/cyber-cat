@@ -1,10 +1,9 @@
-using AuthService.Controllers;
 using AuthService.Models;
 using AuthService.Repositories;
 
-namespace AuthServiceTests;
+namespace AuthServiceTests.Mocks;
 
-public class MockAuthUserRepository : IAuthUserRepository
+internal class MockAuthUserRepository : IAuthUserRepository
 {
     private readonly List<User> _users = new();
 

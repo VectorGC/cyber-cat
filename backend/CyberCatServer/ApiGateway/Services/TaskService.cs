@@ -1,5 +1,6 @@
 using System.Text.Json.Nodes;
 using ApiGateway.Dto;
+using ApiGateway.Models;
 using ApiGateway.Repositories;
 
 namespace ApiGateway.Services;

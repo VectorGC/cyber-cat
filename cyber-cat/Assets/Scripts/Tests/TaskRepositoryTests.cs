@@ -11,7 +11,7 @@ namespace Tests
         private readonly ITaskRepository _taskRepository = new TaskRepositoryProxy(RestAPIFacade.Create());
 
         [Test]
-        public async Task HasTutorialTasks_InRepository([Values("tutorial")] string taskId)
+        public async Task HasTutorialTask_InRepository([Values("tutorial")] string taskId)
         {
             var task = await _taskRepository.GetTask(taskId);
 

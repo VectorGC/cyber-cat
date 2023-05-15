@@ -1,14 +1,15 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using ApiGateway.Dto;
 using ApiGateway.Models;
 
 namespace ApiGateway.Repositories;
 
-public class TasksHierarchyRepository : ITaskRepository
+public class TaskRepositoryFromFile : ITaskRepository
 {
     private readonly IHostEnvironment _hostEnvironment;
 
-    public TasksHierarchyRepository(IHostEnvironment hostEnvironment)
+    public TaskRepositoryFromFile(IHostEnvironment hostEnvironment)
     {
         _hostEnvironment = hostEnvironment;
     }
@@ -16,7 +17,7 @@ public class TasksHierarchyRepository : ITaskRepository
     public async Task<object> GetTasks()
     {
         var rootPath = _hostEnvironment.ContentRootPath;
-        var fullPath = Path.Combine(rootPath, "TaskExamples/tasks_hierarchy.json");
+        var fullPath = Path.Combine(rootPath, "TaskExamples/tasks.json");
 
         await using var stream = File.OpenRead(fullPath);
         var tasks = await JsonSerializer.DeserializeAsync<JsonObject>(stream);
@@ -29,8 +30,14 @@ public class TasksHierarchyRepository : ITaskRepository
         return tasks;
     }
 
-    public Task<ITask> GetTask(string taskId)
+    public async Task<ITask> GetTask(string taskId)
     {
-        throw new NotImplementedException();
+        var rootPath = _hostEnvironment.ContentRootPath;
+        var fullPath = Path.Combine(rootPath, "TaskExamples/tasks.json");
+
+        await using var stream = File.OpenRead(fullPath);
+        var tasks = await JsonSerializer.DeserializeAsync<Dictionary<string, TaskDto>>(stream);
+
+        return tasks[taskId];
     }
 }

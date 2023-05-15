@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Shared.Configurations;
@@ -21,11 +20,4 @@ public static class JwtTokenValidation
             IssuerSigningKey = IssuerSigningKey
         };
     }
-}
-
-public class AuthServiceConnectionStrings
-{
-    public const string AuthServiceGrpcSection = "ConnectionStrings";
-
-    public string AuthServiceGrpcEndpoint { get; set; }
 }

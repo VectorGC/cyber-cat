@@ -1,5 +1,6 @@
 using System.Text.Json;
 using ApiGateway.Dto;
+using ApiGateway.Models;
 
 namespace ApiGateway.Repositories;
 
@@ -26,5 +27,10 @@ public class TasksFlatRepository : ITaskRepository
         }
 
         return tasks;
+    }
+
+    public Task<ITask> GetTask(string taskId)
+    {
+        throw new NotImplementedException();
     }
 }

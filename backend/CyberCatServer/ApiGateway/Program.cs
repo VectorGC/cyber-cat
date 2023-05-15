@@ -23,8 +23,9 @@ builder.Services.AddHostedService<ApplyUserRepositoryMigrationsOnStart>();
 builder.Services.AddScoped<IAuthUserService, AuthUserService>();
 builder.Services.AddScoped<IAuthUserRepository, AuthUserRepositoryMongoDb>();
 
-builder.Services.AddScoped<ITaskRepository, TasksHierarchyRepository>();
-builder.Services.AddScoped<ITaskRepository, TasksFlatRepository>();
+//builder.Services.AddScoped<ITaskRepository, TasksHierarchyRepository>();
+//builder.Services.AddScoped<ITaskRepository, TasksFlatRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
 builder.Services.AddScoped<ISolutionService, SolutionService>();
@@ -57,3 +58,8 @@ app.UseHttpLogging();
 app.MapControllers();
 
 app.Run();
+
+// Чтобы подцепить сюда тесты.
+public partial class Program
+{
+}

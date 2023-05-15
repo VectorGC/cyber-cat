@@ -3,6 +3,7 @@ using System.Security.Claims;
 using AuthService.Controllers;
 using AuthService.Models;
 using AuthService.Repositories;
+using AuthServiceTests.Mocks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,7 @@ public class AuthServiceTests
 {
     private WebApplicationFactory<Program> _factory;
     private readonly MockAuthUserRepository _mockAuthUserRepository = new();
-    private readonly string _userPassword = "123";
+    private const string UserPassword = "123";
 
     private readonly IUser _user = new User
     {
@@ -34,7 +35,7 @@ public class AuthServiceTests
 
         using var scope = _factory.Services.CreateScope();
         var userRepository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
-        userRepository.Add(_user, _userPassword);
+        userRepository.Add(_user, UserPassword);
     }
 
     [Test]
@@ -46,7 +47,7 @@ public class AuthServiceTests
         var args = new GetAccessTokenArgsDto
         {
             Email = _user.Email,
-            Password = _userPassword
+            Password = UserPassword
         };
         var token = await authenticationService.GetAccessToken(args);
 

@@ -12,6 +12,7 @@ namespace ApiGateway.Controllers;
 
 [Controller]
 [Route("[controller]")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AuthController : ControllerBase
 {
     private readonly string _authServiceGrpcEndpoint;
@@ -23,16 +24,6 @@ public class AuthController : ControllerBase
         {
             throw new ArgumentNullException(nameof(_authServiceGrpcEndpoint));
         }
-    }
-
-    [HttpGet("authorize_player")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public ActionResult<AuthorizePlayerResponseDto> AuthorizePlayer()
-    {
-        return new AuthorizePlayerResponseDto
-        {
-            Name = User.Identity.Name
-        };
     }
 
     [AllowAnonymous]
@@ -50,6 +41,15 @@ public class AuthController : ControllerBase
         return new TokenResponseDto
         {
             AccessToken = access.Value
+        };
+    }
+
+    [HttpGet("authorize_player")]
+    public ActionResult<AuthorizePlayerResponseDto> AuthorizePlayer()
+    {
+        return new AuthorizePlayerResponseDto
+        {
+            Name = User.Identity.Name
         };
     }
 }

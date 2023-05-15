@@ -9,12 +9,6 @@ using UnityEngine;
 
 namespace ServerAPI.ServerAPIImplements
 {
-    internal class TaskFromFileDto : ITask
-    {
-        [JsonProperty("name")] public string Name { get; set; }
-        [JsonProperty("description")] public string Description { get; set; }
-    }
-
     public class ServerlessAPI : IServerAPI
     {
         public UniTask<ITokenSession> Authenticate(string login, string password, IProgress<float> progress = null)
@@ -30,7 +24,7 @@ namespace ServerAPI.ServerAPIImplements
         public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
             var tasksJson = await ReadFileContentAsync("tasks.json");
-            var tasks = JsonConvert.DeserializeObject<Dictionary<string, TaskFromFileDto>>(tasksJson);
+            var tasks = JsonConvert.DeserializeObject<Dictionary<string, TaskDto>>(tasksJson);
 
             if (!tasks.TryGetValue(taskId, out var task))
             {

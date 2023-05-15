@@ -1,6 +1,6 @@
-using AuthService.Controllers;
 using AuthService.Models;
 using AuthService.Repositories;
+using AuthServiceTests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Shared;

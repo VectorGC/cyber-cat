@@ -54,9 +54,17 @@ namespace ServerAPI.ServerAPIImplements
             };
         }
 
-        public UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
+        public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
-            throw new NotImplementedException();
+            var request = new RequestHelper
+            {
+                Uri = _url + $"/tasks/{taskId}",
+                ProgressCallback = value => progress?.Report(value),
+                EnableDebug = Debug.isDebugBuild
+            };
+
+            var task = await RestClient.Get<TaskDto>(request).ToUniTask();
+            return task;
         }
     }
 }
