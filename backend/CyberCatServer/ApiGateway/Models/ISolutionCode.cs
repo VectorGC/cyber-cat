@@ -1,8 +1,6 @@
 namespace ApiGateway.Models;
 
-public interface ISolutionCode
+public interface ISourceCode
 {
-    UserId Author { get; }
-    string TaskId { get; }
     string SourceCode { get; }
 }

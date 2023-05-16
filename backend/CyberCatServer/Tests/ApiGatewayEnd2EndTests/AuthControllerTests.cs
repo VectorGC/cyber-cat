@@ -15,7 +15,7 @@ public class AuthControllerTests
     }
 
     [Test]
-    public async Task ShouldLogin_WhenPassValidCredentials()
+    public async Task Login_WhenPassValidCredentials()
     {
         var token = await AuthHttpClientExtensions.GetToken(_client, "karo@test.ru", "12qw!@QW");
 

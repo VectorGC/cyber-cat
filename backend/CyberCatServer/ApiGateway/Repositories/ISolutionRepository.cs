@@ -6,8 +6,8 @@ namespace ApiGateway.Repositories;
 
 public interface ISolutionRepository
 {
+    Task SaveCode(string taskId, string sourceCode);
     Task<string> GetSavedCode(UserId userId, string taskId);
-    Task SaveCode(UserId userId, string taskId, string code);
 }
 
 public class SolutionRepository : ISolutionRepository
@@ -30,6 +30,11 @@ public class SolutionRepository : ISolutionRepository
             .FirstOrDefaultAsync(GetCT());
 
         return code ?? string.Empty;
+    }
+
+    public Task SaveCode(string taskId, string sourceCode)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task SaveCode(UserId userId, string taskId, string code)
