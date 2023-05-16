@@ -1,6 +1,7 @@
 using ProtoBuf.Grpc.Server;
 using TaskService;
 using TaskService.Repositories;
+using TaskService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,9 @@ builder.Services.Configure<TaskServiceAppSettings>(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<ITaskRepository, TaskRepositoryFromFile>();
-builder.Services.AddScoped<ITaskRepository, TaskMongoRepository>();
+builder.Services
+    .AddScoped<ITaskRepository, TaskMongoRepository>()
+    .AddHostedService<AutoLoadTasksRepository>();
 
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 

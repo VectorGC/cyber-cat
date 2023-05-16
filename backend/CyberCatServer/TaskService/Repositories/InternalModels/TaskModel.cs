@@ -1,14 +1,18 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using System.Text.Json.Serialization;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 using Shared.Models;
 
-namespace TaskService.Repositories
+namespace TaskService.Repositories.InternalModels
 {
     [CollectionName("Tasks")]
-    public class TaskModel : IDocument<string>, IEquatable<string>, ITask
+    internal class TaskModel : IDocument<string>, IEquatable<string>, ITask
     {
-        [BsonId] public string Id { get; set; }
+        [BsonId]
+        [JsonPropertyName("_id")] // Для точной десериализации из файла.
+        public string Id { get; set; }
+
         public int Version { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
