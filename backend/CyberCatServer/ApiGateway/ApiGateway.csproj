@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
-      <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+      <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
     </ItemGroup>
 
@@ -25,10 +25,6 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="ApiGateway" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
 </Project>

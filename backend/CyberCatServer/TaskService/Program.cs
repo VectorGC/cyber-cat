@@ -7,9 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<TaskServiceAppSettings>(builder.Configuration);
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
-
 builder.Services
     .AddScoped<ITaskRepository, TaskMongoRepository>()
     .AddHostedService<AutoLoadTasksRepository>();
@@ -18,17 +15,6 @@ builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = tr
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.MapGet("/", (context) =>
-{
-    context.Response.Redirect("/swagger");
-    return Task.CompletedTask;
-});
-
-app.MapGrpcService<TaskService.Services.TaskGrpcService>();
-
-app.MapControllers();
+app.MapGrpcService<TaskGrpcService>();
 
 app.Run();

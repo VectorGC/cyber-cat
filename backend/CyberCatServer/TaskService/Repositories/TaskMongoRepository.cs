@@ -8,7 +8,7 @@ namespace TaskService.Repositories
     public class TaskMongoRepository : BaseMongoRepository<string>, ITaskRepository
     {
         public TaskMongoRepository(IOptions<TaskServiceAppSettings> appSettings)
-            : base(appSettings.Value.MongoTaskRepository.ConnectionString, appSettings.Value.MongoTaskRepository.DatabaseName)
+            : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
         {
         }
 

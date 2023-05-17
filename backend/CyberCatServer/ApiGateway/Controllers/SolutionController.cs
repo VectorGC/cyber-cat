@@ -1,11 +1,10 @@
 using System.Net;
-using ApiGateway.Dto;
-using ApiGateway.Models;
-using ApiGateway.Repositories;
-using ApiGateway.Services;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Dto;
+using Shared.Services;
 
 namespace ApiGateway.Controllers;
 
@@ -14,69 +13,65 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class SolutionController : ControllerBase
 {
-    private readonly ISolutionService _solutionService;
-    private readonly IUserRepository _userRepository;
-    private readonly ILogger _logger;
+    private readonly ISolutionGrpcService _solutionService;
 
-    public SolutionController(ILogger<SolutionController> logger)
+    public SolutionController(ISolutionGrpcService solutionService)
     {
-        _logger = logger;
+        _solutionService = solutionService;
     }
 
-    [HttpPost("save")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<IActionResult> SaveCode([FromBody] SaveCodeArgsDto args)
-    {
-        //var userId = (UserId) (HttpContext.Items[typeof(UserId)] ?? throw new InvalidOperationException());
-        //var savedCode = await _solutionService.GetLastSavedCode(userId, taskId);
-
-        //var user = await _userRepository.GetUser(userId);
-        //_logger.LogInformation("'{User}' get last saved code for task '{Task}'", user, taskId);
-
-        return Ok();
-    }
-
-    [HttpGet]
-    [ProducesResponseType(typeof(SaveCodeArgsDto), (int) HttpStatusCode.OK)]
+    [HttpGet("{taskId}")]
+    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<IActionResult> GetLastSavedCode([FromQuery(Name = "task_id")] string taskId)
+    public async Task<ActionResult<string>> GetLastSavedCode(string taskId)
     {
-        var userId = (UserId) (HttpContext.Items[typeof(UserId)] ?? throw new InvalidOperationException());
-        var savedCode = await _solutionService.GetLastSavedCode(userId, taskId);
+        var userId = User.Identity.GetUserId();
+        var args = new GetSavedCodeArgs
+        {
+            UserId = userId,
+            TaskId = taskId
+        };
 
-        var user = await _userRepository.GetUser(userId);
-        _logger.LogInformation("'{User}' get last saved code for task '{Task}'", user, taskId);
+        var savedCode = await _solutionService.GetSavedCode(args);
+        return savedCode.SolutionCode;
+    }
+
+    [HttpPost("{taskId}")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> SaveCode(string taskId, [FromBody] string sourceCode)
+    {
+        if (string.IsNullOrEmpty(sourceCode))
+        {
+            throw new ArgumentNullException(nameof(sourceCode));
+        }
+
+        var userId = User.Identity.GetUserId();
+        var args = new SaveCodeArgs
+        {
+            UserId = userId,
+            TaskId = taskId,
+            SolutionCode = sourceCode
+        };
+
+        await _solutionService.SaveCode(args);
 
         return Ok();
     }
 
-    /*
-    [HttpPost]
-    [ProducesResponseType(typeof(VerdictResult), (int) HttpStatusCode.OK)]
-    public async Task<IActionResult> VerifyCodeSolution([FromForm(Name = "task_id")] string taskId, [FromForm(Name = "source_text")] string sourceCode)
+    [HttpDelete("{taskId}")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<string>> DeleteSavedCode(string taskId)
     {
-        var userId = (UserId) (HttpContext.Items[typeof(UserId)] ?? throw new InvalidOperationException());
-
-        try
+        var userId = User.Identity.GetUserId();
+        var args = new RemoveCodeArgs
         {
-            await _solutionService.SaveCode(userId, taskId, sourceCode);
-            _logger.LogInformation("'{User}' saved code for task '{Task}'", userId, taskId);
-            return Ok(new VerdictResult());
-        }
-        catch (Exception e)
-        {
-            var user = await _userRepository.GetUser(userId);
-            _logger.LogError(e, "User '{User}'", user);
+            UserId = userId,
+            TaskId = taskId
+        };
 
-            return Ok(new VerdictResult
-            {
-                Error = 1000,
-                ErrorData = new VerdictError
-                {
-                    Msg = "При сохранении произошла ошибка. Попробуйте ещё раз или обратитесь к организатору."
-                }
-            });
-        }
+        await _solutionService.RemoveCode(args);
+
+        return Ok();
     }
-    */
 }

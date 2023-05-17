@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dto;
 using Shared.Services;
-using TaskDto = Shared.Dto.TaskDto;
 
 namespace ApiGateway.Controllers;
 
@@ -21,14 +20,14 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(TaskDto), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(TaskResponse), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string id)
+    public async Task<ActionResult<TaskResponse>> ShouldGetTutorialTask(string id)
     {
         var task = await TaskService.GetTask(new TaskIdArg
         {
             Id = id
         });
-        return TaskDto.FromTask(task);
+        return TaskResponse.FromTask(task);
     }
 }

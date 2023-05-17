@@ -1,56 +1,42 @@
-using System.Net;
 using System.Net.Http.Json;
-using ApiGateway.Dto;
 using ApiGatewayEnd2EndTests.Extensions;
-using Shared.Dto;
 
 namespace ApiGatewayEnd2EndTests;
 
+[TestFixture]
 public class SolutionControllerTests
 {
     private HttpClient _client;
 
     [SetUp]
-    public void SetUp()
+    public async Task SetUp()
     {
         _client = new HttpClient();
+        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
     }
 
     [Test]
-    public async Task SaveCode()
+    public async Task GetSavedCode_AfterSaveAndDeleteCode()
     {
         var taskId = "tutorial";
         var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-        var args = new SaveCodeArgsDto
-        {
-            TaskId = taskId,
-            SourceCode = sourceCode
-        };
+        // Проверяем что изначально кода нет.
+        var lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        Assert.IsEmpty(lastSavedCode);
 
-        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
+        // Сохраняем код.
+        var response = await _client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCode);
+        response.EnsureSuccessStatusCode();
 
-        var response = await _client.PostAsJsonAsync("http://localhost:5000/solution/save", args);
+        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        Assert.IsNotEmpty(lastSavedCode);
+        Assert.AreEqual(sourceCode, lastSavedCode);
 
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-    }
-    
-    [Test]
-    public async Task GetSavedCode_AfterSave()
-    {
-        var taskId = "tutorial";
-        var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
+        // Удаляем и проверяем, что все очистилось.
+        await _client.DeleteAsync($"http://localhost:5000/solution/{taskId}");
 
-        var args = new SaveCodeArgsDto
-        {
-            TaskId = taskId,
-            SourceCode = sourceCode
-        };
-
-        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
-
-        var response = await _client.PostAsJsonAsync("http://localhost:5000/solution/save", args);
-
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        Assert.IsEmpty(lastSavedCode);
     }
 }

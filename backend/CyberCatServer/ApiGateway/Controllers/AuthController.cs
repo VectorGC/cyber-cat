@@ -21,15 +21,15 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<TokenResponseDto>> Login(string username, string password)
+    public async Task<ActionResult<TokenResponse>> Login(string username, string password)
     {
-        var response = await _authService.GetAccessToken(new GetAccessTokenArgsDto
+        var response = await _authService.GetAccessToken(new GetAccessTokenArgs
         {
             Email = username,
             Password = password
         });
 
-        return new TokenResponseDto
+        return new TokenResponse
         {
             AccessToken = response.AccessToken
         };

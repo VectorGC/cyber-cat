@@ -1,4 +1,3 @@
-using CompilerServiceAPI;
 using CompilerServiceAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddSwagger();
 
 builder.Services.AddScoped<ICommandService, CommandService>();
 builder.Services.AddScoped<ICompileService>(serviceProvider =>
@@ -20,10 +18,6 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment() || true)
 {
-    app.UseSwaggerSwashbuckle();
-    app.FallbackToSwaggerPage();
-
-    // ��������� ������ � ������ ����������.
     app.UseDeveloperExceptionPage();
 }
 

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ApiGatewayEnd2EndTests (auto reload)": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "watch test",
+      "workingDirectory": "$(ProjectDir)"
+    }
+  }
+}

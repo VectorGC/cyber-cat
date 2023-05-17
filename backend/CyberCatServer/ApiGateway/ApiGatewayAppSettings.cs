@@ -6,9 +6,11 @@ public class ApiGatewayAppSettings
     {
         public string AuthServiceGrpcEndpoint { get; set; }
         public string TaskServiceGrpcEndpoint { get; set; }
+        public string SolutionServiceGrpcEndpoint { get; set; }
 
         public Uri AuthServiceGrpcAddress => new(AuthServiceGrpcEndpoint);
         public Uri TaskServiceGrpcAddress => new(TaskServiceGrpcEndpoint);
+        public Uri SolutionServiceGrpcAddress => new(SolutionServiceGrpcEndpoint);
     }
 
     public ConnectionStringsSettings ConnectionStrings { get; set; }

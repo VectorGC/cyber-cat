@@ -1,10 +1,11 @@
 using AspNetCore.Identity.MongoDbCore.Models;
+using AuthService.Models;
 using MongoDbGenericRepository.Attributes;
 
-namespace AuthService.Models;
+namespace AuthService.Repositories.InternalModels;
 
 [CollectionName("Users")]
-public sealed class User : MongoIdentityUser, IUser
+internal sealed class User : MongoIdentityUser, IUser
 {
     string IUser.UserName => base.UserName;
 

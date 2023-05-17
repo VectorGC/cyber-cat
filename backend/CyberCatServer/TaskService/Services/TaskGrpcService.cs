@@ -13,9 +13,9 @@ public class TaskGrpcService : ITaskGrpcService
         _taskRepository = taskRepository;
     }
 
-    public async Task<TaskDto> GetTask(TaskIdArg arg)
+    public async Task<TaskResponse> GetTask(TaskIdArg arg)
     {
         var task = await _taskRepository.GetTask(arg.Id);
-        return TaskDto.FromTask(task);
+        return TaskResponse.FromTask(task);
     }
 }

@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using AuthService;
 using AuthService.Models;
 using AuthService.Repositories;
+using AuthService.Repositories.InternalModels;
 using AuthServiceTests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +43,7 @@ public class AuthServiceTests
         using var channel = _factory.CreateGrpcChannel();
         var authenticationService = channel.CreateGrpcService<IAuthGrpcService>();
 
-        var args = new GetAccessTokenArgsDto
+        var args = new GetAccessTokenArgs
         {
             Email = _user.Email,
             Password = UserPassword

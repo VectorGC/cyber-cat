@@ -1,9 +1,9 @@
 using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
 
-namespace AuthService.Models;
+namespace AuthService.Repositories.InternalModels;
 
 [CollectionName("Roles")]
-public class Role : MongoIdentityRole
+internal class Role : MongoIdentityRole
 {
 }

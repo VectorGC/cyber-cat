@@ -1,7 +1,5 @@
 using ApiGateway;
 using ApiGateway.Extensions;
-using ApiGateway.Repositories;
-using ApiGateway.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ProtoBuf.Grpc.ClientFactory;
 using Shared.Configurations;
@@ -21,9 +19,7 @@ builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(bui
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
-
-builder.Services.AddScoped<ISolutionService, SolutionService>();
-builder.Services.AddScoped<ISolutionRepository, SolutionRepository>();
+builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 
 var app = builder.Build();
 

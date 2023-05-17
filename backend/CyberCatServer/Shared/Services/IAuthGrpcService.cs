@@ -6,5 +6,5 @@ namespace Shared.Services;
 [Service]
 public interface IAuthGrpcService
 {
-    Task<TokenResponseDto> GetAccessToken(GetAccessTokenArgsDto argsDto);
+    Task<TokenResponse> GetAccessToken(GetAccessTokenArgs args);
 }

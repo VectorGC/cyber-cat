@@ -5,7 +5,7 @@ using Shared.Models;
 namespace Shared.Dto;
 
 [ProtoContract]
-public class TaskDto : ITask
+public class TaskResponse : ITask
 {
     [ProtoMember(1)]
     [JsonPropertyName("name")]
@@ -15,9 +15,9 @@ public class TaskDto : ITask
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    public static TaskDto FromTask(ITask task)
+    public static TaskResponse FromTask(ITask task)
     {
-        return task as TaskDto ?? new TaskDto()
+        return task as TaskResponse ?? new TaskResponse()
         {
             Name = task.Name,
             Description = task.Description

@@ -1,11 +1,12 @@
 using AuthService.Models;
+using AuthService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Shared.Exceptions;
 
 namespace AuthService.Repositories;
 
-public class AuthUserManagerRepository : IAuthUserRepository
+internal class AuthUserManagerRepository : IAuthUserRepository
 {
     private readonly UserManager<User> _userManager;
 

@@ -2,10 +2,7 @@ namespace Shared.Exceptions;
 
 public class IdentityUserException : Exception
 {
-    public override string Message { get; }
-
-    public IdentityUserException(string message)
+    public IdentityUserException(string message) : base(message)
     {
-        Message = message;
     }
 }
