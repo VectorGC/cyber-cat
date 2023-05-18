@@ -1,4 +1,4 @@
-namespace CompilerServiceAPI.Services;
+namespace CppLauncherService.Services;
 
 internal class TempCppFileCreator : ICppFileCreator
 {

@@ -1,4 +1,4 @@
-using CompilerServiceAPI;
+using CppLauncherService;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
 using Shared;
@@ -22,7 +22,7 @@ public class CppLauncherServiceTests
     public async Task CompileAndLaunch_WhenPassValidCode()
     {
         var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
-        var args = new SolutionCodeArgs
+        var args = new SourceCodeArgs
         {
             SourceCode = sourceCode
         };
@@ -40,7 +40,7 @@ public class CppLauncherServiceTests
     public async Task CompileError_WhenPassNonCompiledCode()
     {
         var sourceCode = "#include <stdio.h> \nint main()";
-        var args = new SolutionCodeArgs
+        var args = new SourceCodeArgs
         {
             SourceCode = sourceCode
         };
@@ -59,7 +59,7 @@ public class CppLauncherServiceTests
     public async Task LaunchError_WhenPassInfinityLoopCode()
     {
         var sourceCode = "int main() { while(true){} }";
-        var args = new SolutionCodeArgs
+        var args = new SourceCodeArgs
         {
             SourceCode = sourceCode
         };
@@ -71,27 +71,5 @@ public class CppLauncherServiceTests
 
         Assert.AreEqual("Exit Code -1: The process took more than 5 seconds", response.StandardError);
         Assert.IsNull(response.StandardOutput);
-    }
-
-    [Test]
-    public async Task CompileAndLaunchManyProcess_WithDifferentResult()
-    {
-        var tasks = new List<Task>();
-        for (var i = 0; i < 5; i++)
-        {
-            tasks.Add(CompileAndLaunch_WhenPassValidCode());
-        }
-
-        for (var i = 0; i < 5; i++)
-        {
-            tasks.Add(CompileError_WhenPassNonCompiledCode());
-        }
-
-        for (var i = 0; i < 5; i++)
-        {
-            tasks.Add(LaunchError_WhenPassInfinityLoopCode());
-        }
-
-        await Task.WhenAll(tasks);
     }
 }

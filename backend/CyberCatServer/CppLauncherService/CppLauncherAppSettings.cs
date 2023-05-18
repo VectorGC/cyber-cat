@@ -1,4 +1,4 @@
-namespace CompilerServiceAPI;
+namespace CppLauncherService;
 
 public class CppLauncherAppSettings
 {

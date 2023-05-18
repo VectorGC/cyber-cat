@@ -1,19 +1,19 @@
-using CompilerServiceAPI.Services.CppLaunchers;
+using CppLauncherService.Services.CppLaunchers;
 using Shared.Dto;
 using Shared.Services;
 
-namespace CompilerServiceAPI.Services;
+namespace CppLauncherService.Services;
 
 internal class CppLauncherGrpcService : ICodeLauncherGrpcService
 {
-    private readonly ICppLauncherService _compileService;
+    private readonly ICppExecutorOsSpecificService _compileService;
 
-    public CppLauncherGrpcService(ICppLauncherService compileService)
+    public CppLauncherGrpcService(ICppExecutorOsSpecificService compileService)
     {
         _compileService = compileService;
     }
 
-    public async Task<LaunchCodeResponse> Launch(SolutionCodeArgs args)
+    public async Task<LaunchCodeResponse> Launch(SourceCodeArgs args)
     {
         var sourceCode = args.SourceCode;
 

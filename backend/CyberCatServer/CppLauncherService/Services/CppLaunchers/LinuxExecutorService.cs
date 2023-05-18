@@ -1,13 +1,13 @@
-﻿using CompilerServiceAPI.InternalModels;
+﻿using CppLauncherService.InternalModels;
 
-namespace CompilerServiceAPI.Services.CppLaunchers
+namespace CppLauncherService.Services.CppLaunchers
 {
-    internal class WinCompileService : ICppLauncherService
+    internal class LinuxExecutorService : ICppExecutorOsSpecificService
     {
         private readonly IProcessExecutorProxy _processExecutorProxy;
         private readonly ICppFileCreator _cppFileCreator;
 
-        public WinCompileService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator)
+        public LinuxExecutorService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator)
         {
             _processExecutorProxy = processExecutorProxy;
             _cppFileCreator = cppFileCreator;
@@ -18,7 +18,9 @@ namespace CompilerServiceAPI.Services.CppLaunchers
             var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
             var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
 
-            var output = await _processExecutorProxy.Run("wsl", $"g++ {cppFileName} -Wall -Werror -o {objectFileName} -static-libgcc -static-libstdc++");
+            var pathToFile = await _cppFileCreator.CreateCppWithText(sourceCode);
+            var output = await _processExecutorProxy.Run("g++", $"{pathToFile} -Wall -Werror -o code -static-libgcc -static-libstdc++");
+
             return new CompileCppResult
             {
                 Output = output,
@@ -28,7 +30,7 @@ namespace CompilerServiceAPI.Services.CppLaunchers
 
         public async Task<Output> LaunchCode(string objectFileName)
         {
-            return await _processExecutorProxy.Run("wsl", $"./{objectFileName}");
+            return await _processExecutorProxy.Run($"{objectFileName}", string.Empty);
         }
     }
 }

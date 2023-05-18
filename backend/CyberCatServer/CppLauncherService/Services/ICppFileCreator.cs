@@ -1,4 +1,4 @@
-namespace CompilerServiceAPI.Services;
+namespace CppLauncherService.Services;
 
 internal interface ICppFileCreator
 {

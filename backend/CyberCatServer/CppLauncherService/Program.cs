@@ -1,6 +1,6 @@
-using CompilerServiceAPI;
-using CompilerServiceAPI.Services;
-using CompilerServiceAPI.Services.CppLaunchers;
+using CppLauncherService;
+using CppLauncherService.Services;
+using CppLauncherService.Services.CppLaunchers;
 using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<CppLauncherAppSettings>(builder.Configuration);
 
 builder.Services.AddScoped<IProcessExecutorProxy, ConsoleExecutorProxy>();
-builder.Services.AddScoped<ICppLauncherService>(serviceProvider =>
+builder.Services.AddScoped<ICppExecutorOsSpecificService>(serviceProvider =>
 {
     return Environment.OSVersion.Platform == PlatformID.Win32NT
-        ? ActivatorUtilities.CreateInstance<WinCompileService>(serviceProvider)
-        : ActivatorUtilities.CreateInstance<LinuxCompileService>(serviceProvider);
+        ? ActivatorUtilities.CreateInstance<WinExecutorService>(serviceProvider)
+        : ActivatorUtilities.CreateInstance<LinuxExecutorService>(serviceProvider);
 });
 builder.Services.AddScoped<ICppFileCreator, TempCppFileCreator>();
 
@@ -24,7 +24,7 @@ app.MapGrpcService<CppLauncherGrpcService>();
 
 app.Run();
 
-namespace CompilerServiceAPI
+namespace CppLauncherService
 {
     public partial class Program
     {

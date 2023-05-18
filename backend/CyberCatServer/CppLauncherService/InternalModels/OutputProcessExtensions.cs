@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace CompilerServiceAPI.InternalModels;
+namespace CppLauncherService.InternalModels;
 
 internal static class OutputProcessExtensions
 {

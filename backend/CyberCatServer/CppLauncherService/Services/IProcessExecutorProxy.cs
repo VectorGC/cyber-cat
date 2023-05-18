@@ -1,6 +1,6 @@
-﻿using CompilerServiceAPI.InternalModels;
+﻿using CppLauncherService.InternalModels;
 
-namespace CompilerServiceAPI.Services
+namespace CppLauncherService.Services
 {
     internal interface IProcessExecutorProxy
     {

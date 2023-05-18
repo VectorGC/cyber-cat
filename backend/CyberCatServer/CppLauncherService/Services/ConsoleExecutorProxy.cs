@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using CompilerServiceAPI.InternalModels;
+using CppLauncherService.InternalModels;
 using Microsoft.Extensions.Options;
 
-namespace CompilerServiceAPI.Services
+namespace CppLauncherService.Services
 {
     internal class ConsoleExecutorProxy : IProcessExecutorProxy
     {

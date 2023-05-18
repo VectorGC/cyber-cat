@@ -1,4 +1,4 @@
-namespace CompilerServiceAPI.InternalModels;
+namespace CppLauncherService.InternalModels;
 
 internal class Output
 {
