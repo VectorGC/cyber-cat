@@ -17,16 +17,16 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
     {
         var sourceCode = args.SourceCode;
 
-        var compileOutput = await _compileService.CompileCode(sourceCode);
-        if (compileOutput.HasError)
+        var compileResult = await _compileService.CompileCode(sourceCode);
+        if (compileResult.Output.HasError)
         {
             return new LaunchCodeResponse
             {
-                StandardError = compileOutput.StandardError
+                StandardError = compileResult.Output.StandardError
             };
         }
 
-        var launchOutput = await _compileService.LaunchCode();
+        var launchOutput = await _compileService.LaunchCode(compileResult.ObjectFileName);
         return new LaunchCodeResponse
         {
             StandardOutput = launchOutput.StandardOutput,

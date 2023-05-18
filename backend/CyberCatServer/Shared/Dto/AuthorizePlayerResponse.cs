@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace ApiGateway.Dto;
+namespace Shared.Dto;
 
-public class AuthorizePlayerResponseDto
+public class AuthorizePlayerResponse
 {
     [JsonPropertyName("name")] public string Name { get; set; }
 }

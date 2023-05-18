@@ -14,6 +14,7 @@ builder.Services.AddScoped<ICppLauncherService>(serviceProvider =>
         ? ActivatorUtilities.CreateInstance<WinCompileService>(serviceProvider)
         : ActivatorUtilities.CreateInstance<LinuxCompileService>(serviceProvider);
 });
+builder.Services.AddScoped<ICppFileCreator, TempCppFileCreator>();
 
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 

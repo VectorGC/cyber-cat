@@ -5,25 +5,32 @@ namespace CompilerServiceAPI.Services.CppLaunchers
     internal class LinuxCompileService : ICppLauncherService
     {
         private readonly IProcessExecutorProxy _processExecutorProxy;
+        private readonly ICppFileCreator _cppFileCreator;
 
-        public LinuxCompileService(IProcessExecutorProxy processExecutorProxy)
+        public LinuxCompileService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator)
         {
             _processExecutorProxy = processExecutorProxy;
+            _cppFileCreator = cppFileCreator;
         }
 
-        public async Task<Output> CompileCode(string sourceCode)
+        public async Task<CompileCppResult> CompileCode(string sourceCode)
         {
-            using (StreamWriter writer = System.IO.File.CreateText("code.cpp"))
+            var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
+            var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
+
+            var pathToFile = await _cppFileCreator.CreateCppWithText(sourceCode);
+            var output = await _processExecutorProxy.Run("g++", $"{pathToFile} -Wall -Werror -o code -static-libgcc -static-libstdc++");
+
+            return new CompileCppResult
             {
-                await writer.WriteAsync(sourceCode);
-            }
-
-            return await _processExecutorProxy.Run("g++", "code.cpp -Wall -Werror -o code -static-libgcc -static-libstdc++");
+                Output = output,
+                ObjectFileName = objectFileName
+            };
         }
 
-        public async Task<Output> LaunchCode()
+        public async Task<Output> LaunchCode(string objectFileName)
         {
-            return await _processExecutorProxy.Run("code", "");
+            return await _processExecutorProxy.Run($"{objectFileName}", string.Empty);
         }
     }
 }

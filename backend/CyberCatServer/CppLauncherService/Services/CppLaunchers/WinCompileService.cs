@@ -5,25 +5,30 @@ namespace CompilerServiceAPI.Services.CppLaunchers
     internal class WinCompileService : ICppLauncherService
     {
         private readonly IProcessExecutorProxy _processExecutorProxy;
+        private readonly ICppFileCreator _cppFileCreator;
 
-        public WinCompileService(IProcessExecutorProxy processExecutorProxy)
+        public WinCompileService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator)
         {
             _processExecutorProxy = processExecutorProxy;
+            _cppFileCreator = cppFileCreator;
         }
 
-        public async Task<Output> CompileCode(string sourceCode)
+        public async Task<CompileCppResult> CompileCode(string sourceCode)
         {
-            using (StreamWriter writer = System.IO.File.CreateText("code.cpp"))
+            var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
+            var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
+
+            var output = await _processExecutorProxy.Run("wsl", $"g++ {cppFileName} -Wall -Werror -o {objectFileName} -static-libgcc -static-libstdc++");
+            return new CompileCppResult
             {
-                await writer.WriteAsync(sourceCode);
-            }
-
-            return await _processExecutorProxy.Run("wsl", "g++ code.cpp -Wall -Werror -o code -static-libgcc -static-libstdc++");
+                Output = output,
+                ObjectFileName = objectFileName
+            };
         }
 
-        public async Task<Output> LaunchCode()
+        public async Task<Output> LaunchCode(string objectFileName)
         {
-            return await _processExecutorProxy.Run("wsl", "./code");
+            return await _processExecutorProxy.Run("wsl", $"./{objectFileName}");
         }
     }
 }

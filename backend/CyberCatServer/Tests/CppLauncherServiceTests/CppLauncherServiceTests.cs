@@ -11,18 +11,11 @@ namespace CppLauncherServiceTests;
 public class CppLauncherServiceTests
 {
     private WebApplicationFactory<Program> _factory;
-    private const string UserPassword = "123";
 
     [SetUp]
     public void Setup()
     {
-        _factory = new WebApplicationFactory<Program>(); //.AddScoped<Program, IAuthUserRepository>(_mockAuthUserRepository);
-
-        /*
-        using var scope = _factory.Services.CreateScope();
-        var userRepository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
-        userRepository.Add(_user, UserPassword);
-        */
+        _factory = new WebApplicationFactory<Program>();
     }
 
     [Test]
@@ -51,14 +44,14 @@ public class CppLauncherServiceTests
         {
             SourceCode = sourceCode
         };
-        var expectedError = "Exit Code 1: code.cpp:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
+        var expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
         var response = await codeLauncherService.Launch(args);
 
-        Assert.AreEqual(expectedError, response.StandardError);
+        Assert.That(response.StandardError, Does.Match(expectedErrorRegex));
         Assert.IsNull(response.StandardOutput);
     }
 
@@ -80,5 +73,25 @@ public class CppLauncherServiceTests
         Assert.IsNull(response.StandardOutput);
     }
 
-    // TODO: Тест проверяющий асинхронную работу 3 - 10 запусков разных решений
+    [Test]
+    public async Task CompileAndLaunchManyProcess_WithDifferentResult()
+    {
+        var tasks = new List<Task>();
+        for (var i = 0; i < 5; i++)
+        {
+            tasks.Add(CompileAndLaunch_WhenPassValidCode());
+        }
+
+        for (var i = 0; i < 5; i++)
+        {
+            tasks.Add(CompileError_WhenPassNonCompiledCode());
+        }
+
+        for (var i = 0; i < 5; i++)
+        {
+            tasks.Add(LaunchError_WhenPassInfinityLoopCode());
+        }
+
+        await Task.WhenAll(tasks);
+    }
 }

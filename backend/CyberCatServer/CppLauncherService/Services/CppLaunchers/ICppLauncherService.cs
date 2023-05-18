@@ -4,7 +4,7 @@ namespace CompilerServiceAPI.Services.CppLaunchers
 {
     internal interface ICppLauncherService
     {
-        Task<Output> CompileCode(string sourceCode);
-        Task<Output> LaunchCode();
+        Task<CompileCppResult> CompileCode(string sourceCode);
+        Task<Output> LaunchCode(string objectFileName);
     }
 }

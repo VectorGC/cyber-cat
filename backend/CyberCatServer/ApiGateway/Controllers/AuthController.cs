@@ -1,4 +1,3 @@
-using ApiGateway.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +35,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("authorize_player")]
-    public ActionResult<AuthorizePlayerResponseDto> AuthorizePlayer()
+    public ActionResult<AuthorizePlayerResponse> AuthorizePlayer()
     {
-        return new AuthorizePlayerResponseDto
+        return new AuthorizePlayerResponse
         {
             Name = User.Identity.Name
         };
