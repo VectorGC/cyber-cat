@@ -1,34 +1,38 @@
+using System.Net;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Shared.Dto;
+using Shared.Services;
+
 namespace ApiGateway.Controllers;
 
-public class JudgeController
+[Controller]
+[Route("[controller]")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+public class JudgeController : ControllerBase
 {
-    /*
-    [HttpPost]
-    [ProducesResponseType(typeof(VerdictResult), (int) HttpStatusCode.OK)]
-    public async Task<IActionResult> VerifyCodeSolution([FromForm(Name = "task_id")] string taskId, [FromForm(Name = "source_text")] string sourceCode)
+    private readonly IJudgeGrpcService _judgeService;
+
+    public JudgeController(IJudgeGrpcService judgeService)
     {
-        var userId = (UserId) (HttpContext.Items[typeof(UserId)] ?? throw new InvalidOperationException());
-
-        try
-        {
-            await _solutionService.SaveCode(userId, taskId, sourceCode);
-            _logger.LogInformation("'{User}' saved code for task '{Task}'", userId, taskId);
-            return Ok(new VerdictResult());
-        }
-        catch (Exception e)
-        {
-            var user = await _userRepository.GetUser(userId);
-            _logger.LogError(e, "User '{User}'", user);
-
-            return Ok(new VerdictResult
-            {
-                Error = 1000,
-                ErrorData = new VerdictError
-                {
-                    Msg = "При сохранении произошла ошибка. Попробуйте ещё раз или обратитесь к организатору."
-                }
-            });
-        }
+        _judgeService = judgeService;
     }
-    */
+
+    [HttpPut("verify/{taskId}")]
+    [ProducesResponseType(typeof(VerdictResponse), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<VerdictResponse>> VerifySolution(string taskId, [FromBody] string sourceCode)
+    {
+        var userId = User.Identity.GetUserId();
+        var args = new SolutionArgs
+        {
+            UserId = userId,
+            TaskId = taskId,
+            SolutionCode = sourceCode
+        };
+
+        var verdict = await _judgeService.GetVerdict(args);
+        return verdict;
+    }
 }

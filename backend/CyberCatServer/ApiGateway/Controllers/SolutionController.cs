@@ -46,7 +46,7 @@ public class SolutionController : ControllerBase
         }
 
         var userId = User.Identity.GetUserId();
-        var args = new SaveCodeArgs
+        var args = new SolutionArgs
         {
             UserId = userId,
             TaskId = taskId,

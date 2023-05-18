@@ -7,6 +7,6 @@ namespace Shared.Services;
 public interface ISolutionGrpcService
 {
     Task<GetSavedCodeResponse> GetSavedCode(GetSavedCodeArgs args);
-    Task SaveCode(SaveCodeArgs args);
+    Task SaveCode(SolutionArgs args);
     Task RemoveCode(RemoveCodeArgs args);
 }

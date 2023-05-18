@@ -2,6 +2,7 @@
   <configuration default="false" name="Server Production" type="CompoundRunConfigurationType">
     <toRun name="ApiGateway: Production" type="LaunchSettings" />
     <toRun name="AuthService: Production" type="LaunchSettings" />
+    <toRun name="JudgeService: Production" type="LaunchSettings" />
     <toRun name="SolutionService: Production" type="LaunchSettings" />
     <toRun name="TaskService: Production" type="LaunchSettings" />
     <method v="2" />

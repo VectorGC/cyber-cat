@@ -20,6 +20,7 @@ var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
 
 var app = builder.Build();
 

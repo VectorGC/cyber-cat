@@ -1,0 +1,25 @@
+{
+  "profiles": {
+    "Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Development (auto reload)": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "watch run --no-hot-reload",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Production": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}

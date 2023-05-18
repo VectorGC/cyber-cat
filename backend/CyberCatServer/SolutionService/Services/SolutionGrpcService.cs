@@ -22,7 +22,7 @@ public class SolutionGrpcService : ISolutionGrpcService
         };
     }
 
-    public async Task SaveCode(SaveCodeArgs args)
+    public async Task SaveCode(SolutionArgs args)
     {
         await _solutionRepository.SaveCode(args.UserId, args.TaskId, args.SolutionCode);
     }
