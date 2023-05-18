@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "(auto reload)": {
+    "Auto reload": {
       "commandName": "Executable",
       "executablePath": "dotnet",
       "commandLineArgs": "watch test",

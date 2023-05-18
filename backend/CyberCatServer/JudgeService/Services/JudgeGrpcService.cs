@@ -1,7 +1,7 @@
 using Shared.Dto;
 using Shared.Services;
 
-namespace TaskService.Services;
+namespace JudgeService.Services;
 
 public class JudgeGrpcService : IJudgeGrpcService
 {

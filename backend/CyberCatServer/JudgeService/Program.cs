@@ -1,6 +1,6 @@
+using JudgeService;
+using JudgeService.Services;
 using ProtoBuf.Grpc.Server;
-using TaskService;
-using TaskService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

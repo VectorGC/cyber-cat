@@ -2,6 +2,7 @@
   <configuration default="false" name="Server Development" type="CompoundRunConfigurationType">
     <toRun name="ApiGateway: Development" type="LaunchSettings" />
     <toRun name="AuthService: Development" type="LaunchSettings" />
+    <toRun name="CppLauncherService: Development" type="LaunchSettings" />
     <toRun name="JudgeService: Development" type="LaunchSettings" />
     <toRun name="SolutionService: Development" type="LaunchSettings" />
     <toRun name="TaskService: Development" type="LaunchSettings" />

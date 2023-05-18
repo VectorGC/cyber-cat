@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config.d", "config.d", "{29
 		nginx\config.d\nginx.conf = nginx\config.d\nginx.conf
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompilerServiceAPI", "CompilerServiceAPI\CompilerServiceAPI.csproj", "{97095151-0159-4DCB-BC04-F0F08DA7CD0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CppLauncherService", "CppLauncherService\CppLauncherService.csproj", "{97095151-0159-4DCB-BC04-F0F08DA7CD0D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskService", "TaskService\TaskService.csproj", "{AAC47226-5086-465C-95BC-E2669B268D83}"
 EndProject
@@ -35,6 +35,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionService", "SolutionService\SolutionService.csproj", "{121AAC7B-C0AB-4717-9669-CAD36C5E45D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JudgeService", "JudgeService\JudgeService.csproj", "{4653BE4C-1807-4447-A9C4-8DA3AEF9E972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CppLauncherServiceTests", "Tests\CppLauncherServiceTests\CppLauncherServiceTests.csproj", "{EFC64247-9878-4547-B54F-BBF4A9CBDF69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,10 @@ Global
 		{4653BE4C-1807-4447-A9C4-8DA3AEF9E972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4653BE4C-1807-4447-A9C4-8DA3AEF9E972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4653BE4C-1807-4447-A9C4-8DA3AEF9E972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFC64247-9878-4547-B54F-BBF4A9CBDF69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFC64247-9878-4547-B54F-BBF4A9CBDF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFC64247-9878-4547-B54F-BBF4A9CBDF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFC64247-9878-4547-B54F-BBF4A9CBDF69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{296A288F-EFC4-470B-8357-23E4E2744677} = {46F24FCC-5926-4D85-B2D6-042A033369B9}
 		{A2693AA8-2595-4B87-A88D-0E0A2F19AEBB} = {C817C1D8-1209-4185-837E-B49E349BB59E}
 		{CF99A99F-5688-4D4A-B2F9-560E22B7DAA4} = {C817C1D8-1209-4185-837E-B49E349BB59E}
+		{EFC64247-9878-4547-B54F-BBF4A9CBDF69} = {C817C1D8-1209-4185-837E-B49E349BB59E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}

@@ -7,6 +7,7 @@ using AuthServiceTests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Client;
+using ProtoBuf.Grpc.ClientFactory;
 using Shared;
 using Shared.Configurations;
 using Shared.Dto;

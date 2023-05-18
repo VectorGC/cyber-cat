@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ApiGatewayEnd2EndTests: ApiGatewayEnd2EndTests (auto reload)" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Tests/ApiGatewayEnd2EndTests/ApiGatewayEnd2EndTests.csproj" />
+  <configuration default="false" name="CppLauncherService: Development (auto reload)" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/CppLauncherService/CppLauncherService.csproj" />
     <option name="LAUNCH_PROFILE_TFM" value="net7.0" />
-    <option name="LAUNCH_PROFILE_NAME" value="ApiGatewayEnd2EndTests (auto reload)" />
+    <option name="LAUNCH_PROFILE_NAME" value="Development (auto reload)" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
     <option name="RUNTIME_ARGUMENTS" value="" />

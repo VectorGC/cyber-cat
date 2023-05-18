@@ -1,6 +1,6 @@
 using Shared.Configurations;
 
-namespace TaskService;
+namespace JudgeService;
 
 public class JudgeServiceAppSettings
 {
