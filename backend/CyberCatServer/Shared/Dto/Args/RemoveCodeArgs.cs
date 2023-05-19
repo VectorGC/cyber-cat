@@ -1,11 +1,10 @@
 using ProtoBuf;
 
-namespace Shared.Dto;
+namespace Shared.Dto.Args;
 
 [ProtoContract]
-public class SolutionArgs
+public class RemoveCodeArgs
 {
     [ProtoMember(1)] public string UserId { get; set; }
     [ProtoMember(2)] public string TaskId { get; set; }
-    [ProtoMember(3)] public string SolutionCode { get; set; }
 }

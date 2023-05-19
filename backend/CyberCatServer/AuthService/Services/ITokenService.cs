@@ -1,4 +1,4 @@
-using AuthService.Models;
+using Shared.Models;
 
 namespace AuthService.Services;
 

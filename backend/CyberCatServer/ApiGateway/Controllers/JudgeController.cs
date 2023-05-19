@@ -25,11 +25,11 @@ public class JudgeController : ControllerBase
     public async Task<ActionResult<VerdictResponse>> VerifySolution(string taskId, [FromBody] string sourceCode)
     {
         var userId = User.Identity.GetUserId();
-        var args = new SolutionArgs
+        var args = new SolutionDto
         {
             UserId = userId,
             TaskId = taskId,
-            SolutionCode = sourceCode
+            SourceCode = sourceCode
         };
 
         var verdict = await _judgeService.GetVerdict(args);

@@ -6,5 +6,5 @@ namespace Shared.Services;
 [Service]
 public interface ICodeLauncherGrpcService
 {
-    Task<LaunchCodeResponse> Launch(SourceCodeArgs args);
+    Task<OutputDto> Launch(StringProto sourceCode);
 }

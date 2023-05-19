@@ -1,4 +1,5 @@
 using ProtoBuf;
+using Shared.Models;
 
 namespace Shared.Dto;
 

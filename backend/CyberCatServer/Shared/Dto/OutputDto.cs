@@ -3,7 +3,7 @@ using ProtoBuf;
 namespace Shared.Dto;
 
 [ProtoContract]
-public class LaunchCodeResponse
+public class OutputDto
 {
     [ProtoMember(1)] public string StandardOutput { get; set; }
     [ProtoMember(2)] public string StandardError { get; set; }

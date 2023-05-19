@@ -1,10 +1,12 @@
 using ProtoBuf;
+using Shared.Models;
 
 namespace Shared.Dto;
 
 [ProtoContract]
-public class RemoveCodeArgs
+public class SolutionDto : ISolution
 {
     [ProtoMember(1)] public string UserId { get; set; }
     [ProtoMember(2)] public string TaskId { get; set; }
+    [ProtoMember(3)] public string SourceCode { get; set; }
 }

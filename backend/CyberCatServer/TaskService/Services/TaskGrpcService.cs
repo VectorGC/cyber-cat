@@ -13,9 +13,13 @@ public class TaskGrpcService : ITaskGrpcService
         _taskRepository = taskRepository;
     }
 
-    public async Task<TaskResponse> GetTask(TaskIdArg arg)
+    public async Task<TaskDto> GetTask(StringProto taskId)
     {
-        var task = await _taskRepository.GetTask(arg.Id);
-        return TaskResponse.FromTask(task);
+        var task = await _taskRepository.GetTask(taskId);
+        return new TaskDto
+        {
+            Name = task.Name,
+            Description = task.Description
+        };
     }
 }

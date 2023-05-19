@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using AuthService.Models;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthServiceTests.Mocks;
@@ -9,7 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Client;
 using Shared;
 using Shared.Configurations;
-using Shared.Dto;
+using Shared.Dto.Args;
+using Shared.Models;
 using Shared.Services;
 
 namespace AuthServiceTests;

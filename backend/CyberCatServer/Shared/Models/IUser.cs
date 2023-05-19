@@ -1,4 +1,4 @@
-namespace AuthService.Models;
+namespace Shared.Models;
 
 public interface IUser
 {

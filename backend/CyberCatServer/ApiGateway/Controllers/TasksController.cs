@@ -19,15 +19,12 @@ public class TasksController : ControllerBase
         TaskService = taskService;
     }
 
-    [HttpGet("{id}")]
-    [ProducesResponseType(typeof(TaskResponse), (int) HttpStatusCode.OK)]
+    [HttpGet("{taskId}")]
+    [ProducesResponseType(typeof(TaskDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskResponse>> ShouldGetTutorialTask(string id)
+    public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
     {
-        var task = await TaskService.GetTask(new TaskIdArg
-        {
-            Id = id
-        });
-        return TaskResponse.FromTask(task);
+        var task = await TaskService.GetTask(taskId);
+        return task;
     }
 }

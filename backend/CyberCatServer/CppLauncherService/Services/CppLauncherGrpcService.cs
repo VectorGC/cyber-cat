@@ -13,21 +13,19 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         _compileService = compileService;
     }
 
-    public async Task<LaunchCodeResponse> Launch(SourceCodeArgs args)
+    public async Task<OutputDto> Launch(StringProto sourceCode)
     {
-        var sourceCode = args.SourceCode;
-
         var compileResult = await _compileService.CompileCode(sourceCode);
         if (compileResult.Output.HasError)
         {
-            return new LaunchCodeResponse
+            return new OutputDto
             {
                 StandardError = compileResult.Output.StandardError
             };
         }
 
         var launchOutput = await _compileService.LaunchCode(compileResult.ObjectFileName);
-        return new LaunchCodeResponse
+        return new OutputDto
         {
             StandardOutput = launchOutput.StandardOutput,
             StandardError = launchOutput.StandardError

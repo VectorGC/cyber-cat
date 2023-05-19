@@ -2,7 +2,6 @@ using CppLauncherService;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
 using Shared;
-using Shared.Dto;
 using Shared.Services;
 
 namespace CppLauncherServiceTests;
@@ -21,16 +20,12 @@ public class CppLauncherServiceTests
     [Test]
     public async Task CompileAndLaunch_WhenPassValidCode()
     {
-        var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
-        var args = new SourceCodeArgs
-        {
-            SourceCode = sourceCode
-        };
+        const string sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(args);
+        var response = await codeLauncherService.Launch(sourceCode);
 
         Assert.IsNull(response.StandardError);
         Assert.AreEqual("Hello cat!", response.StandardOutput);
@@ -39,17 +34,13 @@ public class CppLauncherServiceTests
     [Test]
     public async Task CompileError_WhenPassNonCompiledCode()
     {
-        var sourceCode = "#include <stdio.h> \nint main()";
-        var args = new SourceCodeArgs
-        {
-            SourceCode = sourceCode
-        };
-        var expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
+        const string sourceCode = "#include <stdio.h> \nint main()";
+        const string expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(args);
+        var response = await codeLauncherService.Launch(sourceCode);
 
         Assert.That(response.StandardError, Does.Match(expectedErrorRegex));
         Assert.IsNull(response.StandardOutput);
@@ -58,18 +49,15 @@ public class CppLauncherServiceTests
     [Test]
     public async Task LaunchError_WhenPassInfinityLoopCode()
     {
-        var sourceCode = "int main() { while(true){} }";
-        var args = new SourceCodeArgs
-        {
-            SourceCode = sourceCode
-        };
+        const string sourceCode = "int main() { while(true){} }";
+        const string expectedError = "Exit Code -1: The process took more than 5 seconds";
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(args);
+        var response = await codeLauncherService.Launch(sourceCode);
 
-        Assert.AreEqual("Exit Code -1: The process took more than 5 seconds", response.StandardError);
+        Assert.AreEqual(expectedError, response.StandardError);
         Assert.IsNull(response.StandardOutput);
     }
 }

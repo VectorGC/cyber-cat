@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using ApiGatewayEnd2EndTests.Extensions;
 using Shared.Dto;
+using Shared.Models;
 
 namespace ApiGatewayEnd2EndTests;
 

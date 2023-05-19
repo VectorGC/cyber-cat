@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Dto;
+using Shared.Dto.Args;
 using Shared.Services;
 
 namespace ApiGateway.Controllers;
@@ -33,7 +34,7 @@ public class SolutionController : ControllerBase
         };
 
         var savedCode = await _solutionService.GetSavedCode(args);
-        return savedCode.SolutionCode;
+        return (string) savedCode;
     }
 
     [HttpPost("{taskId}")]
@@ -46,11 +47,11 @@ public class SolutionController : ControllerBase
         }
 
         var userId = User.Identity.GetUserId();
-        var args = new SolutionArgs
+        var args = new SolutionDto
         {
             UserId = userId,
             TaskId = taskId,
-            SolutionCode = sourceCode
+            SourceCode = sourceCode
         };
 
         await _solutionService.SaveCode(args);

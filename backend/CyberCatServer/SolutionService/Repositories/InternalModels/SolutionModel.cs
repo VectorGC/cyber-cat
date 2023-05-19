@@ -11,6 +11,8 @@ public class SolutionModel : ISolution, IDocument<Guid>
     public string TaskId { get; set; } = null!;
     public string SourceCode { get; set; } = null!;
 
+    public string Comment => throw new NotImplementedException();
+
     public Guid Id { get; set; }
     public int Version { get; set; }
 }

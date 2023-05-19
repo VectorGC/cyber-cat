@@ -1,5 +1,6 @@
 using AuthService.Repositories;
 using Shared.Dto;
+using Shared.Dto.Args;
 using Shared.Exceptions;
 using Shared.Services;
 

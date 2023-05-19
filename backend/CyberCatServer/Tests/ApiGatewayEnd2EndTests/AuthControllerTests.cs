@@ -1,6 +1,4 @@
-using System.Net.Http.Json;
 using ApiGatewayEnd2EndTests.Extensions;
-using Shared.Dto;
 
 namespace ApiGatewayEnd2EndTests;
 
@@ -27,9 +25,8 @@ public class AuthControllerTests
     {
         await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
 
-        var response = await _client.GetAsync("http://localhost:5000/auth/authorize_player");
-        var responseDto = await response.Content.ReadFromJsonAsync<AuthorizePlayerResponse>();
+        var name = await _client.GetStringAsync("http://localhost:5000/auth/authorize_player");
 
-        Assert.AreEqual("lll", responseDto.Name);
+        Assert.AreEqual("lll", name);
     }
 }

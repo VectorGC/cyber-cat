@@ -1,4 +1,4 @@
-namespace Shared.Dto;
+namespace Shared.Models;
 
 public enum VerdictStatus
 {

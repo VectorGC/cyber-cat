@@ -1,4 +1,5 @@
 using Shared.Dto;
+using Shared.Models;
 using Shared.Services;
 
 namespace JudgeService.Services;
@@ -12,14 +13,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         _codeLauncherGrpcService = codeLauncherGrpcService;
     }
 
-    public async Task<VerdictResponse> GetVerdict(SolutionArgs args)
+    public async Task<VerdictResponse> GetVerdict(SolutionDto solution)
     {
-        var launchCodeArgs = new SourceCodeArgs
-        {
-            SourceCode = args.SolutionCode
-        };
-
-        var response = await _codeLauncherGrpcService.Launch(launchCodeArgs);
+        var response = await _codeLauncherGrpcService.Launch(solution.SourceCode);
         if (response.HasError)
         {
             return new VerdictResponse
