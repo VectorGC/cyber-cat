@@ -1,6 +1,10 @@
+using System.Linq.Expressions;
+using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using MongoDbGenericRepository;
 using Shared.Exceptions;
+using Shared.Models;
 using SolutionService.Repositories.InternalModels;
 
 namespace SolutionService.Repositories;
@@ -10,6 +14,13 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
     public SolutionMongoRepository(IOptions<SolutionServiceAppSettings> appSettings)
         : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
     {
+        var indexes = new List<Expression<Func<SolutionModel, object>>>
+        {
+            s => s.UserId,
+            s => s.TaskId
+        };
+
+        CreateCombinedTextIndexAsync(indexes);
     }
 
     public async Task<string?> GetSavedCode(string userId, string taskId)
@@ -18,28 +29,24 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         return solution?.SourceCode;
     }
 
-    public async Task SaveCode(string userId, string taskId, string sourceCode)
+    public async Task Save(ISolution solution)
     {
-        var solution = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == taskId);
-        if (solution == null)
+        var solutionModel = await GetOneAsync<SolutionModel>(s => s.UserId == solution.UserId && s.TaskId == solution.TaskId);
+        if (solutionModel == null)
         {
-            solution = new SolutionModel
-            {
-                UserId = userId,
-                TaskId = taskId,
-                SourceCode = sourceCode
-            };
-
-            await AddOneAsync(solution);
+            solutionModel = solution.To<SolutionModel>();
+            await AddOneAsync(solutionModel);
             return;
         }
 
-        solution.SourceCode = sourceCode;
+        var id = solutionModel.Id;
+        solutionModel = solution.To<SolutionModel>();
+        solutionModel.Id = id;
 
-        var success = await UpdateOneAsync(solution);
+        var success = await UpdateOneAsync(solutionModel);
         if (!success)
         {
-            throw new SaveCodeException($"Failure save code solution for user '{userId}' by task '{taskId}'");
+            throw new SaveCodeException($"Failure save code solution for user '{solution.UserId}' by task '{solution.TaskId}'");
         }
     }
 

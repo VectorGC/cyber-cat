@@ -20,9 +20,9 @@ public class SolutionGrpcService : ISolutionGrpcService
         return solutionCode;
     }
 
-    public async Task SaveCode(SolutionDto dto)
+    public async Task SaveCode(SolutionDto solution)
     {
-        await _solutionRepository.SaveCode(dto.UserId, dto.TaskId, dto.SourceCode);
+        await _solutionRepository.Save(solution);
     }
 
     public async Task RemoveCode(RemoveCodeArgs args)

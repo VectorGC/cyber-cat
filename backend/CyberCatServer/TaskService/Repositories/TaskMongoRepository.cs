@@ -14,7 +14,9 @@ namespace TaskService.Repositories
 
         public async Task Add(string id, ITask task)
         {
-            var taskModel = TaskModel.FromTask(id, task);
+            var taskModel = task.To<TaskModel>();
+            taskModel.Id = id;
+
             await AddOneAsync(taskModel);
         }
 

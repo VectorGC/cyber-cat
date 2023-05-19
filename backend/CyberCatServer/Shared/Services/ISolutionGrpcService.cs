@@ -8,6 +8,6 @@ namespace Shared.Services;
 public interface ISolutionGrpcService
 {
     Task<StringProto> GetSavedCode(GetSavedCodeArgs args);
-    Task SaveCode(SolutionDto dto);
+    Task SaveCode(SolutionDto solution);
     Task RemoveCode(RemoveCodeArgs args);
 }

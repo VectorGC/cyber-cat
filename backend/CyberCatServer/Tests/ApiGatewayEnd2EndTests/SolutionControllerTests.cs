@@ -19,7 +19,8 @@ public class SolutionControllerTests
     public async Task GetSavedCode_AfterSaveAndDeleteCode()
     {
         var taskId = "tutorial";
-        var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
+        var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
+        var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
         // Проверяем что изначально кода нет.
         var lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
@@ -32,6 +33,14 @@ public class SolutionControllerTests
         lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
         Assert.IsNotEmpty(lastSavedCode);
         Assert.AreEqual(sourceCode, lastSavedCode);
+
+        // Меняем сохраненный код.
+        response = await _client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCodeToChange);
+        response.EnsureSuccessStatusCode();
+
+        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        Assert.IsNotEmpty(lastSavedCode);
+        Assert.AreEqual(sourceCodeToChange, lastSavedCode);
 
         // Удаляем и проверяем, что все очистилось.
         await _client.DeleteAsync($"http://localhost:5000/solution/{taskId}");

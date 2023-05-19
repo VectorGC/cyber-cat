@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
 using ProtoBuf;
+using Shared.Models;
 
 namespace Shared.Dto;
 
 [ProtoContract]
-public class TaskDto
+public class TaskDto : ITask
 {
     [ProtoMember(1)]
     [JsonPropertyName("name")]
