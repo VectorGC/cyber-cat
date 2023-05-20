@@ -18,8 +18,7 @@ namespace CppLauncherService.Services.CppLaunchers
             var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
             var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
 
-            var pathToFile = await _cppFileCreator.CreateCppWithText(sourceCode);
-            var output = await _processExecutorProxy.Run("g++", $"{pathToFile} -Wall -Werror -o code -static-libgcc -static-libstdc++");
+            var output = await _processExecutorProxy.Run("g++", $"{cppFileName} -Wall -Werror -o {objectFileName} -static-libgcc -static-libstdc++");
 
             return new CompileCppResult
             {
@@ -28,9 +27,9 @@ namespace CppLauncherService.Services.CppLaunchers
             };
         }
 
-        public async Task<Output> LaunchCode(string objectFileName)
+        public async Task<Output> LaunchCode(string objectFileName, string? input)
         {
-            return await _processExecutorProxy.Run($"{objectFileName}", string.Empty);
+            return await _processExecutorProxy.Run($"{objectFileName}", string.Empty, input);
         }
     }
 }

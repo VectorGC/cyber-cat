@@ -26,9 +26,9 @@ namespace CppLauncherService.Services.CppLaunchers
             };
         }
 
-        public async Task<Output> LaunchCode(string objectFileName)
+        public async Task<Output> LaunchCode(string objectFileName, string? input)
         {
-            return await _processExecutorProxy.Run("wsl", $"./{objectFileName}");
+            return await _processExecutorProxy.Run("wsl", $"./{objectFileName}", input);
         }
     }
 }

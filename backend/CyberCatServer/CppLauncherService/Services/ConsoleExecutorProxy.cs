@@ -14,18 +14,24 @@ namespace CppLauncherService.Services
             _timeOut = appSettings.Value.ProcessTimeout;
         }
 
-        public async Task<Output> Run(string command, string arguments)
+        public async Task<Output> Run(string command, string arguments, string? input = null)
         {
             ProcessStartInfo startInfo = new()
             {
                 FileName = command,
                 Arguments = arguments,
+                RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 StandardErrorEncoding = Encoding.Default
             };
 
             var process = Process.Start(startInfo);
+            await process.StandardInput.WriteAsync(input);
+            // После воода нудно передать символ \n (как будто нажали Enter), чтобы программа засчитала ввод.
+            // TODO: Используй здесь константу.
+            await process.StandardInput.WriteAsync("\n");
+
             var output = await WaitForExit(process, _timeOut);
             if (output.HasError)
             {

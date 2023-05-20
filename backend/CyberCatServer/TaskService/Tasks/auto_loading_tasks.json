@@ -1,7 +1,31 @@
 [
   {
     "_id": "tutorial",
-    "Name": "Hello world!",
-    "Description": "Вывести строку: Hello world!"
+    "Name": "Hello cat!",
+    "Description": "Вывести строку: Hello cat!",
+    "Tests": [
+      {
+        "ExpectedOutput": "Hello cat!"
+      }
+    ]
+  },
+  {
+    "_id": "sum_ab",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
   }
 ]

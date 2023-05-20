@@ -2,12 +2,14 @@ using CppLauncherService;
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
 using Shared;
+using Shared.Dto.Args;
 using Shared.Services;
 
 namespace CppLauncherServiceTests;
 
+// Проверяем, может ли код компилироваться и запуска на нашем сервисе.
 [TestFixture]
-public class CppLauncherServiceTests
+public class CompileAndLaunchTests
 {
     private WebApplicationFactory<Program> _factory;
 
@@ -17,15 +19,21 @@ public class CppLauncherServiceTests
         _factory = new WebApplicationFactory<Program>();
     }
 
+    // TODO: Проверяем что директория пуста и после запуска она тоже очищается.
+
     [Test]
     public async Task CompileAndLaunch_WhenPassValidCode()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
+        var args = new LaunchCodeArgs()
+        {
+            SourceCode = sourceCode
+        };
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(sourceCode);
+        var response = await codeLauncherService.Launch(args);
 
         Assert.IsNull(response.StandardError);
         Assert.AreEqual("Hello cat!", response.StandardOutput);
@@ -36,11 +44,15 @@ public class CppLauncherServiceTests
     {
         const string sourceCode = "#include <stdio.h> \nint main()";
         const string expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
+        var args = new LaunchCodeArgs()
+        {
+            SourceCode = sourceCode
+        };
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(sourceCode);
+        var response = await codeLauncherService.Launch(args);
 
         Assert.That(response.StandardError, Does.Match(expectedErrorRegex));
         Assert.IsNull(response.StandardOutput);
@@ -51,13 +63,19 @@ public class CppLauncherServiceTests
     {
         const string sourceCode = "int main() { while(true){} }";
         const string expectedError = "Exit Code -1: The process took more than 5 seconds";
+        var args = new LaunchCodeArgs()
+        {
+            SourceCode = sourceCode
+        };
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var response = await codeLauncherService.Launch(sourceCode);
+        var response = await codeLauncherService.Launch(args);
 
         Assert.AreEqual(expectedError, response.StandardError);
         Assert.IsNull(response.StandardOutput);
     }
+
+    // TODO: Проверка, на segmentation fault не запускается
 }

@@ -22,7 +22,7 @@ public class TasksControllerTests
 
         var task = await _client.GetFromJsonAsync<TaskDto>($"http://localhost:5000/tasks/{taskId}");
 
-        Assert.AreEqual("Hello world!", task.Name);
+        Assert.AreEqual("Hello cat!", task.Name);
         Assert.IsNotEmpty(task.Description);
     }
 }

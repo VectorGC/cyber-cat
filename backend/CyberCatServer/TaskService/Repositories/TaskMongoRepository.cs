@@ -14,7 +14,7 @@ namespace TaskService.Repositories
 
         public async Task Add(string id, ITask task)
         {
-            var taskModel = task.To<TaskModel>();
+            var taskModel = task.To<TaskWithTestsModel>();
             taskModel.Id = id;
 
             await AddOneAsync(taskModel);
@@ -22,13 +22,13 @@ namespace TaskService.Repositories
 
         public async Task<ITask?> GetTask(string id)
         {
-            var task = await GetOneAsync<TaskModel>(task => task.Id == id);
+            var task = await GetOneAsync<TaskWithTestsModel>(task => task.Id == id);
             return task;
         }
 
         public async Task<bool> Contains(string id)
         {
-            return await AnyAsync<TaskModel>(task => task.Id == id);
+            return await AnyAsync<TaskWithTestsModel>(task => task.Id == id);
         }
     }
 }

@@ -28,7 +28,7 @@ public class AutoLoadTasksRepository : IHostedService
         var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
 
         await using var stream = File.OpenRead(fullPath);
-        var tasks = await JsonSerializer.DeserializeAsync<List<TaskModel>>(stream, cancellationToken: cancellationToken);
+        var tasks = await JsonSerializer.DeserializeAsync<List<TaskWithTestsModel>>(stream, cancellationToken: cancellationToken);
 
         foreach (var task in tasks)
         {

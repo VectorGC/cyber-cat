@@ -7,6 +7,7 @@ using Shared;
 
 namespace AuthServiceTests;
 
+// Проверяем, корректно ли создается и удаляются пользователи.
 [TestFixture]
 public class AuthRepositoryTests
 {

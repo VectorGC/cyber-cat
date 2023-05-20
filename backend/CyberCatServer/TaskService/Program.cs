@@ -11,10 +11,13 @@ builder.Services
     .AddScoped<ITaskRepository, TaskMongoRepository>()
     .AddHostedService<AutoLoadTasksRepository>();
 
+builder.Services.AddScoped<ITestRepository, TestMongoRepository>();
+
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 
 var app = builder.Build();
 
 app.MapGrpcService<TaskGrpcService>();
+app.MapGrpcService<TestGrpcService>();
 
 app.Run();

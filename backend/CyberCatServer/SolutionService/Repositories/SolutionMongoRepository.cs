@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
-using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 using MongoDbGenericRepository;
 using Shared.Exceptions;
 using Shared.Models;

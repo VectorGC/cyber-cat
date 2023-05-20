@@ -14,8 +14,9 @@ using Shared.Services;
 
 namespace AuthServiceTests;
 
+// Проверяем аутентификацию и авторизацию.
 [TestFixture]
-public class AuthServiceTests
+public class AuthenticationAndPlayerAuthorization
 {
     private WebApplicationFactory<Program> _factory;
     private readonly MockAuthUserRepository _mockAuthUserRepository = new();

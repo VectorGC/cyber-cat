@@ -12,6 +12,7 @@ builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = tr
 
 var appSettings = builder.Configuration.Get<JudgeServiceAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<ICodeLauncherGrpcService>(options => { options.Address = appSettings.ConnectionStrings.CppLauncherServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpcClient<ITestGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TestServiceGrpcAddress; });
 
 var app = builder.Build();
 
