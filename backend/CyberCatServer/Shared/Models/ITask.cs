@@ -2,6 +2,6 @@ namespace Shared.Models;
 
 public interface ITask
 {
-    string Name { get; init; }
-    string Description { get; init; }
+    string Name { get; }
+    string Description { get; }
 }

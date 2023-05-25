@@ -38,12 +38,7 @@ public class AutoLoadTasksRepository : IHostedService
                 continue;
             }
 
-            var taskChallenge = new TaskChallenge
-            {
-                Name = task.Name,
-                Description = task.Description
-            };
-            await repository.Add(task.Id, taskChallenge);
+            await repository.Add(task.Id, task);
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 

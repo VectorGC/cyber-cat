@@ -28,11 +28,7 @@ namespace TaskService.Repositories
         public async Task<ITask?> GetTask(string id)
         {
             var task = await GetOneAsync<TaskModel>(task => task.Id == id);
-            return new TaskChallenge
-            {
-                Name = task.Name,
-                Description = task.Description
-            };
+            return task;
         }
 
         public async Task<bool> Contains(string id)
