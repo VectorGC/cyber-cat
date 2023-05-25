@@ -27,4 +27,8 @@
         <InternalsVisibleTo Include="ApiGateway" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Dto\" />
+    </ItemGroup>
+
 </Project>

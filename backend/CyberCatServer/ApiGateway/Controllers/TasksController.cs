@@ -1,5 +1,4 @@
 using System.Net;
-using ApiGateway.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

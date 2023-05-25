@@ -25,3 +25,19 @@ public class ListProto<T>
         };
     }
 }
+
+public static class ListProtoExtensions
+{
+    public static List<TSource> ToListProto<TSource>(this IEnumerable<TSource> source) where TSource : new()
+    {
+        if (source == null)
+        {
+            throw new ArgumentException(nameof(source));
+        }
+
+        return source as ListProto<TSource> ?? new ListProto<TSource>
+        {
+            Values = source as List<TSource> ?? new List<TSource>(source)
+        };
+    }
+}
