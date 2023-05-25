@@ -15,10 +15,6 @@ public class TestMongoRepository : BaseMongoRepository<string>, ITestRepository
     public async Task<List<ITest>?> GetTests(string taskId)
     {
         var task = await GetOneAsync<TaskModel>(task => task.Id == taskId);
-        return task.Tests.Select(t => (ITest) new TestChallenge
-        {
-            Input = t.Input,
-            ExpectedOutput = t.ExpectedOutput
-        }).ToList();
+        return task.Tests.OfType<ITest>().ToList();
     }
 }

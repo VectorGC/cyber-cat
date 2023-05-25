@@ -1,4 +1,5 @@
 using System.Net;
+using ApiGateway.Dto;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,10 @@ public class TasksController : ControllerBase
     public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
     {
         var task = await TaskService.GetTask(taskId);
-        return task;
+        return new TaskDto
+        {
+            Name = task.Name,
+            Description = task.Description
+        };
     }
 }

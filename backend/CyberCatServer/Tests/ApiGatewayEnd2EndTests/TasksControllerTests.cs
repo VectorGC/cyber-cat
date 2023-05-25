@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using ApiGateway.Dto;
 using ApiGatewayEnd2EndTests.Extensions;
 using Shared.Dto;
 

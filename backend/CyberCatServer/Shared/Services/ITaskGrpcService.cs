@@ -6,5 +6,5 @@ namespace Shared.Services;
 [Service]
 public interface ITaskGrpcService
 {
-    Task<TaskDto> GetTask(StringProto taskId);
+    Task<GetTaskResponse> GetTask(StringProto taskId);
 }
