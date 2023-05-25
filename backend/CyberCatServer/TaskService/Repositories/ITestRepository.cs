@@ -4,5 +4,5 @@ namespace TaskService.Repositories;
 
 public interface ITestRepository
 {
-    Task<List<ITest>?> GetTests(string taskId);
+    Task<ITests?> GetTests(string taskId);
 }

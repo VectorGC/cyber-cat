@@ -17,5 +17,10 @@ namespace TaskService.Repositories.InternalModels
         public string Name { get; set; }
         public string Description { get; set; }
         public List<TestModel> Tests { get; set; }
+
+        public TestsModel GetTests()
+        {
+            return new TestsModel(Tests);
+        }
     }
 }

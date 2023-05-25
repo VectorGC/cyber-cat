@@ -20,9 +20,4 @@ public static class TestDtoExtensions
             ExpectedOutput = test.ExpectedOutput
         };
     }
-
-    public static ListProto<TestDto> ToProtoDto(this List<ITest> tests)
-    {
-        return tests.Select(test => test.ToDto()).ToListProto();
-    }
 }

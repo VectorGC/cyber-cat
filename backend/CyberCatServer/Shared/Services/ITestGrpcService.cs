@@ -6,5 +6,5 @@ namespace Shared.Services;
 [Service]
 public interface ITestGrpcService
 {
-    Task<ListProto<TestDto>> GetTests(StringProto taskId);
+    Task<TestsDto> GetTests(StringProto taskId);
 }
