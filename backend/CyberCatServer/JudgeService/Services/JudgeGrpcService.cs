@@ -22,8 +22,7 @@ public class JudgeGrpcService : IJudgeGrpcService
         var tests = await _testService.GetTests(solution.TaskId);
         var testPassed = 0;
 
-        // TODO: Нужна коллекция и удобная итерация по объектам в коллекции.
-        foreach (var test in tests.Tests)
+        foreach (var test in tests)
         {
             var output = await LaunchCode(solution.SourceCode, test.Input);
             if (!output.Success)

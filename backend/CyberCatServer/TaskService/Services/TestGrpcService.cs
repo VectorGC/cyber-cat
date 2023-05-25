@@ -13,12 +13,16 @@ public class TestGrpcService : ITestGrpcService
         _testRepository = testRepository;
     }
 
-    public async Task<TestsDto> GetTests(StringProto taskId)
+    public async Task<ListProto<TestDto>> GetTests(StringProto taskId)
     {
         var tests = await _testRepository.GetTests(taskId);
-        return new TestsDto
+        return new ListProto<TestDto>()
         {
-            Tests = tests.Tests.Select(x => x.To<TestDto>()).ToList()
+            Values = tests.Select(t => new TestDto
+            {
+                Input = t.Input,
+                ExpectedOutput = t.ExpectedOutput
+            }).ToList()
         };
     }
 }

@@ -1,11 +1,10 @@
 using ProtoBuf;
-using Shared.Models;
 
 namespace Shared.Dto;
 
 [ProtoContract]
-public class TestDto : ITest
+public class TestDto
 {
-    [ProtoMember(1)] public string Input { get; init; }
-    [ProtoMember(2)] public string ExpectedOutput { get; init; }
+    [ProtoMember(1)] public string Input { get; set; }
+    [ProtoMember(2)] public string ExpectedOutput { get; set; }
 }
