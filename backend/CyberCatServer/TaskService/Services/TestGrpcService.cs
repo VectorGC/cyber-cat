@@ -16,6 +16,9 @@ public class TestGrpcService : ITestGrpcService
     public async Task<TestsDto> GetTests(StringProto taskId)
     {
         var tests = await _testRepository.GetTests(taskId);
-        return tests.To<TestsDto, TestDto>();
+        return new TestsDto
+        {
+            Tests = tests.Tests.Select(x => x.To<TestDto>()).ToList()
+        };
     }
 }

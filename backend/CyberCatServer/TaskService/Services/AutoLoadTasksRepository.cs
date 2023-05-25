@@ -28,7 +28,7 @@ public class AutoLoadTasksRepository : IHostedService
         var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
 
         await using var stream = File.OpenRead(fullPath);
-        var tasks = await JsonSerializer.DeserializeAsync<List<TaskWithTestsModel>>(stream, cancellationToken: cancellationToken);
+        var tasks = await JsonSerializer.DeserializeAsync<List<TaskModel>>(stream, cancellationToken: cancellationToken);
 
         foreach (var task in tasks)
         {
@@ -38,7 +38,12 @@ public class AutoLoadTasksRepository : IHostedService
                 continue;
             }
 
-            await repository.Add(task.Id, task);
+            var taskChallenge = new TaskChallenge
+            {
+                Name = task.Name,
+                Description = task.Description
+            };
+            await repository.Add(task.Id, taskChallenge);
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 

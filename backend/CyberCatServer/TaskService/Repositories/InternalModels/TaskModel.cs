@@ -7,7 +7,7 @@ using Shared.Models;
 namespace TaskService.Repositories.InternalModels
 {
     [CollectionName("Tasks")]
-    internal class TaskWithTestsModel : IDocument<string>, ITask, ITests
+    internal class TaskModel : IDocument<string>
     {
         [BsonId]
         [JsonPropertyName("_id")] // Для точной десериализации из файла.
@@ -17,11 +17,11 @@ namespace TaskService.Repositories.InternalModels
         public string Name { get; init; }
         public string Description { get; init; }
         public List<TestModel> Tests { get; init; }
-
-        IReadOnlyList<ITest> ITests.Tests
-        {
-            get => Tests;
-            init => Tests = value.Select(test => test.To<TestModel>()).ToList();
-        }
+    }
+    
+    internal class TaskChallenge : ITask
+    {
+        public string Name { get; init; }
+        public string Description { get; init; }
     }
 }
