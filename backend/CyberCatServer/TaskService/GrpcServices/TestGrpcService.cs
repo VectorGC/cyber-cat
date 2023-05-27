@@ -1,8 +1,9 @@
 using Shared.Dto;
+using Shared.Dto.ProtoHelpers;
 using Shared.Services;
 using TaskService.Repositories;
 
-namespace TaskService.Services;
+namespace TaskService.GrpcServices;
 
 public class TestGrpcService : ITestGrpcService
 {
@@ -16,6 +17,6 @@ public class TestGrpcService : ITestGrpcService
     public async Task<TestsDto> GetTests(StringProto taskId)
     {
         var tests = await _testRepository.GetTests(taskId);
-        return tests.ToDto();
+        return tests.To<TestsDto>();
     }
 }

@@ -1,5 +1,6 @@
 using Shared.Dto;
 using Shared.Dto.Args;
+using Shared.Dto.ProtoHelpers;
 using Shared.Services;
 using SolutionService.Repositories;
 
@@ -20,9 +21,9 @@ public class SolutionGrpcService : ISolutionGrpcService
         return solutionCode;
     }
 
-    public async Task SaveCode(SolutionDto solution)
+    public async Task SaveCode(SaveCodeArgs args)
     {
-        await _solutionRepository.Save(solution);
+        await _solutionRepository.Save(args.UserId, args.Solution);
     }
 
     public async Task RemoveCode(RemoveCodeArgs args)

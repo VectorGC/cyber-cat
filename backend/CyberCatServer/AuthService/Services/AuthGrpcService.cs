@@ -17,7 +17,7 @@ public class AuthGrpcService : IAuthGrpcService
         _tokenService = tokenService;
     }
 
-    public async Task<TokenResponse> GetAccessToken(GetAccessTokenArgs args)
+    public async Task<TokenDto> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
         var password = args.Password;
@@ -37,6 +37,6 @@ public class AuthGrpcService : IAuthGrpcService
         var accessToken = _tokenService.CreateToken(user);
         await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(user, accessToken);
 
-        return new TokenResponse {AccessToken = accessToken};
+        return new TokenDto {AccessToken = accessToken};
     }
 }

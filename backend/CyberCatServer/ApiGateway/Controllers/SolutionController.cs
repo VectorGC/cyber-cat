@@ -14,11 +14,11 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class SolutionController : ControllerBase
 {
-    private readonly ISolutionGrpcService _solutionService;
+    private readonly ISolutionGrpcService _solutionGrpcService;
 
-    public SolutionController(ISolutionGrpcService solutionService)
+    public SolutionController(ISolutionGrpcService solutionGrpcService)
     {
-        _solutionService = solutionService;
+        _solutionGrpcService = solutionGrpcService;
     }
 
     [HttpGet("{taskId}")]
@@ -33,7 +33,7 @@ public class SolutionController : ControllerBase
             TaskId = taskId
         };
 
-        var savedCode = await _solutionService.GetSavedCode(args);
+        var savedCode = await _solutionGrpcService.GetSavedCode(args);
         return (string) savedCode;
     }
 
@@ -47,14 +47,17 @@ public class SolutionController : ControllerBase
         }
 
         var userId = User.Identity.GetUserId();
-        var args = new SolutionDto
+        var args = new SaveCodeArgs()
         {
             UserId = userId,
-            TaskId = taskId,
-            SourceCode = sourceCode
+            Solution = new SolutionDto()
+            {
+                TaskId = taskId,
+                SourceCode = sourceCode
+            }
         };
 
-        await _solutionService.SaveCode(args);
+        await _solutionGrpcService.SaveCode(args);
 
         return Ok();
     }
@@ -71,7 +74,7 @@ public class SolutionController : ControllerBase
             TaskId = taskId
         };
 
-        await _solutionService.RemoveCode(args);
+        await _solutionGrpcService.RemoveCode(args);
 
         return Ok();
     }

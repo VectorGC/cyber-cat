@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Dto;
+namespace Shared.Dto.ProtoHelpers;
 
 [ProtoContract]
 public sealed class StringProto

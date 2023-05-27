@@ -1,6 +1,7 @@
 using ProtoBuf.Grpc.Configuration;
 using Shared.Dto;
 using Shared.Dto.Args;
+using Shared.Dto.ProtoHelpers;
 
 namespace Shared.Services;
 
@@ -8,6 +9,6 @@ namespace Shared.Services;
 public interface ISolutionGrpcService
 {
     Task<StringProto> GetSavedCode(GetSavedCodeArgs args);
-    Task SaveCode(SolutionDto solution);
+    Task SaveCode(SaveCodeArgs solution);
     Task RemoveCode(RemoveCodeArgs args);
 }

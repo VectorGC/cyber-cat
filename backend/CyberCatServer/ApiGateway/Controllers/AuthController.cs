@@ -12,24 +12,24 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthGrpcService _authService;
+    private readonly IAuthGrpcService _authGrpcService;
 
-    public AuthController(IAuthGrpcService authService)
+    public AuthController(IAuthGrpcService authGrpcService)
     {
-        _authService = authService;
+        _authGrpcService = authGrpcService;
     }
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<TokenResponse>> Login(string username, string password)
+    public async Task<ActionResult<TokenDto>> Login(string username, string password)
     {
-        var response = await _authService.GetAccessToken(new GetAccessTokenArgs
+        var response = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
         {
             Email = username,
             Password = password
         });
 
-        return new TokenResponse
+        return new TokenDto
         {
             AccessToken = response.AccessToken
         };

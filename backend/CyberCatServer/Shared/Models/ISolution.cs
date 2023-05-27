@@ -2,15 +2,18 @@ namespace Shared.Models;
 
 public interface ISolution
 {
-    string UserId { get; init; }
     string TaskId { get; init; }
     string SourceCode { get; init; }
 
-    T To<T>() where T : class, ISolution, new()
+    T To<T>() where T : ISolution, new()
     {
-        return this as T ?? new T
+        if (this is T typed)
         {
-            UserId = UserId,
+            return typed;
+        }
+
+        return new T
+        {
             TaskId = TaskId,
             SourceCode = SourceCode
         };

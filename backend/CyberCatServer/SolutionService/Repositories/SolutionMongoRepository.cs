@@ -27,12 +27,13 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         return solution?.SourceCode;
     }
 
-    public async Task Save(ISolution solution)
+    public async Task Save(string userId, ISolution solution)
     {
-        var solutionModel = await GetOneAsync<SolutionModel>(s => s.UserId == solution.UserId && s.TaskId == solution.TaskId);
+        var solutionModel = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == solution.TaskId);
         if (solutionModel == null)
         {
             solutionModel = solution.To<SolutionModel>();
+            solutionModel.UserId = userId;
             await AddOneAsync(solutionModel);
             return;
         }
@@ -40,11 +41,12 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         var id = solutionModel.Id;
         solutionModel = solution.To<SolutionModel>();
         solutionModel.Id = id;
+        solutionModel.UserId = userId;
 
         var success = await UpdateOneAsync(solutionModel);
         if (!success)
         {
-            throw new SaveCodeException($"Failure save code solution for user '{solution.UserId}' by task '{solution.TaskId}'");
+            throw new SaveCodeException($"Failure save code solution for user '{userId}' by task '{solution.TaskId}'");
         }
     }
 

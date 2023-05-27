@@ -1,5 +1,6 @@
 using ProtoBuf.Grpc.Server;
 using TaskService;
+using TaskService.GrpcServices;
 using TaskService.Repositories;
 using TaskService.Services;
 
@@ -9,7 +10,7 @@ builder.Services.Configure<TaskServiceAppSettings>(builder.Configuration);
 
 builder.Services
     .AddScoped<ITaskRepository, TaskMongoRepository>()
-    .AddHostedService<AutoLoadTasksRepository>();
+    .AddHostedService<AutoLoadTasksToRepository>();
 
 builder.Services.AddScoped<ITestRepository, TestMongoRepository>();
 

@@ -7,7 +7,7 @@ namespace SolutionService.Repositories.InternalModels;
 [CollectionName("Solutions")]
 public class SolutionModel : ISolution, IDocument<Guid>
 {
-    public string UserId { get; init; } = null!;
+    public string UserId { get; set; } = null!;
     public string TaskId { get; init; } = null!;
     public string SourceCode { get; set; } = null!;
 

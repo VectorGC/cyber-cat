@@ -8,18 +8,17 @@ namespace JudgeService.Services;
 public class JudgeGrpcService : IJudgeGrpcService
 {
     private readonly ICodeLauncherGrpcService _codeLauncherService;
-    private readonly ITestGrpcService _testService;
+    private readonly ITestGrpcService _testGrpcService;
 
-    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITestGrpcService testService)
+    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITestGrpcService testGrpcService)
     {
         _codeLauncherService = codeLauncherService;
-        _testService = testService;
+        _testGrpcService = testGrpcService;
     }
 
-    // TODO: Здесь не нужен UserId.
-    public async Task<VerdictResponse> GetVerdict(SolutionDto solution)
+    public async Task<VerdictDto> GetVerdict(SolutionDto solution)
     {
-        var tests = await _testService.GetTests(solution.TaskId);
+        var tests = await _testGrpcService.GetTests(solution.TaskId);
         var testPassed = 0;
 
         foreach (var test in tests)
@@ -42,7 +41,6 @@ public class JudgeGrpcService : IJudgeGrpcService
         return Success(testPassed);
     }
 
-    // TODO: Output как будто отдельная бизнес сущность
     private async Task<OutputDto> LaunchCode(string sourceCode, string input)
     {
         var args = new LaunchCodeArgs
@@ -60,9 +58,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         return expected == actual;
     }
 
-    private VerdictResponse Failure(int testPassed, string error)
+    private VerdictDto Failure(int testPassed, string error)
     {
-        return new VerdictResponse
+        return new VerdictDto
         {
             Status = VerdictStatus.Failure,
             Error = error,
@@ -70,9 +68,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         };
     }
 
-    private VerdictResponse Success(int testPassed)
+    private VerdictDto Success(int testPassed)
     {
-        return new VerdictResponse
+        return new VerdictDto
         {
             Status = VerdictStatus.Success,
             TestsPassed = testPassed

@@ -6,5 +6,5 @@ namespace Shared.Services;
 [Service]
 public interface IJudgeGrpcService
 {
-    Task<VerdictResponse> GetVerdict(SolutionDto solution);
+    Task<VerdictDto> GetVerdict(SolutionDto solution);
 }

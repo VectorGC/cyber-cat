@@ -4,13 +4,13 @@ using TaskService.Repositories.InternalModels;
 
 namespace TaskService.Services;
 
-public class AutoLoadTasksRepository : IHostedService
+public class AutoLoadTasksToRepository : IHostedService
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IHostEnvironment _hostEnvironment;
-    private readonly ILogger<AutoLoadTasksRepository> _logger;
+    private readonly ILogger<AutoLoadTasksToRepository> _logger;
 
-    public AutoLoadTasksRepository(IServiceProvider serviceProvider, IHostEnvironment hostEnvironment, ILogger<AutoLoadTasksRepository> logger)
+    public AutoLoadTasksToRepository(IServiceProvider serviceProvider, IHostEnvironment hostEnvironment, ILogger<AutoLoadTasksToRepository> logger)
     {
         _serviceProvider = serviceProvider;
         _hostEnvironment = hostEnvironment;
@@ -22,7 +22,7 @@ public class AutoLoadTasksRepository : IHostedService
         _logger.LogInformation("Start auto load tasks");
 
         await using var scope = _serviceProvider.CreateAsyncScope();
-        var repository = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
+        var taskRepository = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
 
         var rootPath = _hostEnvironment.ContentRootPath;
         var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
@@ -32,13 +32,13 @@ public class AutoLoadTasksRepository : IHostedService
 
         foreach (var task in tasks)
         {
-            var alreadyContainsTask = await repository.Contains(task.Id);
+            var alreadyContainsTask = await taskRepository.Contains(task.Id);
             if (alreadyContainsTask)
             {
                 continue;
             }
 
-            await repository.Add(task.Id, task);
+            await taskRepository.Add(task.Id, task);
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 

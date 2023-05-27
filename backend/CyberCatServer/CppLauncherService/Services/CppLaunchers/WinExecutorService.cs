@@ -18,7 +18,7 @@ namespace CppLauncherService.Services.CppLaunchers
             var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
             var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
 
-            var output = await _processExecutorProxy.Run("wsl", $"g++ {cppFileName} -Wall -Werror -o {objectFileName} -static-libgcc -static-libstdc++");
+            var output = await _processExecutorProxy.Run("wsl", $"g++ -g {cppFileName} -Wall -o {objectFileName} -static-libgcc -static-libstdc++");
             return new CompileCppResult
             {
                 Output = output,

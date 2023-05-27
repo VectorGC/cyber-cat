@@ -4,23 +4,16 @@ using Shared.Models;
 namespace Shared.Dto;
 
 [ProtoContract]
-public class TestsDto
+public class TestsDto : IAdd<ITest>
 {
-    [ProtoMember(1)] public List<TestDto> Tests { get; set; }
+    [ProtoMember(1)] public List<TestDto> Tests { get; set; } = new();
 
-    public List<TestDto>.Enumerator GetEnumerator()
-    {
-        return Tests.GetEnumerator();
-    }
-}
+    public int Count => Tests.Count;
 
-public static class TestsDtoExtensions
-{
-    public static TestsDto ToDto(this IEnumerable<ITest>? tests)
+    public void Add(ITest item)
     {
-        return new TestsDto
-        {
-            Tests = tests?.Select(test => test.ToDto()).ToList() ?? new List<TestDto>()
-        };
+        Tests.Add(item.To<TestDto>());
     }
+
+    public List<TestDto>.Enumerator GetEnumerator() => Tests.GetEnumerator();
 }

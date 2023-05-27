@@ -17,7 +17,7 @@ builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = tr
 
 var app = builder.Build();
 
-app.MapGrpcService<AuthGrpcService>();
+app.MapGrpcService<AuthService.Services.AuthGrpcService>();
 
 app.Run();
 

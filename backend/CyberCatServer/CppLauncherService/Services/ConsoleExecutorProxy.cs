@@ -29,8 +29,7 @@ namespace CppLauncherService.Services
             var process = Process.Start(startInfo);
             await process.StandardInput.WriteAsync(input);
             // После воода нудно передать символ \n (как будто нажали Enter), чтобы программа засчитала ввод.
-            // TODO: Используй здесь константу.
-            await process.StandardInput.WriteAsync("\n");
+            await process.StandardInput.WriteAsync(Environment.NewLine);
 
             var output = await WaitForExit(process, _timeOut);
             if (output.HasError)

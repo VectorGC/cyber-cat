@@ -15,6 +15,7 @@ builder.Services.AddScoped<ICppExecutorOsSpecificService>(serviceProvider =>
         : ActivatorUtilities.CreateInstance<LinuxExecutorService>(serviceProvider);
 });
 builder.Services.AddScoped<ICppFileCreator, TempCppFileCreator>();
+builder.Services.AddScoped<ICppErrorFormatService, CppErrorFormatService>();
 
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 

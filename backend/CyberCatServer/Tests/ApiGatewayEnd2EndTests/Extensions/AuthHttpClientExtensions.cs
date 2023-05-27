@@ -20,7 +20,7 @@ public static class AuthHttpClientExtensions
         form.Add(new StringContent(password), "password");
 
         var response = await client.PostAsync("http://localhost:5000/auth/login", form);
-        var token = await response.Content.ReadFromJsonAsync<TokenResponse>();
+        var token = await response.Content.ReadFromJsonAsync<TokenDto>();
 
         return token.AccessToken;
     }

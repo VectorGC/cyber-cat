@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace Shared.Dto;
 
 [ProtoContract]
-public class TokenResponse
+public class TokenDto
 {
     [ProtoMember(1)]
     [JsonPropertyName("access_token")]

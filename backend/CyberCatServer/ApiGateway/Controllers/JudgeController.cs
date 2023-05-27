@@ -1,5 +1,4 @@
 using System.Net;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,26 +12,24 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class JudgeController : ControllerBase
 {
-    private readonly IJudgeGrpcService _judgeService;
+    private readonly IJudgeGrpcService _judgeGrpcService;
 
-    public JudgeController(IJudgeGrpcService judgeService)
+    public JudgeController(IJudgeGrpcService judgeGrpcService)
     {
-        _judgeService = judgeService;
+        _judgeGrpcService = judgeGrpcService;
     }
 
     [HttpPut("verify/{taskId}")]
-    [ProducesResponseType(typeof(VerdictResponse), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictResponse>> VerifySolution(string taskId, [FromBody] string sourceCode)
+    [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromBody] string sourceCode)
     {
-        var userId = User.Identity.GetUserId();
         var args = new SolutionDto
         {
-            UserId = userId,
             TaskId = taskId,
             SourceCode = sourceCode
         };
 
-        var verdict = await _judgeService.GetVerdict(args);
+        var verdict = await _judgeGrpcService.GetVerdict(args);
         return verdict;
     }
 }

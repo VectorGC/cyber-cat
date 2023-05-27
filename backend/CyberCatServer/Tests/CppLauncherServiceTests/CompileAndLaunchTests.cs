@@ -19,8 +19,6 @@ public class CompileAndLaunchTests
         _factory = new WebApplicationFactory<Program>();
     }
 
-    // TODO: Проверяем что директория пуста и после запуска она тоже очищается.
-
     [Test]
     public async Task CompileAndLaunch_WhenPassValidCode()
     {
@@ -77,5 +75,22 @@ public class CompileAndLaunchTests
         Assert.IsNull(response.StandardOutput);
     }
 
-    // TODO: Проверка, на segmentation fault не запускается
+    [Test]
+    public async Task LaunchError_WhenPassSegmentationFaultCode()
+    {
+        const string sourceCode = "#include <stdio.h> \nint main() { int *p = NULL; *p = 1; }";
+        const string expectedError = "Exit Code 11: (SIGSEGV signal) Segmentation fault";
+        var args = new LaunchCodeArgs()
+        {
+            SourceCode = sourceCode
+        };
+
+        using var channel = _factory.CreateGrpcChannel();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+
+        var response = await codeLauncherService.Launch(args);
+
+        Assert.AreEqual(expectedError, response.StandardError);
+        Assert.IsNull(response.StandardOutput);
+    }
 }

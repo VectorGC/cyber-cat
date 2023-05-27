@@ -1,9 +1,7 @@
 using System.Net.Http.Json;
 using ApiGatewayEnd2EndTests.Extensions;
 using Shared.Dto;
-using Shared.Dto.Args;
 using Shared.Models;
-using Shared.Services;
 
 namespace ApiGatewayEnd2EndTests;
 
@@ -27,7 +25,7 @@ public class JudgeControllerTests
         var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
-        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictResponse>();
+        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
 
         Assert.AreEqual(VerdictStatus.Success, verdict.Status);
         Assert.IsNull(verdict.Error);
@@ -44,7 +42,7 @@ public class JudgeControllerTests
         var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
-        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictResponse>();
+        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(0, verdict.TestsPassed);
@@ -60,7 +58,7 @@ public class JudgeControllerTests
         var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
-        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictResponse>();
+        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(0, verdict.TestsPassed);
@@ -99,7 +97,7 @@ public class JudgeControllerTests
         var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
-        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictResponse>();
+        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(1, verdict.TestsPassed);
@@ -116,7 +114,7 @@ public class JudgeControllerTests
         var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
-        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictResponse>();
+        var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(0, verdict.TestsPassed);

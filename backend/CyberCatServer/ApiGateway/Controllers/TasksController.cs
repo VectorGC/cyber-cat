@@ -12,11 +12,11 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TasksController : ControllerBase
 {
-    public ITaskGrpcService TaskService { get; }
+    public ITaskGrpcService TaskGrpcService { get; }
 
-    public TasksController(ITaskGrpcService taskService)
+    public TasksController(ITaskGrpcService taskGrpcService)
     {
-        TaskService = taskService;
+        TaskGrpcService = taskGrpcService;
     }
 
     [HttpGet("{taskId}")]
@@ -24,7 +24,7 @@ public class TasksController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
     {
-        var task = await TaskService.GetTask(taskId);
+        var task = await TaskGrpcService.GetTask(taskId);
         return new TaskDto
         {
             Name = task.Name,
