@@ -8,15 +8,19 @@ namespace SolutionService.Repositories.InternalModels;
 public class SolutionModel : ISolution, IDocument<Guid>
 {
     public string UserId { get; set; } = null!;
-    public string TaskId { get; init; } = null!;
+    public string TaskId { get; set; } = null!;
     public string SourceCode { get; set; } = null!;
-
-    string ISolution.SourceCode
-    {
-        get => SourceCode;
-        init => SourceCode = value;
-    }
-
     public Guid Id { get; set; }
     public int Version { get; set; }
+
+    public SolutionModel(string userId, ISolution solution)
+    {
+        UserId = userId;
+        TaskId = solution.TaskId;
+        SourceCode = solution.SourceCode;
+    }
+
+    public SolutionModel()
+    {
+    }
 }

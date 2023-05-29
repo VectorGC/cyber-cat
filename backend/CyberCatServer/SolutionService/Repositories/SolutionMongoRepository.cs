@@ -32,17 +32,12 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         var solutionModel = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == solution.TaskId);
         if (solutionModel == null)
         {
-            solutionModel = solution.To<SolutionModel>();
-            solutionModel.UserId = userId;
+            solutionModel = new SolutionModel(userId, solution);
             await AddOneAsync(solutionModel);
             return;
         }
 
-        var id = solutionModel.Id;
-        solutionModel = solution.To<SolutionModel>();
-        solutionModel.Id = id;
-        solutionModel.UserId = userId;
-
+        solutionModel.SourceCode = solution.SourceCode;
         var success = await UpdateOneAsync(solutionModel);
         if (!success)
         {

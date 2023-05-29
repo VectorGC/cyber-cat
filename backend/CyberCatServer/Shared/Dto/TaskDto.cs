@@ -9,9 +9,19 @@ public class TaskDto : ITask
 {
     [JsonPropertyName("name")]
     [ProtoMember(1)]
-    public string Name { get; init; }
+    public string Name { get; set; }
 
     [JsonPropertyName("description")]
     [ProtoMember(2)]
-    public string Description { get; init; }
+    public string Description { get; set; }
+
+    public TaskDto(ITask task)
+    {
+        Name = task.Name;
+        Description = task.Description;
+    }
+
+    public TaskDto()
+    {
+    }
 }

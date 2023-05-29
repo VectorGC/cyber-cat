@@ -27,9 +27,20 @@ namespace TaskService.Repositories.InternalModels
         public string Id { get; set; }
 
         public int Version { get; set; }
-        public string Name { get; init; }
-        public string Description { get; init; }
-        public List<TestModel> Tests { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public List<TestModel> Tests { get; set; } = new List<TestModel>();
+
+        public TaskModel(string id, ITask task)
+        {
+            Id = id;
+            Name = task.Name;
+            Description = task.Description;
+        }
+
+        public TaskModel()
+        {
+        }
 
         public ITests GetTests()
         {

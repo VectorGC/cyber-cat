@@ -23,6 +23,7 @@ public class AutoLoadTasksToRepository : IHostedService
 
         await using var scope = _serviceProvider.CreateAsyncScope();
         var taskRepository = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
+        var testRepository = scope.ServiceProvider.GetRequiredService<ITestRepository>();
 
         var rootPath = _hostEnvironment.ContentRootPath;
         var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
@@ -39,6 +40,7 @@ public class AutoLoadTasksToRepository : IHostedService
             }
 
             await taskRepository.Add(task.Id, task);
+            await testRepository.Add(task.Id, task.Tests);
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 
