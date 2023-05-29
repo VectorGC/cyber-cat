@@ -17,24 +17,24 @@ internal class AuthUserManagerRepository : IAuthUserRepository
 
     public async Task Add(IUser user, string password)
     {
-        var authUser = user as User ?? new User(user);
+        var authUser = new User(user);
 
         var result = await _userManager.CreateAsync(authUser, password);
         if (!result.Succeeded)
         {
-            var errors = string.Join(';', result.Errors);
+            var errors = string.Join(';', result.Errors.Select(e => e.Description));
             throw new IdentityUserException(errors);
         }
     }
 
-    public async Task Remove(IUser user)
+    public async Task Remove(string email)
     {
-        var authUser = user as User ?? new User(user);
+        var user = await _userManager.FindByEmailAsync(email);
 
-        var result = await _userManager.DeleteAsync(authUser);
+        var result = await _userManager.DeleteAsync(user);
         if (!result.Succeeded)
         {
-            var errors = string.Join(';', result.Errors);
+            var errors = string.Join(';', result.Errors.Select(e => e.Description));
             throw new IdentityUserException(errors);
         }
     }
@@ -44,15 +44,15 @@ internal class AuthUserManagerRepository : IAuthUserRepository
         return await _userManager.FindByEmailAsync(email);
     }
 
-    public async Task<bool> CheckPasswordAsync(IUser user, string password)
+    public async Task<bool> CheckPasswordAsync(string email, string password)
     {
-        var authUser = user as User ?? new User(user);
-        return await _userManager.CheckPasswordAsync(authUser, password);
+        var user = await _userManager.FindByEmailAsync(email);
+        return await _userManager.CheckPasswordAsync(user, password);
     }
 
-    public async Task SetJwtAuthenticationAccessTokenAsync(IUser user, string? accessToken)
+    public async Task SetJwtAuthenticationAccessTokenAsync(string email, string? accessToken)
     {
-        var authUser = user as User ?? new User(user);
-        await _userManager.SetAuthenticationTokenAsync(authUser, JwtBearerDefaults.AuthenticationScheme, "access_token", accessToken);
+        var user = await _userManager.FindByEmailAsync(email);
+        await _userManager.SetAuthenticationTokenAsync(user, JwtBearerDefaults.AuthenticationScheme, "access_token", accessToken);
     }
 }

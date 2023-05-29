@@ -5,24 +5,16 @@ using Shared.Models;
 
 namespace ApiGateway.Tests.End2End;
 
-public class JudgeControllerTests
+[TestFixture]
+public class JudgeControllerTests : E2ETests
 {
-    private HttpClient _client;
-
-    [SetUp]
-    public async Task SetUp()
-    {
-        _client = new HttpClient();
-        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
-    }
-
     [Test]
     public async Task SuccessVerifyHelloCatTaskWithoutOutput_WhenPassCorrectCode()
     {
         var taskId = "tutorial";
         var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-        var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
+        var verdictResponse = await Client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
         var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
@@ -39,7 +31,7 @@ public class JudgeControllerTests
         var sourceCode = "#include <stdio.h> \nint main()";
         var expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
-        var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
+        var verdictResponse = await Client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
         var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
@@ -55,7 +47,7 @@ public class JudgeControllerTests
         var taskId = "tutorial";
         var sourceCode = "int main() { while(true){} }";
 
-        var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
+        var verdictResponse = await Client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
         var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
@@ -94,7 +86,7 @@ public class JudgeControllerTests
         // Просто выводим результат первого теста. Чтобы первый тест прошел, а остальные завалились.
         const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
 
-        var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
+        var verdictResponse = await Client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
         var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();
@@ -111,7 +103,7 @@ public class JudgeControllerTests
         // Сделали лишний ввод, бесконечно ждем, когда введется 'c'.
         const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
 
-        var verdictResponse = await _client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
+        var verdictResponse = await Client.PutAsJsonAsync($"http://localhost:5000/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
 
         var verdict = await verdictResponse.Content.ReadFromJsonAsync<VerdictDto>();

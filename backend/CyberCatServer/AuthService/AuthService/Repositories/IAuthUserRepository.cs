@@ -5,8 +5,8 @@ namespace AuthServiceService.Repositories;
 public interface IAuthUserRepository
 {
     Task Add(IUser user, string password);
-    Task Remove(IUser user);
+    Task Remove(string email);
     Task<IUser?> FindByEmailAsync(string email);
-    Task<bool> CheckPasswordAsync(IUser user, string password);
-    Task SetJwtAuthenticationAccessTokenAsync(IUser user, string? accessToken);
+    Task<bool> CheckPasswordAsync(string email, string password);
+    Task SetJwtAuthenticationAccessTokenAsync(string email, string? accessToken);
 }

@@ -4,23 +4,15 @@ using Shared.Dto;
 
 namespace ApiGateway.Tests.End2End;
 
-public class TasksControllerTests
+[TestFixture]
+public class TasksControllerTests : E2ETests
 {
-    private HttpClient _client;
-
-    [SetUp]
-    public async Task SetUp()
-    {
-        _client = new HttpClient();
-        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
-    }
-
     [Test]
     public async Task GetTask()
     {
         var taskId = "tutorial";
 
-        var task = await _client.GetFromJsonAsync<TaskDto>($"http://localhost:5000/tasks/{taskId}");
+        var task = await Client.GetFromJsonAsync<TaskDto>($"http://localhost:5000/tasks/{taskId}");
 
         Assert.AreEqual("Hello cat!", task.Name);
         Assert.IsNotEmpty(task.Description);

@@ -4,17 +4,8 @@ using ApiGateway.Tests.End2End.Extensions;
 namespace ApiGateway.Tests.End2End;
 
 [TestFixture]
-public class SolutionControllerTests
+public class SolutionControllerTests : E2ETests
 {
-    private HttpClient _client;
-
-    [SetUp]
-    public async Task SetUp()
-    {
-        _client = new HttpClient();
-        await _client.AddJwtAuthorizationHeaderAsync("karo@test.ru", "12qw!@QW");
-    }
-
     [Test]
     public async Task GetSavedCode_AfterSaveAndDeleteCode()
     {
@@ -23,29 +14,29 @@ public class SolutionControllerTests
         var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
         // Проверяем что изначально кода нет.
-        var lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        var lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
         Assert.IsEmpty(lastSavedCode);
 
         // Сохраняем код.
-        var response = await _client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCode);
+        var response = await Client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCode);
         response.EnsureSuccessStatusCode();
 
-        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
         Assert.IsNotEmpty(lastSavedCode);
         Assert.AreEqual(sourceCode, lastSavedCode);
 
         // Меняем сохраненный код.
-        response = await _client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCodeToChange);
+        response = await Client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCodeToChange);
         response.EnsureSuccessStatusCode();
 
-        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
         Assert.IsNotEmpty(lastSavedCode);
         Assert.AreEqual(sourceCodeToChange, lastSavedCode);
 
         // Удаляем и проверяем, что все очистилось.
-        await _client.DeleteAsync($"http://localhost:5000/solution/{taskId}");
+        await Client.DeleteAsync($"http://localhost:5000/solution/{taskId}");
 
-        lastSavedCode = await _client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
         Assert.IsEmpty(lastSavedCode);
     }
 }

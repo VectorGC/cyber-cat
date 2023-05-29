@@ -9,7 +9,7 @@ namespace AuthService.Tests;
 
 // Проверяем, корректно ли создается и удаляются пользователи.
 [TestFixture]
-public class AuthRepositoryTests
+public class AuthUserRepositoryTests
 {
     private WebApplicationFactory<Program> _factory;
 
@@ -39,7 +39,7 @@ public class AuthRepositoryTests
         var createdUser = await userRepository.FindByEmailAsync(user.Email);
         Assert.NotNull(createdUser);
 
-        await userRepository.Remove(createdUser);
+        await userRepository.Remove(user.Email);
         var removedUser = await userRepository.FindByEmailAsync(user.Email);
         Assert.Null(removedUser);
     }

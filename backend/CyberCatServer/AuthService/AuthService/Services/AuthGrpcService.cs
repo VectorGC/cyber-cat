@@ -1,6 +1,8 @@
 using AuthServiceService.Repositories;
+using AuthServiceService.Repositories.InternalModels;
 using Shared.Dto;
 using Shared.Dto.Args;
+using Shared.Dto.ProtoHelpers;
 using Shared.Exceptions;
 using Shared.Services;
 
@@ -17,6 +19,16 @@ public class AuthGrpcService : IAuthGrpcService
         _tokenService = tokenService;
     }
 
+    public async Task CreateUser(CreateUserArgs args)
+    {
+        await _authUserRepository.Add(args.User, args.Password);
+    }
+
+    public async Task RemoveUser(StringProto email)
+    {
+        await _authUserRepository.Remove(email);
+    }
+
     public async Task<TokenDto> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
@@ -28,14 +40,14 @@ public class AuthGrpcService : IAuthGrpcService
             throw UserNotFound.NotFoundEmail(email);
         }
 
-        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(user, password);
+        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(email, password);
         if (!isPasswordValid)
         {
             throw new UnauthorizedAccessException("Invalid password");
         }
 
         var accessToken = _tokenService.CreateToken(user);
-        await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(user, accessToken);
+        await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(email, accessToken);
 
         return new TokenDto {AccessToken = accessToken};
     }

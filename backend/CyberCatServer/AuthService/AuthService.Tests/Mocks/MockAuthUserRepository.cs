@@ -14,16 +14,16 @@ internal class MockAuthUserRepository : IAuthUserRepository
         return Task.FromResult<IUser?>(user);
     }
 
-    public Task<bool> CheckPasswordAsync(IUser user, string password)
+    public Task<bool> CheckPasswordAsync(string email, string password)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Email == user.Email);
+        var findingUser = _users.FirstOrDefault(u => u.Email == email);
 
         return Task.FromResult(findingUser.PasswordHash == password.GetHashCode().ToString());
     }
 
-    public Task SetJwtAuthenticationAccessTokenAsync(IUser user, string? accessToken)
+    public Task SetJwtAuthenticationAccessTokenAsync(string email, string? accessToken)
     {
-        Console.WriteLine($"Set access token '{accessToken}' for user '{user.Email}'");
+        Console.WriteLine($"Set access token '{accessToken}' for user '{email}'");
         return Task.CompletedTask;
     }
 
@@ -38,9 +38,9 @@ internal class MockAuthUserRepository : IAuthUserRepository
         return Task.CompletedTask;
     }
 
-    public Task Remove(IUser user)
+    public Task Remove(string email)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Email == user.Email);
+        var findingUser = _users.FirstOrDefault(u => u.Email == email);
         _users.Remove(findingUser);
 
         return Task.CompletedTask;

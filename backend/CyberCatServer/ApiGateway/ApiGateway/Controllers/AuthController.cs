@@ -20,12 +20,28 @@ public class AuthController : ControllerBase
     }
 
     [AllowAnonymous]
+    [HttpPost("create")]
+    public async Task<ActionResult> CreateUser([FromBody] CreateUserArgs args)
+    {
+        await _authGrpcService.CreateUser(args);
+
+        return Ok();
+    }
+
+    [HttpPost("remove")]
+    public async Task<ActionResult> RemoveUser([FromBody] string email)
+    {
+        await _authGrpcService.RemoveUser(email);
+        return Ok();
+    }
+
+    [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<TokenDto>> Login(string username, string password)
+    public async Task<ActionResult<TokenDto>> Login(string email, string password)
     {
         var response = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
         {
-            Email = username,
+            Email = email,
             Password = password
         });
 
