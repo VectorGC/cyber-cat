@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\ApiGateway.Service\ApiGateway.Service.csproj" />
       <ProjectReference Include="..\..\Shared\Shared.csproj" />
+      <ProjectReference Include="..\ApiGateway\ApiGateway.csproj" />
     </ItemGroup>
 
 </Project>
