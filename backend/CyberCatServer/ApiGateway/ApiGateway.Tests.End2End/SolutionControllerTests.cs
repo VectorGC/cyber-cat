@@ -14,29 +14,29 @@ public class SolutionControllerTests : E2ETests
         var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
         // Проверяем что изначально кода нет.
-        var lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        var lastSavedCode = await Client.GetStringAsync($"/solution/{taskId}");
         Assert.IsEmpty(lastSavedCode);
 
         // Сохраняем код.
-        var response = await Client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCode);
+        var response = await Client.PostAsJsonAsync($"/solution/{taskId}", sourceCode);
         response.EnsureSuccessStatusCode();
 
-        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"/solution/{taskId}");
         Assert.IsNotEmpty(lastSavedCode);
         Assert.AreEqual(sourceCode, lastSavedCode);
 
         // Меняем сохраненный код.
-        response = await Client.PostAsJsonAsync($"http://localhost:5000/solution/{taskId}", sourceCodeToChange);
+        response = await Client.PostAsJsonAsync($"/solution/{taskId}", sourceCodeToChange);
         response.EnsureSuccessStatusCode();
 
-        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"/solution/{taskId}");
         Assert.IsNotEmpty(lastSavedCode);
         Assert.AreEqual(sourceCodeToChange, lastSavedCode);
 
         // Удаляем и проверяем, что все очистилось.
-        await Client.DeleteAsync($"http://localhost:5000/solution/{taskId}");
+        await Client.DeleteAsync($"/solution/{taskId}");
 
-        lastSavedCode = await Client.GetStringAsync($"http://localhost:5000/solution/{taskId}");
+        lastSavedCode = await Client.GetStringAsync($"/solution/{taskId}");
         Assert.IsEmpty(lastSavedCode);
     }
 }

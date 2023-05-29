@@ -12,7 +12,7 @@ public class TasksControllerTests : E2ETests
     {
         var taskId = "tutorial";
 
-        var task = await Client.GetFromJsonAsync<TaskDto>($"http://localhost:5000/tasks/{taskId}");
+        var task = await Client.GetFromJsonAsync<TaskDto>($"/tasks/{taskId}");
 
         Assert.AreEqual("Hello cat!", task.Name);
         Assert.IsNotEmpty(task.Description);
