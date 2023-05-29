@@ -1,8 +1,8 @@
-using AuthService.Service.Repositories;
-using AuthService.Service.Repositories.InternalModels;
+using AuthServiceService.Repositories;
+using AuthServiceService.Repositories.InternalModels;
 using Shared.Models;
 
-namespace AuthServiceTests.Mocks;
+namespace AuthService.Tests.Mocks;
 
 internal class MockAuthUserRepository : IAuthUserRepository
 {

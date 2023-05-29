@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="CppLauncherServiceTests: Auto reload" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Tests/CppLauncherServiceTests/CppLauncherServiceTests.csproj" />
+    <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Tests/CppLauncher.Tests/CppLauncher.Tests.csproj" />
     <option name="LAUNCH_PROFILE_TFM" value="net7.0" />
     <option name="LAUNCH_PROFILE_NAME" value="Auto reload" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />

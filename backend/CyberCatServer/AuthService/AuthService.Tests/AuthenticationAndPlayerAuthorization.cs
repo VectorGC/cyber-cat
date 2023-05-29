@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using AuthService.Service.Repositories;
-using AuthService.Service.Repositories.InternalModels;
-using AuthServiceTests.Mocks;
+using AuthService.Tests.Mocks;
+using AuthServiceService.Repositories;
+using AuthServiceService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Client;
@@ -12,7 +12,7 @@ using Shared.Dto.Args;
 using Shared.Models;
 using Shared.Services;
 
-namespace AuthServiceTests;
+namespace AuthService.Tests;
 
 // Проверяем аутентификацию и авторизацию.
 [TestFixture]

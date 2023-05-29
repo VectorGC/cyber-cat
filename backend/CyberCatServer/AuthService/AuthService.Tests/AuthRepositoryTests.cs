@@ -1,12 +1,11 @@
-using AuthService.Service.Repositories;
-using AuthService.Service.Repositories.InternalModels;
-using AuthServiceTests.Mocks;
+using AuthService.Tests.Mocks;
+using AuthServiceService.Repositories;
+using AuthServiceService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Shared;
 
-namespace AuthServiceTests;
+namespace AuthService.Tests;
 
 // Проверяем, корректно ли создается и удаляются пользователи.
 [TestFixture]
