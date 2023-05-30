@@ -14,7 +14,7 @@ namespace CppLauncherService.Services
             _timeOut = appSettings.Value.ProcessTimeout;
         }
 
-        public async Task<Output> Run(string command, string arguments, string? input = null)
+        public async Task<Output> Run(string command, string arguments, string input = null)
         {
             ProcessStartInfo startInfo = new()
             {
@@ -58,7 +58,7 @@ namespace CppLauncherService.Services
                 await process.WaitForExitAsync(ct);
                 return Output.Empty;
             }
-            catch (TaskCanceledException _)
+            catch (TaskCanceledException)
             {
                 Kill(process, timeOut);
                 return process.ReadError("The process took more than 5 seconds");

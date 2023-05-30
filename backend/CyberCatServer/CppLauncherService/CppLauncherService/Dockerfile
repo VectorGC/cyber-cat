@@ -1,26 +1,23 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
-EXPOSE $COMPILER_SERVICE_API_PORT
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["CompilerServiceAPI.csproj", "CompilerServiceAPI/"]
-
-RUN dotnet restore "CompilerServiceAPI/CompilerServiceAPI.csproj"
-WORKDIR "/src/CompilerServiceAPI"
+COPY ["CppLauncherService/CppLauncherService/CppLauncherService.csproj", "CppLauncherService/CppLauncherService/"]
+COPY ["Shared/Shared.csproj", "Shared/"]
+RUN dotnet restore "CppLauncherService/CppLauncherService/CppLauncherService.csproj"
 COPY . .
-
-RUN dotnet build "CompilerServiceAPI.csproj" -c Release -o /app/build
+WORKDIR "/src/CppLauncherService/CppLauncherService"
+RUN dotnet build "CppLauncherService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CompilerServiceAPI.csproj" -c Release -o /app/publish 
-
+RUN dotnet publish "CppLauncherService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CompilerServiceAPI.dll"]
+ENTRYPOINT ["dotnet", "CppLauncherService.dll"]
 
+FROM final AS gpp-install
 RUN apt-get update
 RUN apt-get -y install g++

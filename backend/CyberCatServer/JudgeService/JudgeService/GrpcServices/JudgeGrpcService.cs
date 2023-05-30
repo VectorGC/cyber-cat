@@ -3,7 +3,7 @@ using Shared.Dto.Args;
 using Shared.Models;
 using Shared.Services;
 
-namespace JudgeService.Services;
+namespace JudgeService.GrpcServices;
 
 public class JudgeGrpcService : IJudgeGrpcService
 {

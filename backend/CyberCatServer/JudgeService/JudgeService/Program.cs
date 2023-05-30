@@ -1,5 +1,5 @@
 using JudgeService;
-using JudgeService.Services;
+using JudgeService.GrpcServices;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Server;
 using Shared.Services;

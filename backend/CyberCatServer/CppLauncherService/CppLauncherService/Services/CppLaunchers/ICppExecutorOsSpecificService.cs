@@ -5,6 +5,6 @@ namespace CppLauncherService.Services.CppLaunchers
     internal interface ICppExecutorOsSpecificService
     {
         Task<CompileCppResult> CompileCode(string sourceCode);
-        Task<Output> LaunchCode(string objectFileName, string? input);
+        Task<Output> LaunchCode(string objectFileName, string input);
     }
 }

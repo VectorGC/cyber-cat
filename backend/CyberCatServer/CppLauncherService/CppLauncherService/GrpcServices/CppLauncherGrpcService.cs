@@ -1,9 +1,10 @@
+using CppLauncherService.Services;
 using CppLauncherService.Services.CppLaunchers;
 using Shared.Dto;
 using Shared.Dto.Args;
 using Shared.Services;
 
-namespace CppLauncherService.Services;
+namespace CppLauncherService.GrpcServices;
 
 internal class CppLauncherGrpcService : ICodeLauncherGrpcService
 {
@@ -21,7 +22,7 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         return await LaunchCode(args.SourceCode, args.Input);
     }
 
-    private async Task<OutputDto> LaunchCode(string sourceCode, string? input = null)
+    private async Task<OutputDto> LaunchCode(string sourceCode, string input = null)
     {
         var compileResult = await _compileService.CompileCode(sourceCode);
         if (compileResult.Output.HasError)

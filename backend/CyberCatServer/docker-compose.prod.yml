@@ -1,0 +1,135 @@
+﻿version: '3.4'
+
+services:
+  # Рестарт nginx для перечитки конфигов:
+  # docker compose exec nginx nginx -s reload
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Порт по умолчанию для http запросов.
+      - "443:443" # Порт по умолчанию для https запросов.
+    depends_on:
+      - api-gateway
+      - mongo-express
+      #volumes:
+      # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
+      # Настройка файловых хранилищ для взаимодействия нескольких контейнеров.
+      # Папки сертификатов, которые нужно читать nginx, чтобы обеспечивать https. ro - только чтение.
+      # Слева - локальный путь на хост машине, где расположен сервер (!). Справа - путь, который создастся внутри докер контейнера.
+      #- www-certbot:/var/www/certbot/:ro
+      #- etc-letsencrypt:/etc/letsencrypt:ro
+  
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGateway/ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Http__Url=$API_GATEWAY_URL
+      - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
+      - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
+      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
+    ports:
+      - "80:5000"
+    depends_on:
+      - auth-service
+      - task-service
+      - solution-service
+      - judge-service
+  
+  auth-service:
+    image: auth-service
+    container_name: $AUTH_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: AuthService/AuthService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_ENDPOINT
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  task-service:
+    image: task-service
+    container_name: $TASK_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: TaskService/TaskService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_ENDPOINT
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  solution-service:
+    image: solution-service
+    container_name: $SOLUTION_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: SolutionService/SolutionService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$SOLUTION_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  judge-service:
+    image: judge-service
+    container_name: $JUDGE_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: JudgeService/JudgeService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$JUDGE_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - ConnectionStrings__CppLauncherServiceGrpcEndpoint=$CPP_LAUNCHER_SERVICE_GRPC_URL
+      - ConnectionStrings__TestServiceGrpcEndpoint=$TEST_SERVICE_GRPC_URL
+    depends_on:
+      - cpp-launcher-service
+  
+  cpp-launcher-service:
+    image: cpp-launcher-service
+    container_name: $CPP_LAUNCHER_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: CppLauncherService/CppLauncherService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$CPP_LAUNCHER_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+  
+  mongo:
+    image: mongo:5.0.15
+    container_name: $MONGO_DB_CONTAINER_NAME
+
+  mongo-express: # Веб интерфейс СУБД для управления монгой.
+    image: mongo-express:0.54.0
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: cyber-dog
+      ME_CONFIG_BASICAUTH_PASSWORD: 123
+    depends_on:
+      - mongo
+
+volumes:
+  nginx-conf:
+  www-certbot:
+  etc-letsencrypt:

@@ -13,6 +13,5 @@ public class JudgeServiceAppSettings
         public Uri TestServiceGrpcAddress => new(TestServiceGrpcEndpoint);
     }
 
-    public MongoRepositorySettings MongoRepository { get; set; }
     public ConnectionStringsSettings ConnectionStrings { get; set; }
 }
