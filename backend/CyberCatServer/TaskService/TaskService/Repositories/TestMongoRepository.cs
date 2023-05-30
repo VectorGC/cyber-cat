@@ -35,7 +35,7 @@ public class TestMongoRepository : BaseMongoRepository<string>, ITestRepository
         }
     }
 
-    public async Task<ITests?> GetTests(string taskId)
+    public async Task<ITests> GetTests(string taskId)
     {
         var task = await GetOneAsync<TaskModel>(task => task.Id == taskId);
         return task.GetTests();

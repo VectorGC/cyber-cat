@@ -21,7 +21,7 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         CreateCombinedTextIndexAsync(indexes);
     }
 
-    public async Task<string?> GetSavedCode(string userId, string taskId)
+    public async Task<string> GetSavedCode(string userId, string taskId)
     {
         var solution = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == taskId);
         return solution?.SourceCode;

@@ -31,7 +31,9 @@ services:
     environment:
       - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Http__Url=$API_GATEWAY_URL
-      - ConnectionStrings__AuthServiceGrpcEndpoint=http://auth-service:6001
+      - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
+      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
+      - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
     ports:
       - "80:5000"
       #api-gateway:
@@ -52,13 +54,43 @@ services:
   
   auth-service:
     image: auth-service
-    container_name: auth-service
+    container_name: $AUTH_SERVICE_NAME
     build:
       context: .
       dockerfile: AuthService/AuthService/Dockerfile
     environment:
       - ASPNETCORE_URLS=
-      - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_ENDPOINT
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  task-service:
+    image: task-service
+    container_name: $TASK_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: TaskService/TaskService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_ENDPOINT
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  solution-service:
+    image: solution-service
+    container_name: $TASK_SERVICE_NAME
+    build:
+      context: .
+      dockerfile: SolutionService/SolutionService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_URL
       - Kestrel__EndPoints__Grpc__Protocols=Http2
       - MongoRepository__ConnectionString=$MONGO_DB_URL
       - MongoRepository__DatabaseName=$DATABASE_NAME
@@ -78,19 +110,6 @@ services:
       - ASPNETCORE_URLS=$COMPILER_SERVICE_URL
     ports:
       - "${COMPILER_SERVICE_PORT}:${COMPILER_SERVICE_PORT}"
-
-  task-service:
-    image: task-service
-    build:
-      context: /TaskService/
-      dockerfile: Dockerfile
-    environment:
-      - ASPNETCORE_URLS=$TASK_SERVICE_URL
-      - "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017"
-    ports:
-      - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
-    depends_on:
-      - mongo
 
   mongo-express: # Веб интерфейс СУБД для управления монгой.
     image: mongo-express:0.54.0

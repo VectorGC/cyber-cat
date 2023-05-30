@@ -1,7 +1,7 @@
 using ProtoBuf.Grpc.Server;
 using SolutionService;
+using SolutionService.GrpcServices;
 using SolutionService.Repositories;
-using SolutionService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

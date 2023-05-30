@@ -2,6 +2,8 @@
   <configuration default="false" name="Server" type="CompoundRunConfigurationType">
     <toRun name="ApiGateway: Development" type="DotNetProject" />
     <toRun name="AuthService: Development" type="DotNetProject" />
+    <toRun name="SolutionService: Development" type="DotNetProject" />
+    <toRun name="TaskService: Development" type="DotNetProject" />
     <method v="2" />
   </configuration>
 </component>

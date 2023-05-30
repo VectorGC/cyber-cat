@@ -85,32 +85,32 @@ public class TestUserHttpClient : IAsyncDisposable
         return await _client.GetStringAsync(Host + endpoint);
     }
 
-    public async Task<HttpResponseMessage> PostAsJsonAsync(string endpoint, string? value)
+    public async Task<HttpResponseMessage> PostAsJsonAsync(string endpoint, string value)
     {
         return await _client.PostAsJsonAsync(Host + endpoint, value);
     }
 
-    public async Task<HttpResponseMessage> PostAsJsonAsync<TValue>(string? endpoint, TValue value)
+    public async Task<HttpResponseMessage> PostAsJsonAsync<TValue>(string endpoint, TValue value)
     {
         return await _client.PostAsJsonAsync(Host + endpoint, value);
     }
 
-    public async Task<HttpResponseMessage> PostAsync(string? endpoint, HttpContent? content)
+    public async Task<HttpResponseMessage> PostAsync(string endpoint, HttpContent content)
     {
         return await _client.PostAsync(Host + endpoint, content);
     }
 
-    public async Task<TValue?> GetFromJsonAsync<TValue>(string? endpoint)
+    public async Task<TValue> GetFromJsonAsync<TValue>(string endpoint)
     {
         return await _client.GetFromJsonAsync<TValue>(Host + endpoint);
     }
 
-    public async Task<HttpResponseMessage> DeleteAsync(string? endpoint)
+    public async Task<HttpResponseMessage> DeleteAsync(string endpoint)
     {
         return await _client.DeleteAsync(Host + endpoint);
     }
 
-    public async Task<HttpResponseMessage> PutAsJsonAsync<TValue>(string? endpoint, TValue value)
+    public async Task<HttpResponseMessage> PutAsJsonAsync<TValue>(string endpoint, TValue value)
     {
         return await _client.PutAsJsonAsync(Host + endpoint, value);
     }

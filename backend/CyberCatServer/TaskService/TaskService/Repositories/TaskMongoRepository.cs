@@ -18,7 +18,7 @@ namespace TaskService.Repositories
             await AddOneAsync(taskModel);
         }
 
-        public async Task<ITask?> GetTask(string id)
+        public async Task<ITask> GetTask(string id)
         {
             var task = await GetOneAsync<TaskModel>(task => task.Id == id);
             return task;

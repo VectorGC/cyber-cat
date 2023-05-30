@@ -1,10 +1,9 @@
-using Shared.Dto;
 using Shared.Dto.Args;
 using Shared.Dto.ProtoHelpers;
 using Shared.Services;
 using SolutionService.Repositories;
 
-namespace SolutionService.Services;
+namespace SolutionService.GrpcServices;
 
 public class SolutionGrpcService : ISolutionGrpcService
 {

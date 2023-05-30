@@ -1,4 +1,5 @@
 using AuthService;
+using AuthService.GrpcServices;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Services;
