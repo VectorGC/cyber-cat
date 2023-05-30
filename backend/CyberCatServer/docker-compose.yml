@@ -1,22 +1,6 @@
-version: '3.4'
+﻿version: '3.4'
 
-services:  
-  #api-gateway:
-   # image: api-gateway
-    #container_name: api-gateway
-    #build:
-      # Для докер файла устаналиваем контекст, какбудто мы запускаем Dockerfile из папки в которой этот файл лежит.
-     # context: ./ApiGateway/
-      #dockerfile: Dockerfile
-    #environment:
-     # - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
-      # - ASPNETCORE_ENVIRONMENT=Development # Чтобы переопределять окуржение и показывать сваггер.
-      #- "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
-    #ports:
-     # - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
-    #depends_on:
-    #  - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
-
+services:
   # Рестарт nginx для перечитки конфигов:
   # docker compose exec nginx nginx -s reload
   nginx:
@@ -25,27 +9,73 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      # Осторожно, nginx смотрит адрес и порт входящего запроса из интернета, а не входящего запроса в контейнер. Поэтому порт должен быть одинаковым по обе стороны.
       - "80:80" # Порт по умолчанию для http запросов.
       - "443:443" # Порт по умолчанию для https запросов.
     depends_on:
-     # - api-gateway
+      - api-gateway
       - mongo-express
-    volumes:
+      #volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
       # Настройка файловых хранилищ для взаимодействия нескольких контейнеров.
       # Папки сертификатов, которые нужно читать nginx, чтобы обеспечивать https. ro - только чтение.
       # Слева - локальный путь на хост машине, где расположен сервер (!). Справа - путь, который создастся внутри докер контейнера.
-      - www-certbot:/var/www/certbot/:ro
-      - etc-letsencrypt:/etc/letsencrypt:ro
+      #- www-certbot:/var/www/certbot/:ro
+      #- etc-letsencrypt:/etc/letsencrypt:ro
+  
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGateway/ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Http__Url=$API_GATEWAY_URL
+      - ConnectionStrings__AuthServiceGrpcEndpoint=http://auth-service:6001
+    ports:
+      - "80:5000"
+      #api-gateway:
+      # image: api-gateway
+      #container_name: api-gateway
+      #build:
+      # Для докер файла устаналиваем контекст, какбудто мы запускаем Dockerfile из папки в которой этот файл лежит.
+      # context: ./ApiGateway/
+      #dockerfile: Dockerfile
+      #environment:
+      # - ASPNETCORE_URLS=$API_GATEWAY_URL # Переопределяем url и порт на котором будет висеть приложение.
+      # - ASPNETCORE_ENVIRONMENT=Development # Чтобы переопределять окуржение и показывать сваггер.
+      #- "ConnectionStrings:Database=mongodb://${MONGO_DB_NAME}:27017" # Переопределяем строку подключения к БД, можно ли сделать запись не такой грязной?
+      #ports:
+      # - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    #depends_on:
+    #  - mongo # Запускаем этот сервис только после того, как запустился контейнер с монгой.
+  
+  auth-service:
+    image: auth-service
+    container_name: auth-service
+    build:
+      context: .
+      dockerfile: AuthService/AuthService/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=
+      - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Protocols=Http2
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+      - MongoRepository__DatabaseName=$DATABASE_NAME
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo:5.0.15
+    container_name: $MONGO_DB_CONTAINER_NAME
 
   compiler-service:
     image: compiler-service
-    build: 
+    build:
       context: /CompilerServiceAPI/
       dockerfile: Dockerfile
     environment:
-      -  ASPNETCORE_URLS=$COMPILER_SERVICE_URL
+      - ASPNETCORE_URLS=$COMPILER_SERVICE_URL
     ports:
       - "${COMPILER_SERVICE_PORT}:${COMPILER_SERVICE_PORT}"
 
@@ -61,12 +91,6 @@ services:
       - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
     depends_on:
       - mongo
-
-  mongo:
-    image: mongo:5.0.15
-    container_name: $MONGO_DB_NAME
-    ports:
-      - "27017:27017"
 
   mongo-express: # Веб интерфейс СУБД для управления монгой.
     image: mongo-express:0.54.0

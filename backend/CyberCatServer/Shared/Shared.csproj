@@ -10,10 +10,7 @@
       <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
-      <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
+      <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12"/>
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>

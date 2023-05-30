@@ -1,12 +1,11 @@
-using AuthServiceService.Repositories;
-using AuthServiceService.Repositories.InternalModels;
+using AuthService.Repositories;
 using Shared.Dto;
 using Shared.Dto.Args;
 using Shared.Dto.ProtoHelpers;
 using Shared.Exceptions;
 using Shared.Services;
 
-namespace AuthServiceService.Services;
+namespace AuthService.Services;
 
 public class AuthGrpcService : IAuthGrpcService
 {

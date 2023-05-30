@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6308A0E2-FB3D-47EE-97E9-8C857809FB72}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{46F24FCC-5926-4D85-B2D6-042A033369B9}"
 	ProjectSection(SolutionItems) = preProject
 		nginx\dhparam = nginx\dhparam
@@ -48,16 +46,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskService", "TaskService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskService", "TaskService\TaskService\TaskService.csproj", "{E79632D2-B7E9-437F-BFF6-54B2C7750C60}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{31577144-A5F9-4DC8-A5C0-41B6D688B801}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+		docker-compose.yml = docker-compose.yml
+		.dockerignore = .dockerignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1CD8607E-8D02-43E6-AEDD-4E1440AA89E3}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6308A0E2-FB3D-47EE-97E9-8C857809FB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6308A0E2-FB3D-47EE-97E9-8C857809FB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6308A0E2-FB3D-47EE-97E9-8C857809FB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6308A0E2-FB3D-47EE-97E9-8C857809FB72}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F0D021F-7DE5-44A5-9B87-FB69BF6FCF92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F0D021F-7DE5-44A5-9B87-FB69BF6FCF92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F0D021F-7DE5-44A5-9B87-FB69BF6FCF92}.Release|Any CPU.ActiveCfg = Release|Any CPU

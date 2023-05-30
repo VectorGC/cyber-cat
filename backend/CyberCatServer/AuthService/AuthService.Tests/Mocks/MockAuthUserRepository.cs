@@ -1,5 +1,5 @@
-using AuthServiceService.Repositories;
-using AuthServiceService.Repositories.InternalModels;
+using AuthService.Repositories;
+using AuthService.Repositories.InternalModels;
 using Shared.Models;
 
 namespace AuthService.Tests.Mocks;

@@ -1,5 +1,5 @@
 using System.Net;
-using Microsoft.AspNet.Identity;
+using ApiGateway.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

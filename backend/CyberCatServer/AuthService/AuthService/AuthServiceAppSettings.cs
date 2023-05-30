@@ -1,6 +1,6 @@
 using Shared.Configurations;
 
-namespace AuthServiceService;
+namespace AuthService;
 
 public class AuthServiceAppSettings
 {

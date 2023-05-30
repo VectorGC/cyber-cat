@@ -56,7 +56,7 @@ app.Run();
 // Чтобы подцепить сюда тесты.
 namespace ApiGateway
 {
-    public partial class Program
+    internal class Program
     {
     }
 }

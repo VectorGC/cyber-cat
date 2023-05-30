@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Shared.Dto;
 using Shared.Dto.Args;
 
@@ -12,9 +13,9 @@ public class TestUserHttpClient : IAsyncDisposable
     public const string TestUserPassword = "TestUserPassword123456@";
     public const string TestUserName = "TestUserName";
 
-    private const string Host = "http://localhost:5000";
+    private const string Host = ApiGatewayTestSettings.URL;
 
-    private HttpClient _client;
+    private readonly HttpClient _client;
 
     public static async Task<TestUserHttpClient> Create()
     {

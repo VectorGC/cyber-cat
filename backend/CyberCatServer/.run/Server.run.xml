@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Server" type="CompoundRunConfigurationType">
+    <toRun name="ApiGateway: Development" type="DotNetProject" />
+    <toRun name="AuthService: Development" type="DotNetProject" />
+    <method v="2" />
+  </configuration>
+</component>

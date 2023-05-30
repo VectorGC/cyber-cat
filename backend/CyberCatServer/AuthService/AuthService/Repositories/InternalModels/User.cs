@@ -2,7 +2,7 @@ using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
 using Shared.Models;
 
-namespace AuthServiceService.Repositories.InternalModels;
+namespace AuthService.Repositories.InternalModels;
 
 [CollectionName("Users")]
 internal sealed class User : MongoIdentityUser, IUser

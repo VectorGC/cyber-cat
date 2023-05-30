@@ -1,8 +1,7 @@
-using System.Net.Http.Json;
 using ApiGateway.Tests.End2End.Extensions;
 using Shared.Dto;
 
-namespace ApiGateway.Tests.End2End;
+namespace ApiGateway.Tests.End2End.Controllers;
 
 [TestFixture]
 public class TasksControllerTests : E2ETests

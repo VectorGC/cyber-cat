@@ -1,7 +1,6 @@
-using System.Net.Http.Json;
 using ApiGateway.Tests.End2End.Extensions;
 
-namespace ApiGateway.Tests.End2End;
+namespace ApiGateway.Tests.End2End.Controllers;
 
 [TestFixture]
 public class SolutionControllerTests : E2ETests

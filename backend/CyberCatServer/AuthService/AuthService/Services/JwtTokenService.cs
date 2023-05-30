@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shared.Configurations;
 using Shared.Models;
 
-namespace AuthServiceService.Services;
+namespace AuthService.Services;
 
 public class JwtTokenService : ITokenService
 {

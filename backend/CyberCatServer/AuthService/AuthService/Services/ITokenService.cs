@@ -1,6 +1,6 @@
 using Shared.Models;
 
-namespace AuthServiceService.Services;
+namespace AuthService.Services;
 
 public interface ITokenService
 {

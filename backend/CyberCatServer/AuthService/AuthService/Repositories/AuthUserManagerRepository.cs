@@ -1,10 +1,10 @@
-using AuthServiceService.Repositories.InternalModels;
+using AuthService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Shared.Exceptions;
 using Shared.Models;
 
-namespace AuthServiceService.Repositories;
+namespace AuthService.Repositories;
 
 internal class AuthUserManagerRepository : IAuthUserRepository
 {
@@ -39,7 +39,7 @@ internal class AuthUserManagerRepository : IAuthUserRepository
         }
     }
 
-    public async Task<IUser?> FindByEmailAsync(string email)
+    public async Task<IUser> FindByEmailAsync(string email)
     {
         return await _userManager.FindByEmailAsync(email);
     }
@@ -50,7 +50,7 @@ internal class AuthUserManagerRepository : IAuthUserRepository
         return await _userManager.CheckPasswordAsync(user, password);
     }
 
-    public async Task SetJwtAuthenticationAccessTokenAsync(string email, string? accessToken)
+    public async Task SetJwtAuthenticationAccessTokenAsync(string email, string accessToken)
     {
         var user = await _userManager.FindByEmailAsync(email);
         await _userManager.SetAuthenticationTokenAsync(user, JwtBearerDefaults.AuthenticationScheme, "access_token", accessToken);

@@ -3,7 +3,7 @@ using ApiGateway.Tests.End2End.Extensions;
 using Shared.Dto;
 using Shared.Models;
 
-namespace ApiGateway.Tests.End2End;
+namespace ApiGateway.Tests.End2End.Controllers;
 
 [TestFixture]
 public class JudgeControllerTests : E2ETests

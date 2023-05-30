@@ -1,7 +1,7 @@
-using AuthServiceService;
-using AuthServiceService.Repositories;
-using AuthServiceService.Repositories.InternalModels;
-using AuthServiceService.Services;
+using AuthService;
+using AuthService.Repositories;
+using AuthService.Repositories.InternalModels;
+using AuthService.Services;
 using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +21,9 @@ app.MapGrpcService<AuthGrpcService>();
 
 app.Run();
 
-namespace AuthServiceService
+namespace AuthService
 {
-    public partial class Program
+    internal class Program
     {
     }
 }
