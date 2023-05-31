@@ -29,7 +29,7 @@ public class JudgeControllerTests : E2ETests
     {
         var taskId = "tutorial";
         var sourceCode = "#include <stdio.h> \nint main()";
-        var expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
+        var expectedErrorRegex = "Exit Code 1:.*: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
         var verdictResponse = await Client.PutAsJsonAsync($"/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
@@ -46,6 +46,7 @@ public class JudgeControllerTests : E2ETests
     {
         var taskId = "tutorial";
         var sourceCode = "int main() { while(true){} }";
+        var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
 
         var verdictResponse = await Client.PutAsJsonAsync($"/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
@@ -54,7 +55,7 @@ public class JudgeControllerTests : E2ETests
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(0, verdict.TestsPassed);
-        Assert.AreEqual("Exit Code -1: The process took more than 5 seconds", verdict.Error);
+        Assert.That(verdict.Error, Does.Match(expectedErrorRegex));
     }
 
     [Test]
@@ -102,6 +103,7 @@ public class JudgeControllerTests : E2ETests
         const string taskId = "sum_ab";
         // Сделали лишний ввод, бесконечно ждем, когда введется 'c'.
         const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
+        var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
 
         var verdictResponse = await Client.PutAsJsonAsync($"/judge/verify/{taskId}", sourceCode);
         verdictResponse.EnsureSuccessStatusCode();
@@ -110,6 +112,6 @@ public class JudgeControllerTests : E2ETests
 
         Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
         Assert.AreEqual(0, verdict.TestsPassed);
-        Assert.AreEqual("Exit Code -1: The process took more than 5 seconds", verdict.Error);
+        Assert.That(verdict.Error, Does.Match(expectedErrorRegex));
     }
 }

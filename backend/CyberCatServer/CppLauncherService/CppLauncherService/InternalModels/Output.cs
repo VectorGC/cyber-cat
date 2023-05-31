@@ -4,7 +4,6 @@ internal class Output
 {
     public string StandardOutput { get; private init; }
     public string StandardError { get; private init; }
-
     public int? ExitCode { get; private init; }
 
     public bool HasError => !string.IsNullOrEmpty(StandardError);

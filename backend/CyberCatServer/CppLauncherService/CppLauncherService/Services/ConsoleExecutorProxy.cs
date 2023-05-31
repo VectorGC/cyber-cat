@@ -14,12 +14,12 @@ namespace CppLauncherService.Services
             _timeOut = appSettings.Value.ProcessTimeout;
         }
 
-        public async Task<Output> Run(string command, string arguments, string input = null)
+        public async Task<Output> Run(RunCommand command)
         {
-            ProcessStartInfo startInfo = new()
+            var startInfo = new ProcessStartInfo()
             {
-                FileName = command,
-                Arguments = arguments,
+                FileName = command.Command,
+                Arguments = command.Arguments,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -27,8 +27,8 @@ namespace CppLauncherService.Services
             };
 
             var process = Process.Start(startInfo);
-            await process.StandardInput.WriteAsync(input);
-            // После воода нудно передать символ \n (как будто нажали Enter), чтобы программа засчитала ввод.
+            await process.StandardInput.WriteAsync(command.Input);
+            // После ввода нужно передать символ \n (как будто нажали Enter), чтобы программа засчитала ввод.
             await process.StandardInput.WriteAsync(Environment.NewLine);
 
             var output = await WaitForExit(process, _timeOut);
@@ -61,7 +61,7 @@ namespace CppLauncherService.Services
             catch (TaskCanceledException)
             {
                 Kill(process, timeOut);
-                return process.ReadError("The process took more than 5 seconds");
+                return process.ReadError($"The process took more than {timeOut.Seconds} seconds");
             }
         }
 

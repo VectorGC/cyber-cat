@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
 using Shared;
 using Shared.Dto.Args;
@@ -11,6 +13,7 @@ namespace CppLauncherService.Tests;
 public class CompileAndLaunchTests
 {
     private WebApplicationFactory<Program> _factory;
+    private CppLauncherAppSettings _appSettings;
 
     [SetUp]
     public void Setup()
@@ -59,7 +62,8 @@ public class CompileAndLaunchTests
     public async Task LaunchError_WhenPassInfinityLoopCode()
     {
         const string sourceCode = "int main() { while(true){} }";
-        const string expectedError = "Exit Code -1: The process took more than 5 seconds";
+        var appSettings = _factory.Services.GetRequiredService<IOptions<CppLauncherAppSettings>>();
+        var expectedError = $"Exit Code -1: The process took more than {appSettings.Value.ProcessTimeoutSec} seconds";
         var args = new LaunchCodeArgs()
         {
             SourceCode = sourceCode

@@ -99,7 +99,7 @@ services:
       - Kestrel__EndPoints__Grpc__Url=$JUDGE_SERVICE_GRPC_URL
       - Kestrel__EndPoints__Grpc__Protocols=Http2
       - ConnectionStrings__CppLauncherServiceGrpcEndpoint=$CPP_LAUNCHER_SERVICE_GRPC_URL
-      - ConnectionStrings__TestServiceGrpcEndpoint=$TEST_SERVICE_GRPC_URL
+      - ConnectionStrings__TestServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
     depends_on:
       - cpp-launcher-service
   

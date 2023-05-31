@@ -1,5 +1,5 @@
+using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
-using CppLauncherService.Services.CppLaunchers;
 using Shared.Dto;
 using Shared.Dto.Args;
 using Shared.Services;
@@ -8,23 +8,25 @@ namespace CppLauncherService.GrpcServices;
 
 internal class CppLauncherGrpcService : ICodeLauncherGrpcService
 {
-    private readonly ICppExecutorOsSpecificService _compileService;
+    private readonly IProcessExecutorProxy _processExecutorProxy;
+    private readonly ICppFileCreator _cppFileCreator;
     private readonly ICppErrorFormatService _errorFormatService;
 
-    public CppLauncherGrpcService(ICppExecutorOsSpecificService compileService, ICppErrorFormatService errorFormatService)
+    public CppLauncherGrpcService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator, ICppErrorFormatService errorFormatService)
     {
-        _compileService = compileService;
+        _processExecutorProxy = processExecutorProxy;
+        _cppFileCreator = cppFileCreator;
         _errorFormatService = errorFormatService;
     }
 
     public async Task<OutputDto> Launch(LaunchCodeArgs args)
     {
-        return await LaunchCode(args.SourceCode, args.Input);
+        return await Launch(args.SourceCode, args.Input);
     }
 
-    private async Task<OutputDto> LaunchCode(string sourceCode, string input = null)
+    private async Task<OutputDto> Launch(string sourceCode, string input = null)
     {
-        var compileResult = await _compileService.CompileCode(sourceCode);
+        var compileResult = await CompileCode(sourceCode);
         if (compileResult.Output.HasError)
         {
             return new OutputDto
@@ -33,7 +35,7 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
             };
         }
 
-        var launchOutput = await _compileService.LaunchCode(compileResult.ObjectFileName, input);
+        var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
         launchOutput = _errorFormatService.Format(launchOutput);
 
         return new OutputDto
@@ -41,5 +43,24 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
             StandardOutput = launchOutput.StandardOutput,
             StandardError = launchOutput.StandardError
         };
+    }
+
+    private async Task<CompileCppResult> CompileCode(string sourceCode)
+    {
+        var cppFileName = await _cppFileCreator.CreateCppWithText(sourceCode);
+        var objectFileName = _cppFileCreator.GetObjectFileName(cppFileName);
+
+        var output = await _processExecutorProxy.Run(RunCommand.CreateCompile(cppFileName, objectFileName));
+
+        return new CompileCppResult
+        {
+            Output = output,
+            ObjectFileName = objectFileName
+        };
+    }
+
+    private async Task<Output> LaunchCode(string objectFileName, string input)
+    {
+        return await _processExecutorProxy.Run(RunCommand.CreateLaunch(objectFileName, input));
     }
 }

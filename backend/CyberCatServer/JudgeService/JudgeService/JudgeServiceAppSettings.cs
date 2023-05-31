@@ -1,5 +1,3 @@
-using Shared.Configurations;
-
 namespace JudgeService;
 
 public class JudgeServiceAppSettings

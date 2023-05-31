@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Properties\launchSettings.json" />
+    <InternalsVisibleTo Include="CppLauncherService.Tests" />
   </ItemGroup>
 
   <ItemGroup>

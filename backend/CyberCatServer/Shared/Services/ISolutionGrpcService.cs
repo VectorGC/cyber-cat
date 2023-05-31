@@ -1,5 +1,4 @@
 using ProtoBuf.Grpc.Configuration;
-using Shared.Dto;
 using Shared.Dto.Args;
 using Shared.Dto.ProtoHelpers;
 

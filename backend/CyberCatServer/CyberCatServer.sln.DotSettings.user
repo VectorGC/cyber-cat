@@ -7,6 +7,7 @@
     &lt;/And&gt;&#xD;
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::A022F486-E701-4060-BC5D-D950415C6DA5::net7.0::ApiGateway.Tests.End2End.AuthControllerTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::4CAA1798-76F9-4117-9269-CE7565DCF6E7::net7.0::CppLauncherService.Tests.CompileAndLaunchTests.LaunchError_WhenPassInfinityLoopCode&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;Project Location="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Tests.End2End" Presentation="&amp;lt;ApiGateway&amp;gt;\&amp;lt;ApiGateway.Tests.End2End&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
