@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _task: tutorial_task
+    _task: tutorial
   taskDataObservers:
   - {fileID: 204111229}
   - {fileID: 204111231}

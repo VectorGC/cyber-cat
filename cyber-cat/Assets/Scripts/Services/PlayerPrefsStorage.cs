@@ -17,7 +17,8 @@ namespace Services
 
         public void RemoveAll()
         {
-            PlayerPrefs.DeleteAll();
+            PlayerPrefs.DeleteKey(PlayerNamePrefsKey);
+            PlayerPrefs.DeleteKey(TokenPrefsKey);
             PlayerPrefs.Save();
         }
 

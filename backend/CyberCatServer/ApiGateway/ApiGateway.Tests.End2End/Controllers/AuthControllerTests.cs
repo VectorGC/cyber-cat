@@ -20,4 +20,13 @@ public class AuthControllerTests : E2ETests
 
         Assert.AreEqual(TestUserHttpClient.TestUserName, name);
     }
+
+    [Test]
+    public async Task ExistsDefaultUser_WhenPassValidCredentials()
+    {
+        await Client.AddAuthHeader("cyber@cat", "Cyber_Cat123@");
+        var name = await Client.GetStringAsync("/auth/authorize_player");
+
+        Assert.AreEqual("CyberCat", name);
+    }
 }

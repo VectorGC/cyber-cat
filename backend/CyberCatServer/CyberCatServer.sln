@@ -49,7 +49,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{31577144-A5F9-4DC8-A5C0-41B6D688B801}"
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
-		docker-compose.prod.yml = docker-compose.prod.yml
+		docker-compose.yml = docker-compose.yml
 		.dockerignore = .dockerignore
 		mongo-db-local.yml = mongo-db-local.yml
 	EndProjectSection

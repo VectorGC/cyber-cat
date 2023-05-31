@@ -24,7 +24,7 @@ namespace ServerAPI.ServerAPIImplements
                 Uri = _url + "/auth/login",
                 SimpleForm = new Dictionary<string, string>
                 {
-                    ["username"] = email,
+                    ["email"] = email,
                     ["password"] = password
                 },
                 ProgressCallback = value => progress?.Report(value),
@@ -46,10 +46,10 @@ namespace ServerAPI.ServerAPIImplements
                 EnableDebug = Debug.isDebugBuild
             };
 
-            var response = await RestClient.Get<AuthorizePlayerResponseDto>(request).ToUniTask();
+            var response = await RestClient.Get(request).ToUniTask();
             return new PlayerDto
             {
-                Name = response.Name,
+                Name = response.Text,
                 Token = token
             };
         }

@@ -136,7 +136,7 @@ namespace Proyecto26
                 }
                 catch (Exception error)
                 {
-                    DebugLog(options.EnableDebug, string.Format("RestClient - Invalid JSON format\nError: {0}", error.Message), true);
+                    DebugLog(options.EnableDebug, string.Format("RestClient - Invalid JSON format\nError: {0}. Json: {1}", error.Message, res.Text), true);
                     err = new RequestException(error.Message);
                 }
                 finally

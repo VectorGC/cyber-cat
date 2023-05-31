@@ -42,11 +42,22 @@ public class TestUserHttpClient : IAsyncDisposable
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
     }
 
+    public async Task AddAuthHeader(string email, string password)
+    {
+        var token = await GetTokenForUser(email, password);
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+    }
+
     public async Task<string> GetTokenForTestUser()
     {
+        return await GetTokenForUser(TestEmail, TestUserPassword);
+    }
+
+    public async Task<string> GetTokenForUser(string email, string password)
+    {
         var form = new MultipartFormDataContent();
-        form.Add(new StringContent(TestEmail), "email");
-        form.Add(new StringContent(TestUserPassword), "password");
+        form.Add(new StringContent(email), "email");
+        form.Add(new StringContent(password), "password");
 
         var response = await PostAsync("/auth/login", form);
         var token = await response.Content.ReadFromJsonAsync<TokenDto>();

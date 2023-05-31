@@ -12,7 +12,9 @@ var appSettings = builder.Configuration.Get<AuthServiceAppSettings>();
 builder.Services.AddIdentity<User, Role>().AddMongoDbStores<User, Role, Guid>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
-builder.Services.AddScoped<IAuthUserRepository, AuthUserManagerRepository>();
+builder.Services
+    .AddScoped<IAuthUserRepository, AuthUserManagerRepository>()
+    .AddHostedService<AddCyberCatUserToRepositoryOnStart>();
 
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 
