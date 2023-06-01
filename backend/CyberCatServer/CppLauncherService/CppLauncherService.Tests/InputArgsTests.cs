@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
-using Shared;
 using Shared.Dto.Args;
-using Shared.Services;
+using Shared.Server.Services;
+using Shared.Server.Tests;
 
 namespace CppLauncherService.Tests;
 

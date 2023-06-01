@@ -1,6 +1,6 @@
 using Shared.Dto;
-using Shared.Dto.ProtoHelpers;
-using Shared.Services;
+using Shared.ProtoHelpers;
+using Shared.Server.Services;
 using TaskService.Repositories;
 
 namespace TaskService.GrpcServices;

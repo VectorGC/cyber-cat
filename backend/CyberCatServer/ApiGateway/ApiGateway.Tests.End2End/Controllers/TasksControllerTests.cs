@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApiGateway.Tests.End2End.Extensions;
 using Shared.Dto;
 

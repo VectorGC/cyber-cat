@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Dto;
 using Shared.Dto.Args;
-using Shared.Services;
+using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
 
@@ -37,7 +36,7 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<TokenDto>> Login(string email, string password)
+    public async Task<ActionResult<string>> Login(string email, string password)
     {
         var response = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
         {
@@ -45,10 +44,7 @@ public class AuthController : ControllerBase
             Password = password
         });
 
-        return new TokenDto
-        {
-            AccessToken = response.AccessToken
-        };
+        return response.AccessToken;
     }
 
     [HttpGet("authorize_player")]

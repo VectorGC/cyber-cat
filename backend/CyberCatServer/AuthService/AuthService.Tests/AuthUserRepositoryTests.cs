@@ -3,7 +3,7 @@ using AuthService.Repositories.InternalModels;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Shared;
+using Shared.Server.Tests;
 
 namespace AuthService.Tests;
 

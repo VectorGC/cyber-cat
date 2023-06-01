@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using AuthService.JwtValidation;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Configurations;
 using Shared.Models;
 
 namespace AuthService.Services;

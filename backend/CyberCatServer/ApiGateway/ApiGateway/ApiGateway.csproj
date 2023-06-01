@@ -7,18 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Shared\Shared.csproj" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\AuthService\AuthService.JwtValidation\AuthService.JwtValidation.csproj" />
+      <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
     </ItemGroup>
 
 </Project>

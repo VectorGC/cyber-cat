@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
-using Shared;
 using Shared.Dto.Args;
-using Shared.Services;
+using Shared.Server.Services;
+using Shared.Server.Tests;
 
 namespace CppLauncherService.Tests;
 
@@ -13,7 +13,6 @@ namespace CppLauncherService.Tests;
 public class CompileAndLaunchTests
 {
     private WebApplicationFactory<Program> _factory;
-    private CppLauncherAppSettings _appSettings;
 
     [SetUp]
     public void Setup()

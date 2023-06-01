@@ -1,6 +1,6 @@
 using Shared.Dto.Args;
-using Shared.Dto.ProtoHelpers;
-using Shared.Services;
+using Shared.ProtoHelpers;
+using Shared.Server.Services;
 using SolutionService.Repositories;
 
 namespace SolutionService.GrpcServices;

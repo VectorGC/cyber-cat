@@ -8,7 +8,7 @@ namespace Tests
     [TestFixture]
     public class TaskRepositoryTests
     {
-        private readonly ITaskRepository _taskRepository = new TaskRepositoryProxy(RestAPIFacade.Create());
+        private readonly ITaskRepository _taskRepository = new TaskRepositoryProxy(ServerAPIFacade.Create());
 
         [Test]
         public async Task HasTutorialTask_InRepository([Values("tutorial")] string taskId)

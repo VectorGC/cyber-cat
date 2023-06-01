@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApiGateway.Tests.End2End.Extensions;
 
 namespace ApiGateway.Tests.End2End.Controllers;

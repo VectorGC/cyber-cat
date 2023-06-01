@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace ApiGateway.Tests.End2End.Extensions;
 
 [TestFixture]

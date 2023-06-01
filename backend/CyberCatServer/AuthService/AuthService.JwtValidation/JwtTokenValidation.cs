@@ -1,0 +1,23 @@
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace AuthService.JwtValidation;
+
+public static class JwtTokenValidation
+{
+    public const string Issuer = "AuthService";
+    public const string Audience = "AuthService";
+    public static readonly SymmetricSecurityKey IssuerSigningKey = new("!CyberCatSecret!"u8.ToArray());
+
+    public static TokenValidationParameters CreateTokenParameters()
+    {
+        return new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = Issuer,
+            ValidAudience = Audience,
+            IssuerSigningKey = IssuerSigningKey
+        };
+    }
+}

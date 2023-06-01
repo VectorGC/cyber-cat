@@ -1,16 +1,16 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using AuthService.JwtValidation;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Client;
-using Shared;
-using Shared.Configurations;
 using Shared.Dto.Args;
 using Shared.Models;
-using Shared.Services;
+using Shared.Server.Services;
+using Shared.Server.Tests;
 
 namespace AuthService.Tests;
 

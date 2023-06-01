@@ -1,9 +1,9 @@
 using ApiGateway;
 using ApiGateway.Extensions;
+using AuthService.JwtValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ProtoBuf.Grpc.ClientFactory;
-using Shared.Configurations;
-using Shared.Services;
+using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

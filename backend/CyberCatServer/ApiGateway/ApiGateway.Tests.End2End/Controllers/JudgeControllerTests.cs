@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 using ApiGateway.Tests.End2End.Extensions;
 using Shared.Dto;
 using Shared.Models;

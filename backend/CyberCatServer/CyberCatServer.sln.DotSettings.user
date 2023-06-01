@@ -1,4 +1,8 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/AddReferences/RecentPaths/=D_003A_005CProjects_005Ccyber_002Dcat_005Cbackend_005CCyberCatServer_005CApiGateway_005CApiGateway_002EClient_005Cbin_005CDebug_005Cnet7_002E0_005CApiGateway_002EClient_002Edll/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Client\bin\Debug\net7.0\ApiGateway.Client.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=08ce0667_002D7552_002D40a6_002D94a7_002Db23993db279e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;And&gt;&#xD;
@@ -8,7 +12,15 @@
     &lt;TestAncestor&gt;&#xD;
       &lt;TestId&gt;NUnit3x::A022F486-E701-4060-BC5D-D950415C6DA5::net7.0::ApiGateway.Tests.End2End.AuthControllerTests&lt;/TestId&gt;&#xD;
       &lt;TestId&gt;NUnit3x::4CAA1798-76F9-4117-9269-CE7565DCF6E7::net7.0::CppLauncherService.Tests.CompileAndLaunchTests.LaunchError_WhenPassInfinityLoopCode&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.AuthorizePlayer_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.ExistsDefaultUser_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.TaskTests.GetTask&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.AuthenticateTests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.AuthenticateTests&lt;/TestId&gt;&#xD;
     &lt;/TestAncestor&gt;&#xD;
     &lt;Project Location="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Tests.End2End" Presentation="&amp;lt;ApiGateway&amp;gt;\&amp;lt;ApiGateway.Tests.End2End&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	
+	</wpf:ResourceDictionary>

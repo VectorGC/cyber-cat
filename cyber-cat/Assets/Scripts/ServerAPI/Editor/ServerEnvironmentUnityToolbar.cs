@@ -16,7 +16,7 @@ public static class ServerEnvironmentUnityToolbar
     {
         EditorGUI.BeginDisabledGroup(Application.isPlaying);
 
-        RestAPIFacade.ServerEnvironment = (ServerEnvironment) EditorGUILayout.EnumPopup(RestAPIFacade.ServerEnvironment);
+        ServerAPIFacade.ServerEnvironment = (ServerEnvironment) EditorGUILayout.EnumPopup(ServerAPIFacade.ServerEnvironment);
 
         EditorGUI.EndDisabledGroup();
 

@@ -1,4 +1,4 @@
-using Shared.Configurations;
+using Shared.Server.Configurations;
 
 namespace AuthService;
 

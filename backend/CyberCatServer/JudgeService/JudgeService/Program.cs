@@ -2,7 +2,7 @@ using JudgeService;
 using JudgeService.GrpcServices;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Server;
-using Shared.Services;
+using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

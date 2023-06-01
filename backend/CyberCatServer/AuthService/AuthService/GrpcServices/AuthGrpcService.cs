@@ -2,9 +2,9 @@ using AuthService.Repositories;
 using AuthService.Services;
 using Shared.Dto;
 using Shared.Dto.Args;
-using Shared.Dto.ProtoHelpers;
-using Shared.Exceptions;
-using Shared.Services;
+using Shared.ProtoHelpers;
+using Shared.Server.Exceptions;
+using Shared.Server.Services;
 
 namespace AuthService.GrpcServices;
 

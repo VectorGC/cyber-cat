@@ -6,8 +6,8 @@ using Services.AuthService;
 
 public class GameManager
 {
-    public readonly ITaskRepository TaskRepository = new TaskRepositoryProxy(RestAPIFacade.Create());
-    public readonly IAuthService AuthService = new AuthServiceProxy(RestAPIFacade.Create());
+    public readonly ITaskRepository TaskRepository = new TaskRepositoryProxy(ServerAPIFacade.Create());
+    public readonly IAuthService AuthService = new AuthServiceProxy(ServerAPIFacade.Create());
     public readonly ILocalStorageService LocalStorage = new PlayerPrefsStorage();
 
     public static GameManager Instance
