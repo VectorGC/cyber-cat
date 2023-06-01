@@ -37,6 +37,7 @@ namespace ApiGateway.Client
         {
             AddAuthorizationToken(token);
             var name = await _restClient.GetStringAsync(_uri + "auth/authorize_player");
+            RemoveAuthorizationToken();
 
             return name;
         }

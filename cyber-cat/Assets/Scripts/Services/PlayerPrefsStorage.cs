@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Models;
 using Services.InternalModels;
 using UnityEngine;
@@ -22,10 +23,16 @@ namespace Services
             PlayerPrefs.Save();
         }
 
+        [CanBeNull]
         private IPlayer GetPlayer()
         {
-            var playerName = PlayerPrefs.GetString(PlayerNamePrefsKey);
             var tokenValue = PlayerPrefs.GetString(TokenPrefsKey);
+            if (string.IsNullOrEmpty(tokenValue))
+            {
+                return null;
+            }
+
+            var playerName = PlayerPrefs.GetString(PlayerNamePrefsKey);
 
             var token = new TokenSession(tokenValue);
 

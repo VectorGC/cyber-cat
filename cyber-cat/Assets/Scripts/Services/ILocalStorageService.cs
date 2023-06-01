@@ -1,10 +1,11 @@
+using JetBrains.Annotations;
 using Models;
 
 namespace Services
 {
     public interface ILocalStorageService
     {
-        IPlayer Player { get; set; }
+        [CanBeNull] IPlayer Player { get; set; }
         void RemoveAll();
     }
 }
