@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Publish ApiGateway.Client to Cyber Cat Unity folder" type="DotNetFolderPublish" factoryName="Publish to folder">
-    <riderPublish configuration="Release" platform="Any CPU" runtime="win-x86" target_folder="$PROJECT_DIR$/../../cyber-cat/Assets/Plugins/ApiGateway.Client" target_framework="net7.0" uuid_high="4193027679102193170" uuid_low="-4738623913970928196" />
+    <riderPublish configuration="Release" platform="Any CPU" runtime="win-x86" target_folder="$PROJECT_DIR$/../../cyber-cat/Assets/Plugins/ApiGateway.Client" target_framework="net45" uuid_high="4193027679102193170" uuid_low="-4738623913970928196" />
     <method v="2" />
   </configuration>
 </component>
