@@ -1,5 +1,5 @@
 {
-    "name": "RestAPI.Editor",
+    "name": "ServerAPI.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b",

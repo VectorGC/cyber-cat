@@ -3,7 +3,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TMP_TextField : UIBehaviour, ITextField
+public class TextField_TMP : UIBehaviour, ITextField
 {
     [SerializeField] private TMP_Text textContent;
 

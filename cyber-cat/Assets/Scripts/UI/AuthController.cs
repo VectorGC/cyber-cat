@@ -1,19 +1,18 @@
 using System;
 using AuthService;
 using Services;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Controllers
+namespace UI
 {
     public class AuthController : UIBehaviour
     {
-        [SerializeField] private TMP_InputField _emailTextField;
-        [SerializeField] private TMP_InputField _passwordTextField;
-        [SerializeField] private TMP_Text _errorMessage;
+        [SerializeField] private TextField _emailTextField;
+        [SerializeField] private TextField _passwordTextField;
+        [SerializeField] private TextField _errorMessage;
         [SerializeField] private Button _signIn;
 
         private IAuthService _authService;
@@ -39,8 +38,8 @@ namespace Controllers
         {
             try
             {
-                var email = _emailTextField.text;
-                var password = _passwordTextField.text;
+                var email = _emailTextField.Text;
+                var password = _passwordTextField.Text;
                 var token = await _authService.Authenticate(email, password);
                 var player = await _authService.AuthorizePlayer(token);
 
@@ -49,7 +48,7 @@ namespace Controllers
             catch (Exception e)
             {
                 Debug.LogError(e);
-                _errorMessage.text = e.Message;
+                _errorMessage.Text = e.Message;
                 return;
             }
 
