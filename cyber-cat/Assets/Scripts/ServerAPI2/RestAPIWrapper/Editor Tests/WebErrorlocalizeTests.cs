@@ -1,5 +1,4 @@
-﻿using RestAPIWrapper;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace RestAPIWrapper.EditorTests
 {

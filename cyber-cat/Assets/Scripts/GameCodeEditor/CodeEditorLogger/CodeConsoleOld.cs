@@ -2,7 +2,7 @@ using System;
 using mikinel.easylogview;
 using UniRx;
 
-public class CodeConsole : EasyLogView
+public class CodeConsoleOld : EasyLogView
 {
     public static void WriteLine(ICodeConsoleMessage codeConsoleMessage)
     {

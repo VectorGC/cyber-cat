@@ -1,6 +1,4 @@
-using Authentication;
 using RestAPIWrapper;
-using RestAPIWrapper.V1;
 using System;
 using TaskUnits;
 using UniRx;

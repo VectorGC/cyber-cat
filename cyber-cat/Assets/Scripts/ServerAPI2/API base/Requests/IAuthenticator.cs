@@ -1,6 +1,3 @@
-using Cysharp.Threading.Tasks;
-using System;
-
 namespace ServerAPIBase
 {
     public interface IAuthenticator<T> : IWebApiRequester<IAuthenticatorData, T>

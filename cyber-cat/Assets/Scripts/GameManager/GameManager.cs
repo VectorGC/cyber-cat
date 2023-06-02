@@ -9,6 +9,7 @@ public class GameManager
     public ILocalStorageService LocalStorage { get; } = new PlayerPrefsStorage();
     public ITaskRepository TaskRepository { get; }
     public IAuthService AuthService { get; }
+    public ICodeEditorService CodeEditor { get; }
 
     private GameManager()
     {
@@ -21,6 +22,7 @@ public class GameManager
 
         TaskRepository = new TaskRepositoryProxy(serverClient);
         AuthService = new AuthServiceProxy(serverClient);
+        CodeEditor = new CodeEditorServiceProxy(serverClient);
     }
 
     public static GameManager Instance

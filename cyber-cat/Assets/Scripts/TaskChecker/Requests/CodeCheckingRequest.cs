@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using RestAPIWrapper;
-using ServerAPIBase;
 
 namespace TaskChecker.Requests
 {

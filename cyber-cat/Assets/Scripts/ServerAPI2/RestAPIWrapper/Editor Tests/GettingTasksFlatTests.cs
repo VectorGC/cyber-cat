@@ -1,9 +1,6 @@
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using UnityEngine;
-using ServerAPIBase;
-using TaskUnits;
 
 namespace RestAPIWrapper.EditorTests
 {

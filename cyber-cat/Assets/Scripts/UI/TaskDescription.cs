@@ -1,22 +1,23 @@
-using UniRx;
+using Models;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TaskDescription : UIBehaviour
+namespace UI
 {
-    [SerializeField] private TextField goalTask;
-    [SerializeField] private TextField descriptionTask;
-
-    protected override void Awake()
+    public class TaskDescription : UIBehaviour
     {
-        MessageBroker.Default.Receive<SetTaskDescriptionMessage>().Subscribe(SetTaskDescription);
-    }
+        [SerializeField] private TextField goalTask;
+        [SerializeField] private TextField descriptionTask;
 
-    private void SetTaskDescription(SetTaskDescriptionMessage message)
-    {
-        var task = message.TaskTicket;
-        
-        goalTask.SetText(task.Name);
-        descriptionTask.SetText(task.Description);
+        public ITask Task
+        {
+            set => SetTask(value);
+        }
+
+        private void SetTask(ITask task)
+        {
+            goalTask.Text = task.Name;
+            descriptionTask.Text = task.Description;
+        }
     }
 }

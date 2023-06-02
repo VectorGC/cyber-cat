@@ -2,13 +2,13 @@ using Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 
 namespace UI
 {
     public class MainMenu : UIBehaviour
     {
-        [SerializeField] private TextMeshPro_TextShared _greetingsText;
+        [SerializeField] private TextField _greetingsText;
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _inGameButton;
         [SerializeField] private Button _signOut;
@@ -20,7 +20,7 @@ namespace UI
             _localStorage = GameManager.Instance.LocalStorage;
 
             var playerName = _localStorage.Player.Name;
-            _greetingsText.text = $"Доступ получен: <color=green>{playerName}";
+            _greetingsText.Text = $"Доступ получен: <color=green>{playerName}";
         }
 
         protected override void OnEnable()

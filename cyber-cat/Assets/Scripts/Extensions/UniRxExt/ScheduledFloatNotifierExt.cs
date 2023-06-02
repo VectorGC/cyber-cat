@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using UniRx;
-using UnityEngine;
 
 namespace Extensions.UniRxExt
 {

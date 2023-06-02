@@ -24,6 +24,6 @@ public class SendCodeHandler : MonoBehaviour
         throw new NotImplementedException("token");
         var checkingResult = await RestAPI.Instance.SendCodeToChecking("123", task.Id, code, ProgLanguages[language]);
 
-        CodeConsole.WriteLine(checkingResult);
+        CodeConsoleOld.WriteLine(checkingResult);
     }
 }
