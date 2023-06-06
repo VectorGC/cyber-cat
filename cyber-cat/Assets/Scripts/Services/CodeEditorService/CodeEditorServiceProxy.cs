@@ -1,18 +1,18 @@
 using System;
-using ApiGateway.Client;
 using Cysharp.Threading.Tasks;
 using Models;
+using ServerAPI;
 using UnityEngine.SceneManagement;
 
 public class CodeEditorServiceProxy : ICodeEditorService
 {
     public ITask CurrentTask { get; private set; }
 
-    private readonly IClient _client;
+    private readonly IServerAPI _serverAPI;
 
-    public CodeEditorServiceProxy(IClient client)
+    public CodeEditorServiceProxy(IServerAPI serverAPI)
     {
-        _client = client;
+        _serverAPI = serverAPI;
     }
 
     public async UniTaskVoid OpenEditor(ITask task, IProgress<float> progress = null)

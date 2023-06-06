@@ -4,7 +4,7 @@ using Shared.Models;
 namespace Shared.Dto
 {
     [ProtoContract]
-    public class VerdictDto
+    public class VerdictDto : IVerdict
     {
         [ProtoMember(1)] public VerdictStatus Status { get; set; }
         [ProtoMember(2)] public string Error { get; set; }

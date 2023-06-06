@@ -1,7 +1,6 @@
-using System;
-using ApiGateway.Client;
 using Cysharp.Threading.Tasks;
 using Models;
+using ServerAPI;
 
 namespace Repositories.TaskRepositories
 {
@@ -10,17 +9,16 @@ namespace Repositories.TaskRepositories
     /// </summary>
     public class TaskRepositoryProxy : ITaskRepository
     {
-        private readonly IClient _client;
+        private readonly IServerAPI _serverAPI;
 
-        public TaskRepositoryProxy(IClient client)
+        public TaskRepositoryProxy(IServerAPI serverAPI)
         {
-            _client = client;
+            _serverAPI = serverAPI;
         }
 
         public async UniTask<ITask> GetTask(string taskId)
         {
-            var taskDto = await _client.GetTask(taskId);
-            return new TaskCode(taskDto);
+            return await _serverAPI.GetTask(taskId);
         }
     }
 }

@@ -19,26 +19,6 @@ public class AuthController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("create")]
-    public async Task<ActionResult> CreateUser([FromBody] CreateUserArgs args)
-    {
-        if (args.User == null)
-        {
-            throw new ArgumentNullException(nameof(args.User));
-        }
-
-        await _authGrpcService.CreateUser(args);
-        return Ok();
-    }
-
-    [HttpPost("remove")]
-    public async Task<ActionResult> RemoveUser([FromBody] string email)
-    {
-        await _authGrpcService.RemoveUser(email);
-        return Ok();
-    }
-
-    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<string>> Login(string email, string password)
     {

@@ -19,16 +19,6 @@ public class AuthGrpcService : IAuthGrpcService
         _tokenService = tokenService;
     }
 
-    public async Task CreateUser(CreateUserArgs args)
-    {
-        await _authUserRepository.Add(args.User, args.Password);
-    }
-
-    public async Task RemoveUser(StringProto email)
-    {
-        await _authUserRepository.Remove(email);
-    }
-
     public async Task<TokenDto> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;

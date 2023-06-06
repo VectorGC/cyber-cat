@@ -62,9 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway.Client", "ApiGat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client", "ApiGateway\ApiGateway.Client\ApiGateway.Client\ApiGateway.Client.csproj", "{449B3EA0-C937-48C1-80A7-04CB52895840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client.Tests.Core", "ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests.Core\ApiGateway.Client.Tests.Core.csproj", "{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client.Tests.WebClient", "ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests.WebClient\ApiGateway.Client.Tests.WebClient.csproj", "{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client.Tests", "ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests\ApiGateway.Client.Tests.csproj", "{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,10 +118,6 @@ Global
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,7 +138,6 @@ Global
 		{51C10242-E0E4-4215-8061-B790FDE7532C} = {CB27A2CC-DF7D-4F40-AADD-0D17A8F6CCDD}
 		{449B3EA0-C937-48C1-80A7-04CB52895840} = {51C10242-E0E4-4215-8061-B790FDE7532C}
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900} = {51C10242-E0E4-4215-8061-B790FDE7532C}
-		{39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1} = {51C10242-E0E4-4215-8061-B790FDE7532C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}

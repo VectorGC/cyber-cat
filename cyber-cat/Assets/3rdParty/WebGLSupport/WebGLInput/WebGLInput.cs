@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using AOT;
-using System.Runtime.InteropServices; // for DllImport
+// for DllImport
 using System.Collections;
 using UnityEngine.EventSystems;
 

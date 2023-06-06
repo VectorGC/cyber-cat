@@ -19,8 +19,8 @@ public class AddCyberCatUserToRepositoryOnStart : IHostedService
         _logger.LogInformation("Attempt add default user");
         var user = new User
         {
-            UserName = "CyberCat",
-            Email = "cyber@cat"
+            UserName = "Cat",
+            Email = "cat"
         };
 
         await using var scope = _serviceProvider.CreateAsyncScope();
@@ -33,7 +33,7 @@ public class AddCyberCatUserToRepositoryOnStart : IHostedService
             return;
         }
 
-        await repository.Add(user, "Cyber_Cat123@");
+        await repository.Add(user, "cat");
 
         _logger.LogInformation("Default user has been added");
     }

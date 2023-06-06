@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ITest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ITests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IVerdict.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\VerdictStatus.cs" />
   </ItemGroup>
 </Project>

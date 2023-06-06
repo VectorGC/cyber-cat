@@ -16,7 +16,7 @@ namespace ServerAPI
             }
         }
 
-        public static IClient Create()
+        public static IServerAPI Create()
         {
             switch (ServerEnvironment)
             {
@@ -24,12 +24,12 @@ namespace ServerAPI
                     return new ServerlessClient();
                 case ServerEnvironment.LocalServer:
                     // Send to Api Gateway local instance directly.
-                    return new Client("http://localhost:5000", new UnityRestClientAdapter());
+                    return new ServerAPI("http://localhost:5000");
                 case ServerEnvironment.DockerLocalServer:
                     // Send to Nginx in local docker engine.
-                    return new Client("http://localhost", new UnityRestClientAdapter());
+                    return new ServerAPI("http://localhost");
                 case ServerEnvironment.Production:
-                    return new Client("https://server.cyber-cat.pro", new UnityRestClientAdapter());
+                    return new ServerAPI("https://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }

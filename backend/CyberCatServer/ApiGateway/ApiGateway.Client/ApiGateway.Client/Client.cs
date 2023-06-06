@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shared.Dto;
+using Shared.Models;
 
 namespace ApiGateway.Client
 {
-    public class Client : IClient, IDisposable
+    public class Client : IClient
     {
         private readonly Uri _uri;
         private readonly IRestClient _restClient;
 
-        public Client(string uri, IRestClient restClient)
+        public Client(string uri)
         {
             _uri = new Uri(uri);
-            _restClient = restClient;
+            _restClient = new WebClientAdapter();
         }
 
         public void Dispose()
@@ -42,7 +43,7 @@ namespace ApiGateway.Client
             return name;
         }
 
-        public async Task<TaskDto> GetTask(string taskId)
+        public async Task<ITask> GetTask(string taskId)
         {
             var task = await _restClient.GetFromJsonAsync<TaskDto>(_uri + $"tasks/{taskId}");
             return task;
@@ -73,7 +74,7 @@ namespace ApiGateway.Client
             await _restClient.DeleteAsync(_uri + $"solution/{taskId}");
         }
 
-        public async Task<VerdictDto> VerifySolution(string taskId, string sourceCode)
+        public async Task<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
             return await _restClient.PostAsJsonAsync<VerdictDto>(_uri + $"judge/verify/{taskId}", sourceCode);
         }

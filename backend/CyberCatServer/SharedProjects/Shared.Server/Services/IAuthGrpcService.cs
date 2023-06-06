@@ -9,7 +9,5 @@ namespace Shared.Server.Services;
 [Service]
 public interface IAuthGrpcService
 {
-    Task CreateUser(CreateUserArgs args);
-    Task RemoveUser(StringProto email);
     Task<TokenDto> GetAccessToken(GetAccessTokenArgs args);
 }

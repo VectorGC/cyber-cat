@@ -2,8 +2,7 @@
  *  can move forward/back, left/right and up/down. The movement is controlled 
  *  via Rigidbody.
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]

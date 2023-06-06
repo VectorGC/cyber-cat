@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,32 +16,32 @@ public class TestScript : MonoBehaviour
     public void TestTutorial()
     {
         UnityAction[] actions = new UnityAction[] {DoTutorial, DoNotTutorial};
-        string[] names = new string[] { "Да", "Нет" };
-        _modalpanel.MessageBos(_questionIcon, "Очень важный вопрос", "Вы хотите пройти обучение?", true, 2, actions, names);
+        string[] names = new string[] { "Р”Р°", "РќРµС‚" };
+        _modalpanel.MessageBos(_questionIcon, "РћС‡РµРЅСЊ РІР°Р¶РЅС‹Р№ РІРѕРїСЂРѕСЃ", "Р’С‹ С…РѕС‚РёС‚Рµ РїСЂРѕР№С‚Рё РѕР±СѓС‡РµРЅРёРµ?", true, 2, actions, names);
     }
 
     public void TestGoodMan()
     {
         UnityAction[] actions = new UnityAction[] { GoodMan};
-        string[] names = new string[] { "Да"};
-        _modalpanel.MessageBos(_errorIcon, "Очень хороший человек", "Вы знали, что вы молодец", true, 1, actions, names);
+        string[] names = new string[] { "Р”Р°"};
+        _modalpanel.MessageBos(_errorIcon, "РћС‡РµРЅСЊ С…РѕСЂРѕС€РёР№ С‡РµР»РѕРІРµРє", "Р’С‹ Р·РЅР°Р»Рё, С‡С‚Рѕ РІС‹ РјРѕР»РѕРґРµС†", true, 1, actions, names);
     }
 
     public void TestFruits()
     {
         UnityAction[] actions = new UnityAction[] { Apple, Orange, Mango };
-        string[] names = new string[] { "Яблоко", "Апельсин", "Манго" };
-        _modalpanel.MessageBos(_errorIcon, "Очень хороший человек", "Вы знали, что вы молодец", true, 3, actions, names);
+        string[] names = new string[] { "РЇР±Р»РѕРєРѕ", "РђРїРµР»СЊСЃРёРЅ", "РњР°РЅРіРѕ" };
+        _modalpanel.MessageBos(_errorIcon, "РћС‡РµРЅСЊ С…РѕСЂРѕС€РёР№ С‡РµР»РѕРІРµРє", "Р’С‹ Р·РЅР°Р»Рё, С‡С‚Рѕ РІС‹ РјРѕР»РѕРґРµС†", true, 3, actions, names);
     }
 
     private void DoTutorial()
     {
-        Debug.Log("Согашение к туториалу");
+        Debug.Log("РЎРѕРіР°С€РµРЅРёРµ Рє С‚СѓС‚РѕСЂРёР°Р»Сѓ");
     }
 
     private void DoNotTutorial()
     {
-        Debug.Log("Отказ от туториала");
+        Debug.Log("РћС‚РєР°Р· РѕС‚ С‚СѓС‚РѕСЂРёР°Р»Р°");
     }
 
     private void GoodMan()

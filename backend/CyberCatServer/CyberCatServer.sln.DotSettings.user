@@ -3,16 +3,14 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Client\bin\Debug\net7.0\ApiGateway.Client.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=112475a0_002Dd8ed_002D421a_002Dac40_002D8f29ba03c32e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Authenticate_WhenPassValidCredentials" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::270F52A1-D252-49C0-A83C-45248DA05CE2::.NETFramework,Version=v4.5::ApiGateway.Client.Tests.Core.Tests.AuthenticateTests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=45b73905_002D896c_002D4cb9_002D8613_002D038955816522/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AuthenticateDefaultUser_WhenPassValidCredentials" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;Namespace&gt;ApiGateway.Client.Tests.Tests&lt;/Namespace&gt;&#xD;
+    &lt;Project Location="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests" Presentation="&amp;lt;ApiGateway&amp;gt;\&amp;lt;ApiGateway.Client&amp;gt;\&amp;lt;ApiGateway.Client.Tests&amp;gt;" /&gt;&#xD;
+  &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6fa8053c_002Db29c_002D43c4_002D8105_002Dffeab64498aa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AuthenticateTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1::.NETFramework,Version=v4.5::ApiGateway.Client.Tests.WebClient.Authenticate&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
 	
 	
 	

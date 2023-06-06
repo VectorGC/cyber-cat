@@ -1,11 +1,15 @@
 using System;
 using System.Threading.Tasks;
-using ApiGateway.Client;
+using Cysharp.Threading.Tasks;
+using Models;
 using Shared.Dto;
+using Shared.Models;
+using ITask = Shared.Models.ITask;
+using IVerdict = Shared.Models.IVerdict;
 
 namespace ServerAPI
 {
-    public class ServerlessClient : IClient
+    public class ServerlessClient : IServerAPI
     {
         public Task<string> Authenticate(string email, string password, IProgress<float> progress)
         {
@@ -17,7 +21,7 @@ namespace ServerAPI
             return Task.FromResult("Cyber Cat");
         }
 
-        public Task<TaskDto> GetTask(string taskId, IProgress<float> progress = null)
+        public Task<ITask> GetTask(string taskId, IProgress<float> progress = null)
         {
             var task = new TaskDto()
             {
@@ -25,7 +29,7 @@ namespace ServerAPI
                 Description = "Вы играете без сервера. Чтобы решать задачи - включите интернет"
             };
 
-            return Task.FromResult(task);
+            return Task.FromResult<ITask>(task);
         }
 
         public void AddAuthorizationToken(string token)
@@ -36,44 +40,48 @@ namespace ServerAPI
         {
         }
 
-        public Task<string> Authenticate(string email, string password)
+        public UniTask<string> Authenticate(string email, string password)
         {
-            throw new NotImplementedException();
+            return UniTask.FromResult("Cyber Cat");
         }
 
-        public Task<string> AuthorizePlayer(string token)
+        public UniTask<string> AuthorizePlayer(string token)
         {
-            throw new NotImplementedException();
+            return UniTask.FromResult("Cyber Cat");
         }
 
-        public Task<TaskDto> GetTask(string taskId)
+        public UniTask<Models.ITask> GetTask(string taskId)
         {
-            throw new NotImplementedException();
+            var task = new TaskModel("Hello world", "Вы играете без сервера. Чтобы решать задачи - включите интернет");
+            return UniTask.FromResult<Models.ITask>(task);
         }
 
         public Task<string> GetSavedCode(string taskId)
         {
-            throw new NotImplementedException();
+            return Task.FromResult("Hello World!");
         }
 
         public Task SaveCode(string taskId, string sourceCode)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public Task RemoveSavedCode(string taskId)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
-        public Task<VerdictDto> VerifySolution(string taskId, string sourceCode)
+        public Task<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
-            throw new NotImplementedException();
+            var verdict = new VerdictDto()
+            {
+                Status = VerdictStatus.Success
+            };
+            return Task.FromResult<IVerdict>(verdict);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
         }
     }
 }

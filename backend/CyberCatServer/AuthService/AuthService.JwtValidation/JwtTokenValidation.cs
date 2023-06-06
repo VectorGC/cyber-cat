@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuthService.JwtValidation;
 
@@ -19,5 +20,17 @@ public static class JwtTokenValidation
             ValidAudience = Audience,
             IssuerSigningKey = IssuerSigningKey
         };
+    }
+}
+
+public static class AuthIdentity
+{
+    public static void SetServiceOptions(IdentityOptions options)
+    {
+        options.Password.RequireDigit = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = true;
+        options.Password.RequiredLength = 3;
     }
 }

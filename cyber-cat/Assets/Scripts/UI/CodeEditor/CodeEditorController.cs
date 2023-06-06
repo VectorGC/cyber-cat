@@ -1,6 +1,5 @@
 using System;
 using Models;
-using Shared.Dto;
 using TNRD;
 using UI;
 using UnityEngine;
@@ -29,11 +28,7 @@ public class CodeEditorController : UIBehaviour
                 throw new ArgumentNullException(nameof(_codeEditorService.CurrentTask));
             }
 
-            currentTask = new TaskCode(new TaskDto
-            {
-                Name = "Тестовая задача",
-                Description = "Выполните сначала А, потом Б. Входные данные 123 и массив из двух чисел. Выходные данные строка \"Кот\""
-            });
+            currentTask = new TaskModel("Тестовая задача", "Выполните сначала А, потом Б. Входные данные 123 и массив из двух чисел. Выходные данные строка \"Кот\"");
         }
 
         _taskDescription.Task = currentTask;
