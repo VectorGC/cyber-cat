@@ -1,4 +1,5 @@
 using System;
+using System.Net.Http;
 using Cysharp.Threading.Tasks;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
@@ -12,12 +13,13 @@ namespace TaskUnits
 
         public TaskUnitFolder(string task)
         {
+            //var t = new HttpClient();
             _task = task;
         }
 
-        public readonly async UniTask<ITaskData> GetTask(IProgress<float> progress = null)
+        public readonly async UniTask<ITaskData> GetTask()
         {
-            var task = await GameManager.Instance.TaskRepository.GetTask(_task, progress);
+            var task = await GameManager.Instance.TaskRepository.GetTask(_task);
             return TaskData.ConvertFrom(task);
         }
     }

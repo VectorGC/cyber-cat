@@ -27,7 +27,7 @@ public static class SwaggerGetOptionsAuthExtensions
             {
                 Password = new OpenApiOAuthFlow
                 {
-                    TokenUrl = new Uri($"{httpHostUrl}/Auth/login")
+                    TokenUrl = new Uri($"{httpHostUrl}/auth/login")
                 }
             }
         });

@@ -22,8 +22,12 @@ public class AuthController : ControllerBase
     [HttpPost("create")]
     public async Task<ActionResult> CreateUser([FromBody] CreateUserArgs args)
     {
-        await _authGrpcService.CreateUser(args);
+        if (args.User == null)
+        {
+            throw new ArgumentNullException(nameof(args.User));
+        }
 
+        await _authGrpcService.CreateUser(args);
         return Ok();
     }
 

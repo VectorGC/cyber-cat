@@ -19,7 +19,7 @@ public class JudgeController : ControllerBase
         _judgeGrpcService = judgeGrpcService;
     }
 
-    [HttpPut("verify/{taskId}")]
+    [HttpPost("verify/{taskId}")]
     [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
     public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromBody] string sourceCode)
     {

@@ -3,24 +3,18 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Client\bin\Debug\net7.0\ApiGateway.Client.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=08ce0667_002D7552_002D40a6_002D94a7_002Db23993db279e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;And&gt;&#xD;
-      &lt;Namespace&gt;AuthService.Tests&lt;/Namespace&gt;&#xD;
-      &lt;Project Location="D:\Projects\cyber-cat\backend\CyberCatServer\AuthService\AuthService.Tests" Presentation="&amp;lt;AuthService&amp;gt;\&amp;lt;AuthService.Tests&amp;gt;" /&gt;&#xD;
-    &lt;/And&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::A022F486-E701-4060-BC5D-D950415C6DA5::net7.0::ApiGateway.Tests.End2End.AuthControllerTests&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::4CAA1798-76F9-4117-9269-CE7565DCF6E7::net7.0::CppLauncherService.Tests.CompileAndLaunchTests.LaunchError_WhenPassInfinityLoopCode&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.AuthorizePlayer_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.Tests.ExistsDefaultUser_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.TaskTests.GetTask&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.AuthenticateTests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::F1493885-9928-4437-8A8B-7B62EF2ED649::net7.0::ApiGateway.Client.Tests.AuthenticateTests&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;Project Location="D:\Projects\cyber-cat\backend\CyberCatServer\ApiGateway\ApiGateway.Tests.End2End" Presentation="&amp;lt;ApiGateway&amp;gt;\&amp;lt;ApiGateway.Tests.End2End&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=112475a0_002Dd8ed_002D421a_002Dac40_002D8f29ba03c32e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Authenticate_WhenPassValidCredentials" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::270F52A1-D252-49C0-A83C-45248DA05CE2::.NETFramework,Version=v4.5::ApiGateway.Client.Tests.Core.Tests.AuthenticateTests.Authenticate_WhenPassValidCredentials&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6fa8053c_002Db29c_002D43c4_002D8105_002Dffeab64498aa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AuthenticateTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::39CDD2CB-1B1A-4CA7-9994-42EEF5AA47E1::.NETFramework,Version=v4.5::ApiGateway.Client.Tests.WebClient.Authenticate&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	
 	
 	</wpf:ResourceDictionary>

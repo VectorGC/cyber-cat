@@ -24,12 +24,12 @@ namespace ServerAPI
                     return new ServerlessClient();
                 case ServerEnvironment.LocalServer:
                     // Send to Api Gateway local instance directly.
-                    return new Client("http://localhost:5000", new UnityRestClientProxy());
+                    return new Client("http://localhost:5000", new UnityRestClientAdapter());
                 case ServerEnvironment.DockerLocalServer:
                     // Send to Nginx in local docker engine.
-                    return new Client("http://localhost", new UnityRestClientProxy());
+                    return new Client("http://localhost", new UnityRestClientAdapter());
                 case ServerEnvironment.Production:
-                    return new Client("https://server.cyber-cat.pro", new UnityRestClientProxy());
+                    return new Client("https://server.cyber-cat.pro", new UnityRestClientAdapter());
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -17,9 +17,9 @@ namespace Repositories.TaskRepositories
             _client = client;
         }
 
-        public async UniTask<ITask> GetTask(string taskId, IProgress<float> progress = null)
+        public async UniTask<ITask> GetTask(string taskId)
         {
-            var taskDto = await _client.GetTask(taskId, progress);
+            var taskDto = await _client.GetTask(taskId);
             return new TaskCode(taskDto);
         }
     }

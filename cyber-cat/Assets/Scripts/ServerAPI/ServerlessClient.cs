@@ -35,5 +35,45 @@ namespace ServerAPI
         public void RemoveAuthorizationToken()
         {
         }
+
+        public Task<string> Authenticate(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> AuthorizePlayer(string token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TaskDto> GetTask(string taskId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetSavedCode(string taskId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveCode(string taskId, string sourceCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveSavedCode(string taskId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<VerdictDto> VerifySolution(string taskId, string sourceCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

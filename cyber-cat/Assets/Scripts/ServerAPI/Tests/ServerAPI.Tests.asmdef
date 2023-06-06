@@ -1,10 +1,8 @@
 {
-    "name": "ServerAPI",
+    "name": "ServerAPI.Tests",
     "rootNamespace": "",
     "references": [
-        "GUID:c5fc7656c655850499749ca726c250c9",
-        "GUID:b3793389d983a85428458394eb28e901",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -12,7 +10,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "ApiGateway.Client.dll",
-        "Newtonsoft.Json.dll"
+        "ApiGateway.Client.Tests.Core.dll",
+        "nunit.framework.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
