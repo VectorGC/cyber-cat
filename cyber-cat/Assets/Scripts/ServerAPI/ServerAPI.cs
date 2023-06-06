@@ -4,11 +4,11 @@ using Models;
 
 namespace ServerAPI
 {
-    public class ServerAPI : Client, IServerAPI
+    public class ServerAPI : IServerAPI
     {
         private readonly Client _client;
 
-        public ServerAPI(string uri) : base(uri)
+        public ServerAPI(string uri)
         {
             _client = new Client(uri);
         }
@@ -27,6 +27,24 @@ namespace ServerAPI
         public async UniTask<string> AuthorizePlayer(string token)
         {
             return await _client.AuthorizePlayer(token);
+        }
+
+        public void AddAuthorizationToken(string token)
+        {
+            _client.AddAuthorizationToken(token);
+        }
+
+        public async UniTask<string> GetSavedCode(string taskId)
+        {
+            return await _client.GetSavedCode(taskId);
+        }
+
+        public async UniTask<IVerdict> VerifySolution(string taskId, string sourceCode)
+        {
+            var verdictDto = await _client.VerifySolution(taskId, sourceCode);
+
+            var status = (int) verdictDto.Status;
+            return new Verdict((VerdictStatus) status, verdictDto.Error, verdictDto.TestsPassed);
         }
     }
 }

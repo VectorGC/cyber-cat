@@ -22,7 +22,7 @@ public class GameManager
 
         TaskRepository = new TaskRepositoryProxy(serverClient);
         AuthService = new AuthServiceProxy(serverClient);
-        CodeEditor = new CodeEditorServiceProxy(serverClient);
+        CodeEditor = new CodeEditorServiceProxy(serverClient, TaskRepository);
     }
 
     public static GameManager Instance

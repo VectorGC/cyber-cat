@@ -17,19 +17,10 @@ public class CodeEditorController : UIBehaviour
 
     private ICodeEditorService _codeEditorService;
 
-    protected override void Start()
+    protected override async void Start()
     {
         _codeEditorService = GameManager.Instance.CodeEditor;
-        var currentTask = _codeEditorService.CurrentTask;
-        if (currentTask == null)
-        {
-            if (!Debug.isDebugBuild)
-            {
-                throw new ArgumentNullException(nameof(_codeEditorService.CurrentTask));
-            }
-
-            currentTask = new TaskModel("Тестовая задача", "Выполните сначала А, потом Б. Входные данные 123 и массив из двух чисел. Выходные данные строка \"Кот\"");
-        }
+        var currentTask = await _codeEditorService.GetCurrentTask();
 
         _taskDescription.Task = currentTask;
         _codeEditorView.Value.Language = LanguageProg.Cpp;
@@ -40,7 +31,7 @@ public class CodeEditorController : UIBehaviour
         Time.timeScale = 0f;
 
         _verifySolution.onClick.AddListener(VerifySolution);
-        _loadSavedCode.onClick.AddListener(LoadSavedCode);
+        _loadSavedCode.onClick.AddListener(GetSavedCode);
         _exit.onClick.AddListener(ExitEditor);
     }
 
@@ -49,21 +40,22 @@ public class CodeEditorController : UIBehaviour
         Time.timeScale = 1f;
 
         _verifySolution.onClick.AddListener(VerifySolution);
-        _loadSavedCode.onClick.RemoveListener(LoadSavedCode);
+        _loadSavedCode.onClick.RemoveListener(GetSavedCode);
         _exit.onClick.RemoveListener(ExitEditor);
     }
 
     private async void VerifySolution()
     {
-        var task = _codeEditorService.CurrentTask;
         var sourceCode = _codeEditorView.Value.SourceCode;
-        var verdict = await _codeEditorService.VerifySolution(task, sourceCode);
+        var verdict = await _codeEditorService.VerifySolution(sourceCode);
 
         _console.Value.Log(verdict.ToString());
     }
 
-    private void LoadSavedCode()
+    private async void GetSavedCode()
     {
+        var sourceCode = await _codeEditorService.GetSavedCode();
+        _codeEditorView.Value.SourceCode = sourceCode;
     }
 
     private void ExitEditor()

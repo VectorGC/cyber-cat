@@ -1,39 +1,68 @@
 using System;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using Models;
+using Repositories.TaskRepositories;
 using ServerAPI;
 using UnityEngine.SceneManagement;
 
 public class CodeEditorServiceProxy : ICodeEditorService
 {
-    public ITask CurrentTask { get; private set; }
+    [CanBeNull] private string _taskId;
 
     private readonly IServerAPI _serverAPI;
+    private readonly ITaskRepository _taskRepository;
 
-    public CodeEditorServiceProxy(IServerAPI serverAPI)
+    public CodeEditorServiceProxy(IServerAPI serverAPI, ITaskRepository taskRepository)
     {
         _serverAPI = serverAPI;
+        _taskRepository = taskRepository;
     }
 
-    public async UniTaskVoid OpenEditor(ITask task, IProgress<float> progress = null)
+    public async UniTaskVoid OpenEditor(string taskId, IProgress<float> progress = null)
     {
-        CurrentTask = task;
+        if (string.IsNullOrEmpty(taskId))
+        {
+            throw new ArgumentNullException(nameof(taskId));
+        }
+        
+        _taskId = taskId;
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask(progress);
     }
 
     public async UniTaskVoid CloseEditor(IProgress<float> progress = null)
     {
-        CurrentTask = null;
+        _taskId = string.Empty;
         await SceneManager.UnloadSceneAsync("CodeEditor").ToUniTask(progress);
     }
 
-    public UniTask<string> LoadSavedCode(ITask task, IProgress<float> progress = null)
+    public async UniTask<ITask> GetCurrentTask()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(_taskId))
+        {
+            throw new ArgumentNullException(nameof(_taskId));
+        }
+
+        return await _taskRepository.GetTask(_taskId);
     }
 
-    public UniTask<IVerdict> VerifySolution(ITask task, string sourceCode, IProgress<float> progress = null)
+    public async UniTask<string> GetSavedCode()
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(_taskId))
+        {
+            throw new ArgumentNullException(nameof(_taskId));
+        }
+
+        return await _serverAPI.GetSavedCode(_taskId);
+    }
+
+    public async UniTask<IVerdict> VerifySolution(string sourceCode)
+    {
+        if (string.IsNullOrEmpty(_taskId))
+        {
+            throw new ArgumentNullException(nameof(_taskId));
+        }
+
+        return await _serverAPI.VerifySolution(_taskId, sourceCode);
     }
 }

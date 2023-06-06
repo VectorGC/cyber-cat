@@ -6,6 +6,7 @@ using Shared.Dto;
 using Shared.Models;
 using ITask = Shared.Models.ITask;
 using IVerdict = Shared.Models.IVerdict;
+using VerdictStatus = Models.VerdictStatus;
 
 namespace ServerAPI
 {
@@ -56,32 +57,15 @@ namespace ServerAPI
             return UniTask.FromResult<Models.ITask>(task);
         }
 
-        public Task<string> GetSavedCode(string taskId)
+        public UniTask<string> GetSavedCode(string taskId)
         {
-            return Task.FromResult("Hello World!");
+            return UniTask.FromResult("Hello World!");
         }
 
-        public Task SaveCode(string taskId, string sourceCode)
+        public UniTask<Models.IVerdict> VerifySolution(string taskId, string sourceCode)
         {
-            return Task.CompletedTask;
-        }
-
-        public Task RemoveSavedCode(string taskId)
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task<IVerdict> VerifySolution(string taskId, string sourceCode)
-        {
-            var verdict = new VerdictDto()
-            {
-                Status = VerdictStatus.Success
-            };
-            return Task.FromResult<IVerdict>(verdict);
-        }
-
-        public void Dispose()
-        {
+            var verdict = new Verdict(VerdictStatus.Success, string.Empty, 0);
+            return UniTask.FromResult<Models.IVerdict>(verdict);
         }
     }
 }
