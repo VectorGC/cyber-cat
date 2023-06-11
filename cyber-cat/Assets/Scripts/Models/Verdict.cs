@@ -12,5 +12,10 @@ namespace Models
             _error = error;
             _testPassed = testPassed;
         }
+
+        public override string ToString()
+        {
+            return $"{nameof(_status)}: {_status}, {nameof(_error)}: {_error}, {nameof(_testPassed)}: {_testPassed}";
+        }
     }
 }

@@ -25,7 +25,7 @@ public class CodeEditorServiceProxy : ICodeEditorService
         {
             throw new ArgumentNullException(nameof(taskId));
         }
-        
+
         _taskId = taskId;
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask(progress);
     }

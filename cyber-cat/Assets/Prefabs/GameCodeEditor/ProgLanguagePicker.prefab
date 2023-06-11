@@ -1465,7 +1465,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6325959349828447263}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ProgLanguagePicker, Assembly-CSharp
         m_MethodName: SelectLanguage
         m_Mode: 0
@@ -1625,7 +1625,6 @@ GameObject:
   - component: {fileID: 2827090326746086787}
   - component: {fileID: 2827090326746086797}
   - component: {fileID: 2827090326746086786}
-  - component: {fileID: 6325959349828447263}
   m_Layer: 5
   m_Name: ProgLanguagePicker
   m_TagString: Untagged
@@ -1700,21 +1699,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0.1
   m_LayoutPriority: 1
---- !u!114 &6325959349828447263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2827090326746086784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7512990b1487cc24697e87c1d2a9a969, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pythonTemplateText: {fileID: 2827090326655230057}
-  cTemplateText: {fileID: 2827090326072844211}
-  pascalTemplateText: {fileID: 840099098}
 --- !u!1001 &2827090326065076183
 PrefabInstance:
   m_ObjectHideFlags: 0

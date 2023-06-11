@@ -18,7 +18,6 @@ namespace TaskChecker
             }
             catch (Exception ex)
             {
-                CodeConsoleOld.WriteLine(ex);
                 throw;
             }
         }

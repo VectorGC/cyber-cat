@@ -39,7 +39,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
             var progress = new ScheduledNotifier<float>();
             progress.ViaLoadingScreen();
 
-            CodeEditor.OpenSolution(_taskData, progress).Forget();
+            GameManager.Instance.CodeEditor.OpenEditor(_taskData.Id, progress).Forget();
         }
     }
 
@@ -48,7 +48,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         var progress = new ScheduledNotifier<float>();
         progress.ViaLoadingScreen();
 
-        CodeEditor.OpenSolution(_taskData, progress).Forget();
+        GameManager.Instance.CodeEditor.OpenEditor(_taskData.Id, progress).Forget();
     }
 
 

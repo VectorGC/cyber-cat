@@ -10,7 +10,7 @@ using VerdictStatus = Models.VerdictStatus;
 
 namespace ServerAPI
 {
-    public class ServerlessClient : IServerAPI
+    public class Serverless : IServerAPI
     {
         public Task<string> Authenticate(string email, string password, IProgress<float> progress)
         {

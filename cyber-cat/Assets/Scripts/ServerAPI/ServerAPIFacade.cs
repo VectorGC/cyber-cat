@@ -21,7 +21,7 @@ namespace ServerAPI
             switch (ServerEnvironment)
             {
                 case ServerEnvironment.Serverless:
-                    return new ServerlessClient();
+                    return new Serverless();
                 case ServerEnvironment.LocalServer:
                     // Send to Api Gateway local instance directly.
                     return new ServerAPI("http://localhost:5000");

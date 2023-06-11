@@ -1,4 +1,5 @@
 using AuthService;
+using Models;
 using Repositories.TaskRepositories;
 using ServerAPI;
 using Services;
@@ -13,16 +14,22 @@ public class GameManager
 
     private GameManager()
     {
-        var serverClient = ServerAPIFacade.Create();
-        var token = LocalStorage.Player?.Token.Value;
-        if (!string.IsNullOrEmpty(token))
-        {
-            serverClient.AddAuthorizationToken(token);
-        }
+        var serverAPIClient = ServerAPIFacade.Create();
+        AuthService = new AuthServiceProxy(serverAPIClient);
 
-        TaskRepository = new TaskRepositoryProxy(serverClient);
-        AuthService = new AuthServiceProxy(serverClient);
-        CodeEditor = new CodeEditorServiceProxy(serverClient, TaskRepository);
+        LocalStorage.Player = Authorize(serverAPIClient);
+
+        TaskRepository = new TaskRepositoryProxy(serverAPIClient);
+        CodeEditor = new CodeEditorServiceProxy(serverAPIClient, TaskRepository);
+    }
+
+    private IPlayer Authorize(IServerAPI serverAPI)
+    {
+        var token = AuthService.Authenticate("cat", "cat").GetAwaiter().GetResult();
+        serverAPI.AddAuthorizationToken(token.Value);
+        var player = AuthService.AuthorizePlayer(token).GetAwaiter().GetResult();
+
+        return player;
     }
 
     public static GameManager Instance
