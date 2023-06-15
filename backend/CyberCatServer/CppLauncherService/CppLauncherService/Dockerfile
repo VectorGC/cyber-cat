@@ -4,7 +4,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["CppLauncherService/CppLauncherService/CppLauncherService.csproj", "CppLauncherService/CppLauncherService/"]
-COPY ["Shared/Shared.csproj", "Shared/"]
 RUN dotnet restore "CppLauncherService/CppLauncherService/CppLauncherService.csproj"
 COPY . .
 WORKDIR "/src/CppLauncherService/CppLauncherService"
