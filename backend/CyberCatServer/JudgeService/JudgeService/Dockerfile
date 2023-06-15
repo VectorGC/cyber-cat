@@ -4,6 +4,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["JudgeService/JudgeService/JudgeService.csproj", "JudgeService/JudgeService/"]
+
 RUN dotnet restore "JudgeService/JudgeService/JudgeService.csproj"
 COPY . .
 WORKDIR "/src/JudgeService/JudgeService"

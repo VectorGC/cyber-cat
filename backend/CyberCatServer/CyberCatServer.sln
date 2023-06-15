@@ -16,53 +16,53 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config.d", "config.d", "{29
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{CB27A2CC-DF7D-4F40-AADD-0D17A8F6CCDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway\ApiGateway.csproj", "{ED45FB5C-C0B5-4F39-BD8D-38FE55424DCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway\ApiGateway.csproj", "{ED45FB5C-C0B5-4F39-BD8D-38FE55424DCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService", "{5F7B7568-69A6-490F-8428-36F651B119CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService\AuthService.csproj", "{6F21B559-5A58-4C0D-A32D-643A172E2440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService\AuthService.csproj", "{6F21B559-5A58-4C0D-A32D-643A172E2440}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Tests", "AuthService\AuthService.Tests\AuthService.Tests.csproj", "{A1400983-45A8-4431-9D80-17818B18F510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Tests", "AuthService\AuthService.Tests\AuthService.Tests.csproj", "{A1400983-45A8-4431-9D80-17818B18F510}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CppLauncherService", "CppLauncherService", "{2C64FFEB-E6A0-4C76-8CC4-2B5C2E5D027B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CppLauncherService", "CppLauncherService\CppLauncherService\CppLauncherService.csproj", "{5BAC5A7A-C3BC-40B1-AB69-103A9E55533A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CppLauncherService", "CppLauncherService\CppLauncherService\CppLauncherService.csproj", "{5BAC5A7A-C3BC-40B1-AB69-103A9E55533A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CppLauncherService.Tests", "CppLauncherService\CppLauncherService.Tests\CppLauncherService.Tests.csproj", "{4CAA1798-76F9-4117-9269-CE7565DCF6E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CppLauncherService.Tests", "CppLauncherService\CppLauncherService.Tests\CppLauncherService.Tests.csproj", "{4CAA1798-76F9-4117-9269-CE7565DCF6E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JudgeService", "JudgeService", "{5BFED7FB-9B4B-4F4A-B4B4-972AA2BA315B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JudgeService", "JudgeService\JudgeService\JudgeService.csproj", "{372F3A79-83CF-4267-93AC-BB04DC59E6BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JudgeService", "JudgeService\JudgeService\JudgeService.csproj", "{372F3A79-83CF-4267-93AC-BB04DC59E6BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionService", "SolutionService", "{8C3FC71D-935C-4DF9-94AD-E260DC3FF817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionService", "SolutionService\SolutionService\SolutionService.csproj", "{414D3D02-3E53-4F13-95D1-A6B3EB27EFB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionService", "SolutionService\SolutionService\SolutionService.csproj", "{414D3D02-3E53-4F13-95D1-A6B3EB27EFB4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskService", "TaskService", "{35356CC5-0FB2-4A20-A0F2-4D4F91C34268}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskService", "TaskService\TaskService\TaskService.csproj", "{E79632D2-B7E9-437F-BFF6-54B2C7750C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskService", "TaskService\TaskService\TaskService.csproj", "{E79632D2-B7E9-437F-BFF6-54B2C7750C60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{31577144-A5F9-4DC8-A5C0-41B6D688B801}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.env = .env
 		docker-compose.yml = docker-compose.yml
-		.dockerignore = .dockerignore
 		mongo-db-local.yml = mongo-db-local.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedProjects", "SharedProjects", "{2C859AAA-6580-4039-82A2-A05EAFC79E57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.JwtValidation", "AuthService\AuthService.JwtValidation\AuthService.JwtValidation.csproj", "{E639A109-59B3-47FC-B1B9-A1D4B30BEC1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.JwtValidation", "AuthService\AuthService.JwtValidation\AuthService.JwtValidation.csproj", "{E639A109-59B3-47FC-B1B9-A1D4B30BEC1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Server", "SharedProjects\Shared.Server\Shared.Server.csproj", "{F0CF378E-7F1E-4BFA-87D1-E802BB0779D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Server", "SharedProjects\Shared.Server\Shared.Server.csproj", "{F0CF378E-7F1E-4BFA-87D1-E802BB0779D4}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.Models", "SharedProjects\Shared.Models\Shared.Models.shproj", "{B2AC4520-C277-4B05-BBC1-64D5C739CC7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway.Client", "ApiGateway.Client", "{51C10242-E0E4-4215-8061-B790FDE7532C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client", "ApiGateway\ApiGateway.Client\ApiGateway.Client\ApiGateway.Client.csproj", "{449B3EA0-C937-48C1-80A7-04CB52895840}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway.Client", "ApiGateway\ApiGateway.Client\ApiGateway.Client\ApiGateway.Client.csproj", "{449B3EA0-C937-48C1-80A7-04CB52895840}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Client.Tests", "ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests\ApiGateway.Client.Tests.csproj", "{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway.Client.Tests", "ApiGateway\ApiGateway.Client\ApiGateway.Client.Tests\ApiGateway.Client.Tests.csproj", "{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,5 +141,10 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProjects\Shared.Models\Shared.Models.projitems*{449b3ea0-c937-48c1-80a7-04cb52895840}*SharedItemsImports = 5
+		SharedProjects\Shared.Models\Shared.Models.projitems*{b2ac4520-c277-4b05-bbc1-64d5c739cc7e}*SharedItemsImports = 13
+		SharedProjects\Shared.Models\Shared.Models.projitems*{f0cf378e-7f1e-4bfa-87d1-e802bb0779d4}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
