@@ -4,7 +4,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["ApiGateway/ApiGateway/ApiGateway.csproj", "ApiGateway/ApiGateway/"]
-
 RUN dotnet restore "ApiGateway/ApiGateway/ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateway/ApiGateway"
