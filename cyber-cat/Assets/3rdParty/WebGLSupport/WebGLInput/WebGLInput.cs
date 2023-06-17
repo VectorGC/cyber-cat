@@ -9,6 +9,9 @@ using System;
 using AOT;
 // for DllImport
 using System.Collections;
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Runtime.InteropServices;
+#endif
 using UnityEngine.EventSystems;
 
 namespace WebGLSupport
