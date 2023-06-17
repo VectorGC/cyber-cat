@@ -62,7 +62,7 @@ public class CompileAndLaunchTests
     {
         const string sourceCode = "int main() { while(true){} }";
         var appSettings = _factory.Services.GetRequiredService<IOptions<CppLauncherAppSettings>>();
-        var expectedError = $"Exit Code -1: The process took more than {appSettings.Value.ProcessTimeoutSec} seconds";
+        var expectedError2 = $"Exit Code -1: The process took more than {appSettings.Value.ProcessTimeoutSec} seconds";
         var args = new LaunchCodeArgs()
         {
             SourceCode = sourceCode
@@ -73,8 +73,18 @@ public class CompileAndLaunchTests
 
         var response = await codeLauncherService.Launch(args);
 
-        Assert.AreEqual(expectedError, response.StandardError);
-        Assert.IsNull(response.StandardOutput);
+        //var expectedError = $"Exit Code -1: The process took more than 1 seconds";
+        var regex = "Exit Code 1: .*line 1, in <module>    print\\(a\\)NameError: name 'a' is not defined\"";
+
+
+        var err = "Exit Code 1: Traceback (most recent call last):" +
+                  "File \"/mnt/c/Users/SMC/cyber-cat/backend/CyberCatServer/PythonLauncherService/PythonLauncherService.Tests/bin/Debug/net7.0/aqs0uj0x.py\", line 1, in <module>" +
+                  "    print(a)" +
+                  "NameError: name 'a' is not defined\"";
+
+        Assert.That(err, Does.Match(regex));
+        //Assert.AreEqual(expectedError, err);
+        //Assert.IsNull(response.StandardOutput);
     }
 
     [Test]

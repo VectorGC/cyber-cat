@@ -1,4 +1,5 @@
 using System;
+using ApiGateway.Client;
 using Cysharp.Threading.Tasks;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
@@ -12,13 +13,17 @@ namespace TaskUnits
 
         public TaskUnitFolder(string task)
         {
-            //var t = new HttpClient();
             _task = task;
         }
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var task = await GameManager.Instance.TaskRepository.GetTask(_task);
+            var authorizationService = AuthorizationServiceFactory.Create(GameManager.ServerUri);
+            var token = await authorizationService.Authenticate("cat", "cat");
+
+            var repo = TaskRepositoryFactory.Create(GameManager.ServerUri, token);
+            var task = await repo.GetTask(_task);
+
             return TaskData.ConvertFrom(task);
         }
     }

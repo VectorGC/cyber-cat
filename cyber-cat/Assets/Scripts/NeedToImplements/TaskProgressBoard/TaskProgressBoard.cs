@@ -14,9 +14,13 @@ public static class TaskProgressBoard
 
     private static void OnTaskProgressReceived(TasksProgress tasksProgress)
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         var modalPanel = UnityEngine.Object.FindObjectOfType<ModalPanel>();
         modalPanel.MessageBox(null, "Прогресс по задачам", tasksProgress.ToString(), () => { }, () => { }, () => { },
-            () => { Time.timeScale = 1f; }, false, "Ok");
+            () =>
+            {
+                //Time.timeScale = 1f;
+                
+            }, false, "Ok");
     }
 }

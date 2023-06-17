@@ -13,7 +13,7 @@ namespace MonoBehaviours
 
         public void UnloadSceneByIndex(int index)
         {
-            Time.timeScale = 1f;
+           // Time.timeScale = 1f;
             var sceneByIndex = SceneManager.GetSceneAt(index);
             SceneManager.UnloadSceneAsync(sceneByIndex).ViaLoadingScreen();
         }

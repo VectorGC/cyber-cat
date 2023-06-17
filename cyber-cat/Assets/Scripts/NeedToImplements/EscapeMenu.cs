@@ -31,21 +31,21 @@ public class EscapeMenu : MonoBehaviour
     public void Resume()
     {
         escapeMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
         IsGamePaused = false;
     }
 
     private void Pause()
     {
         escapeMenuUI.SetActive(true);
-        Time.timeScale = 0f;
+       // Time.timeScale = 0f;
         IsGamePaused = true;
     }
 
     public void ExitGame()
     {
         Debug.Log("The game was exited.");
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
 
         /*
          * Enter the name of the scene you want to go to after exiting the game.

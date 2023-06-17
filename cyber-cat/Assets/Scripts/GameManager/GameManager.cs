@@ -1,3 +1,4 @@
+using ApiGateway.Client;
 using AuthService;
 using Models;
 using Repositories.TaskRepositories;
@@ -7,20 +8,19 @@ using Services.AuthService;
 
 public class GameManager
 {
+    public static string ServerUri => ServerAPIFacade.ServerUri;
     public ILocalStorageService LocalStorage { get; } = new PlayerPrefsStorage();
-    public ITaskRepository TaskRepository { get; }
+    public ITaskRepository2 TaskRepository2 { get; }
     public IAuthService AuthService { get; }
-    public ICodeEditorService CodeEditor { get; }
 
     private GameManager()
     {
         var serverAPIClient = ServerAPIFacade.Create();
         AuthService = new AuthServiceProxy(serverAPIClient);
 
-        LocalStorage.Player = Authorize(serverAPIClient);
+        //LocalStorage.Player = Authorize(serverAPIClient);
 
-        TaskRepository = new TaskRepositoryProxy(serverAPIClient);
-        CodeEditor = new CodeEditorServiceProxy(serverAPIClient, TaskRepository);
+        TaskRepository2 = new TaskRepository2Proxy(serverAPIClient);
     }
 
     private IPlayer Authorize(IServerAPI serverAPI)

@@ -16,6 +16,28 @@ namespace ServerAPI
             }
         }
 
+        public static string ServerUri
+        {
+            get
+            {
+                switch (ServerEnvironment)
+                {
+                    case ServerEnvironment.Serverless:
+                        return string.Empty;
+                    case ServerEnvironment.LocalServer:
+                        // Send to Api Gateway local instance directly.
+                        return "http://localhost:5000";
+                    case ServerEnvironment.DockerLocalServer:
+                        // Send to Nginx in local docker engine.
+                        return "http://localhost";
+                    case ServerEnvironment.Production:
+                        return "https://server.cyber-cat.pro";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         public static IServerAPI Create()
         {
             switch (ServerEnvironment)

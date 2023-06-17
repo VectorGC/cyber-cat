@@ -6,12 +6,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SphereCollider))]
 public class Trigger : MonoBehaviour
 {
-    private Player _player;
+    private GameObject _player;
     private ModalPanel _modalPanel;
     [SerializeField] private bool _activated;
     [SerializeField] private bool _startActivated;
 
-    public Player Player => _player;
     public ModalPanel ModalPanel => _modalPanel;
     public bool Activated => _activated;
 
@@ -49,7 +48,7 @@ public class Trigger : MonoBehaviour
         
         _activated = false;
         _startActivated = false;
-        _player = GameObject.FindObjectOfType<Player>();
+        _player = GameObject.FindGameObjectWithTag("Player");
         _modalPanel = FindObjectOfType<ModalPanel>();
 
         GetComponent<SphereCollider>().isTrigger = true;
@@ -69,7 +68,7 @@ public class Trigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!CanBeActivated() || _playerInside || (_triggerType != TriggerType.Enter && _triggerType != TriggerType.EnterAndPress) || !other.TryGetComponent<Player>(out _player))
+        if (!CanBeActivated() || _playerInside || (_triggerType != TriggerType.Enter && _triggerType != TriggerType.EnterAndPress)/* || !other.TryGetComponent<Player>(out _player)*/)
         {
             return;
         }
@@ -88,10 +87,14 @@ public class Trigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        /*
         if (!other.TryGetComponent<Player>(out _player))
         {
             return;
         }
+        */
+
+        Collider c = null;
         _onExit?.Invoke();
 
         if (_canBeActivatedMultipleTime)
