@@ -66,6 +66,14 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         }
     }
 
+    public void Load()
+    {
+        var progress = new ScheduledNotifier<float>();
+        progress.ViaLoadingScreen();
+
+        new CodeEditorService().OpenEditor(_task.GetId(), progress).Forget();
+    }
+
 
     public override void OnNext(ITaskData taskData)
     {

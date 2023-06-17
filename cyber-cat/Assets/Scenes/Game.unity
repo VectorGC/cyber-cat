@@ -813,7 +813,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-2
     _task: task-2
   taskDataObservers:
   - {fileID: 535794898}
@@ -3144,7 +3143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-6
   taskDataObservers:
   - {fileID: 1048939985}
@@ -9778,6 +9776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _task: 0
   _triggerToActivate: {fileID: 0}
   selfTriggerLogic: 1
 --- !u!114 &522180653
@@ -10131,7 +10130,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-2
   taskDataObservers:
   - {fileID: 501186221}
@@ -11632,7 +11630,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-2
     _task: task-1
   taskDataObservers:
   - {fileID: 1553029236}
@@ -13490,7 +13487,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-3
   taskDataObservers:
   - {fileID: 910821714}
@@ -13507,6 +13503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c27dcbdc03ae1cf44b4de0d1ad2e9ba1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _task: 3
   _triggerToActivate: {fileID: 0}
   selfTriggerLogic: 1
 --- !u!1 &910821715 stripped
@@ -13838,6 +13835,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2085101556}
     m_Modifications:
+    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
+      propertyPath: _task
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
       propertyPath: _triggerToActivate
       value: 
@@ -14190,6 +14191,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 40580951}
     m_Modifications:
+    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
+      propertyPath: _task
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
       propertyPath: taskUnit
       value: 
@@ -17188,7 +17193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-1
   taskDataObservers:
   - {fileID: 449821444}
@@ -18322,6 +18326,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58754942}
     m_Modifications:
+    - target: {fileID: 501186221, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: _task
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -27375,6 +27383,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 737618179}
     m_Modifications:
+    - target: {fileID: 501186221, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: _task
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2001415881680744083, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -29101,6 +29113,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2126313766}
     m_Modifications:
+    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
+      propertyPath: _task
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
       propertyPath: _triggerToActivate
       value: 
@@ -32069,6 +32085,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 177149849}
     m_Modifications:
+    - target: {fileID: 204111229, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
+      propertyPath: _task
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 204111230, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
       propertyPath: taskUnitFolder._task
       value: task-1
@@ -32124,6 +32144,10 @@ PrefabInstance:
     - target: {fileID: 2375059412060071096, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
       propertyPath: m_Name
       value: ServerRoomFlash Unit-3 Task-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375059412060071096, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19d0e60c3cba0c041a8f1ee01fef7921, type: 3}
@@ -32424,9 +32448,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 570747565}
     m_Modifications:
+    - target: {fileID: 501186221, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
+      propertyPath: _task
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2375059412060071074, guid: ee341ae81deb74647abfba370e67fb78, type: 3}
       propertyPath: m_LocalPosition.x
@@ -36887,7 +36915,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-4
   taskDataObservers:
   - {fileID: 1479371113}
@@ -37761,7 +37788,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskUnitFolder:
-    _unit: unit-1
     _task: task-5
   taskDataObservers:
   - {fileID: 1686819947}
@@ -38402,6 +38428,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1238783291}
     m_Modifications:
+    - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
+      propertyPath: _task
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1523780051627760664, guid: 7a761405a4ad7024fa955d14bdf38e00, type: 3}
       propertyPath: taskUnit
       value: 

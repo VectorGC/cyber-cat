@@ -27,5 +27,176 @@
         "ExpectedOutput": "0"
       }
     ]
+  },
+  {
+    "_id": "task-1",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-2",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-3",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-4",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-5",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-6",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-7",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-8",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
+  },
+  {
+    "_id": "task-9",
+    "Name": "А + B",
+    "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "Tests": [
+      {
+        "Input": "1 1",
+        "ExpectedOutput": "2"
+      },
+      {
+        "Input": "5 10",
+        "ExpectedOutput": "15"
+      },
+      {
+        "Input": "-1000 1000",
+        "ExpectedOutput": "0"
+      }
+    ]
   }
 ]
