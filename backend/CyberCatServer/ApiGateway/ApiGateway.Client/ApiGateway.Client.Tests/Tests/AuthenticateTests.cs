@@ -10,8 +10,7 @@ namespace ApiGateway.Client.Tests.Tests
         [Test]
         public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
         {
-            const string uri = "http://localhost:5000";
-            var client = new Client(uri);
+            var client = await PlayerClient.Create();
             var token = await client.Authenticate(PlayerClient.TestEmail, PlayerClient.TestUserPassword);
 
             Assert.IsNotEmpty(token);
