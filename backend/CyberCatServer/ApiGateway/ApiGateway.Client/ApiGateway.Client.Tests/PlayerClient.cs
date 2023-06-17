@@ -22,7 +22,8 @@ namespace ApiGateway.Client.Tests.Abstracts
 
         private PlayerClient()
         {
-            var uri = "http://localhost:5000";
+            //var uri = "http://localhost:5000";
+            var uri = "http://localhost";
             _client = new Client(uri);
         }
 
