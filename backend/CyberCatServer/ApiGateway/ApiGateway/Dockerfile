@@ -4,6 +4,9 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["ApiGateway/ApiGateway/ApiGateway.csproj", "ApiGateway/ApiGateway/"]
+COPY ["AuthService/AuthService.JwtValidation/AuthService.JwtValidation.csproj", "AuthService/AuthService.JwtValidation/"]
+COPY ["SharedProjects/Shared.Server/Shared.Server.csproj", "SharedProjects/Shared.Server/"]
+COPY ["SharedProjects/Shared.Models/Shared.Models.shproj", "SharedProjects/Shared.Models/"]
 RUN dotnet restore "ApiGateway/ApiGateway/ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/ApiGateway/ApiGateway"

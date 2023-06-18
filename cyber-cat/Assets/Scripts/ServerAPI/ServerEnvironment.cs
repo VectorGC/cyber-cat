@@ -5,6 +5,7 @@ namespace ServerAPI
         Serverless = 0,
         LocalServer,
         DockerLocalServer,
-        Production
+        Production,
+        Production_Http,
     }
 }

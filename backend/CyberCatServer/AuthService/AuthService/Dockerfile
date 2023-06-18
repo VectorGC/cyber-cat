@@ -4,6 +4,8 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["AuthService/AuthService/AuthService.csproj", "AuthService/AuthService/"]
+COPY ["SharedProjects/Shared.Server/Shared.Server.csproj", "SharedProjects/Shared.Server/"]
+COPY ["SharedProjects/Shared.Models/Shared.Models.shproj", "SharedProjects/Shared.Models/"]
 RUN dotnet restore "AuthService/AuthService/AuthService.csproj"
 COPY . .
 WORKDIR "/src/AuthService/AuthService"

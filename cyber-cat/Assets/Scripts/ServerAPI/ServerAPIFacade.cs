@@ -1,5 +1,6 @@
 using System;
 using ApiGateway.Client;
+using UnityEditor;
 using UnityEngine;
 
 namespace ServerAPI
@@ -8,7 +9,15 @@ namespace ServerAPI
     {
         public static ServerEnvironment ServerEnvironment
         {
-            get => (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
+            get
+            {
+                if (Application.isEditor)
+                {
+                    return (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
+                }
+
+                return ServerEnvironment.LocalServer;
+            }
             set
             {
                 PlayerPrefs.SetInt("server_environment", (int) value);
@@ -32,6 +41,8 @@ namespace ServerAPI
                         return "http://localhost";
                     case ServerEnvironment.Production:
                         return "https://server.cyber-cat.pro";
+                    case ServerEnvironment.Production_Http:
+                        return "http://server.cyber-cat.pro";
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
