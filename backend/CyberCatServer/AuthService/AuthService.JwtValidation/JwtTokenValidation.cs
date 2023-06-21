@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthService.JwtValidation;
@@ -7,7 +8,7 @@ public static class JwtTokenValidation
 {
     public const string Issuer = "AuthService";
     public const string Audience = "AuthService";
-    public static readonly SymmetricSecurityKey IssuerSigningKey = new("!CyberCatSecret!"u8.ToArray());
+    public static readonly SymmetricSecurityKey IssuerSigningKey = new(Encoding.UTF8.GetBytes("!CyberCatSecret!").ToArray());
 
     public static TokenValidationParameters CreateTokenParameters()
     {
