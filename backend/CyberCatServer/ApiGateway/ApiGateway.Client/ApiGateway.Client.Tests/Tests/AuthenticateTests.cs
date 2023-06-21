@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Tests

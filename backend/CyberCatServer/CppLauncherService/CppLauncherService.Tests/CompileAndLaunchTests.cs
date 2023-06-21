@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
-using Shared.Dto.Args;
+using Shared.Models.Dto.Args;
 using Shared.Server.Services;
 using Shared.Server.Tests;
 

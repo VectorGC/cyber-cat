@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Shared.Models;
 
 public interface ICodeEditorService
 {

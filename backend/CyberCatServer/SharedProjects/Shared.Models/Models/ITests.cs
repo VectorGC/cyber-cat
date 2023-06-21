@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Shared.Models
+namespace Shared.Models.Models
 {
     public interface ITests : IReadOnlyCollection<ITest>
     {

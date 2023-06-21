@@ -1,6 +1,10 @@
+using System;
 using ApiGateway.Client;
 using Cysharp.Threading.Tasks;
 using Models;
+using Shared.Models.Models;
+using IVerdict = Models.IVerdict;
+using VerdictStatus = Models.VerdictStatus;
 
 namespace ServerAPI
 {
@@ -16,7 +20,8 @@ namespace ServerAPI
         public async UniTask<ITask> GetTask(string taskId)
         {
             var task = await _client.GetTask(taskId);
-            return new TaskModel(task.Name, task.Description);
+            throw new NotImplementedException();
+            //return new TaskModel(task.Name, task.Description);
         }
 
         public async UniTask<string> Authenticate(string email, string password)

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 using Shared.Models;
+using Shared.Models.Models;
 
 namespace ApiGateway.Client.Tests.Tests
 {

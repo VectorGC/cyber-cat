@@ -15,7 +15,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "ApiGateway.Client.dll"
+        "ApiGateway.Client.dll",
+        "Shared.Models.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

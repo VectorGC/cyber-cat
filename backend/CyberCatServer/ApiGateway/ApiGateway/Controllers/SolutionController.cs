@@ -3,8 +3,8 @@ using ApiGateway.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Dto;
-using Shared.Dto.Args;
+using Shared.Models.Dto;
+using Shared.Models.Dto.Args;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;

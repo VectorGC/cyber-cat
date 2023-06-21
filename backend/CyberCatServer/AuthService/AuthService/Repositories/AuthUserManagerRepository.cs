@@ -2,6 +2,7 @@ using AuthService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Shared.Models;
+using Shared.Models.Models;
 using Shared.Server.Exceptions;
 
 namespace AuthService.Repositories;

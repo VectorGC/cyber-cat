@@ -2,7 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Dto;
+using Shared.Models.Dto;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;

@@ -1,5 +1,3 @@
-using Cysharp.Threading.Tasks;
-using Models;
 using ServerAPI;
 
 namespace Repositories.TaskRepositories
@@ -14,11 +12,6 @@ namespace Repositories.TaskRepositories
         public TaskRepository2Proxy(IServerAPI serverAPI)
         {
             _serverAPI = serverAPI;
-        }
-
-        public async UniTask<ITask> GetTask(string taskId)
-        {
-            return await _serverAPI.GetTask(taskId);
         }
     }
 }

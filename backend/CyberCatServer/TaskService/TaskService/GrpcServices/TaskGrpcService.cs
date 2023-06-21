@@ -1,5 +1,5 @@
-using Shared.Dto;
-using Shared.ProtoHelpers;
+using Shared.Models.Dto;
+using Shared.Models.Dto.ProtoHelpers;
 using Shared.Server.Services;
 using TaskService.Repositories;
 

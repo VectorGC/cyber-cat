@@ -1,4 +1,5 @@
 using Shared.Models;
+using Shared.Models.Models;
 
 namespace TaskService.Repositories.InternalModels;
 

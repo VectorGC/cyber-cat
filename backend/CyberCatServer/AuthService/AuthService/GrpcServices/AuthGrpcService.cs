@@ -1,8 +1,7 @@
 using AuthService.Repositories;
 using AuthService.Services;
-using Shared.Dto;
-using Shared.Dto.Args;
-using Shared.ProtoHelpers;
+using Shared.Models.Dto;
+using Shared.Models.Dto.Args;
 using Shared.Server.Exceptions;
 using Shared.Server.Services;
 

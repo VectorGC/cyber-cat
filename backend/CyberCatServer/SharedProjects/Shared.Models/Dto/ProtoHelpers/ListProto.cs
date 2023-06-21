@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using ProtoBuf;
 
-namespace Shared.Dto.ProtoHelpers
+namespace Shared.Models.Dto.ProtoHelpers
 {
     [ProtoContract]
     public class ListProto<TSource>

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Dto.Args;
-using Shared.ProtoHelpers;
+using Shared.Models.Dto.Args;
+using Shared.Models.Dto.ProtoHelpers;
 
 namespace Shared.Server.Services;
 

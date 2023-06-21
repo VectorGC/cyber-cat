@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Dto.Args
+namespace Shared.Models.Dto.Args
 {
     [ProtoContract]
     public class CreateUserArgs

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ProtoBuf;
-using Shared.Models;
+using Shared.Models.Models;
 
-namespace Shared.Dto
+namespace Shared.Models.Dto
 {
     [ProtoContract]
     public class TestsDto

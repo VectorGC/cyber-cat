@@ -1,4 +1,4 @@
-using Shared.Models;
+using Shared.Models.Models;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

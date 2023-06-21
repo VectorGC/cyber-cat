@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shared.Dto;
 using Shared.Models;
+using Shared.Models.Dto;
+using Shared.Models.Models;
 
 namespace ApiGateway.Client
 {

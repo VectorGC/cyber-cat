@@ -1,7 +1,6 @@
 using System;
-using System.Threading.Tasks;
-using Models;
 using Newtonsoft.Json;
+using Shared.Models.Models;
 
 namespace TaskUnits.TaskDataModels
 {
@@ -21,16 +20,6 @@ namespace TaskUnits.TaskDataModels
         // TODO:
         [Obsolete("Не используйте его, он будет удален. Он нужен только для совеместимости старой ITaskData с новой сервисной архитекутрой ITask")]
         public static ITaskData ConvertFrom(ITask task)
-        {
-            return new TaskData
-            {
-                Name = task.Name,
-                Description = task.Description
-            };
-        }
-
-        [Obsolete("Не используйте его, он будет удален. Он нужен только для совеместимости старой ITaskData с новой сервисной архитекутрой ITask")]
-        public static ITaskData ConvertFrom(Shared.Models.ITask task)
         {
             return new TaskData
             {

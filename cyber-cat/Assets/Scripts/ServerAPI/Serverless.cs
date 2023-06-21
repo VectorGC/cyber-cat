@@ -2,10 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Models;
-using Shared.Dto;
-using Shared.Models;
-using ITask = Shared.Models.ITask;
-using IVerdict = Shared.Models.IVerdict;
+using Shared.Models.Dto;
+using Shared.Models.Models;
 using VerdictStatus = Models.VerdictStatus;
 
 namespace ServerAPI
@@ -51,10 +49,11 @@ namespace ServerAPI
             return UniTask.FromResult("Cyber Cat");
         }
 
-        public UniTask<Models.ITask> GetTask(string taskId)
+        public UniTask<ITask> GetTask(string taskId)
         {
-            var task = new TaskModel("Hello world", "Вы играете без сервера. Чтобы решать задачи - включите интернет");
-            return UniTask.FromResult<Models.ITask>(task);
+            throw new NotImplementedException();
+            //var task = new TaskDto()"Hello world", "Вы играете без сервера. Чтобы решать задачи - включите интернет");
+            //return UniTask.FromResult<ITask>(task);
         }
 
         public UniTask<string> GetSavedCode(string taskId)

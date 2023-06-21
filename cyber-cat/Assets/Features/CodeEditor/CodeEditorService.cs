@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Shared.Models;
 using UnityEngine.SceneManagement;
 
 public class CodeEditorService : ICodeEditorService

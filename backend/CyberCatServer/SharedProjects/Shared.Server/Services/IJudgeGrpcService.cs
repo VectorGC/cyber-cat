@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Dto;
+using Shared.Models.Dto;
 
 namespace Shared.Server.Services;
 

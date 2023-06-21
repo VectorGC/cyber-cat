@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Models;
+using Shared.Models.Models;
+using IVerdict = Models.IVerdict;
 
 namespace ServerAPI
 {

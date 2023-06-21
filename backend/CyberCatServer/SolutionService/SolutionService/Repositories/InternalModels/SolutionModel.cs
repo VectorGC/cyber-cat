@@ -1,6 +1,7 @@
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 using Shared.Models;
+using Shared.Models.Models;
 
 namespace SolutionService.Repositories.InternalModels;
 

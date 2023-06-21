@@ -1,6 +1,6 @@
 using ApiGateway.Client;
 using Models;
-using Shared.Models;
+using Shared.Models.Models;
 using TNRD;
 using UI;
 using UnityEngine;
