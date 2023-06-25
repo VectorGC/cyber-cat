@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Features/CodeEditor/CodeEditor.unity
     guid: 15651a159b27a3046bcbbeab2b7ce1b6
+  - enabled: 1
+    path: Assets/Features/Authorization/AuhtorizationScene.unity
+    guid: faf80ce44101fb440bee94140c2cc734
   m_configObjects: {}

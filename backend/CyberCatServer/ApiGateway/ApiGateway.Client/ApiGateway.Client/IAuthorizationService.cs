@@ -10,9 +10,9 @@ namespace ApiGateway.Client
 
     public static class AuthorizationServiceFactory
     {
-        public static IAuthorizationService Create(string uri)
+        public static IAuthorizationService Create(string uri, IRestClient restClient)
         {
-            return new Client(uri);
+            return new Client(uri, restClient);
         }
     }
 }

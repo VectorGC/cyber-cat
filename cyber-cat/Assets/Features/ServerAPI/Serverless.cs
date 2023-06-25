@@ -1,10 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Models;
 using Shared.Models.Dto;
 using Shared.Models.Models;
-using VerdictStatus = Models.VerdictStatus;
 
 namespace ServerAPI
 {
@@ -61,10 +59,22 @@ namespace ServerAPI
             return UniTask.FromResult("Hello World!");
         }
 
-        public UniTask<Models.IVerdict> VerifySolution(string taskId, string sourceCode)
+        public UniTask<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
-            var verdict = new Verdict(VerdictStatus.Success, string.Empty, 0);
-            return UniTask.FromResult<Models.IVerdict>(verdict);
+            var verdict = new Verdict()
+            {
+                Status = VerdictStatus.Success
+            };
+            return UniTask.FromResult<IVerdict>(verdict);
         }
+    }
+
+    public class Verdict : IVerdict
+    {
+        public VerdictStatus Status { get; set; }
+
+        public string Error { get; }
+
+        public int TestsPassed { get; }
     }
 }

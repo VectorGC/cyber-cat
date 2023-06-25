@@ -3,15 +3,14 @@
     "rootNamespace": "",
     "references": [
         "GUID:d99ae67dbb84b0746b97a668ebd6e4c4",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
-    "precompiledReferences": [
-        "ApiGateway.Client.dll"
-    ],
+    "overrideReferences": false,
+    "precompiledReferences": [],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],

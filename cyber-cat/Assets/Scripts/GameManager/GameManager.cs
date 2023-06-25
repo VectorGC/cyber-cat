@@ -1,4 +1,3 @@
-using ApiGateway.Client;
 using AuthService;
 using Models;
 using Repositories.TaskRepositories;

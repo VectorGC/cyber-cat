@@ -1,4 +1,4 @@
-using ApiGateway.Client;
+using ServerAPI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,9 +16,10 @@ namespace UI
 
         protected override async void Start()
         {
-            var authorizationService = AuthorizationServiceFactory.Create(GameManager.ServerUri);
-            var token = await authorizationService.Authenticate("cat", "cat");
-            var playerName = await authorizationService.AuthorizePlayer(token);
+            var client = ServerAPIFacade.Create();
+            var token = await client.Authenticate("cat", "cat");
+            client.AddAuthorizationToken(token);
+            var playerName = await client.AuthorizePlayer(token);
 
             _greetingsText.text = $"Доступ получен: <color=green>{playerName}";
         }
@@ -49,7 +50,7 @@ namespace UI
 
         private void SignOut()
         {
-            SceneManager.LoadSceneAsync("AuthScene");
+            SceneManager.LoadSceneAsync("Features/Authorization/AuhtorizationScene");
         }
     }
 }

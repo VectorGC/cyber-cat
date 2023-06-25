@@ -1,6 +1,4 @@
 using System;
-using ApiGateway.Client;
-using UnityEditor;
 using UnityEngine;
 
 namespace ServerAPI
@@ -57,12 +55,12 @@ namespace ServerAPI
                     return new Serverless();
                 case ServerEnvironment.LocalServer:
                     // Send to Api Gateway local instance directly.
-                    return new ServerAPI("http://localhost:5000");
+                    return new RestClientServerAPI("http://localhost:5000");
                 case ServerEnvironment.DockerLocalServer:
                     // Send to Nginx in local docker engine.
-                    return new ServerAPI("http://localhost");
+                    return new RestClientServerAPI("http://localhost");
                 case ServerEnvironment.Production:
-                    return new ServerAPI("https://server.cyber-cat.pro");
+                    return new RestClientServerAPI("https://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }

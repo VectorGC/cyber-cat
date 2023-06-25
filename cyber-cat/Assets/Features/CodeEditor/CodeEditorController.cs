@@ -1,5 +1,5 @@
-using ApiGateway.Client;
 using Models;
+using ServerAPI;
 using Shared.Models.Models;
 using TNRD;
 using UI;
@@ -16,28 +16,24 @@ public class CodeEditorController : UIBehaviour
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
     [Header("Debug")] [SerializeField] private string _taskId;
-
-    //private ICodeEditorService _codeEditorService;
-    private IJudgeService _judgeService;
+    
+    private IServerAPI _client;
 
     protected override async void Start()
     {
-        var authorizationService = AuthorizationServiceFactory.Create(GameManager.ServerUri);
-        var token = await authorizationService.Authenticate("cat", "cat");
-
-        var taskRepository = TaskRepositoryFactory.Create(GameManager.ServerUri, token);
+        _client = ServerAPIFacade.Create();
+        var token = await _client.Authenticate("cat", "cat");
+        _client.AddAuthorizationToken(token);
 
         if (!string.IsNullOrEmpty(CodeEditorOpenedTask.TaskId))
         {
             _taskId = CodeEditorOpenedTask.TaskId;
         }
 
-        var task = await taskRepository.GetTask(_taskId);
+        var task = await _client.GetTask(_taskId);
 
         _taskDescription.Task = task;
         _codeEditorView.Value.Language = LanguageProg.Cpp;
-
-        _judgeService = JudgeServiceFactory.Create(GameManager.ServerUri, token);
     }
 
     protected override void OnEnable()
@@ -61,7 +57,7 @@ public class CodeEditorController : UIBehaviour
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.Value.SourceCode;
-        var verdict = await _judgeService.VerifySolution(_taskId, sourceCode);
+        var verdict = await _client.VerifySolution(_taskId, sourceCode);
 
         switch (verdict.Status)
         {
@@ -80,13 +76,7 @@ public class CodeEditorController : UIBehaviour
 
     private async void GetSavedCode()
     {
-        var authorizationService = AuthorizationServiceFactory.Create(GameManager.ServerUri);
-        var client = new Client(GameManager.ServerUri);
-
-        var token = await authorizationService.Authenticate("cat", "cat");
-        client.AddAuthorizationToken(token);
-
-        var sourceCode = await client.GetSavedCode(_taskId);
+        var sourceCode = await _client.GetSavedCode(_taskId);
         _codeEditorView.Value.SourceCode = sourceCode;
     }
 

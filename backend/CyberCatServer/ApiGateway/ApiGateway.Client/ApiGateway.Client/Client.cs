@@ -12,10 +12,10 @@ namespace ApiGateway.Client
         private readonly Uri _uri;
         private readonly IRestClient _restClient;
 
-        public Client(string uri)
+        public Client(string uri, IRestClient restClient)
         {
             _uri = new Uri(uri);
-            _restClient = new WebClientAdapter();
+            _restClient = restClient;
         }
 
         public void Dispose()

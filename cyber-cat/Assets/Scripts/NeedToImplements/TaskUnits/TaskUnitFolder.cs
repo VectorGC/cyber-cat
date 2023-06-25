@@ -1,6 +1,6 @@
 using System;
-using ApiGateway.Client;
 using Cysharp.Threading.Tasks;
+using ServerAPI;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
 
@@ -18,11 +18,11 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var authorizationService = AuthorizationServiceFactory.Create(GameManager.ServerUri);
-            var token = await authorizationService.Authenticate("cat", "cat");
+            var client = ServerAPIFacade.Create();
+            var token = await client.Authenticate("cat", "cat");
+            client.AddAuthorizationToken(token);
 
-            var repo = TaskRepositoryFactory.Create(GameManager.ServerUri, token);
-            var task = await repo.GetTask(_task);
+            var task = await client.GetTask(_task);
 
             return TaskData.ConvertFrom(task);
         }

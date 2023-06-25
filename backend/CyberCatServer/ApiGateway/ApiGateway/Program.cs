@@ -24,6 +24,29 @@ builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.A
 builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+            );
+
+            options.AddPolicy("signalr",
+                builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+
+                    .AllowCredentials()
+                    .SetIsOriginAllowed(hostName => true));
+        });
+});
+
 var app = builder.Build();
 
 // Если мы в режиме разработки (ASPNETCORE_ENVIRONMENT = Development).
@@ -47,8 +70,13 @@ if (app.Environment.IsDevelopment())
 // Логирование Http запросов.
 app.UseHttpLogging();
 
+//app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
+app.UseCors("signalr");
 
 // Используем методы контроллеров как ендпоинты.
 app.MapControllers();

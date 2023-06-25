@@ -11,9 +11,9 @@ namespace ApiGateway.Client
 
     public static class JudgeServiceFactory
     {
-        public static IJudgeService Create(string uri, string token)
+        public static IJudgeService Create(string uri, string token, IRestClient restClient)
         {
-            var client = new Client(uri);
+            var client = new Client(uri, restClient);
             client.AddAuthorizationToken(token);
 
             return client;
