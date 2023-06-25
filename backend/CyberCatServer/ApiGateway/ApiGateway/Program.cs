@@ -25,6 +25,7 @@ builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { optio
 builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -41,7 +42,6 @@ builder.Services.AddCors(options =>
                 builder => builder
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-
                     .AllowCredentials()
                     .SetIsOriginAllowed(hostName => true));
         });
