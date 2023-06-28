@@ -14,13 +14,37 @@ services:
     depends_on:
       - api-gateway
       - mongo-express
-      #volumes:
+    volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
       # Настройка файловых хранилищ для взаимодействия нескольких контейнеров.
       # Папки сертификатов, которые нужно читать nginx, чтобы обеспечивать https. ro - только чтение.
       # Слева - локальный путь на хост машине, где расположен сервер (!). Справа - путь, который создастся внутри докер контейнера.
-      #- www-certbot:/var/www/certbot/:ro
-      #- etc-letsencrypt:/etc/letsencrypt:ro
+      - www-certbot:/var/www/certbot/:ro
+      - etc-letsencrypt:/etc/letsencrypt:ro
+    
+    # При развертывании на целевой машине, нужно проверить и получить сертификаты.
+    # Проверка certbot из контейнера командой в терминале:
+    # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d server.cyber-cat.pro (тут адрес сервера).
+    # --rm - удалить контейнер после завершения
+    # --webroot --webroot-path - путь куда кладутся сертификаты
+    # --dry-run - тестовый прогон. Проверяет, что можно выдать сертификат, но не выдает его. Потому что можно получить не больше N сертификатов в неделю
+    # -d - адрес, который проверяем
+    # Ещё доп. параметры:
+    # --email email@email
+    # --agree-tos - авто-принятие всех лицензий
+    # --no-eff-email - не делиться имейлом с EEF
+
+    # Получение сертификата (не забудьте потом перезапустить nginx) Да вроде бы не надо?:
+    # docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d server.cyber-cat.pro
+    # То же что и выше, но без --dry-run
+  certbot:
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    volumes:
+      # Папки, куда certbot положит сертификаты после проверки. rw - чтение и запись.
+      - www-certbot:/var/www/certbot/:rw
+      - etc-letsencrypt:/etc/letsencrypt/:rw
   
   api-gateway:
     image: api-gateway
