@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
@@ -18,14 +18,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
+      <ProjectReference Include="..\AuthService.JwtValidation\AuthService.JwtValidation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
-      <ProjectReference Include="..\AuthService.JwtValidation\AuthService.JwtValidation.csproj" />
+        <Watch Include="..\**\*.env" Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' != 'true'" />
     </ItemGroup>
 
 </Project>

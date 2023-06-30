@@ -1,11 +1,11 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["JudgeService/JudgeService/JudgeService.csproj", "JudgeService/JudgeService/"]
 COPY ["SharedProjects/Shared.Server/Shared.Server.csproj", "SharedProjects/Shared.Server/"]
-COPY ["SharedProjects/Shared.Models/Shared.Models.shproj", "SharedProjects/Shared.Models/"]
+COPY ["SharedProjects/Shared.Models/Shared.Models.csproj", "SharedProjects/Shared.Models/"]
 RUN dotnet restore "JudgeService/JudgeService/JudgeService.csproj"
 COPY . .
 WORKDIR "/src/JudgeService/JudgeService"

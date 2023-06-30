@@ -1,21 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Tests\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.5" />
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Models\Shared.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Watch Include="..\**\*.env" Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' != 'true'" />
     </ItemGroup>
 
 </Project>

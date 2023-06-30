@@ -73,7 +73,7 @@ namespace CppLauncherService.Services
             }
 
             // Синхронно ждем завершения процесса.
-            process.WaitForExit(timeOut);
+            process.WaitForExit((int) timeOut.TotalMilliseconds);
 
             if (!process.HasExited)
             {
