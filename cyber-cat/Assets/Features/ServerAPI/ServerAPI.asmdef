@@ -1,0 +1,22 @@
+{
+    "name": "ServerAPI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c5fc7656c655850499749ca726c250c9",
+        "GUID:b3793389d983a85428458394eb28e901",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ApiGateway.Client.dll",
+        "Newtonsoft.Json.dll",
+        "Shared.Models.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

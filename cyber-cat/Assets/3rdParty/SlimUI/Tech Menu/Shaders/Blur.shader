@@ -1,5 +1,6 @@
 ﻿Shader "Custom/BLUR" {
     Properties {
+        _MainTex ("Texture", 2D) = "white" {}
         _Color ("Main Color", Color) = (1,1,1,1)
         _Size ("Size", Range(0, 20)) = 1
     }

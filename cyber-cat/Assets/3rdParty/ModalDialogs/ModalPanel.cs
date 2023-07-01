@@ -30,7 +30,7 @@ public class ModalPanel : MonoBehaviour
     // Patch
     public static void ShowModalDialog(string title, string message, UnityAction okAction)
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         var modalPanel = FindObjectOfType<ModalPanel>();
         if (!modalPanel)
         {
@@ -40,7 +40,7 @@ public class ModalPanel : MonoBehaviour
         modalPanel.MessageBox(null, title, message, () => { }, () => { }, () => { },
             () =>
             {
-                Time.timeScale = 1f;
+                //Time.timeScale = 1f;
                 okAction.Invoke();
             }, false, "Ok");
     }

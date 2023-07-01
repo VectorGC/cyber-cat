@@ -1,16 +1,34 @@
+using AuthService;
+using Models;
 using Repositories.TaskRepositories;
+using ServerAPI;
+using Services;
+using Services.AuthService;
 
 public class GameManager
 {
-    public readonly ITaskRepository TaskRepository = FeatureFlags.UseMockTaskRepository
-        ? (ITaskRepository) new MockTaskRepository()
-        : new TaskRepositoryRestProxy(new RestAPI_V1());
+    public static string ServerUri => ServerAPIFacade.ServerUri;
+    public ILocalStorageService LocalStorage { get; } = new PlayerPrefsStorage();
+    public ITaskRepository2 TaskRepository2 { get; }
+    public IAuthService AuthService { get; }
 
-    // TODO: Удали это, после рефаторинга айдишников задач.
-    public static string GetTaskIdFromUnitAndTask(string unit, string task)
+    private GameManager()
     {
-        // Конвертирование составного айдишника в один какой-то.
-        return $"{unit}{task}";
+        var serverAPIClient = ServerAPIFacade.Create();
+        AuthService = new AuthServiceProxy(serverAPIClient);
+
+        //LocalStorage.Player = Authorize(serverAPIClient);
+
+        TaskRepository2 = new TaskRepository2Proxy(serverAPIClient);
+    }
+
+    private IPlayer Authorize(IServerAPI serverAPI)
+    {
+        var token = AuthService.Authenticate("cat", "cat").GetAwaiter().GetResult();
+        serverAPI.AddAuthorizationToken(token.Value);
+        var player = AuthService.AuthorizePlayer(token).GetAwaiter().GetResult();
+
+        return player;
     }
 
     public static GameManager Instance

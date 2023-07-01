@@ -1,7 +1,6 @@
 ﻿/*  Hover an object relative to its parent over time.
  */
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Hover : MonoBehaviour

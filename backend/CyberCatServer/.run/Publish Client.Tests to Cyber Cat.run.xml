@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish Client.Tests to Cyber Cat" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" platform="Any CPU" runtime="Portable" target_folder="$PROJECT_DIR$/../../cyber-cat/Assets/Plugins/ApiGateway.Client" target_framework="net5.0" uuid_high="-2734195995277703455" uuid_low="-7537710739409647360" />
+    <method v="2" />
+  </configuration>
+</component>

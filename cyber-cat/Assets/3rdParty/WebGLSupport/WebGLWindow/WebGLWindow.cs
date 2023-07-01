@@ -1,7 +1,10 @@
 ﻿using System;
 using AOT;
-using System.Runtime.InteropServices; // for DllImport
+// for DllImport
 using UnityEngine;
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Runtime.InteropServices;
+#endif
 
 namespace WebGLSupport
 {
