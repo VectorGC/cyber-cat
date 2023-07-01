@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\SharedProjects\Shared.Tests\Shared.Tests.csproj" />
       <ProjectReference Include="..\CppLauncherService\CppLauncherService.csproj" />
     </ItemGroup>
 

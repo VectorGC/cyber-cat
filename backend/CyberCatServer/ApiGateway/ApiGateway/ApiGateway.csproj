@@ -22,8 +22,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-        <Watch Include="..\**\*.env" Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' != 'true'" />
-    </ItemGroup>
-
 </Project>

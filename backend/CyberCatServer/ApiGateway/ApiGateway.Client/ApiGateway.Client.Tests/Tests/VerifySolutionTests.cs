@@ -18,8 +18,8 @@ namespace ApiGateway.Client.Tests.Tests
 
             var verdict = await client.VerifySolution(taskId, sourceCode);
 
-            Assert.AreEqual(VerdictStatus.Success, verdict.Status);
             Assert.IsNull(verdict.Error);
+            Assert.AreEqual(VerdictStatus.Success, verdict.Status);
             Assert.AreEqual(1, verdict.TestsPassed);
         }
 

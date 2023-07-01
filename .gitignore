@@ -4,3 +4,4 @@
 .vscode/
 .vsconfig
 launchSettings.json
+*.user

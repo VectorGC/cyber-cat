@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,15 +22,12 @@ public class JudgeController : ControllerBase
 
     [HttpPost("verify/{taskId}")]
     [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, string sourceCode)
+    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromBody] string sourceCode)
     {
-        var sr = new StreamReader(Request.Body);
-        var b = await sr.ReadToEndAsync();
-
         var args = new SolutionDto
         {
             TaskId = taskId,
-            SourceCode = b
+            SourceCode = sourceCode
         };
 
         var verdict = await _judgeGrpcService.GetVerdict(args);

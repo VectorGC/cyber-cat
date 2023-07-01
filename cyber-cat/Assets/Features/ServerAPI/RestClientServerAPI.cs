@@ -78,10 +78,11 @@ namespace ServerAPI
 
         public async UniTask<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
+            var jsonObject = JsonConvert.SerializeObject(sourceCode);
             var request = new RequestHelper
             {
                 Uri = _uri + $"/judge/verify/{taskId}",
-                BodyString = sourceCode,
+                BodyString = jsonObject,
                 EnableDebug = Debug.isDebugBuild
             };
 

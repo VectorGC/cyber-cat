@@ -21,8 +21,8 @@ namespace ApiGateway.Client.Tests
 
         private PlayerClient()
         {
-            var uri = "http://localhost:5000";
-            //var uri = "http://localhost";
+            //var uri = "http://localhost:5000";
+            var uri = "http://localhost";
             //var uri = "http://server.cyber-cat.pro";
             _client = new Client(uri, new WebClientAdapter());
         }

@@ -7,8 +7,5 @@
     <ItemGroup>
       <PackageReference Include="protobuf-net" Version="2.4.8" />
     </ItemGroup>
-    <ItemGroup>
-        <Watch Include="..\**\*.env" Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' != 'true'" />
-    </ItemGroup>
 
 </Project>

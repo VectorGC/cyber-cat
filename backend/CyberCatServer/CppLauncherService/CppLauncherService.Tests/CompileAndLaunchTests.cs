@@ -78,7 +78,7 @@ public class CompileAndLaunchTests
 
 
         var err = "Exit Code 1: Traceback (most recent call last):" +
-                  "File \"/mnt/c/Users/SMC/cyber-cat/backend/CyberCatServer/PythonLauncherService/PythonLauncherService.Tests/bin/Debug/net7.0/aqs0uj0x.py\", line 1, in <module>" +
+                  "File \"/mnt/c/Users/SMC/cyber-cat/backend/CyberCatServer/PythonLauncherService/PythonLauncherService.Tests/bin/Debug/net6.0/aqs0uj0x.py\", line 1, in <module>" +
                   "    print(a)" +
                   "NameError: name 'a' is not defined\"";
 
