@@ -14,7 +14,8 @@ namespace ServerAPI
                     return (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
                 }
 
-                return ServerEnvironment.LocalServer;
+                //return ServerEnvironment.LocalServer;
+                return ServerEnvironment.Production;
             }
             set
             {
@@ -61,6 +62,8 @@ namespace ServerAPI
                     return new RestClientServerAPI("http://localhost");
                 case ServerEnvironment.Production:
                     return new RestClientServerAPI("https://server.cyber-cat.pro");
+                case ServerEnvironment.Production_Http:
+                    return new RestClientServerAPI("http://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }

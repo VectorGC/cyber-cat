@@ -11,8 +11,8 @@ services:
     ports:
       - "80:80" # Порт по умолчанию для http запросов.
       - "443:443" # Порт по умолчанию для https запросов.
-    depends_on:
-      - api-gateway
+    #depends_on:
+      #- api-gateway
       # - mongo-express
     volumes:
       # Копируем папку с конфигами для nginx, чтобы конфиги были доступны из контейнера в момент запуска nginx.
@@ -59,8 +59,8 @@ services:
       - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
       - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
       - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
-    ports:
-      - "80:5000"
+    #ports:
+     # - "80:5000"
     depends_on:
       - auth-service
       - task-service
