@@ -14,6 +14,7 @@ public class WebClientTest : MonoBehaviour
     {
         //StartCoroutine(GetStringAsyncUniTask());
         //GetStringAsync();
+        
 
         await TaskTest();
     }
@@ -28,6 +29,8 @@ public class WebClientTest : MonoBehaviour
     public async Task TaskTest()
     {
         _response.text = "Start";
+        await Task.Run(() => Debug.Log("Task.Run works!"));
+        _response.text = "Start 2";
         var result = await GetLabelAsync();
         _response.text = result;
     }
