@@ -17,6 +17,13 @@ public class AuthController : ControllerBase
     {
         _authGrpcService = authGrpcService;
     }
+    
+    [AllowAnonymous]
+    [HttpGet("simple")]
+    public async Task<ActionResult<string>> Login()
+    {
+        return "Hello";
+    }
 
     [AllowAnonymous]
     [HttpPost("login")]

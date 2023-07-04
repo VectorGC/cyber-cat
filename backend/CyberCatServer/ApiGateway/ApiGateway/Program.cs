@@ -26,7 +26,7 @@ builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-/*
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -47,7 +47,7 @@ builder.Services.AddCors(options =>
                     .SetIsOriginAllowed(hostName => true));
         });
 });
-*/
+
 
 var app = builder.Build();
 
@@ -77,8 +77,8 @@ app.UseHttpLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.UseCors("CorsPolicy");
-//app.UseCors("signalr");
+app.UseCors("CorsPolicy");
+app.UseCors("signalr");
 
 // Используем методы контроллеров как ендпоинты.
 app.MapControllers();

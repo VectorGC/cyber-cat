@@ -10,5 +10,6 @@ namespace ApiGateway.Client
         Task<string> GetSavedCode(string taskId);
         Task SaveCode(string taskId, string sourceCode);
         Task RemoveSavedCode(string taskId);
+        Task<string> GetStringTestAsync();
     }
 }

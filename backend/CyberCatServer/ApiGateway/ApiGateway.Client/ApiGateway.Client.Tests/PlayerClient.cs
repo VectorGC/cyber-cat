@@ -73,6 +73,11 @@ namespace ApiGateway.Client.Tests
             return _client.RemoveSavedCode(taskId);
         }
 
+        public async Task<string> GetStringTestAsync()
+        {
+            return await _client.GetStringTestAsync();
+        }
+
         public Task<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
             return _client.VerifySolution(taskId, sourceCode);
