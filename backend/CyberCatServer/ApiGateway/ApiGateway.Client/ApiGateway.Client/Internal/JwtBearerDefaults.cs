@@ -1,6 +1,6 @@
 namespace ApiGateway.Client
 {
-    public static class JwtBearerDefaults
+    internal static class JwtBearerDefaults
     {
         public const string AuthenticationScheme = "Bearer";
     }

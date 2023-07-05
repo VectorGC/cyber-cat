@@ -15,7 +15,6 @@ public class WebClientTest : MonoBehaviour
     private async void Start()
     {
         //StartCoroutine(GetStringAsyncUniTask());
-
         var client = new Client("http://localhost:5000", null);
         //var response = await GetStringAsync();
         var response = await client.GetStringTestAsync();

@@ -2,18 +2,20 @@
 
     <PropertyGroup>
         <TargetFramework>net45</TargetFramework>
+        <DefineConstants Condition="$(Configuration) == Release">UNITY_WEBGL</DefineConstants>
+        <DefineConstants Condition="$(Configuration) == Debug">HTTP_CLIENT</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj" />
+        <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj"/>
     </ItemGroup>
 
-    <ItemGroup Condition="$(Configuration) == Release">
-        <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true" />
+    <ItemGroup Condition="$(DefineConstants.Contains(UNITY_WEBGL))">
+        <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true"/>
     </ItemGroup>
 
-    <ItemGroup Condition="$(Configuration) == Debug">
-        <ProjectReference Include="..\Mock.UnityEngine\Mock.UnityEngine.csproj" PrivateAssets="all" Private="true" />
+    <ItemGroup Condition="$(DefineConstants.Contains(HTTP_CLIENT))">
+        <Reference Include="System.Net.Http"/>
     </ItemGroup>
 
 </Project>
