@@ -290,9 +290,6 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
  </Reference>
@@ -662,23 +659,14 @@
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
- <Reference Include="TNRD.SerializableInterface.Editor">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/TNRD.SerializableInterface.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
- <Reference Include="MackySoft.SerializeReferenceExtensions.Editor">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/MackySoft.SerializeReferenceExtensions.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
- </Reference>
- <Reference Include="MackySoft.SerializeReferenceExtensions">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/MackySoft.SerializeReferenceExtensions.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -704,9 +692,6 @@
  <Reference Include="UniTask.TextMeshPro">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/UniTask.TextMeshPro.dll</HintPath>
  </Reference>
- <Reference Include="TNRD.SerializableInterface">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/TNRD.SerializableInterface.dll</HintPath>
- </Reference>
  <Reference Include="UniTask">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/UniTask.dll</HintPath>
  </Reference>
@@ -715,6 +700,12 @@
  </Reference>
  <Reference Include="UniTask.Addressables">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/UniTask.Addressables.dll</HintPath>
+ </Reference>
+ <Reference Include="TNRD.SerializableInterface">
+ <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/TNRD.SerializableInterface.dll</HintPath>
+ </Reference>
+ <Reference Include="TNRD.SerializableInterface.Editor">
+ <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/TNRD.SerializableInterface.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -738,10 +729,6 @@
       <Project>{8a654689-45eb-bdb7-87f3-61963c6e751b}</Project>
       <Name>3rdPartyAdapters</Name>
     </ProjectReference>
-    <ProjectReference Include="RestAPIWrapper EditorTests.csproj">
-      <Project>{48189a17-0ccf-a552-20c4-ebfcd882903b}</Project>
-      <Name>RestAPIWrapper EditorTests</Name>
-    </ProjectReference>
     <ProjectReference Include="Utils.csproj">
       <Project>{e1f7457c-a38b-86e9-f952-014d95d2c939}</Project>
       <Name>Utils</Name>
@@ -762,10 +749,6 @@
       <Project>{32d62da2-a3ec-765f-6dcd-a803d92159e2}</Project>
       <Name>Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="RestAPIWrapper.csproj">
-      <Project>{c7541808-ccb0-58b5-bc61-4ccb58800d05}</Project>
-      <Name>RestAPIWrapper</Name>
-    </ProjectReference>
     <ProjectReference Include="Models.csproj">
       <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
       <Name>Models</Name>
@@ -777,14 +760,6 @@
     <ProjectReference Include="ConfigurationUI.csproj">
       <Project>{d36ae8d3-7348-c98b-aad0-f53fa4a49a39}</Project>
       <Name>ConfigurationUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="GameManager.csproj">
-      <Project>{71dcabe1-3688-7484-7cc8-70bd8cd9735c}</Project>
-      <Name>GameManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="MackySoft.SerializeReferenceExtensions.Example.GetStarted.csproj">
-      <Project>{afa51955-a19f-915b-7b49-faf3dbd19084}</Project>
-      <Name>MackySoft.SerializeReferenceExtensions.Example.GetStarted</Name>
     </ProjectReference>
     <ProjectReference Include="InGameCodeEditor.csproj">
       <Project>{26ddbbde-220f-1651-7dfa-8a612e2a1ab0}</Project>
@@ -802,18 +777,6 @@
       <Project>{adadb293-7554-b225-fe62-5e54895ef068}</Project>
       <Name>UI</Name>
     </ProjectReference>
-    <ProjectReference Include="ServerAPIBase.csproj">
-      <Project>{2c4eb255-03b3-4aa6-7eae-aa01f32dc7bd}</Project>
-      <Name>ServerAPIBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="RestAPILegacy.csproj">
-      <Project>{0518f6b4-204f-d749-a951-a8f82fbdf47b}</Project>
-      <Name>RestAPILegacy</Name>
-    </ProjectReference>
-    <ProjectReference Include="ServerAPI.Editor.csproj">
-      <Project>{c45781e8-11bc-c2e2-70c1-ebda68290502}</Project>
-      <Name>ServerAPI.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="SnapshotShaders.csproj">
       <Project>{e026edf5-aff2-1db6-2222-3ba8f6388586}</Project>
       <Name>SnapshotShaders</Name>
@@ -826,33 +789,13 @@
       <Project>{d4fe176c-b024-6506-68eb-266fd4cf62a0}</Project>
       <Name>Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="Repositories.csproj">
-      <Project>{d9d227c2-36b3-40d9-ca4a-784fea792d73}</Project>
-      <Name>Repositories</Name>
+    <ProjectReference Include="ServerEnvironment.csproj">
+      <Project>{661eadfe-bb5a-369b-5950-092ff065d5de}</Project>
+      <Name>ServerEnvironment</Name>
     </ProjectReference>
-    <ProjectReference Include="Services.csproj">
-      <Project>{a65d98a4-0cf6-2d8a-d1d3-72a92dc5f17e}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="Tests.csproj">
-      <Project>{22ec63bb-4976-2216-8b35-61b0fea9477b}</Project>
-      <Name>Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="RestClient.csproj">
-      <Project>{f7c5f45b-81ca-4190-dbf8-1af4cdaaaf8b}</Project>
-      <Name>RestClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="QuestSystem.csproj">
-      <Project>{77684c8f-b5c0-0f94-e0ca-648b09fb73c0}</Project>
-      <Name>QuestSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="ServerAPI.csproj">
-      <Project>{7e8d164e-ab3f-f709-5c97-85207a2429a9}</Project>
-      <Name>ServerAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="TaskChecker.csproj">
-      <Project>{8eb272ba-dc54-71d1-2207-4221f07de4e8}</Project>
-      <Name>TaskChecker</Name>
+    <ProjectReference Include="ServerAPI.Editor.csproj">
+      <Project>{c45781e8-11bc-c2e2-70c1-ebda68290502}</Project>
+      <Name>ServerAPI.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

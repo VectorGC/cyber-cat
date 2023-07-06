@@ -13,11 +13,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{0518f6b4-204f-d749-a951-a8f82fbdf47b}</ProjectGuid>
+    <ProjectGuid>{661eadfe-bb5a-369b-5950-092ff065d5de}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>RestAPILegacy</AssemblyName>
+    <AssemblyName>ServerEnvironment</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -52,6 +52,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Features\ServerEnvironment\ServerEnvironment.cs" />
+     <None Include="Assets\Features\ServerEnvironment\ServerEnvironment.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -280,11 +282,8 @@
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
  </Reference>
- <Reference Include="ReportGeneratorMerged">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/PackageCache/com.unity.testtools.codecoverage@1.2.2/lib/ReportGenerator/ReportGeneratorMerged.dll</HintPath>
- </Reference>
- <Reference Include="nunit.framework">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/PackageCache/com.unity.ext.nunit@2.0.3/net40/unity-custom/nunit.framework.dll</HintPath>
+ <Reference Include="Shared.Models">
+ <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/Shared.Models.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -642,7 +641,10 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Scripts\NeedToImplements" />
+    <ProjectReference Include="Models.csproj">
+      <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

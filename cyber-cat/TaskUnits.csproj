@@ -52,7 +52,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\RequestWrappers\IGetTaskRequestWrapper.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskDataExt.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskUnitFolder.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskDataModels\TaskData.cs" />
@@ -60,7 +59,6 @@
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskDataModels\TaskObservable.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\Messages\NeedUpdateTaskData.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskFacade.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\RequestWrappers\GetTaskRequestWrapper.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskDataModels\EmptyTaskData.cs" />
      <None Include="Assets\Scripts\NeedToImplements\TaskUnits\TaskUnits.asmdef" />
  <Reference Include="UnityEngine">
@@ -291,8 +289,8 @@
  <Reference Include="Shared.Models">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/Shared.Models.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+ <Reference Include="ApiGateway.Client">
+ <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -654,33 +652,17 @@
       <Project>{f597eab2-3734-83c3-5650-c46a7598ae6f}</Project>
       <Name>UniRx</Name>
     </ProjectReference>
-    <ProjectReference Include="RestAPIWrapper.csproj">
-      <Project>{c7541808-ccb0-58b5-bc61-4ccb58800d05}</Project>
-      <Name>RestAPIWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="GameManager.csproj">
-      <Project>{71dcabe1-3688-7484-7cc8-70bd8cd9735c}</Project>
-      <Name>GameManager</Name>
-    </ProjectReference>
     <ProjectReference Include="Models.csproj">
       <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
       <Name>Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="Repositories.csproj">
-      <Project>{d9d227c2-36b3-40d9-ca4a-784fea792d73}</Project>
-      <Name>Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="TaskData.csproj">
       <Project>{df8da9a4-9504-a6a8-42cc-1dfb44207b81}</Project>
       <Name>TaskData</Name>
     </ProjectReference>
-    <ProjectReference Include="ServerAPIBase.csproj">
-      <Project>{2c4eb255-03b3-4aa6-7eae-aa01f32dc7bd}</Project>
-      <Name>ServerAPIBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="ServerAPI.csproj">
-      <Project>{7e8d164e-ab3f-f709-5c97-85207a2429a9}</Project>
-      <Name>ServerAPI</Name>
+    <ProjectReference Include="ServerEnvironment.csproj">
+      <Project>{661eadfe-bb5a-369b-5950-092ff065d5de}</Project>
+      <Name>ServerEnvironment</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,12 +16,7 @@ namespace UI
 
         protected override async void Start()
         {
-            var client = ServerAPIFacade.Create();
-            var token = await client.Authenticate("cat", "cat");
-            client.AddAuthorizationToken(token);
-            var playerName = await client.AuthorizePlayer(token);
-
-            _greetingsText.text = $"Доступ получен: <color=green>{playerName}";
+            _greetingsText.text = $"Доступ получен: <color=green>Cat";
         }
 
         protected override void OnEnable()

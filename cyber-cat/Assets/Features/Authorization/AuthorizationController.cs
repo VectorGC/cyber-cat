@@ -7,14 +7,11 @@ public class AuthorizationController : UIBehaviour
 {
     protected override async void Start()
     {
-        var client = ServerAPIFacade.Create();
-        var token = await client.Authenticate("cat", "cat");
-        client.AddAuthorizationToken(token);
-
-        var playerName = await client.AuthorizePlayer(token);
+        var client = ServerEnvironment.CreateAnonymousClient();
+        var token = await client.Authorization.GetAuthenticationToken("cat", "cat");
 
         TokenRepository.Token = token;
-        TokenRepository.PlayerName = playerName;
+        TokenRepository.PlayerName = "Cat";
 
         await SceneManager.LoadSceneAsync("MainMenu").ToUniTask();
     }

@@ -649,9 +649,6 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
- <Reference Include="MackySoft.SerializeReferenceExtensions">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/MackySoft.SerializeReferenceExtensions.dll</HintPath>
- </Reference>
  <Reference Include="UniTask">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/ScriptAssemblies/UniTask.dll</HintPath>
  </Reference>

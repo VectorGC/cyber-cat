@@ -1,3 +1,4 @@
+using ApiGateway.Client;
 using Models;
 using ServerAPI;
 using Shared.Models.Models;
@@ -16,21 +17,18 @@ public class CodeEditorController : UIBehaviour
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
     [Header("Debug")] [SerializeField] private string _taskId;
-    
-    private IServerAPI _client;
+
+    private IAuthorizedClient _client;
 
     protected override async void Start()
     {
-        _client = ServerAPIFacade.Create();
-        var token = await _client.Authenticate("cat", "cat");
-        _client.AddAuthorizationToken(token);
-
+        _client = await ServerEnvironment.CreateAuthorizedClient();
         if (!string.IsNullOrEmpty(CodeEditorOpenedTask.TaskId))
         {
             _taskId = CodeEditorOpenedTask.TaskId;
         }
 
-        var task = await _client.GetTask(_taskId);
+        var task = await _client.Tasks.GetTask(_taskId);
 
         _taskDescription.Task = task;
         _codeEditorView.Value.Language = LanguageProg.Cpp;
@@ -57,7 +55,7 @@ public class CodeEditorController : UIBehaviour
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.Value.SourceCode;
-        var verdict = await _client.VerifySolution(_taskId, sourceCode);
+        var verdict = await _client.JudgeService.VerifySolution(_taskId, sourceCode);
 
         switch (verdict.Status)
         {
@@ -76,7 +74,7 @@ public class CodeEditorController : UIBehaviour
 
     private async void GetSavedCode()
     {
-        var sourceCode = await _client.GetSavedCode(_taskId);
+        var sourceCode = await _client.SolutionService.GetSavedCode(_taskId);
         _codeEditorView.Value.SourceCode = sourceCode;
     }
 

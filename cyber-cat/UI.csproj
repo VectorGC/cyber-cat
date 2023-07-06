@@ -279,9 +279,6 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
  </Reference>
@@ -654,17 +651,9 @@
       <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
       <Name>Models</Name>
     </ProjectReference>
-    <ProjectReference Include="Services.csproj">
-      <Project>{a65d98a4-0cf6-2d8a-d1d3-72a92dc5f17e}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
     <ProjectReference Include="Views.csproj">
       <Project>{1b92dcb0-7b03-6c14-fb73-ffeb231e5fc5}</Project>
       <Name>Views</Name>
-    </ProjectReference>
-    <ProjectReference Include="GameManager.csproj">
-      <Project>{71dcabe1-3688-7484-7cc8-70bd8cd9735c}</Project>
-      <Name>GameManager</Name>
     </ProjectReference>
     <ProjectReference Include="Utils.csproj">
       <Project>{e1f7457c-a38b-86e9-f952-014d95d2c939}</Project>

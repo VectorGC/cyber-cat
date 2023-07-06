@@ -52,13 +52,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\GettingTasksFlatTests.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\RestoringPasswordTests.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\CodeSendingTests.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\RegisterTests.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\WebErrorlocalizeTests.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\AuthTests.cs" />
-     <None Include="Assets\Scripts\NeedToImplements\ServerAPI2\RestAPIWrapper\Editor Tests\RestAPIWrapper EditorTests.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -295,9 +288,6 @@
  </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
@@ -677,10 +667,6 @@
       <Project>{c7541808-ccb0-58b5-bc61-4ccb58800d05}</Project>
       <Name>RestAPIWrapper</Name>
     </ProjectReference>
-    <ProjectReference Include="RestClient.csproj">
-      <Project>{f7c5f45b-81ca-4190-dbf8-1af4cdaaaf8b}</Project>
-      <Name>RestClient</Name>
-    </ProjectReference>
     <ProjectReference Include="UniRx.csproj">
       <Project>{f597eab2-3734-83c3-5650-c46a7598ae6f}</Project>
       <Name>UniRx</Name>
@@ -697,6 +683,9 @@
       <Project>{df8da9a4-9504-a6a8-42cc-1dfb44207b81}</Project>
       <Name>TaskData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\NeedToImplements" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -18,11 +18,9 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var client = ServerAPIFacade.Create();
-            var token = await client.Authenticate("cat", "cat");
-            client.AddAuthorizationToken(token);
+            var client = await ServerEnvironment.CreateAuthorizedClient();
 
-            var task = await client.GetTask(_task);
+            var task = await client.Tasks.GetTask(_task);
 
             return TaskData.ConvertFrom(task);
         }

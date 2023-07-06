@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using RestAPIWrapper;
 
 namespace Authentication
 {
@@ -24,7 +23,7 @@ namespace Authentication
             var password = passwordTextField.text;
             var userName = nameTextField.text;
 
-            await RestAPI.Instance.RegisterUser(login, password, userName);
+            //await RestAPI.Instance.RegisterUser(login, password, userName);
 
             _logger.Log("Вам на почту пришло сообщение с подтверждением!");
         }
@@ -39,7 +38,7 @@ namespace Authentication
             var login = loginTextField.text;
             var password = passwordTextField.text;
 
-            await RestAPI.Instance.RestorePassword(login, password);
+            //await RestAPI.Instance.RestorePassword(login, password);
 
             _logger.Log("Вам на почту пришло сообщение с подтверждением!");
         }

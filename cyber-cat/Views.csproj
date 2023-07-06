@@ -279,9 +279,6 @@
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
  </Reference>
@@ -662,14 +659,6 @@
       <Project>{df8da9a4-9504-a6a8-42cc-1dfb44207b81}</Project>
       <Name>TaskData</Name>
     </ProjectReference>
-    <ProjectReference Include="RestAPIWrapper.csproj">
-      <Project>{c7541808-ccb0-58b5-bc61-4ccb58800d05}</Project>
-      <Name>RestAPIWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="RestAPILegacy.csproj">
-      <Project>{0518f6b4-204f-d749-a951-a8f82fbdf47b}</Project>
-      <Name>RestAPILegacy</Name>
-    </ProjectReference>
     <ProjectReference Include="SnapshotShaders.csproj">
       <Project>{e026edf5-aff2-1db6-2222-3ba8f6388586}</Project>
       <Name>SnapshotShaders</Name>
@@ -685,10 +674,6 @@
     <ProjectReference Include="GameVisionMode.csproj">
       <Project>{64d6824b-d699-59f6-74b9-196cb5c74002}</Project>
       <Name>GameVisionMode</Name>
-    </ProjectReference>
-    <ProjectReference Include="ServerAPIBase.csproj">
-      <Project>{2c4eb255-03b3-4aa6-7eae-aa01f32dc7bd}</Project>
-      <Name>ServerAPIBase</Name>
     </ProjectReference>
     <ProjectReference Include="Utils.csproj">
       <Project>{e1f7457c-a38b-86e9-f952-014d95d2c939}</Project>
