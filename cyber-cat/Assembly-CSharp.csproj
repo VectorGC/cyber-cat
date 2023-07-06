@@ -75,7 +75,6 @@
      <Compile Include="Assets\Scripts\NeedToImplements\BottomTextController.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\EscapeMenu.cs" />
      <Compile Include="Assets\3rdParty\WebGLSupport\WebGLInput\Wrapper\WrappedTMPInputField.cs" />
-     <Compile Include="Assets\Features\R&amp;D_Webclient\WebClientTest.cs" />
      <Compile Include="Assets\3rdParty\Megapoly.Art\Vintage Controls\Scripts\Monitor.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\StringExt.cs" />
      <Compile Include="Assets\Scripts\NeedToImplements\UserDataController.cs" />
