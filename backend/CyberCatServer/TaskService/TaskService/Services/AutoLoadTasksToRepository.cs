@@ -39,7 +39,7 @@ public class AutoLoadTasksToRepository : IHostedService
                 continue;
             }
 
-            await taskRepository.Add(task.Id, task);
+            await taskRepository.Add(task.Id, task.ToDto());
             await testRepository.Add(task.Id, task.Tests);
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }

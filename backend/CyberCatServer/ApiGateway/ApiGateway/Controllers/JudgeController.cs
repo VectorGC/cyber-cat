@@ -22,8 +22,13 @@ public class JudgeController : ControllerBase
 
     [HttpPost("verify/{taskId}")]
     [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromBody] string sourceCode)
+    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromForm] string sourceCode)
     {
+        if (string.IsNullOrEmpty(sourceCode))
+        {
+            throw new ArgumentNullException(nameof(sourceCode));
+        }
+
         var args = new SolutionDto
         {
             TaskId = taskId,

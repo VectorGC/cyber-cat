@@ -1,0 +1,20 @@
+{
+    "name": "WebClientTest",
+    "rootNamespace": "",
+    "references": [
+        "GUID:003589d5576fedd4b997cd470b948555",
+        "GUID:cfed221c79ccd5c4f91cc8d39524bdc3",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "Unity.Burst.Cecil.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

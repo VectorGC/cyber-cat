@@ -39,7 +39,7 @@ public class SolutionController : ControllerBase
 
     [HttpPost("{taskId}")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SaveCode(string taskId, [FromBody] string sourceCode)
+    public async Task<ActionResult> SaveCode(string taskId, [FromForm] string sourceCode)
     {
         if (string.IsNullOrEmpty(sourceCode))
         {

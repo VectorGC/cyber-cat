@@ -11,7 +11,7 @@ using Shared.Models;
 using Shared.Models.Dto.Args;
 using Shared.Models.Models;
 using Shared.Server.Services;
-using Shared.Server.Tests;
+using Shared.Tests;
 
 namespace AuthService.Tests;
 

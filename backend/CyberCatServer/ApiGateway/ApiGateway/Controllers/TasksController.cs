@@ -25,10 +25,6 @@ public class TasksController : ControllerBase
     public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
     {
         var task = await TaskGrpcService.GetTask(taskId);
-        return new TaskDto
-        {
-            Name = task.Name,
-            Description = task.Description
-        };
+        return task;
     }
 }

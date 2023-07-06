@@ -12,8 +12,7 @@ builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.CreateTokenParameters(); });
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+builder.Services.AddControllers();
 
 // "Kestrel:Endpoints:Http:Url" - взятие url для api gateway.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
@@ -26,7 +25,7 @@ builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-/*
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -47,7 +46,7 @@ builder.Services.AddCors(options =>
                     .SetIsOriginAllowed(hostName => true));
         });
 });
-*/
+
 
 var app = builder.Build();
 
@@ -77,8 +76,8 @@ app.UseHttpLogging();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.UseCors("CorsPolicy");
-//app.UseCors("signalr");
+app.UseCors("CorsPolicy");
+app.UseCors("signalr");
 
 // Используем методы контроллеров как ендпоинты.
 app.MapControllers();
