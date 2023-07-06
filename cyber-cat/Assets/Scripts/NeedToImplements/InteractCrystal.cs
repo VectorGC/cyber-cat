@@ -1,4 +1,3 @@
-using RestAPIWrapper;
 using System;
 using TaskUnits;
 using UniRx;
@@ -32,7 +31,7 @@ namespace Legacy_do_not_use_it
             var isHackModePressed = Input.GetKey(KeyCode.F);
             if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
             {
-                TokenSession token = PlayerPrefsInfo.GetToken();
+                //TokenSession token = PlayerPrefs.GetToken();
             }
         }
     }

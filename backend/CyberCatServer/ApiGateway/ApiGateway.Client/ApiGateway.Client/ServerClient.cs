@@ -20,5 +20,15 @@ namespace ApiGateway.Client
 
             return new AuthorizedClient(client, token);
         }
+
+        public static IAnonymousClient CreateAnonymousServerless()
+        {
+            return new ServerlessClient();
+        }
+
+        public static IAuthorizedClient CreateAuthorizedServerless()
+        {
+            return new ServerlessClient();
+        }
     }
 }

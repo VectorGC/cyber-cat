@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 
 namespace TaskUnits.TaskDataModels
 {
-    [JsonObject]
     internal class TasksData : ITaskDataCollection
     {
-        [JsonProperty("tasks")]
         public Dictionary<string, TaskData> Tasks { get; set; } = new Dictionary<string, TaskData>();
 
         #region | Delegate implementation |
@@ -44,7 +41,7 @@ namespace TaskUnits.TaskDataModels
         public IEnumerable<string> Keys => Tasks.Keys;
 
         public IEnumerable<ITaskData> Values => Tasks.Values;
-        #endregion
 
+        #endregion
     }
 }

@@ -52,12 +52,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Features\ServerAPI\ServerAPIFacade.cs" />
-     <Compile Include="Assets\Features\ServerAPI\Serverless.cs" />
      <Compile Include="Assets\Features\ServerAPI\ServerEnvironment.cs" />
-     <Compile Include="Assets\Features\ServerAPI\RestClientServerAPI.cs" />
-     <Compile Include="Assets\Features\ServerAPI\IServerAPI.cs" />
-     <Compile Include="Assets\Features\ServerAPI\ServerClientAPI.cs" />
      <None Include="Assets\Features\ServerAPI\ServerAPI.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -286,9 +281,6 @@
  </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Shared.Models">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/Shared.Models.dll</HintPath>
@@ -649,10 +641,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="RestClient.csproj">
-      <Project>{f7c5f45b-81ca-4190-dbf8-1af4cdaaaf8b}</Project>
-      <Name>RestClient</Name>
-    </ProjectReference>
     <ProjectReference Include="Models.csproj">
       <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
       <Name>Models</Name>

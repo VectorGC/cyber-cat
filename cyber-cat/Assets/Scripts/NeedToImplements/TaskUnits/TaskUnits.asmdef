@@ -19,7 +19,7 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Shared.Models.dll",
-        "Newtonsoft.Json.dll"
+        "ApiGateway.Client.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

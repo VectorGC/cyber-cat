@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj"/>
+        <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(UNITY_WEBGL))">
-        <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true"/>
+        <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true" />
     </ItemGroup>
 
 </Project>

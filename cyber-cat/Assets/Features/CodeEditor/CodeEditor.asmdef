@@ -3,7 +3,6 @@
     "rootNamespace": "",
     "references": [
         "GUID:9e634c5ef2d67314092beed63a5fbed5",
-        "GUID:d99ae67dbb84b0746b97a668ebd6e4c4",
         "GUID:f4113365f11c42942b4c3ecc47e69ed7",
         "GUID:2bd87b1f29eb7864b90c7d0f6f76690b",
         "GUID:23eed6c2401dca1419d1ebd180e58c5a",
@@ -17,7 +16,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Shared.Models.dll"
+        "Shared.Models.dll",
+        "ApiGateway.Client.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

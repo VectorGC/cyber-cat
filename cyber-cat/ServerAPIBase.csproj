@@ -52,19 +52,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\ServerData.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\IWebApiRequester.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\ICodeSender.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\ICodeReceiver.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\ITokenReceiver.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\ServerConfig.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\IAuthenticator.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\WebApiAggregator.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\IRegistrator.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\ITasksGetter.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\IRestAPI.cs" />
-     <Compile Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\Requests\IPasswordRestorer.cs" />
-     <None Include="Assets\Scripts\NeedToImplements\ServerAPI2\API base\ServerAPIBase.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
@@ -289,9 +276,6 @@
  </Reference>
  <Reference Include="UnityEditor.WindowsStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/3rdParty/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="ApiGateway.Client">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
@@ -662,6 +646,9 @@
       <Project>{df8da9a4-9504-a6a8-42cc-1dfb44207b81}</Project>
       <Name>TaskData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\NeedToImplements" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

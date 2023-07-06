@@ -291,6 +291,9 @@
  <Reference Include="Shared.Models">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/Shared.Models.dll</HintPath>
  </Reference>
+ <Reference Include="ApiGateway.Client">
+ <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.dll</HintPath>
+ </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
  </Reference>
@@ -657,10 +660,6 @@
       <Project>{d069cff8-2426-87c4-c842-d64e5f331ccb}</Project>
       <Name>Auhtorization</Name>
     </ProjectReference>
-    <ProjectReference Include="GameManager.csproj">
-      <Project>{71dcabe1-3688-7484-7cc8-70bd8cd9735c}</Project>
-      <Name>GameManager</Name>
-    </ProjectReference>
     <ProjectReference Include="EasyLogView.csproj">
       <Project>{329b010e-9d7d-0f08-39f2-02c71857a8b8}</Project>
       <Name>EasyLogView</Name>
@@ -669,9 +668,9 @@
       <Project>{26ddbbde-220f-1651-7dfa-8a612e2a1ab0}</Project>
       <Name>InGameCodeEditor</Name>
     </ProjectReference>
-    <ProjectReference Include="ServerAPI.csproj">
-      <Project>{7e8d164e-ab3f-f709-5c97-85207a2429a9}</Project>
-      <Name>ServerAPI</Name>
+    <ProjectReference Include="ServerEnvironment.csproj">
+      <Project>{661eadfe-bb5a-369b-5950-092ff065d5de}</Project>
+      <Name>ServerEnvironment</Name>
     </ProjectReference>
     <ProjectReference Include="Models.csproj">
       <Project>{e464f46e-b669-9737-c2b3-77b5a1450782}</Project>
