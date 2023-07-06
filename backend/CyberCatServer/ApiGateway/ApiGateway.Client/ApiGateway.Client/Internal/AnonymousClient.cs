@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
+using ApiGateway.Client.Services.Authorization;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Internal
 {
     internal class AnonymousClient : IAnonymousClient
     {
@@ -11,14 +11,6 @@ namespace ApiGateway.Client
         public AnonymousClient(Client client)
         {
             _client = client;
-        }
-
-        public async Task<string> GetStringTestAsync(string uri)
-        {
-            var client = WebClientFactory.Create();
-            var response = await client.GetStringAsync(uri);
-
-            return response;
         }
     }
 }

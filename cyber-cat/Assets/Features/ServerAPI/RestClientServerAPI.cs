@@ -17,7 +17,7 @@ namespace ServerAPI
             _uri = uri;
         }
 
-        public async UniTask<ITask> GetTask(string taskId)
+        public async UniTask<TaskDto> GetTask(string taskId)
         {
             var request = new RequestHelper
             {

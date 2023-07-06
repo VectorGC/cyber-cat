@@ -2,10 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net461</TargetFramework>
+        <Platforms>AnyCPU;Unity WebGL</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="protobuf-net" Version="1.0.0.280" />
+        <PackageReference Include="protobuf-net" Version="1.0.0.280"/>
     </ItemGroup>
 
 </Project>

@@ -1,3 +1,5 @@
+using ApiGateway.Client.Services;
+
 namespace ApiGateway.Client
 {
     public interface IAuthorizedClient

@@ -1,8 +1,8 @@
+#if UNITY_WEBGL
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 {
     internal static class UnityWebRequestExtensions
     {
@@ -21,10 +21,10 @@ namespace ApiGateway.Client
             return tcs.Task;
         }
 
-        public static void EnsureSuccessStatusCode(this UnityWebRequest webRequest)
+        public static void EnsureSuccessStatusCode(this UnityEngine.Networking.UnityWebRequest webRequest)
         {
-            var isNetworkError = webRequest.result == UnityWebRequest.Result.ConnectionError;
-            var isHttpError = webRequest.result == UnityWebRequest.Result.ProtocolError;
+            var isNetworkError = webRequest.result == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError;
+            var isHttpError = webRequest.result == UnityEngine.Networking.UnityWebRequest.Result.ProtocolError;
 
             if (!webRequest.isDone || isNetworkError || isHttpError)
             {
@@ -33,3 +33,4 @@ namespace ApiGateway.Client
         }
     }
 }
+#endif

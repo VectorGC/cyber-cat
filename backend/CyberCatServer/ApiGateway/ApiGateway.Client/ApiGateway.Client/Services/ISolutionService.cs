@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Services
 {
     public interface ISolutionService
     {

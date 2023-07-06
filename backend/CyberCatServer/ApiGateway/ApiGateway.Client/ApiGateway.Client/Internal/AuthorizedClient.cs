@@ -1,4 +1,6 @@
-namespace ApiGateway.Client
+using ApiGateway.Client.Services;
+
+namespace ApiGateway.Client.Internal
 {
     internal class AuthorizedClient : IAuthorizedClient
     {

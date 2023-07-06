@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Shared.Models.Dto;
 using Shared.Models.Models;
 
 namespace TaskUnits.TaskDataModels
@@ -19,7 +20,7 @@ namespace TaskUnits.TaskDataModels
 
         // TODO:
         [Obsolete("Не используйте его, он будет удален. Он нужен только для совеместимости старой ITaskData с новой сервисной архитекутрой ITask")]
-        public static ITaskData ConvertFrom(ITask task)
+        public static ITaskData ConvertFrom(TaskDto task)
         {
             return new TaskData
             {

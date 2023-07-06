@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests.Tests
+namespace ApiGateway.Client.Tests
 {
     [TestFixture]
     public class AuthenticateTests
@@ -9,8 +9,8 @@ namespace ApiGateway.Client.Tests.Tests
         [Test]
         public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
         {
-            var client = TestClient.Anonymous();
-            var token = await client.Authorization.GetAuthenticationToken(TestClient.TestEmail, TestClient.TestUserPassword);
+            var client = TestClient.TestClient.Anonymous();
+            var token = await client.Authorization.GetAuthenticationToken(TestClient.TestClient.TestEmail, TestClient.TestClient.TestUserPassword);
 
             Assert.IsNotEmpty(token);
         }

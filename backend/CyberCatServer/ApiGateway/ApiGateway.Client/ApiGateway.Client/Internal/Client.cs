@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Internal.WebClientAdapters;
+using ApiGateway.Client.Services;
+using ApiGateway.Client.Services.Authorization;
 using Shared.Models.Dto;
 using Shared.Models.Models;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Internal
 {
     internal class Client : IAuthorizationService, ITaskRepository, IJudgeService, ISolutionService, IDisposable
     {
@@ -34,7 +37,7 @@ namespace ApiGateway.Client
             return accessToken;
         }
 
-        public async Task<ITask> GetTask(string taskId)
+        public async Task<TaskDto> GetTask(string taskId)
         {
             var task = await _webClient.GetFromJsonAsync<TaskDto>(_uri + $"tasks/{taskId}");
             return task;

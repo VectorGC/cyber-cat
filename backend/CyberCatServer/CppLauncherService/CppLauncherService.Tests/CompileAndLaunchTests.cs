@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
 using Shared.Models.Dto.Args;
 using Shared.Server.Services;
-using Shared.Server.Tests;
+using Shared.Tests;
 
 namespace CppLauncherService.Tests;
 

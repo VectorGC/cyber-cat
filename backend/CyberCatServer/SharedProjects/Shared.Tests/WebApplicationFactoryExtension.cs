@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shared.Server.Tests;
+namespace Shared.Tests;
 
 public static class WebApplicationFactoryExtension
 {

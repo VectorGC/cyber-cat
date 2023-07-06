@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Shared.Models.Models;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Services
 {
     public interface IJudgeService
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests.Tests
+namespace ApiGateway.Client.Tests
 {
     [TestFixture]
     public class TaskTests
@@ -10,7 +10,7 @@ namespace ApiGateway.Client.Tests.Tests
         public async Task GetTask()
         {
             var taskId = "tutorial";
-            var client = await TestClient.Authorized();
+            var client = await TestClient.TestClient.Authorized();
 
             var task = await client.Tasks.GetTask(taskId);
 

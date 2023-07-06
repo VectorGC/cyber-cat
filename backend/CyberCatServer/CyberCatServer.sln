@@ -70,6 +70,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Release|Unity WebGL = Release|Unity WebGL
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{ED45FB5C-C0B5-4F39-BD8D-38FE55424DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -116,14 +117,20 @@ Global
 		{449B3EA0-C937-48C1-80A7-04CB52895840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{449B3EA0-C937-48C1-80A7-04CB52895840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{449B3EA0-C937-48C1-80A7-04CB52895840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{449B3EA0-C937-48C1-80A7-04CB52895840}.Release|Unity WebGL.ActiveCfg = Release|Unity WebGL
+		{449B3EA0-C937-48C1-80A7-04CB52895840}.Release|Unity WebGL.Build.0 = Release|Unity WebGL
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Unity WebGL.ActiveCfg = Release|Unity WebGL
+		{DA0E2F3A-8B2D-46E1-9764-AC04DDD74900}.Release|Unity WebGL.Build.0 = Release|Unity WebGL
 		{92233391-7656-4F93-A73B-BE0797EF5B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92233391-7656-4F93-A73B-BE0797EF5B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92233391-7656-4F93-A73B-BE0797EF5B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92233391-7656-4F93-A73B-BE0797EF5B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92233391-7656-4F93-A73B-BE0797EF5B74}.Release|Unity WebGL.ActiveCfg = Release|Unity WebGL
+		{92233391-7656-4F93-A73B-BE0797EF5B74}.Release|Unity WebGL.Build.0 = Release|Unity WebGL
 		{9A39A6F2-FD40-450E-B558-16039FB74973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A39A6F2-FD40-450E-B558-16039FB74973}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A39A6F2-FD40-450E-B558-16039FB74973}.Release|Any CPU.ActiveCfg = Release|Any CPU

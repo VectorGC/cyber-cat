@@ -18,7 +18,7 @@ namespace ServerAPI
             return Task.FromResult("Cyber Cat");
         }
 
-        public Task<ITask> GetTask(string taskId, IProgress<float> progress = null)
+        public Task<TaskDto> GetTask(string taskId, IProgress<float> progress = null)
         {
             var task = new TaskDto()
             {
@@ -26,7 +26,7 @@ namespace ServerAPI
                 Description = "Вы играете без сервера. Чтобы решать задачи - включите интернет"
             };
 
-            return Task.FromResult<ITask>(task);
+            return Task.FromResult<TaskDto>(task);
         }
 
         public void AddAuthorizationToken(string token)
@@ -47,7 +47,7 @@ namespace ServerAPI
             return UniTask.FromResult("Cyber Cat");
         }
 
-        public UniTask<ITask> GetTask(string taskId)
+        public UniTask<TaskDto> GetTask(string taskId)
         {
             throw new NotImplementedException();
             //var task = new TaskDto()"Hello world", "Вы играете без сервера. Чтобы решать задачи - включите интернет");

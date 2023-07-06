@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests.Tests
+namespace ApiGateway.Client.Tests
 {
     [TestFixture]
     public class SolutionTests
@@ -12,7 +12,7 @@ namespace ApiGateway.Client.Tests.Tests
             var taskId = "tutorial";
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
             var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
-            var client = await TestClient.Authorized();
+            var client = await TestClient.TestClient.Authorized();
 
             // Проверяем что изначально кода нет.
             var lastSavedCode = await client.SolutionService.GetSavedCode(taskId);

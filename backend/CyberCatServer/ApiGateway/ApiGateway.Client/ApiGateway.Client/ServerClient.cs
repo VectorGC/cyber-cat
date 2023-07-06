@@ -1,3 +1,6 @@
+using ApiGateway.Client.Internal;
+using ApiGateway.Client.Internal.WebClientAdapters;
+
 namespace ApiGateway.Client
 {
     public static class ServerClient
@@ -5,7 +8,7 @@ namespace ApiGateway.Client
         public static IAnonymousClient Create(string uri)
         {
             var restClient = WebClientFactory.Create();
-            var client = new Client(uri, restClient);
+            var client = new Internal.Client(uri, restClient);
 
             return new AnonymousClient(client);
         }
@@ -13,7 +16,7 @@ namespace ApiGateway.Client
         public static IAuthorizedClient Create(string uri, string token)
         {
             var restClient = WebClientFactory.Create();
-            var client = new Client(uri, restClient);
+            var client = new Internal.Client(uri, restClient);
 
             return new AuthorizedClient(client, token);
         }

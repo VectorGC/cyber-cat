@@ -1,9 +1,12 @@
+using System;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AuthService;
 using NUnit.Framework;
 using ServerAPI;
 using Services.AuthService;
 using Tests.InternalMockModels;
+using UnityEngine;
 
 namespace Tests
 {

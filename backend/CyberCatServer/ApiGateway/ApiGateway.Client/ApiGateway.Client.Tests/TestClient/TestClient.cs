@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.TestClient
 {
     public static class TestClient
     {

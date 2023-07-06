@@ -1,14 +1,15 @@
+#if WEB_CLIENT
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
 {
     internal class WebClientAdapter : IWebClient
     {
-        private readonly WebClient _client = new WebClient();
+        private readonly System.Net.WebClient _client = new System.Net.WebClient();
 
         public WebClientAdapter()
         {
@@ -123,3 +124,4 @@ namespace ApiGateway.Client
         }
     }
 }
+#endif

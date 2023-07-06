@@ -12,8 +12,7 @@ builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.CreateTokenParameters(); });
 
-builder.Services.AddControllers()
-    .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+builder.Services.AddControllers();
 
 // "Kestrel:Endpoints:Http:Url" - взятие url для api gateway.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });

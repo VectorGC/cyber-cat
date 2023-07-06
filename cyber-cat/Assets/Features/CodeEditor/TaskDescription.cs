@@ -1,3 +1,4 @@
+using Shared.Models.Dto;
 using Shared.Models.Models;
 using TMPro;
 using UnityEngine;
@@ -10,12 +11,12 @@ namespace UI
         [SerializeField] private TMP_Text goalTask;
         [SerializeField] private TMP_Text descriptionTask;
 
-        public ITask Task
+        public TaskDto Task
         {
             set => SetTask(value);
         }
 
-        private void SetTask(ITask task)
+        private void SetTask(TaskDto task)
         {
             goalTask.text = task.Name;
             descriptionTask.text = task.Description;

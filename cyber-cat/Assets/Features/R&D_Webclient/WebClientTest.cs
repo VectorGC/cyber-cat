@@ -17,7 +17,7 @@ public class WebClientTest : MonoBehaviour
         //StartCoroutine(GetStringAsyncUniTask());
         var client = ServerClient.Create("http://localhost:5000");
         //var response = await GetStringAsync();
-        var response = await client.GetStringTestAsync("http://localhost:5000/auth/simple");
+        var response = await client.Authorization.GetAuthenticationToken("cat", "cat");
         Debug.Log(response);
         _response.text = response;
     }

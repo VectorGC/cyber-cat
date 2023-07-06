@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using Shared.Models;
-using Shared.Models.Models;
+using Shared.Models.Dto;
 
-namespace ApiGateway.Client
+namespace ApiGateway.Client.Services
 {
     public interface ITaskRepository
     {
-        Task<ITask> GetTask(string taskId);
+        Task<TaskDto> GetTask(string taskId);
     }
 }
