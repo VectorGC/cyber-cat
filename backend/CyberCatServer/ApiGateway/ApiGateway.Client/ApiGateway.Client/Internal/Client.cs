@@ -48,11 +48,6 @@ namespace ApiGateway.Client.Internal
             _webClient.AddAuthorizationHeader(JwtBearerDefaults.AuthenticationScheme, token);
         }
 
-        public void RemoveAuthorizationToken()
-        {
-            _webClient.RemoveAuthorizationHeader();
-        }
-
         public async Task<string> GetSavedCode(string taskId)
         {
             return await _webClient.GetStringAsync(_uri + $"solution/{taskId}");
@@ -60,7 +55,10 @@ namespace ApiGateway.Client.Internal
 
         public async Task SaveCode(string taskId, string sourceCode)
         {
-            await _webClient.PostStringAsync(_uri + $"solution/{taskId}", sourceCode);
+            await _webClient.PostAsync(_uri + $"solution/{taskId}", new Dictionary<string, string>()
+            {
+                ["sourceCode"] = sourceCode
+            });
         }
 
         public async Task RemoveSavedCode(string taskId)
@@ -70,7 +68,10 @@ namespace ApiGateway.Client.Internal
 
         public async Task<IVerdict> VerifySolution(string taskId, string sourceCode)
         {
-            return await _webClient.PostAsJsonAsync<VerdictDto>(_uri + $"judge/verify/{taskId}", sourceCode);
+            return await _webClient.PostAsJsonAsync<VerdictDto>(_uri + $"judge/verify/{taskId}", new Dictionary<string, string>()
+            {
+                ["sourceCode"] = sourceCode
+            });
         }
     }
 }

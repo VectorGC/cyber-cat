@@ -31,6 +31,19 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             _client.Headers.Remove(HttpRequestHeader.Authorization);
         }
 
+        public async Task<string> GetStringAsync(string uri)
+        {
+            return await _client.DownloadStringTaskAsync(uri);
+        }
+
+        public async Task<T> GetFromJsonAsync<T>(string uri)
+        {
+            var response = await GetStringAsync(uri);
+            var obj = DeserializeJson<T>(response);
+
+            return obj;
+        }
+
         public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
         {
             _client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
@@ -47,43 +60,11 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return response;
         }
 
-        public async Task<string> GetStringAsync(string uri)
+        public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
-            return await _client.DownloadStringTaskAsync(uri);
-        }
-
-        public async Task<T> GetFromJsonAsync<T>(string uri)
-        {
-            var response = await GetStringAsync(uri);
-            var obj = DeserializeJson<T>(response);
-
-            return obj;
-        }
-
-        public async Task PostStringAsync(string uri, string value)
-        {
-            _client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-            var json = SerializeToJson(value);
-            await _client.UploadStringTaskAsync(uri, WebRequestMethods.Http.Post, json);
-        }
-
-        public async Task PostAsJsonAsync<TValue>(string uri, TValue value)
-        {
-            _client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-            var json = SerializeToJson(value);
-            await _client.UploadStringTaskAsync(uri, WebRequestMethods.Http.Post, json);
-        }
-
-        public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, string value)
-        {
-            _client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-            var json = SerializeToJson(value);
-            var response = await _client.UploadStringTaskAsync(uri, WebRequestMethods.Http.Post, json);
-
+            var response = await PostAsync(uri, form);
             var obj = DeserializeJson<TResponse>(response);
+
             return obj;
         }
 

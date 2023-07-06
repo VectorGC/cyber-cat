@@ -17,7 +17,7 @@ namespace ApiGateway.Client.Tests
 
             var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
 
-            Assert.IsNull(verdict.Error);
+            Assert.IsTrue(string.IsNullOrEmpty(verdict.Error));
             Assert.AreEqual(VerdictStatus.Success, verdict.Status);
             Assert.AreEqual(1, verdict.TestsPassed);
         }
@@ -52,7 +52,7 @@ namespace ApiGateway.Client.Tests
             Assert.That(verdict.Error, Does.Match(expectedErrorRegex));
         }
 
-        //[Test]
+        [Test]
         public async Task CompileAndLaunchManyProcess_WithDifferentResult()
         {
             var tasks = new List<Task>();

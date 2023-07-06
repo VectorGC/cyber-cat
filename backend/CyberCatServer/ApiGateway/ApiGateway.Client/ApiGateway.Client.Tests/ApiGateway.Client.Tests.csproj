@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net461</TargetFramework>
-        <DefineConstants Condition="$(Configuration) == Release">UNITY_WEBGL</DefineConstants>
+        <DefineConstants Condition="$(Platform) == 'Unity WebGL'">UNITY_WEBGL</DefineConstants>
         <Platforms>AnyCPU;Unity WebGL</Platforms>
     </PropertyGroup>
 

@@ -14,8 +14,7 @@ namespace ServerAPI
                     return (ServerEnvironment) PlayerPrefs.GetInt("server_environment");
                 }
 
-                //return ServerEnvironment.LocalServer;
-                return ServerEnvironment.Production;
+                return Debug.isDebugBuild ? ServerEnvironment.LocalServer : ServerEnvironment.Production;
             }
             set
             {
@@ -56,14 +55,14 @@ namespace ServerAPI
                     return new Serverless();
                 case ServerEnvironment.LocalServer:
                     // Send to Api Gateway local instance directly.
-                    return new RestClientServerAPI("http://localhost:5000");
+                    return new ServerClientAPI("http://localhost:5000");
                 case ServerEnvironment.DockerLocalServer:
                     // Send to Nginx in local docker engine.
-                    return new RestClientServerAPI("http://localhost");
+                    return new ServerClientAPI("http://localhost");
                 case ServerEnvironment.Production:
-                    return new RestClientServerAPI("https://server.cyber-cat.pro");
+                    return new ServerClientAPI("https://server.cyber-cat.pro");
                 case ServerEnvironment.Production_Http:
-                    return new RestClientServerAPI("http://server.cyber-cat.pro");
+                    return new ServerClientAPI("http://server.cyber-cat.pro");
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -57,6 +57,7 @@
      <Compile Include="Assets\Features\ServerAPI\ServerEnvironment.cs" />
      <Compile Include="Assets\Features\ServerAPI\RestClientServerAPI.cs" />
      <Compile Include="Assets\Features\ServerAPI\IServerAPI.cs" />
+     <Compile Include="Assets\Features\ServerAPI\ServerClientAPI.cs" />
      <None Include="Assets\Features\ServerAPI\ServerAPI.asmdef" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

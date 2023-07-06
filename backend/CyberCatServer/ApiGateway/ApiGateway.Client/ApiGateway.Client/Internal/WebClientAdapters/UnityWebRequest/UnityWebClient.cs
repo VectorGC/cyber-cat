@@ -25,21 +25,6 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             DebugOnly.Log("Remove authorization header");
         }
 
-        public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
-        {
-            DebugOnly.Log($"Send POST to '{uri}'");
-            using (var request = UnityEngine.Networking.UnityWebRequest.Post(uri, form))
-            {
-                SetAuthorizationIfNeeded(request);
-                await request.SendWebRequest().WaitAsync();
-                request.EnsureSuccessStatusCode();
-                var response = request.downloadHandler.text;
-
-                DebugOnly.Log($"Response from {uri} is '{response}'");
-                return response;
-            }
-        }
-
         public async Task<string> GetStringAsync(string uri)
         {
             DebugOnly.Log($"Send GET to '{uri}'");
@@ -75,24 +60,41 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             }
         }
 
-        public Task PostStringAsync(string uri, string value)
+        public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
         {
-            throw new System.NotImplementedException();
+            DebugOnly.Log($"Send POST to '{uri}'");
+            using (var request = UnityEngine.Networking.UnityWebRequest.Post(uri, form))
+            {
+                SetAuthorizationIfNeeded(request);
+                await request.SendWebRequest().WaitAsync();
+                request.EnsureSuccessStatusCode();
+                var response = request.downloadHandler.text;
+
+                DebugOnly.Log($"Response from {uri} is '{response}'");
+                return response;
+            }
         }
 
-        public Task PostAsJsonAsync<TValue>(string uri, TValue value)
+        public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
-            throw new System.NotImplementedException();
+            var json = await PostAsync(uri, form);
+            DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
+            var obj = JsonUtility.FromJson<TResponse>(json);
+            DebugOnly.Log($"Success deserialize object '{obj}'");
+
+            return obj;
         }
 
-        public Task<TResponse> PostAsJsonAsync<TResponse>(string uri, string value)
+        public async Task DeleteAsync(string uri)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task DeleteAsync(string uri)
-        {
-            throw new System.NotImplementedException();
+            DebugOnly.Log($"Send DELETE to '{uri}'");
+            using (var request = UnityEngine.Networking.UnityWebRequest.Delete(uri))
+            {
+                SetAuthorizationIfNeeded(request);
+                await request.SendWebRequest().WaitAsync();
+                request.EnsureSuccessStatusCode();
+                DebugOnly.Log($"Success response from {uri}");
+            }
         }
 
         private void SetAuthorizationIfNeeded(UnityEngine.Networking.UnityWebRequest request)
