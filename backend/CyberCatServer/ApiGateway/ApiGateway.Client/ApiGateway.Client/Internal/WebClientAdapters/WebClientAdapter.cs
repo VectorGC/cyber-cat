@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApiGateway.Client
 {
-    public class WebClientAdapter : IRestClient
+    internal class WebClientAdapter : IWebClient
     {
-        private readonly System.Net.WebClient _client = new System.Net.WebClient();
+        private readonly WebClient _client = new WebClient();
 
         public WebClientAdapter()
         {

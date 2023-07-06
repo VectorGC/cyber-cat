@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net45</TargetFramework>
-        <Platforms>AnyCPU;Unity WebGL</Platforms>
+        <TargetFramework>net461</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

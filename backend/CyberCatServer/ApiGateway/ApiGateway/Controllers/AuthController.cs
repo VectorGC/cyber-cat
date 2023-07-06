@@ -17,7 +17,7 @@ public class AuthController : ControllerBase
     {
         _authGrpcService = authGrpcService;
     }
-    
+
     [AllowAnonymous]
     [HttpGet("simple")]
     public async Task<ActionResult<string>> Login()
@@ -36,11 +36,5 @@ public class AuthController : ControllerBase
         });
 
         return response.AccessToken;
-    }
-
-    [HttpGet("authorize_player")]
-    public ActionResult<string> AuthorizePlayer()
-    {
-        return User.Identity.Name;
     }
 }

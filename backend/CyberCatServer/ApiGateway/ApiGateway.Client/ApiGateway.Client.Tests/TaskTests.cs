@@ -10,9 +10,9 @@ namespace ApiGateway.Client.Tests.Tests
         public async Task GetTask()
         {
             var taskId = "tutorial";
-            var client = await PlayerClient.Create();
+            var client = await TestClient.Authorized();
 
-            var task = await client.GetTask(taskId);
+            var task = await client.Tasks.GetTask(taskId);
 
             Assert.AreEqual("Hello cat!", task.Name);
             Assert.IsNotEmpty(task.Description);

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ApiGateway.Client
 {
-    public interface IRestClient : IDisposable
+    internal interface IWebClient : IDisposable
     {
         void AddAuthorizationHeader(string type, string value);
         void RemoveAuthorizationHeader();

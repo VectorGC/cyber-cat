@@ -311,9 +311,6 @@
  <Reference Include="nunit.framework">
  <HintPath>D:/Projects/cyber-cat/cyber-cat/Library/PackageCache/com.unity.ext.nunit@2.0.3/net40/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
- <Reference Include="ApiGateway.Client.Tests">
- <HintPath>D:/Projects/cyber-cat/cyber-cat/Assets/Plugins/ApiGateway.Client/ApiGateway.Client.Tests.dll</HintPath>
- </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.27f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
  </Reference>

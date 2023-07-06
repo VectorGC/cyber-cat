@@ -9,8 +9,8 @@ namespace ApiGateway.Client.Tests.Tests
         [Test]
         public async Task Test()
         {
-            var client = new Client("http://localhost:5000", new WebClientAdapter());
-            var response = await client.GetStringTestAsync();
+            var client = TestClient.Anonymous();
+            var response = await client.GetStringTestAsync("http://localhost:5000/auth/simple");
 
             Assert.AreEqual("Hello", response);
         }

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace ApiGateway.Client.Tests.RestClient
 {
-    public class HttpRestClientAdapter : IRestClient
+    internal class HttpClientAdapter : IWebClient
     {
         private readonly HttpClient _client = new HttpClient();
 

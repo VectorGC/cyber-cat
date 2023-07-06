@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>net461</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="protobuf-net" Version="2.4.8" />
+      <PackageReference Include="protobuf-net" Version="1.0.0.280" />
     </ItemGroup>
 
 </Project>
