@@ -1,42 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TextAnimation : MonoBehaviour
+public class CoolText : MonoBehaviour
 {
-    public float letterSpeed = 1f; // Скорость анимации букв
-    public TMP_Text textMeshPro;
+    public TMP_Text textComponent;
 
-    private void Start()
+    // Update is called once per frame
+    void Update()
     {
-        // Запускаем корутину для анимации текста
-        StartCoroutine(AnimateText());
-    }
+        textComponent.ForceMeshUpdate();
+        var textInfo = textComponent.textInfo;
 
-    private System.Collections.IEnumerator AnimateText()
-    {
-        while (true)
+        for (int i = 0; i < textInfo.characterCount; ++i)
         {
-            // Получаем текущий текст
-            string originalText = textMeshPro.text;
+            var charinfo = textInfo.characterInfo[i];
 
-            // Создаем новую строку для анимированного текста
-            string animatedText = "";
-
-            // Перебираем символы в оригинальном тексте
-            for (int i = 0; i < originalText.Length; i++)
+            if (!charinfo.isVisible)
             {
-                // Получаем текущий символ
-                char character = originalText[i];
-
-                // Добавляем символ в анимированный текст с небольшим смещением по оси Y
-                animatedText += "<voffset=" + Random.Range(-0.5f, 0.5f) + ">" + character + "</voffset>";
-
-                // Ждем некоторое время перед добавлением следующего символа
-                yield return new WaitForSeconds(letterSpeed);
+                continue;
             }
 
-            // Присваиваем анимированный текст компоненту TextMeshPro
-            textMeshPro.text = animatedText;
+            var verts = textInfo.meshInfo[charinfo.materialReferenceIndex].vertices;
+
+            for (int j = 0; j < 4; ++j)
+            {
+                var orig = verts[charinfo.vertexIndex + j];
+                verts[charinfo.vertexIndex + j] = orig + new Vector3(0, Mathf.Sin(Time.time * 2f + orig.x * 0.01f) * 10f, 0);
+            }
+        }
+
+        for (int i = 0; i < textInfo.meshInfo.Length; ++i)
+        {
+            var meshInfo = textInfo.meshInfo[i];
+            meshInfo.mesh.vertices = meshInfo.vertices;
+            textComponent.UpdateGeometry(meshInfo.mesh, i);
         }
     }
 }
+

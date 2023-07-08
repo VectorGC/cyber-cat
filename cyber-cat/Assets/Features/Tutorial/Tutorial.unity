@@ -765,14 +765,14 @@ MonoBehaviour:
   volumeLayer:
     serializedVersion: 2
     m_Bits: 4294967295
-  stopNaNPropagation: 1
+  stopNaNPropagation: 0
   finalBlitToCameraTarget: 0
   antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
+    sharpness: 0.04
+    stationaryBlending: 0.696
+    motionBlending: 0.708
   subpixelMorphologicalAntialiasing:
     quality: 2
   fastApproximateAntialiasing:
