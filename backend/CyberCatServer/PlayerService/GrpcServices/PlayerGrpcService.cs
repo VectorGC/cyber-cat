@@ -2,6 +2,7 @@
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Dto;
 using Shared.Models.Dto.Args;
+using Shared.Server.Exceptions;
 using Shared.Server.Services;
 
 namespace PlayerService.GrpcServices;

@@ -42,6 +42,8 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
     public async Task<PlayerDto> GetPlayerById(long userId)
     {
         var player = await GetOneAsync<PlayerModel>(p => p.UserId == userId);
+        if (player == null)
+            throw PlayerNotFoundException.UserIdNotFound(userId);
         return player.ToDto();
     }
 }

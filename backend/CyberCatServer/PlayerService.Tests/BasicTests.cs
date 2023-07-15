@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using PlayerService.GrpcServices;
 using ProtoBuf.Grpc.Client;
 using Shared.Models.Dto.Args;
+using Shared.Server.Exceptions;
 using Shared.Server.Services;
 using Shared.Tests;
 
@@ -20,30 +21,29 @@ public class BasicTests
         _factory = new WebApplicationFactory<Program>();
     }
 
-    /*[Test]
-    public async Task CheckAndAddNewPlayer()
+    [Test]
+    public async Task CheckAddAndDeleteNewPlayer()
     {
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
 
         var playerArgs = new PlayerArgs { UserId = 1234567 };
-
-        var newPlayer = await service.GetPlayerById(playerArgs);
-
-        Assert.IsNull(newPlayer);
+        
+        var ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(playerArgs));
+        Assert.That(ex.Message, Is.EqualTo("Status(StatusCode=\"Unknown\", Detail=\"Exception was thrown by handler. PlayerNotFoundException: Player with UserId '1234567' not found\")"));
 
         await service.AddNewPlayer(playerArgs);
         
-        newPlayer = await service.GetPlayerById(playerArgs);
+        var newPlayer = await service.GetPlayerById(playerArgs);
         
         Assert.IsNotNull(newPlayer);
 
         await service.DeletePlayer(playerArgs);
         
-        newPlayer = await service.GetPlayerById(playerArgs);
-
-        Assert.IsNull(newPlayer);
-    }*/
+        ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(playerArgs));
+        Assert.That(ex.Message, Is.EqualTo("Status(StatusCode=\"Unknown\", Detail=\"Exception was thrown by handler. PlayerNotFoundException: Player with UserId '1234567' not found\")"));
+        
+    }
 
     [Test]
     public async Task AddAndReturnNewPlayer()
