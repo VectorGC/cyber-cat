@@ -27,9 +27,10 @@ public class BasicTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
 
-        var playerArgs = new PlayerArgs { UserId = 1234567 };
+        var playerArgs = new PlayerIdArgs { UserId = 1234567 };
         
         var ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(playerArgs));
+
         Assert.That(ex.Message, Is.EqualTo("Status(StatusCode=\"Unknown\", Detail=\"Exception was thrown by handler. PlayerNotFoundException: Player with UserId '1234567' not found\")"));
 
         await service.AddNewPlayer(playerArgs);
@@ -37,6 +38,7 @@ public class BasicTests
         var newPlayer = await service.GetPlayerById(playerArgs);
         
         Assert.IsNotNull(newPlayer);
+        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
 
         await service.DeletePlayer(playerArgs);
         
@@ -51,13 +53,14 @@ public class BasicTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
 
-        var playerArgs = new PlayerArgs { UserId = 1234567 };
+        var playerArgs = new PlayerIdArgs { UserId = 1234567 };
 
         await service.AddNewPlayer(playerArgs);
 
         var newPlayer = await service.GetPlayerById(playerArgs);
 
         Assert.IsNotNull(newPlayer);
+        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
 
         await service.DeletePlayer(playerArgs);
     }

@@ -17,18 +17,6 @@
         <ProjectReference Include="..\SharedProjects\Shared.Tests\Shared.Tests.csproj" />
         <InternalsVisibleTo Include="PlayerService.Tests" />
     </ItemGroup>
-
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\appsettings.Development.json" />
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\appsettings.json" />
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\obj\PlayerService.Tests.csproj.nuget.dgspec.json" />
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\obj\project.assets.json" />
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\obj\project.packagespec.json" />
-      <_ContentIncludedByDefault Remove="PlayerService.Tests\Properties\launchSettings.json" />
-      <_ContentIncludedByDefault Remove="PlayerSerivce.Tests\obj\PlayerSerivce.Tests.csproj.nuget.dgspec.json" />
-      <_ContentIncludedByDefault Remove="PlayerSerivce.Tests\obj\project.assets.json" />
-      <_ContentIncludedByDefault Remove="PlayerSerivce.Tests\obj\project.packagespec.json" />
-    </ItemGroup>
+    
 
 </Project>

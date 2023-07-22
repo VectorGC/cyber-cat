@@ -9,7 +9,6 @@ namespace PlayerService.Repositories.InternalModels;
 public class PlayerModel : IPlayer, IDocument<Guid>
 {
     public long UserId { get; set; } = 0;
-    public string UserName { get; set; } = null!;
     public int CompletedTasksCount { get; set; } = 0;
     
     public Guid Id { get; set; }
@@ -18,7 +17,6 @@ public class PlayerModel : IPlayer, IDocument<Guid>
     public PlayerModel(long userId)
     {
         UserId = userId;
-        UserName = "New Player";
         CompletedTasksCount = 0;
     }
 
@@ -32,7 +30,6 @@ public class PlayerModel : IPlayer, IDocument<Guid>
         return new PlayerDto
         {
             UserId = UserId,
-            UserName = UserName,
             CompletedTasksCount = CompletedTasksCount
         };
     }

@@ -15,17 +15,17 @@ public class PlayerGrpcService : IPlayerGrpcService
     {
         _playerRepository = playerRepository;
     }
-    public async Task AddNewPlayer(PlayerArgs args)
+    public async Task AddNewPlayer(PlayerIdArgs idArgs)
     {
-        await _playerRepository.AddNewPlayer(args.UserId);
+        await _playerRepository.AddNewPlayer(idArgs.UserId);
     }
-    public async Task DeletePlayer(PlayerArgs args)
+    public async Task DeletePlayer(PlayerIdArgs idArgs)
     {
-        await _playerRepository.DeletePlayer(args.UserId);
+        await _playerRepository.DeletePlayer(idArgs.UserId);
     }
-    public async Task<PlayerDto> GetPlayerById(PlayerArgs args)
+    public async Task<PlayerDto> GetPlayerById(PlayerIdArgs idArgs)
     {
-        var player = await _playerRepository.GetPlayerById(args.UserId);
+        var player = await _playerRepository.GetPlayerById(idArgs.UserId);
         return player;
     }
 }

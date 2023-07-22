@@ -5,7 +5,7 @@ namespace PlayerService.Repositories;
 
 public interface IPlayerRepository
 {
-    Task AddNewPlayer(long userId);
-    Task DeletePlayer(long userId);
-    Task<PlayerDto> GetPlayerById(long userId);
+    Task AddNewPlayer(long playerId);
+    Task DeletePlayer(long playerId);
+    Task<PlayerDto> GetPlayerById(long playerId);
 }

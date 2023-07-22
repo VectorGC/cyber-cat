@@ -3,7 +3,6 @@
     public interface IPlayer
     {
         long UserId { get; }
-        string UserName { get;  }
         int CompletedTasksCount { get; }
     }
 }
