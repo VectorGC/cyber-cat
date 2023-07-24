@@ -5,6 +5,6 @@ namespace Shared.Models.Dto.Args
     [ProtoContract]
     public class PlayerIdArgs
     {
-        [ProtoMember(1)] public long UserId { get; set; }
+        [ProtoMember(1)] public long PlayerId { get; set; }
     }
 }

@@ -17,15 +17,19 @@ public class PlayerGrpcService : IPlayerGrpcService
     }
     public async Task AddNewPlayer(PlayerIdArgs idArgs)
     {
-        await _playerRepository.AddNewPlayer(idArgs.UserId);
+        await _playerRepository.AddNewPlayer(idArgs.PlayerId);
     }
     public async Task DeletePlayer(PlayerIdArgs idArgs)
     {
-        await _playerRepository.DeletePlayer(idArgs.UserId);
+        await _playerRepository.DeletePlayer(idArgs.PlayerId);
     }
     public async Task<PlayerDto> GetPlayerById(PlayerIdArgs idArgs)
     {
-        var player = await _playerRepository.GetPlayerById(idArgs.UserId);
+        var player = await _playerRepository.GetPlayerById(idArgs.PlayerId);
         return player;
+    }
+    public async Task AddBitcoinsToPlayer(PlayerAddBtcArgs playerArgs)
+    {
+        await _playerRepository.AddBitcoinsToPlayer(playerArgs.PlayerId, playerArgs.BitcoinsCount);
     }
 }

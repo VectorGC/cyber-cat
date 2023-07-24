@@ -13,4 +13,6 @@ public interface IPlayerGrpcService
     Task DeletePlayer(PlayerIdArgs playerId);
     
     Task<PlayerDto> GetPlayerById(PlayerIdArgs playerId);
+
+    Task AddBitcoinsToPlayer(PlayerAddBtcArgs playerArgs);
 }

@@ -10,6 +10,7 @@ public class PlayerModel : IPlayer, IDocument<Guid>
 {
     public long UserId { get; set; } = 0;
     public int CompletedTasksCount { get; set; } = 0;
+    public int BitcoinCount { get; set; } = 0;
     
     public Guid Id { get; set; }
     public int Version { get; set; }
@@ -18,6 +19,7 @@ public class PlayerModel : IPlayer, IDocument<Guid>
     {
         UserId = userId;
         CompletedTasksCount = 0;
+        BitcoinCount = 0;
     }
 
     public PlayerModel()
@@ -30,7 +32,8 @@ public class PlayerModel : IPlayer, IDocument<Guid>
         return new PlayerDto
         {
             UserId = UserId,
-            CompletedTasksCount = CompletedTasksCount
+            CompletedTasksCount = CompletedTasksCount,
+            BitcoinCount = BitcoinCount
         };
     }
 }

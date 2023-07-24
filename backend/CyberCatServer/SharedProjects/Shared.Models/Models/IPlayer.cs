@@ -4,5 +4,6 @@
     {
         long UserId { get; }
         int CompletedTasksCount { get; }
+        int BitcoinCount { get; }
     }
 }
