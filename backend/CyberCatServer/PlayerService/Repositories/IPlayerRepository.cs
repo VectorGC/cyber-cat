@@ -9,4 +9,5 @@ public interface IPlayerRepository
     Task DeletePlayer(long playerId);
     Task<PlayerDto> GetPlayerById(long playerId);
     Task AddBitcoinsToPlayer(long playerId, int bitcoins);
+    Task TakeBitcoinsFromPlayer(long playerId, int bitcoins);
 }

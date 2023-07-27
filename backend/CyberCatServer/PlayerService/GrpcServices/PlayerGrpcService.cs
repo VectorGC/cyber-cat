@@ -28,8 +28,13 @@ public class PlayerGrpcService : IPlayerGrpcService
         var player = await _playerRepository.GetPlayerById(idArgs.PlayerId);
         return player;
     }
-    public async Task AddBitcoinsToPlayer(PlayerAddBtcArgs playerArgs)
+    public async Task AddBitcoinsToPlayer(PlayerBtcArgs playerArgs)
     {
         await _playerRepository.AddBitcoinsToPlayer(playerArgs.PlayerId, playerArgs.BitcoinsCount);
+    }
+
+    public async Task TakeBitcoinsFromPlayer(PlayerBtcArgs playerBtcArgs)
+    {
+        await _playerRepository.TakeBitcoinsFromPlayer(playerBtcArgs.PlayerId, playerBtcArgs.BitcoinsCount);
     }
 }

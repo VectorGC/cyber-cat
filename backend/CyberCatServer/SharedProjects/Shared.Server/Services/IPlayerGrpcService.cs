@@ -14,5 +14,7 @@ public interface IPlayerGrpcService
     
     Task<PlayerDto> GetPlayerById(PlayerIdArgs playerId);
 
-    Task AddBitcoinsToPlayer(PlayerAddBtcArgs playerArgs);
+    Task AddBitcoinsToPlayer(PlayerBtcArgs playerBtcArgs);
+
+    Task TakeBitcoinsFromPlayer(PlayerBtcArgs playerBtcArgs);
 }

@@ -40,25 +40,24 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
 
     public async Task AddBitcoinsToPlayer(long playerId, int bitcoins)
     {
-        using (var session = await MongoDbContext.Client.StartSessionAsync())
-        {
-            session.StartTransaction();
-            try
-            {
-                var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
-                if (player == null)
-                    throw PlayerNotFoundException.UserIdNotFound(playerId);
-                player.BitcoinCount += bitcoins;
-                await UpdateOneAsync(player);
+        var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
+        if (player == null)
+            throw PlayerNotFoundException.UserIdNotFound(playerId);
+        player.BitcoinCount += bitcoins;
+        await UpdateOneAsync(player);
+    }
 
-                await session.CommitTransactionAsync();
-            }
-            catch
-            {
-                await session.AbortTransactionAsync();
-                throw TransactionErrorException.AddTransactionError(playerId, bitcoins);
-            }
-            
+    public async Task TakeBitcoinsFromPlayer(long playerId, int bitcoins)
+    {
+        var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
+        if (player == null)
+            throw PlayerNotFoundException.UserIdNotFound(playerId);
+        if (player.BitcoinCount >= bitcoins)
+        {
+            player.BitcoinCount -= bitcoins;
+            await UpdateOneAsync(player);
         }
+        else
+            throw BitcoinOperationException.NotEnoughBitcoins(playerId, bitcoins);
     }
 }
