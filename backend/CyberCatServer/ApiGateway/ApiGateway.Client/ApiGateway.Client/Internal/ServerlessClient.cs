@@ -10,5 +10,6 @@ namespace ApiGateway.Client.Internal
         public ITaskRepository Tasks => new TaskRepositoryServerless();
         public ISolutionService SolutionService => new SolutionServiceServerless();
         public IJudgeService JudgeService => new JudgeServiceServerless();
+        public IPlayerService PlayerService { get; }
     }
 }

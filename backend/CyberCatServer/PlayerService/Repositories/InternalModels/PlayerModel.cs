@@ -8,14 +8,14 @@ namespace PlayerService.Repositories.InternalModels;
 [CollectionName("Players")]
 public class PlayerModel : IPlayer, IDocument<Guid>
 {
-    public long UserId { get; set; } = 0;
+    public string UserId { get; set; } = "";
     public int CompletedTasksCount { get; set; } = 0;
     public int BitcoinCount { get; set; } = 0;
     
     public Guid Id { get; set; }
     public int Version { get; set; }
     
-    public PlayerModel(long userId)
+    public PlayerModel(string userId)
     {
         UserId = userId;
         CompletedTasksCount = 0;

@@ -7,5 +7,6 @@ namespace ApiGateway.Client
         ITaskRepository Tasks { get; }
         ISolutionService SolutionService { get; }
         IJudgeService JudgeService { get; }
+        IPlayerService PlayerService { get; }
     }
 }

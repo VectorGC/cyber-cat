@@ -5,9 +5,9 @@ namespace PlayerService.Repositories;
 
 public interface IPlayerRepository
 {
-    Task AddNewPlayer(long playerId);
-    Task DeletePlayer(long playerId);
-    Task<PlayerDto> GetPlayerById(long playerId);
-    Task AddBitcoinsToPlayer(long playerId, int bitcoins);
-    Task TakeBitcoinsFromPlayer(long playerId, int bitcoins);
+    Task AddNewPlayer(string playerId);
+    Task DeletePlayer(string playerId);
+    Task<PlayerDto> GetPlayerById(string playerId);
+    Task AddBitcoinsToPlayer(string playerId, int bitcoins);
+    Task TakeBitcoinsFromPlayer(string playerId, int bitcoins);
 }

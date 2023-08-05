@@ -11,6 +11,7 @@ namespace ApiGateway.Client.Internal
         public ISolutionService SolutionService => _client;
 
         public IJudgeService JudgeService => _client;
+        public IPlayerService PlayerService => _client;
 
         public AuthorizedClient(Client client, string token)
         {

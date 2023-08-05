@@ -23,7 +23,7 @@ public class BasicTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
 
-        var playerArgs = new PlayerIdArgs { PlayerId = 1234567 };
+        var playerArgs = new PlayerIdArgs { PlayerId = "1234567" };
         
         var ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(playerArgs));
 
@@ -34,7 +34,7 @@ public class BasicTests
         var newPlayer = await service.GetPlayerById(playerArgs);
         
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
 
         await service.DeletePlayer(playerArgs);
         
@@ -49,14 +49,14 @@ public class BasicTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
 
-        var playerArgs = new PlayerIdArgs { PlayerId = 1234567 };
+        var playerArgs = new PlayerIdArgs { PlayerId = "1234567" };
 
         await service.AddNewPlayer(playerArgs);
 
         var newPlayer = await service.GetPlayerById(playerArgs);
 
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
 
         await service.DeletePlayer(playerArgs);
     }

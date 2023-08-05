@@ -8,6 +8,6 @@ public class BitcoinOperationException : Exception
     {
     }
 
-    public static BitcoinOperationException NotEnoughBitcoins(long playerId, int bitcoins) =>
+    public static BitcoinOperationException NotEnoughBitcoins(string playerId, int bitcoins) =>
         new($"Error taking {bitcoins} bitcoins from player with Id {playerId}: Not Enough Bitcoins");
 }

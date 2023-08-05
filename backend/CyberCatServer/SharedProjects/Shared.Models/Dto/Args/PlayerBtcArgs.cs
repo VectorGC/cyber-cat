@@ -5,7 +5,7 @@ namespace Shared.Models.Dto.Args
     [ProtoContract]
     public class PlayerBtcArgs
     {
-        [ProtoMember(1)] public long PlayerId { get; set; }
+        [ProtoMember(1)] public string PlayerId { get; set; }
         [ProtoMember(2)] public int BitcoinsCount { get; set; }
     }
 }

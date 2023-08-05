@@ -37,6 +37,7 @@ public class AuthGrpcService : IAuthGrpcService
 
         var accessToken = _tokenService.CreateToken(user);
         await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(email, accessToken);
+        
 
         return new TokenDto {AccessToken = accessToken};
     }

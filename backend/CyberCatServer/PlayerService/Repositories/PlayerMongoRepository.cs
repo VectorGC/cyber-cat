@@ -15,7 +15,7 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
     {
     }
 
-    public async Task AddNewPlayer(long playerId)
+    public async Task AddNewPlayer(string playerId)
     {
         var playerModel = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
         if (playerModel != null)
@@ -25,12 +25,12 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
             await AddOneAsync(playerModel);
     }
 
-    public async Task DeletePlayer(long playerId)
+    public async Task DeletePlayer(string playerId)
     {
         await DeleteOneAsync<PlayerModel>(p => p.UserId == playerId);
     }
 
-    public async Task<PlayerDto> GetPlayerById(long playerId)
+    public async Task<PlayerDto> GetPlayerById(string playerId)
     {
         var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
         if (player == null)
@@ -38,7 +38,7 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
         return player.ToDto();
     }
 
-    public async Task AddBitcoinsToPlayer(long playerId, int bitcoins)
+    public async Task AddBitcoinsToPlayer(string playerId, int bitcoins)
     {
         var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
         if (player == null)
@@ -47,7 +47,7 @@ public class PlayerMongoRepository : BaseMongoRepository, IPlayerRepository
         await UpdateOneAsync(player);
     }
 
-    public async Task TakeBitcoinsFromPlayer(long playerId, int bitcoins)
+    public async Task TakeBitcoinsFromPlayer(string playerId, int bitcoins)
     {
         var player = await GetOneAsync<PlayerModel>(p => p.UserId == playerId);
         if (player == null)

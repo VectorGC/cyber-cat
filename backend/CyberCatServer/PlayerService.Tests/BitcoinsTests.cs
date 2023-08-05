@@ -23,14 +23,14 @@ public class BitcoinsTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
         
-        var createPlayerArgs = new PlayerIdArgs { PlayerId = 1234567 };
+        var createPlayerArgs = new PlayerIdArgs { PlayerId = "1234567" };
 
         await service.AddNewPlayer(createPlayerArgs);
         
         var newPlayer = await service.GetPlayerById(createPlayerArgs);
         
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
 
         var addBtcPlayerArgs = new PlayerBtcArgs { PlayerId = createPlayerArgs.PlayerId, BitcoinsCount = 1000 };
 
@@ -38,7 +38,7 @@ public class BitcoinsTests
         
         newPlayer = await service.GetPlayerById(createPlayerArgs);
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
         Assert.That(newPlayer.BitcoinCount, Is.EqualTo(1000));
 
         await service.DeletePlayer(createPlayerArgs);
@@ -50,14 +50,14 @@ public class BitcoinsTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
         
-        var createPlayerArgs = new PlayerIdArgs { PlayerId = 1234567 };
+        var createPlayerArgs = new PlayerIdArgs { PlayerId = "1234567" };
         
         await service.AddNewPlayer(createPlayerArgs);
         
         var newPlayer = await service.GetPlayerById(createPlayerArgs);
         
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
         
         var addBtcPlayerArgs = new PlayerBtcArgs { PlayerId = createPlayerArgs.PlayerId, BitcoinsCount = 1000 };
 
@@ -70,7 +70,7 @@ public class BitcoinsTests
         newPlayer = await service.GetPlayerById(createPlayerArgs);
         
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
         Assert.That(newPlayer.BitcoinCount, Is.EqualTo(800));
 
         await service.DeletePlayer(createPlayerArgs);
@@ -82,14 +82,14 @@ public class BitcoinsTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
         
-        var createPlayerArgs = new PlayerIdArgs { PlayerId = 1234567 };
+        var createPlayerArgs = new PlayerIdArgs { PlayerId = "1234567" };
         
         await service.AddNewPlayer(createPlayerArgs);
         
         var newPlayer = await service.GetPlayerById(createPlayerArgs);
         
         Assert.IsNotNull(newPlayer);
-        Assert.That(newPlayer.UserId, Is.EqualTo(1234567));
+        Assert.That(newPlayer.UserId, Is.EqualTo("1234567"));
         
         var addBtcPlayerArgs = new PlayerBtcArgs { PlayerId = createPlayerArgs.PlayerId, BitcoinsCount = 1000 };
 

@@ -1,4 +1,4 @@
-<component name="ProjectRunConfigurationManager">
+﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="AuthService: Development" type="DotNetProject" factoryName=".NET Project">
     <option name="EXE_PATH" value="$PROJECT_DIR$/AuthService/AuthService/bin/Debug/net7.0/AuthService.exe" />
     <option name="PROGRAM_PARAMETERS" value="" />

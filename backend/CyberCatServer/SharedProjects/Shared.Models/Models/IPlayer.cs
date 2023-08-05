@@ -2,7 +2,7 @@
 {
     public interface IPlayer
     {
-        long UserId { get; }
+        string UserId { get; }
         int CompletedTasksCount { get; }
         int BitcoinCount { get; }
     }
