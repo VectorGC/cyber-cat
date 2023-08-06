@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
     <PackageReference Include="MongoDbGenericRepository" Version="1.4.8" />
-    <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12" />
     <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
     <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
   </ItemGroup>
