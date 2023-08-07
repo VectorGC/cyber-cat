@@ -8,7 +8,7 @@ COPY ["SharedProjects", "SharedProjects/"]
 
 FROM copy AS publish
 WORKDIR "/src/SolutionService/SolutionService"
-RUN dotnet publish "SolutionService.csproj" -c Release -o /app/publish -v d -r linux-x64
+RUN dotnet publish "SolutionService.csproj" -c Release -o /app/publish /p:UseAppHost=false -v d
 
 FROM base AS final
 WORKDIR /app
