@@ -9,7 +9,7 @@ COPY ["SharedProjects", "SharedProjects/"]
 
 FROM copy AS publish
 WORKDIR "/src/ApiGateway/ApiGateway"
-RUN dotnet publish "ApiGateway.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ApiGateway.csproj" -c Release -o /app/publish /p:UseAppHost=false -v d
 
 FROM base AS final
 WORKDIR /app

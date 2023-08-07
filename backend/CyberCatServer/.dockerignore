@@ -1,4 +1,7 @@
-﻿**/.dockerignore
+﻿%USERPROFILE%
+**/.run
+**/.config
+**/.dockerignore
 **/.env
 **/.git
 **/.gitignore
