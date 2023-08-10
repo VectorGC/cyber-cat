@@ -14,7 +14,6 @@ public static class SwaggerGetOptionsAuthExtensions
             throw new ArgumentNullException(nameof(httpHostUrl));
         }
 
-        // Делаем в сваггере удобный виджет, чтобы авторизоваться по логину и паролю, а не по JWT токену.
         // https://stackoverflow.com/questions/38784537/use-jwt-authorization-bearer-in-swagger-in-asp-net-core/47709074#47709074
         // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1257
         options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme

@@ -1,8 +1,0 @@
-﻿version: '3.4'
-
-services:
-  mongo-db-local:
-    image: mongo:5.0.15
-    container_name: mongo-db-local
-    ports:
-      - "27017:27017"

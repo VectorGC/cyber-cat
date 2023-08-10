@@ -1,5 +1,6 @@
 using System;
 using AuthService;
+using AuthService.Configurations;
 using AuthService.GrpcServices;
 using AuthService.JwtValidation;
 using AuthService.Repositories;
