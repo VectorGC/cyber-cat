@@ -4,10 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    <NoWarn>NU1605</NoWarn>
-    <WarningsAsErrors></WarningsAsErrors>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>

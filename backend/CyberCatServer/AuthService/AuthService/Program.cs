@@ -1,13 +1,9 @@
-using System;
 using AuthService;
 using AuthService.GrpcServices;
 using AuthService.JwtValidation;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,15 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-        <NoWarn>NU1605</NoWarn>
-        <WarningsAsErrors></WarningsAsErrors>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <TargetFramework>net461</TargetFramework>
+        <Platforms>AnyCPU;Unity WebGL</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
+        <PackageReference Include="protobuf-net" Version="1.0.0.280"/>
     </ItemGroup>
 
 </Project>

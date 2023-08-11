@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using AuthService.Repositories.InternalModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
