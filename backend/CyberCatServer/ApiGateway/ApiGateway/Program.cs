@@ -1,9 +1,7 @@
 using ApiGateway;
 using ApiGateway.Extensions;
 using AuthService.JwtValidation;
-using LettuceEncrypt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Server.Kestrel.Https;
 using ProtoBuf.Grpc.ClientFactory;
 using Shared.Server.Services;
 
@@ -24,9 +22,10 @@ builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.A
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
-builder.Services.AddLettuceEncrypt().PersistDataToDirectory(Directory.CreateDirectory("/etc/letsencrypt"), "secret");
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -72,21 +71,20 @@ if (app.Environment.IsDevelopment())
 // Логирование Http запросов.
 app.UseHttpLogging();
 
-// Всегда редиректим на https
-app.UseHttpsRedirection();
-//app.UseHsts();
+//app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Чтобы Unity клиент мог обращатся сюда из браузера (по хорошему нужно точечно настроить домены из которых можно принимать запросы)
 app.UseCors("CorsPolicy");
 app.UseCors("signalr");
 
+// Используем методы контроллеров как ендпоинты.
 app.MapControllers();
 
 app.Run();
 
+// Чтобы подцепить сюда тесты.
 namespace ApiGateway
 {
     internal class Program
