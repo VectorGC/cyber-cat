@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
+        <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+        <NoWarn>NU1605</NoWarn>
+        <WarningsAsErrors></WarningsAsErrors>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
     </ItemGroup>
