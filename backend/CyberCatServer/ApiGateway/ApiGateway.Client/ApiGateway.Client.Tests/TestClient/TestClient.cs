@@ -6,9 +6,9 @@ namespace ApiGateway.Client.Tests.TestClient
     {
         public const string ServerUri
             //= "http://localhost:5000";
-        = "https://localhost";
+        //= "http://localhost";
         // = "http://server.cyber-cat.pro";
-         //= "https://server.cyber-cat.pro";
+         = "https://server.cyber-cat.pro";
 
         public const string TestEmail = "cat";
         public const string TestUserPassword = "cat";

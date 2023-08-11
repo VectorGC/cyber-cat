@@ -3,14 +3,27 @@
     image: api-gateway
     container_name: api-gateway
     build:
+      context: .
       dockerfile: ApiGateway/ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_URLS=https://+;http://+
+      #- Kestrel__EndPoints__Http__Url=$API_GATEWAY_URL
+      - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
+      - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
+      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
+      #- ASPNETCORE_Kestrel__Certificates__Default__Password=secret
+      #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
       - "443:443"
+      - "80:80"
+    volumes:
+      - etc-letsencrypt:/etc/letsencrypt/:rw
+      #- ~/.aspnet/https:/https:ro
     depends_on:
       - auth-service
       - task-service
       - solution-service
-      - judge-service
   
   auth-service:
     image: auth-service
@@ -86,7 +99,7 @@
   mongo:
     image: mongo:5.0.15
     container_name: $MONGO_DB_CONTAINER_NAME
-  
+    
   mongo-express: # Веб интерфейс СУБД для управления монгой.
     image: mongo-express:0.54.0
     container_name: mongo-express
@@ -99,5 +112,4 @@
       - mongo
 
 volumes:
-  cybercatserver_etc-letsencrypt:
-    external: true
+  etc-letsencrypt:

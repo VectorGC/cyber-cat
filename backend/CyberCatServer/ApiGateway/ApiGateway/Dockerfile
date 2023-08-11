@@ -1,18 +1,15 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS copy
+FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0-bullseye-slim-amd64 AS copy
 WORKDIR /src
-COPY ApiGateway/ApiGateway ApiGateway/ApiGateway/
-COPY SharedProjects SharedProjects/
+COPY ["ApiGateway", "ApiGateway/"]
+COPY ["AuthService/AuthService.JwtValidation", "AuthService/AuthService.JwtValidation/"]
+COPY ["SharedProjects", "SharedProjects/"]
 
 FROM copy AS publish
-
-WORKDIR /src/ApiGateway/ApiGateway
-RUN dotnet publish -c Release -o /app/publish -p:UseAppHost=false --verbosity detailed
+WORKDIR "/src/ApiGateway/ApiGateway"
+RUN dotnet publish "ApiGateway.csproj" -c Release -o /app/publish /p:UseAppHost=false -v d
 
 FROM base AS final
 WORKDIR /app
