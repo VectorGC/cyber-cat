@@ -1,7 +1,9 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using ApiGateway;
 using ApiGateway.Extensions;
 using AuthService.JwtValidation;
+using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.ClientFactory;
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // We utilize a strongly-typed class to read and conveniently work with the appsettings.json.
 builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
+var appArgs = Parser.Default.ParseArguments<Args>(args).Value;
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -36,6 +39,26 @@ builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.A
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
+
+builder.WebHost.UseKestrel(options =>
+{
+    options.ListenAnyIP(appArgs.UseHttps ? 443 : 80, listenOptions =>
+    {
+        if (appArgs.UseHttps)
+        {
+            var certPem = File.ReadAllText(appArgs.CertificatePemPath);
+            var keyPem = File.ReadAllText(appArgs.CertificateKeyPath);
+            var x509Cert = X509Certificate2.CreateFromPem(certPem, keyPem);
+            listenOptions.UseHttps(x509Cert);
+
+            /*
+            X509Store store = new X509Store("test");
+            store.Open(OpenFlags.ReadWrite);
+            store.Add(x509Cert);
+            */
+        }
+    });
+});
 
 builder.Services.AddCors(options =>
 {
@@ -81,9 +104,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpLogging();
 
-// Always redirecting to HTTPS.
-//app.UseHttpsRedirection();
-//app.UseHsts();
+if (appArgs.UseHttps)
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -96,10 +120,3 @@ app.UseCors("signalr");
 app.MapControllers();
 
 app.Run();
-
-namespace ApiGateway
-{
-    internal class Program
-    {
-    }
-}

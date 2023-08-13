@@ -4,8 +4,6 @@
     container_name: api-gateway
     build:
       dockerfile: ApiGateway/ApiGateway/Dockerfile
-    ports:
-      - "443:443"
     depends_on:
       - auth-service
       - task-service
@@ -97,7 +95,3 @@
       ME_CONFIG_BASICAUTH_PASSWORD: 123
     depends_on:
       - mongo
-
-volumes:
-  cybercatserver_etc-letsencrypt:
-    external: true

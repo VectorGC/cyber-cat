@@ -1,14 +1,21 @@
 ﻿services:
   # Before launching, make sure you have Let's Encrypt certificates, or run docker-compose.Certbot.yml to obtain them.
   api-gateway:
+    extends:
+      file: docker-compose.yml
+      service: api-gateway
+    entrypoint: dotnet ApiGateway.dll https --ssl /etc/letsencrypt/live/server.cyber-cat.pro/fullchain.pem --key /etc/letsencrypt/live/server.cyber-cat.pro/privkey.pem
+      #environment:
+      # - Https__CertificatePemPath=/etc/letsencrypt/live/server.cyber-cat.pro/fullchain.pem
+    # - Https__CertificateKeyPath=/etc/letsencrypt/live/server.cyber-cat.pro/privkey.pem
+    ports:
+      - "443:443"
     volumes:
       - etc-letsencrypt:/etc/letsencrypt/:rw
   
   # When deploying to the target machine, it's necessary to verify and obtain certificates.
   # Test running Certbot using a command in the terminal to check server configuration:
   # docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot-test-dry-run
-  # Receiving the ssl certificate:
-  # docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot
   certbot-test-dry-run:
     profiles: [ "certbot-test-dry-run" ]
     command: certonly --standalone -d server.cyber-cat.pro --dry-run
@@ -19,9 +26,11 @@
       - etc-letsencrypt:/etc/letsencrypt/:rw
     network_mode: "host"
   
+  # Receiving the ssl certificate for production:
+  # docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot
   certbot:
     profiles: [ "certbot" ]
-    command: certonly --standalone -d server.cyber-cat.pro --dry-run
+    command: certonly --standalone -d server.cyber-cat.pro
     image: certbot/certbot:latest
     ports:
       - "80:80"

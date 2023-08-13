@@ -4,6 +4,9 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+# https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-7.0&tabs=visual-studio%2Clinux-ubuntu#:~:text=https%20%2D%2Dhelp-,Warning,-Do%20not%20create
+ENV DOTNET_GENERATE_ASPNET_CERTIFICATE=false
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS copy
 WORKDIR /src
 COPY ApiGateway/ApiGateway ApiGateway/ApiGateway/

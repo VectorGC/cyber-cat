@@ -1,12 +1,9 @@
 Start local Mongo Database:
+1. `start_local_mongo_in_docker.sh`
 
-`docker compose -f docker-compose.yml -f docker-compose.Dev.MongoDb.yml`
+Start the server on a local or remote machine in Docker with the ability to connect to it via an Unity Editor:
+1. `start_server_in_docker_for_dev.sh`
 
-Start server in docker on local machine:
-
-`docker compose -f docker-compose.yml -f docker-compose.Dev.yml`
-
-Start server in production environment (don't forget to obtain SSL certificates.):
-
-`docker compose -f docker-compose.yml -f docker-compose.Production.yml`
+Launch the server on a remote machine for production. Requests are only accepted from domains specified in **AllowedHosts** in appsettings.Production.json. Don't forget to obtain SSL certificates:
+1. `docker compose -f docker-compose.yml -f docker-compose.Production.yml up`
 

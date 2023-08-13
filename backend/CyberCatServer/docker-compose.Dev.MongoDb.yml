@@ -1,7 +1,0 @@
-﻿services:
-  mongo:
-    extends:
-      file: docker-compose.yml
-      service: mongo
-    ports:
-      - "27017:27017"

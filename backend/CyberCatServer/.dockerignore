@@ -1,8 +1,8 @@
-﻿%USERPROFILE%
-**/.run
+﻿**/.run
 **/.config
 **/.dockerignore
 **/.env
+**/.aspnet
 **/.git
 **/.gitignore
 **/.project
