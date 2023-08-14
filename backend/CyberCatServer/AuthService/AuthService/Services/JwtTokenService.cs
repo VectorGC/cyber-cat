@@ -6,7 +6,6 @@ using System.Security.Claims;
 using System.Text;
 using AuthService.JwtValidation;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models;
 using Shared.Models.Models;
 
 namespace AuthService.Services;

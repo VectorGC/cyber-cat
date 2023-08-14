@@ -4,11 +4,18 @@
     container_name: api-gateway
     build:
       dockerfile: ApiGateway/ApiGateway/Dockerfile
+    environment:
+      - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
+      - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
+      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
+    ports:
+      - "80:80"
     depends_on:
       - auth-service
-      - task-service
-      - solution-service
-      - judge-service
+      #- task-service
+      #- solution-service
+      #- judge-service
   
   auth-service:
     image: auth-service
@@ -17,11 +24,8 @@
       context: .
       dockerfile: AuthService/AuthService/Dockerfile
     environment:
-      - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_ENDPOINT
-      - Kestrel__EndPoints__Grpc__Protocols=Http2
       - MongoRepository__ConnectionString=$MONGO_DB_URL
-      - MongoRepository__DatabaseName=$DATABASE_NAME
     depends_on:
       - mongo
   

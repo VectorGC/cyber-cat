@@ -1,13 +1,4 @@
 ﻿services:
-  api-gateway:
-    extends:
-      file: docker-compose.yml
-      service: api-gateway
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80:80"
-        
   mongo:
     extends:
       file: docker-compose.yml

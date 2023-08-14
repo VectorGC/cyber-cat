@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.Client;
-using Shared.Models;
 using Shared.Models.Dto.Args;
 using Shared.Models.Models;
 using Shared.Server.Services;
@@ -17,7 +16,6 @@ using Shared.Tests;
 
 namespace AuthService.Tests;
 
-// Проверяем аутентификацию и авторизацию.
 [TestFixture]
 public class AuthenticationAndPlayerAuthorization
 {
