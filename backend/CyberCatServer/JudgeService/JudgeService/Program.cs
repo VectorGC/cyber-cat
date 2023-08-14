@@ -1,4 +1,4 @@
-using JudgeService;
+using JudgeService.Configurations;
 using JudgeService.GrpcServices;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Server;

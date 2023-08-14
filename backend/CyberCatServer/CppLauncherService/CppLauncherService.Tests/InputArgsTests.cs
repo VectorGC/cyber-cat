@@ -6,7 +6,6 @@ using Shared.Tests;
 
 namespace CppLauncherService.Tests;
 
-// Проверяем корректно ли работает сервис с выходным потоком.
 [TestFixture]
 public class InputArgsTests
 {
@@ -53,7 +52,7 @@ public class InputArgsTests
         var output = await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
-        // Это нормально, происходит округление.
+        // This is normal, rounding occurs.
         Assert.AreEqual("1.111112", output.StandardOutput);
     }
 

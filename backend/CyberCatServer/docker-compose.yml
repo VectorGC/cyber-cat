@@ -15,7 +15,7 @@
       - auth-service
       - task-service
       - solution-service
-      #- judge-service
+      - judge-service
   
   auth-service:
     image: auth-service
@@ -54,12 +54,9 @@
     image: judge-service
     container_name: $JUDGE_SERVICE_NAME
     build:
-      context: .
       dockerfile: JudgeService/JudgeService/Dockerfile
     environment:
-      - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Grpc__Url=$JUDGE_SERVICE_GRPC_URL
-      - Kestrel__EndPoints__Grpc__Protocols=Http2
       - ConnectionStrings__CppLauncherServiceGrpcEndpoint=$CPP_LAUNCHER_SERVICE_GRPC_URL
       - ConnectionStrings__TestServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
     depends_on:
@@ -69,10 +66,8 @@
     image: cpp-launcher-service
     container_name: $CPP_LAUNCHER_SERVICE_NAME
     build:
-      context: .
       dockerfile: CppLauncherService/CppLauncherService/Dockerfile
     environment:
-      - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Grpc__Url=$CPP_LAUNCHER_SERVICE_GRPC_URL
       - Kestrel__EndPoints__Grpc__Protocols=Http2
   
@@ -80,7 +75,7 @@
     image: mongo:5.0.15
     container_name: $MONGO_DB_CONTAINER_NAME
   
-  mongo-express: # Веб интерфейс СУБД для управления монгой.
+  mongo-express: # Web interface for managing MongoDB
     image: mongo-express:0.54.0
     container_name: mongo-express
     ports:

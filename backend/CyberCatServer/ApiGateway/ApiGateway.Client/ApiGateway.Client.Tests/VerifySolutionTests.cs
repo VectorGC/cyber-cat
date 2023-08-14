@@ -78,7 +78,7 @@ namespace ApiGateway.Client.Tests
         public async Task FailureWithInput_WhenPassNotAllTests()
         {
             const string taskId = "sum_ab";
-            // Просто выводим результат первого теста. Чтобы первый тест прошел, а остальные завалились.
+            // We simply output the result of the first test. So that the first test passes, while the rest fail.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
             var client = await TestClient.TestClient.Authorized();
 
@@ -93,7 +93,7 @@ namespace ApiGateway.Client.Tests
         public async Task Failure_WhenWaitInputInfinity()
         {
             const string taskId = "sum_ab";
-            // Сделали лишний ввод, бесконечно ждем, когда введется 'c'.
+            // We made an extra input and are waiting indefinitely for 'c' to be entered.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
             var client = await TestClient.TestClient.Authorized();

@@ -11,7 +11,7 @@ COPY SharedProjects SharedProjects/
 
 FROM copy AS publish
 WORKDIR /src/AuthService/AuthService
-RUN dotnet publish "AuthService.csproj" -c Release -o /app/publish -p:UseAppHost=false --verbosity detailed
+RUN dotnet publish -c Release -o /app/publish -p:UseAppHost=false --verbosity detailed
 
 FROM base AS final
 WORKDIR /app

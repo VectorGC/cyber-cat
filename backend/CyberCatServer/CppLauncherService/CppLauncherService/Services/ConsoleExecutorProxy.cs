@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using CppLauncherService.Configurations;
 using CppLauncherService.InternalModels;
 using Microsoft.Extensions.Options;
 
@@ -28,7 +29,7 @@ namespace CppLauncherService.Services
 
             var process = Process.Start(startInfo);
             await process.StandardInput.WriteAsync(command.Input);
-            // После ввода нужно передать символ \n (как будто нажали Enter), чтобы программа засчитала ввод.
+            // After entering, you need to send the "\n" character (as if you pressed Enter) for the program to register the input.
             await process.StandardInput.WriteAsync(Environment.NewLine);
 
             var output = await WaitForExit(process, _timeOut);
@@ -72,7 +73,7 @@ namespace CppLauncherService.Services
                 process.Kill(true);
             }
 
-            // Синхронно ждем завершения процесса.
+            // We synchronously wait for the process to complete.
             process.WaitForExit((int) timeOut.TotalMilliseconds);
 
             if (!process.HasExited)

@@ -1,4 +1,4 @@
-using CppLauncherService;
+using CppLauncherService.Configurations;
 using CppLauncherService.GrpcServices;
 using CppLauncherService.Services;
 using ProtoBuf.Grpc.Server;

@@ -11,7 +11,7 @@ COPY SharedProjects SharedProjects/
 
 FROM copy AS publish
 WORKDIR /src/SolutionService/SolutionService
-RUN dotnet publish "SolutionService.csproj" -c Release -o /app/publish -p:UseAppHost=false --verbosity detailed
+RUN dotnet publish -c Release -o /app/publish -p:UseAppHost=false --verbosity detailed
 
 FROM base AS final
 WORKDIR /app
