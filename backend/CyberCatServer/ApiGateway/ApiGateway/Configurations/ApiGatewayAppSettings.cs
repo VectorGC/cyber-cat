@@ -1,5 +1,3 @@
-using Shared.Server.Configurations;
-
 namespace ApiGateway;
 
 public class ApiGatewayAppSettings

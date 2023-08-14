@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // We utilize a strongly-typed class to read and conveniently work with the appsettings.json.
 builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
 var appArgs = Parser.Default.ParseArguments<Args>(args).Value;
+var host = appArgs.UseHttps ? new Uri("https://0.0.0.0:443") : new Uri("http://0.0.0.0:80");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -31,8 +32,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddControllers();
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
-// "Kestrel:Endpoints:Http:Urls" - fetching the URL for the API gateway.
-builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Https:Url"]); });
+builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(host.ToString()); });
 
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
@@ -42,7 +42,7 @@ builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.
 
 builder.WebHost.UseKestrel(options =>
 {
-    options.ListenAnyIP(appArgs.UseHttps ? 443 : 80, listenOptions =>
+    options.ListenAnyIP(host.Port, listenOptions =>
     {
         if (appArgs.UseHttps)
         {
@@ -50,12 +50,6 @@ builder.WebHost.UseKestrel(options =>
             var keyPem = File.ReadAllText(appArgs.CertificateKeyPath);
             var x509Cert = X509Certificate2.CreateFromPem(certPem, keyPem);
             listenOptions.UseHttps(x509Cert);
-
-            /*
-            X509Store store = new X509Store("test");
-            store.Open(OpenFlags.ReadWrite);
-            store.Add(x509Cert);
-            */
         }
     });
 });

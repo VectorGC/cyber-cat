@@ -7,11 +7,11 @@ namespace ApiGateway.Extensions;
 
 public static class SwaggerGetOptionsAuthExtensions
 {
-    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options, string httpHostUrl)
+    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options, string host)
     {
-        if (string.IsNullOrEmpty(httpHostUrl))
+        if (string.IsNullOrEmpty(host))
         {
-            throw new ArgumentNullException(nameof(httpHostUrl));
+            throw new ArgumentNullException(nameof(host));
         }
 
         // https://stackoverflow.com/questions/38784537/use-jwt-authorization-bearer-in-swagger-in-asp-net-core/47709074#47709074
@@ -26,7 +26,7 @@ public static class SwaggerGetOptionsAuthExtensions
             {
                 Password = new OpenApiOAuthFlow
                 {
-                    TokenUrl = new Uri($"{httpHostUrl}/auth/login")
+                    TokenUrl = new Uri($"{host}/auth/login")
                 }
             }
         });
