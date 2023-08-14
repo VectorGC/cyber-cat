@@ -14,7 +14,7 @@
     depends_on:
       - auth-service
       - task-service
-      #- solution-service
+      - solution-service
       #- judge-service
   
   auth-service:
@@ -43,14 +43,10 @@
     image: solution-service
     container_name: $SOLUTION_SERVICE_NAME
     build:
-      context: .
       dockerfile: SolutionService/SolutionService/Dockerfile
     environment:
-      - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Grpc__Url=$SOLUTION_SERVICE_GRPC_URL
-      - Kestrel__EndPoints__Grpc__Protocols=Http2
       - MongoRepository__ConnectionString=$MONGO_DB_URL
-      - MongoRepository__DatabaseName=$DATABASE_NAME
     depends_on:
       - mongo
   
