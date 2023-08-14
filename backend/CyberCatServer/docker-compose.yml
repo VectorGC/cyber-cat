@@ -13,7 +13,7 @@
       - "80:80"
     depends_on:
       - auth-service
-      #- task-service
+      - task-service
       #- solution-service
       #- judge-service
   
@@ -21,7 +21,6 @@
     image: auth-service
     container_name: $AUTH_SERVICE_NAME
     build:
-      context: .
       dockerfile: AuthService/AuthService/Dockerfile
     environment:
       - Kestrel__EndPoints__Grpc__Url=$AUTH_SERVICE_GRPC_ENDPOINT
@@ -33,14 +32,10 @@
     image: task-service
     container_name: $TASK_SERVICE_NAME
     build:
-      context: .
       dockerfile: TaskService/TaskService/Dockerfile
     environment:
-      - ASPNETCORE_URLS=
       - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_ENDPOINT
-      - Kestrel__EndPoints__Grpc__Protocols=Http2
       - MongoRepository__ConnectionString=$MONGO_DB_URL
-      - MongoRepository__DatabaseName=$DATABASE_NAME
     depends_on:
       - mongo
   

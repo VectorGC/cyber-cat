@@ -1,6 +1,6 @@
 using Shared.Server.Configurations;
 
-namespace TaskService;
+namespace TaskService.Configurations;
 
 public class TaskServiceAppSettings
 {

@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
-using Shared.Models;
 using Shared.Models.Models;
 using Shared.Server.Exceptions;
 using SolutionService.Repositories.InternalModels;

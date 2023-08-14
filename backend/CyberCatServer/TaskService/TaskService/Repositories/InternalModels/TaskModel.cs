@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
-using Shared.Models;
 using Shared.Models.Dto;
 using Shared.Models.Models;
 
