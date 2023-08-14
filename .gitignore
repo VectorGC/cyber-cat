@@ -3,7 +3,6 @@
 .vs/
 .vscode/
 .vsconfig
-launchSettings.json
 *.user
 
 # This .gitignore file should be placed at the root of your Unity project directory

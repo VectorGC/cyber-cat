@@ -25,7 +25,7 @@ namespace ServerAPI
                     return (Types) PlayerPrefs.GetInt("server_environment");
                 }
 
-                return Debug.isDebugBuild ? Types.LocalServer : Types.Production;
+                return Debug.isDebugBuild ? Types.DockerLocalServer : Types.Production;
             }
             set
             {
@@ -44,10 +44,10 @@ namespace ServerAPI
                         return string.Empty;
                     case Types.LocalServer:
                         // Send to Api Gateway local instance directly.
-                        return "http://localhost:5000";
+                        return "https://localhost:5000";
                     case Types.DockerLocalServer:
                         // Send to Nginx in local docker engine.
-                        return "http://localhost";
+                        return "https://localhost";
                     case Types.Production:
                         return "https://server.cyber-cat.pro";
                     case Types.Production_Http:

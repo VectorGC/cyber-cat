@@ -1,5 +1,5 @@
 using ProtoBuf.Grpc.Server;
-using SolutionService;
+using SolutionService.Configurations;
 using SolutionService.GrpcServices;
 using SolutionService.Repositories;
 

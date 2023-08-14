@@ -1,8 +1,8 @@
 using Shared.Server.Configurations;
 
-namespace TaskService;
+namespace AuthService.Configurations;
 
-public class TaskServiceAppSettings
+public class AuthServiceAppSettings
 {
     public MongoRepositorySettings MongoRepository { get; set; }
 }

@@ -1,4 +1,3 @@
-using Shared.Models;
 using Shared.Models.Models;
 
 namespace SolutionService.Repositories;

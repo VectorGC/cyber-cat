@@ -1,14 +1,16 @@
-using AuthService;
+using System;
+using AuthService.Configurations;
 using AuthService.GrpcServices;
-using AuthService.JwtValidation;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Authentication.
 var appSettings = builder.Configuration.Get<AuthServiceAppSettings>();
 builder.Services.AddIdentity<User, Role>(AuthIdentity.SetServiceOptions).AddMongoDbStores<User, Role, Guid>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
 

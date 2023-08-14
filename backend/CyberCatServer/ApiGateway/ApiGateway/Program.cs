@@ -1,21 +1,38 @@
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using ApiGateway;
 using ApiGateway.Extensions;
 using AuthService.JwtValidation;
+using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.ClientFactory;
 using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Используем строготипизированный класс, чтобы считать appsettings.json и удобно с ним работать.
+// We utilize a strongly-typed class to read and conveniently work with the appsettings.json.
 builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
+var appArgs = Parser.Default.ParseArguments<Args>(args).Value;
+var host = appArgs.UseHttps ? new Uri("https://0.0.0.0:443") : new Uri("http://0.0.0.0:80");
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.CreateTokenParameters(); });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = JwtTokenValidation.Issuer,
+        ValidAudience = JwtTokenValidation.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenValidation.IssuerSigningKey).ToArray())
+    };
+});
 
 builder.Services.AddControllers();
 
-// "Kestrel:Endpoints:Http:Url" - взятие url для api gateway.
-builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(builder.Configuration["Kestrel:Endpoints:Http:Url"]); });
+// We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
+builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(host.ToString()); });
 
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
@@ -23,13 +40,24 @@ builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.A
 builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
+builder.WebHost.UseKestrel(options =>
+{
+    options.ListenAnyIP(host.Port, listenOptions =>
+    {
+        if (appArgs.UseHttps)
+        {
+            var certPem = File.ReadAllText(appArgs.CertificatePemPath);
+            var keyPem = File.ReadAllText(appArgs.CertificateKeyPath);
+            var x509Cert = X509Certificate2.CreateFromPem(certPem, keyPem);
+            listenOptions.UseHttps(x509Cert);
+        }
+    });
+});
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-        policy =>
+    options.AddPolicy(name: "_myAllowSpecificOrigins",
+        _ =>
         {
             options.AddPolicy("CorsPolicy",
                 builder => builder
@@ -50,10 +78,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Если мы в режиме разработки (ASPNETCORE_ENVIRONMENT = Development).
+// If we are in development mode (ASPNETCORE_ENVIRONMENT = Development).
 if (app.Environment.IsDevelopment())
 {
-    // Показываем API спецификацию через swagger.
+    // We showcase the API specification using Swagger.
     app.UseSwagger();
     app.UseSwaggerUI();
 
@@ -64,30 +92,25 @@ if (app.Environment.IsDevelopment())
         }
     );
 
-    // Подробные ошибки в режиме разработки.
+    // Detailed errors in development mode.
     app.UseDeveloperExceptionPage();
 }
 
-// Логирование Http запросов.
 app.UseHttpLogging();
 
-//app.UseRouting();
+if (appArgs.UseHttps)
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+// So that the Unity client can access this from a browser (ideally, specific domains need to be configured from which requests can be accepted).
+// https://gitlab.com/karim.kimsanbaev/cyber-cat/-/issues/80
 app.UseCors("CorsPolicy");
 app.UseCors("signalr");
 
-// Используем методы контроллеров как ендпоинты.
 app.MapControllers();
 
 app.Run();
-
-// Чтобы подцепить сюда тесты.
-namespace ApiGateway
-{
-    internal class Program
-    {
-    }
-}

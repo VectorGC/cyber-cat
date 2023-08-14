@@ -2,14 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.19" />
         <PackageReference Include="MongoDbGenericRepository" Version="1.4.8" />
-        <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12" />
         <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
     </ItemGroup>
 
@@ -19,7 +18,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
-      <ProjectReference Include="..\AuthService.JwtValidation\AuthService.JwtValidation.csproj" />
     </ItemGroup>
 
     <ItemGroup>

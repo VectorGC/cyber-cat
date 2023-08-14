@@ -1,6 +1,6 @@
 using Shared.Server.Configurations;
 
-namespace SolutionService;
+namespace SolutionService.Configurations;
 
 public class SolutionServiceAppSettings
 {

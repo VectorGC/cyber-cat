@@ -1,5 +1,6 @@
 using ProtoBuf.Grpc.Server;
 using TaskService;
+using TaskService.Configurations;
 using TaskService.GrpcServices;
 using TaskService.Repositories;
 using TaskService.Services;

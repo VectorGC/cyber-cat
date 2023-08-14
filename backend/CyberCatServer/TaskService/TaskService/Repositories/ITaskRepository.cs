@@ -1,6 +1,4 @@
-﻿using Shared.Models;
-using Shared.Models.Dto;
-using Shared.Models.Models;
+﻿using Shared.Models.Dto;
 
 namespace TaskService.Repositories
 {

@@ -1,8 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using AuthService.JwtValidation;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models;
 using Shared.Models.Models;
 
 namespace AuthService.Services;
@@ -55,6 +58,7 @@ public class JwtTokenService : ITokenService
 
     private SigningCredentials CreateSigningCredentials()
     {
-        return new SigningCredentials(JwtTokenValidation.IssuerSigningKey, SecurityAlgorithms.HmacSha256);
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenValidation.IssuerSigningKey).ToArray());
+        return new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
     }
 }

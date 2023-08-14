@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
-using Shared.Models;
 using Shared.Models.Models;
+using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
 
 namespace TaskService.Repositories;

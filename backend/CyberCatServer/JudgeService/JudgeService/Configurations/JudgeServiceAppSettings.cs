@@ -1,4 +1,4 @@
-namespace JudgeService;
+namespace JudgeService.Configurations;
 
 public class JudgeServiceAppSettings
 {

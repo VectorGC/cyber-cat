@@ -1,13 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using AuthService.JwtValidation;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.Client;
-using Shared.Models;
 using Shared.Models.Dto.Args;
 using Shared.Models.Models;
 using Shared.Server.Services;
@@ -15,7 +16,6 @@ using Shared.Tests;
 
 namespace AuthService.Tests;
 
-// Проверяем аутентификацию и авторизацию.
 [TestFixture]
 public class AuthenticationAndPlayerAuthorization
 {
@@ -54,7 +54,15 @@ public class AuthenticationAndPlayerAuthorization
 
         Assert.IsNotEmpty(token.AccessToken);
 
-        var parameters = JwtTokenValidation.CreateTokenParameters();
+        var parameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = JwtTokenValidation.Issuer,
+            ValidAudience = JwtTokenValidation.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenValidation.IssuerSigningKey).ToArray())
+        };
         var tokenHandler = new JwtSecurityTokenHandler();
 
         var claims = tokenHandler.ValidateToken(token.AccessToken, parameters, out _);

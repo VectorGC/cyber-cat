@@ -1,4 +1,4 @@
-using Shared.Models;
+using System.Threading.Tasks;
 using Shared.Models.Models;
 
 namespace AuthService.Repositories;
