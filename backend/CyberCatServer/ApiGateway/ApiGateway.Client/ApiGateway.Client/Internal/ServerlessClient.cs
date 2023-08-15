@@ -1,6 +1,5 @@
 using ApiGateway.Client.Internal.ServerlessServices;
 using ApiGateway.Client.Services;
-using ApiGateway.Client.Services.Authorization;
 
 namespace ApiGateway.Client.Internal
 {

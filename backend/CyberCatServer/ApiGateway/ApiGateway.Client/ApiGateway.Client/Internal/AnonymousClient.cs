@@ -1,16 +1,34 @@
-using ApiGateway.Client.Services.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ApiGateway.Client.Internal.WebClientAdapters;
+using ApiGateway.Client.Services;
 
 namespace ApiGateway.Client.Internal
 {
-    internal class AnonymousClient : IAnonymousClient
+    internal class AnonymousClient : IAnonymousClient, IAuthorizationService
     {
-        public IAuthorizationService Authorization => _client;
+        public IAuthorizationService Authorization => this;
 
-        private readonly Client _client;
+        private readonly IWebClient _webClient;
+        private readonly Uri _uri;
 
-        public AnonymousClient(Client client)
+        public AnonymousClient(Uri uri, IWebClient webClient)
         {
-            _client = client;
+            _uri = uri;
+            _webClient = webClient;
+        }
+
+        async Task<string> IAuthorizationService.GetAuthenticationToken(string email, string password)
+        {
+            var form = new Dictionary<string, string>
+            {
+                ["email"] = email,
+                ["password"] = password
+            };
+
+            var accessToken = await _webClient.PostAsync(_uri + "auth/login", form);
+            return accessToken;
         }
     }
 }

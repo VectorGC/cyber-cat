@@ -1,6 +1,7 @@
 using ApiGateway.Client;
+using ApiGateway.Client.Factory;
+using Features.GameManager;
 using Models;
-using ServerAPI;
 using Shared.Models.Models;
 using TNRD;
 using UI;
@@ -22,7 +23,7 @@ public class CodeEditorController : UIBehaviour
 
     protected override async void Start()
     {
-        _client = await ServerEnvironment.CreateAuthorizedClient();
+        _client = await ServerClientFactory.UseCredentials("cat", "cat").Create(GameConfig.ServerEnvironment);
         if (!string.IsNullOrEmpty(CodeEditorOpenedTask.TaskId))
         {
             _taskId = CodeEditorOpenedTask.TaskId;

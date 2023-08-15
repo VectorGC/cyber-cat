@@ -1,16 +1,20 @@
 using System.Threading.Tasks;
+using ApiGateway.Client.Factory;
+using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    [TestFixture]
-    public class AuthenticateTests
+    public class AuthenticateTests : AnonymousClientTestFixture
     {
+        public AuthenticateTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        {
+        }
+
         [Test]
         public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
         {
-            var client = TestClient.TestClient.Anonymous();
-            var token = await client.Authorization.GetAuthenticationToken(TestClient.TestClient.TestEmail, TestClient.TestClient.TestUserPassword);
+            var token = await Client.Authorization.GetAuthenticationToken("cat", "cat");
 
             Assert.IsNotEmpty(token);
         }

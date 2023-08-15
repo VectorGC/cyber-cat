@@ -1,4 +1,4 @@
-namespace ApiGateway.Client.Services.Authorization
+namespace ApiGateway.Client.Internal.Authorization
 {
     internal static class JwtBearerDefaults
     {

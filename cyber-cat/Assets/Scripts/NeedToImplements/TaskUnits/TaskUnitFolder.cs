@@ -1,6 +1,7 @@
 using System;
+using ApiGateway.Client.Factory;
 using Cysharp.Threading.Tasks;
-using ServerAPI;
+using Features.GameManager;
 using TaskUnits.TaskDataModels;
 using UnityEngine;
 
@@ -18,10 +19,8 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var client = await ServerEnvironment.CreateAuthorizedClient();
-
+            var client = await ServerClientFactory.UseCredentials("cat", "cat").Create(GameConfig.ServerEnvironment);
             var task = await client.Tasks.GetTask(_task);
-
             return TaskData.ConvertFrom(task);
         }
     }

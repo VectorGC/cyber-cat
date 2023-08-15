@@ -1,4 +1,4 @@
-using ApiGateway.Client.Services.Authorization;
+using ApiGateway.Client.Services;
 
 namespace ApiGateway.Client
 {

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client.Services.Authorization
+namespace ApiGateway.Client.Services
 {
     public interface IAuthorizationService
     {

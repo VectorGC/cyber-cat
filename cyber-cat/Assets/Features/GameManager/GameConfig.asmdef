@@ -1,5 +1,5 @@
 {
-    "name": "ServerEnvironment",
+    "name": "GameConfig",
     "rootNamespace": "",
     "references": [
         "GUID:b3793389d983a85428458394eb28e901",

@@ -1,4 +1,5 @@
-using ServerAPI;
+using ApiGateway.Client.Factory;
+using Features.GameManager;
 using UnityEditor;
 using UnityEngine;
 using UnityToolbarExtender;
@@ -16,7 +17,7 @@ public static class ServerEnvironmentUnityToolbar
     {
         EditorGUI.BeginDisabledGroup(Application.isPlaying);
 
-        ServerEnvironment.Current = (ServerEnvironment.Types) EditorGUILayout.EnumPopup(ServerEnvironment.Current);
+        GameConfig.ServerEnvironment = (ServerEnvironment) EditorGUILayout.EnumPopup(GameConfig.ServerEnvironment);
 
         EditorGUI.EndDisabledGroup();
 
