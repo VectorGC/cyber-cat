@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAPI.Editor", "ServerAPI.Editor.csproj", "{c45781e8-11bc-c2e2-70c1-ebda68290502}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetUsageDetector.Editor", "AssetUsageDetector.Editor.csproj", "{5706d4ea-36fb-5772-6688-4e6a69b7ed12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,10 @@ Global
 		{c45781e8-11bc-c2e2-70c1-ebda68290502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{c45781e8-11bc-c2e2-70c1-ebda68290502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{c45781e8-11bc-c2e2-70c1-ebda68290502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5706d4ea-36fb-5772-6688-4e6a69b7ed12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5706d4ea-36fb-5772-6688-4e6a69b7ed12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5706d4ea-36fb-5772-6688-4e6a69b7ed12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5706d4ea-36fb-5772-6688-4e6a69b7ed12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
