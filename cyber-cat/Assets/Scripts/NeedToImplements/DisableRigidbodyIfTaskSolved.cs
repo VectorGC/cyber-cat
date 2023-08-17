@@ -5,8 +5,6 @@ using UnityEngine;
 public class DisableRigidbodyIfTaskSolved : MonoBehaviourObserver<ITaskData>
 {
     [SerializeField] private Rigidbody RigidbodyToDisable;
-    [SerializeField] private Hover HoverComponent;
-    [SerializeField] private Rotate RotateComponent;
     [SerializeField] private Collider ActiveRidigbodyColliderOnDisable;
 
     private void Start()
@@ -25,8 +23,6 @@ public class DisableRigidbodyIfTaskSolved : MonoBehaviourObserver<ITaskData>
     public override void OnCompleted()
     {
         RigidbodyToDisable.useGravity = true;
-        HoverComponent.enabled = false;
-        RotateComponent.enabled = false;
         ActiveRidigbodyColliderOnDisable.enabled = true;
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class SnapshotMode : MonoBehaviour
 {
-    private SnapshotCanvas snapshotCanvas;
-
     private Shader noneShader;
     private Shader greyscaleShader;
     private Shader sepiaShader;
