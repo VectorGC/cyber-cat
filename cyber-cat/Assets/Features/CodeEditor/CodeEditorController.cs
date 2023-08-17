@@ -1,5 +1,6 @@
 using ApiGateway.Client;
 using ApiGateway.Client.Factory;
+using Cysharp.Threading.Tasks;
 using Features.GameManager;
 using Models;
 using Shared.Models.Models;
@@ -17,20 +18,16 @@ public class CodeEditorController : UIBehaviour
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
-    [Header("Debug")] [SerializeField] private string _taskId;
 
     private IAuthorizedClient _client;
+    private ICodeEditor _codeEditor;
 
-    protected override async void Start()
+    public async UniTask Construct(ICodeEditor codeEditor)
     {
+        _codeEditor = codeEditor;
+
         _client = await ServerClientFactory.UseCredentials("cat", "cat").Create(GameConfig.ServerEnvironment);
-        if (!string.IsNullOrEmpty(CodeEditorOpenedTask.TaskId))
-        {
-            _taskId = CodeEditorOpenedTask.TaskId;
-        }
-
-        var task = await _client.Tasks.GetTask(_taskId);
-
+        var task = await _client.Tasks.GetTask(_codeEditor.TaskId);
         _taskDescription.Task = task;
         _codeEditorView.Value.Language = LanguageProg.Cpp;
     }
@@ -56,7 +53,7 @@ public class CodeEditorController : UIBehaviour
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.Value.SourceCode;
-        var verdict = await _client.JudgeService.VerifySolution(_taskId, sourceCode);
+        var verdict = await _client.JudgeService.VerifySolution(_codeEditor.TaskId, sourceCode);
 
         switch (verdict.Status)
         {
@@ -66,21 +63,17 @@ public class CodeEditorController : UIBehaviour
             case VerdictStatus.Failure:
                 _console.Value.LogError($"{verdict.Status}: {verdict.TestsPassed} test passed. Error: {verdict.Error}");
                 break;
-            // TODO: По моему это не надо.
-            case VerdictStatus.None:
-                _console.Value.Log($"{verdict.Status}: {verdict.TestsPassed} test passed");
-                break;
         }
     }
 
     private async void GetSavedCode()
     {
-        var sourceCode = await _client.SolutionService.GetSavedCode(_taskId);
+        var sourceCode = await _client.SolutionService.GetSavedCode(_codeEditor.TaskId);
         _codeEditorView.Value.SourceCode = sourceCode;
     }
 
     private void ExitEditor()
     {
-        new CodeEditorService().CloseEditor().Forget();
+        _codeEditor.Close();
     }
 }

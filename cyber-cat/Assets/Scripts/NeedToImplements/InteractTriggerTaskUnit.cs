@@ -57,12 +57,12 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         }
 
         var isHackModePressed = Input.GetKeyDown(KeyCode.F);
-        if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
+        if (isHackModePressed && HackerVisionSingleton.Instance.Active)
         {
             var progress = new ScheduledNotifier<float>();
             progress.ViaLoadingScreen();
 
-            new CodeEditorService().OpenEditor(_task.GetId(), progress).Forget();
+            CodeEditor.Open(_task.GetId());
         }
     }
 
@@ -71,7 +71,7 @@ public class InteractTriggerTaskUnit : MonoBehaviourObserver<ITaskData>
         var progress = new ScheduledNotifier<float>();
         progress.ViaLoadingScreen();
 
-        new CodeEditorService().OpenEditor(_task.GetId(), progress).Forget();
+        CodeEditor.Open(_task.GetId());
     }
 
 

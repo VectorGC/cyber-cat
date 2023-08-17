@@ -29,7 +29,7 @@ namespace Legacy_do_not_use_it
             }
 
             var isHackModePressed = Input.GetKey(KeyCode.F);
-            if (isHackModePressed && GameMode.Vision == VisionMode.HackVision)
+            if (isHackModePressed && HackerVisionSingleton.Instance.Active)
             {
                 //TokenSession token = PlayerPrefs.GetToken();
             }

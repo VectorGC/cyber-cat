@@ -18,7 +18,7 @@ public class HackerVisionTaskFx : MonoBehaviourObserver<ITaskData>
 
     private void Update()
     {
-        if (GameMode.Vision == VisionMode.HackVision)
+        if (HackerVisionSingleton.Instance.Active)
         {
             if (_isTaskSolved is false)
             {
