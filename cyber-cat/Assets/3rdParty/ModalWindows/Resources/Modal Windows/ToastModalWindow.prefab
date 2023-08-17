@@ -80,6 +80,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!114 &1818239137074316467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +237,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2922313235305640126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,11 +327,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.27058825, g: 0.3647059, b: 0.45098042, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 9b55b44c03c69c748ae2793469f32201, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -404,6 +408,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -451,6 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -481,6 +488,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2958403647143247024}
+        m_TargetAssemblyTypeName: 
         m_MethodName: UI_IgnorePopup
         m_Mode: 1
         m_Arguments:
@@ -551,11 +559,13 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.27058825, g: 0.3647059, b: 0.45098042, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 9b55b44c03c69c748ae2793469f32201, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
     m_BestFit: 0
@@ -629,6 +639,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.23137257, g: 0.30588236, b: 0.3803922, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -725,6 +737,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.27058825, g: 0.3647059, b: 0.45098042, a: 0}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -752,6 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -782,6 +797,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2958403647143247024}
+        m_TargetAssemblyTypeName: 
         m_MethodName: UI_IgnorePopup
         m_Mode: 1
         m_Arguments:
@@ -875,6 +891,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &9070049228100808039
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,6 +952,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.27058825, g: 0.3647059, b: 0.45098042, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

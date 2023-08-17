@@ -1,16 +1,15 @@
 {
-    "name": "MainMenu",
+    "name": "GTS.GlobalTextSystem",
     "rootNamespace": "",
-    "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
+    "references": [],
+    "includePlatforms": [
+        "Editor"
     ],
-    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
