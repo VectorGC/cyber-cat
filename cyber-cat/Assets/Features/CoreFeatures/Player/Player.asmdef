@@ -1,15 +1,13 @@
 {
-    "name": "MainMenu",
+    "name": "Player",
     "rootNamespace": "",
-    "references": [
-        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

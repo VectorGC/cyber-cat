@@ -1,11 +1,9 @@
 {
-    "name": "BehaviourTrees",
+    "name": "BehaviourTrees.Tutorial",
     "rootNamespace": "",
     "references": [
-        "GUID:9304b1db5e4b0884589c00e2cafb14ac",
-        "GUID:a05720c07908a7649bad471efc0b41e0",
-        "GUID:571039feb44ed4948a554710e0f81711",
-        "GUID:1a2c68dd20b1dc148bdcdcbf3f3c9eda",
+        "GUID:c83dc91d55520074486aae9a57fc2825",
+        "GUID:0495632e7e8a22448b67788cf8066954",
         "GUID:1a1f83471ba7f404da8a2066cb7bfabd"
     ],
     "includePlatforms": [],
@@ -15,7 +13,7 @@
     "precompiledReferences": [
         "PandaBT.dll"
     ],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

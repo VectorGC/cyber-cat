@@ -3,8 +3,46 @@ using Panda;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(PandaBehaviour))]
 public class BaseBehaviourTreeController : MonoBehaviour
 {
+    [Task]
+    [UsedImplicitly]
+    public void Modal(string text)
+    {
+        if (ThisTask.status == Status.Ready)
+        {
+            ThisTask.data = SimpleModalWindow.Create()
+                .SetBody(text)
+                .Show();
+            return;
+        }
+
+        if ((SimpleModalWindow) ThisTask.data == null)
+        {
+            ThisTask.Succeed();
+        }
+    }
+
+    [Task]
+    [UsedImplicitly]
+    public void Modal(string header, string text)
+    {
+        if (ThisTask.status == Status.Ready)
+        {
+            ThisTask.data = SimpleModalWindow.Create()
+                .SetHeader(header)
+                .SetBody(text)
+                .Show();
+            return;
+        }
+
+        if ((SimpleModalWindow) ThisTask.data == null)
+        {
+            ThisTask.Succeed();
+        }
+    }
+
     [Task]
     [UsedImplicitly]
     public void Modal(string header, string text, string buttonText)
@@ -44,5 +82,11 @@ public class BaseBehaviourTreeController : MonoBehaviour
     public void OpenMainMenu()
     {
         SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+    [Task]
+    [UsedImplicitly]
+    public void Hint(string text)
+    {
     }
 }
