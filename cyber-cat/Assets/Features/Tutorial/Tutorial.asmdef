@@ -1,0 +1,19 @@
+{
+    "name": "Tutorial",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c83dc91d55520074486aae9a57fc2825",
+        "GUID:0495632e7e8a22448b67788cf8066954"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "PandaBT.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

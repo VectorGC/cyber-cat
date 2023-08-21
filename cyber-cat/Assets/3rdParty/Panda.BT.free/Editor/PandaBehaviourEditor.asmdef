@@ -1,0 +1,20 @@
+{
+    "name": "PandaBehaviourEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1a2c68dd20b1dc148bdcdcbf3f3c9eda"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "PandaBTEditor.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,21 +1,21 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
 namespace UI
 {
     public class MainMenuController : UIBehaviour
     {
-        [SerializeField] private TMP_Text _greetingsText;
+        [SerializeField] private Text _greetingsText;
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _inGameButton;
         [SerializeField] private Button _signOut;
 
-        protected override async void Start()
+        protected override void Start()
         {
-            _greetingsText.text = $"Доступ получен: <color=green>Cat";
+            _greetingsText.text = "Доступ получен: Cat";
         }
 
         protected override void OnEnable()
@@ -44,7 +44,7 @@ namespace UI
 
         private void SignOut()
         {
-            SceneManager.LoadSceneAsync("Features/Authorization/AuhtorizationScene");
+            Application.Quit();
         }
     }
 }

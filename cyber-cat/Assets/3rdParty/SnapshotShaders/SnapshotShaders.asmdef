@@ -1,9 +1,7 @@
 {
     "name": "SnapshotShaders",
     "rootNamespace": "",
-    "references": [
-        "GUID:1b7050c257c8cfd4b8264ab90ebe6f52"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

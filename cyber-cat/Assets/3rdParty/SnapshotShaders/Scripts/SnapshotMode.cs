@@ -1,18 +1,9 @@
 ﻿using System.Collections.Generic;
-using Legacy_do_not_use_it;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class SnapshotMode : MonoBehaviour
 {
-    [SerializeField]
-    private bool useCanvas = true;
-
-    [SerializeField]
-    private SnapshotCanvas snapshotCanvasPrefab;
-
-    private SnapshotCanvas snapshotCanvas;
-
     private Shader noneShader;
     private Shader greyscaleShader;
     private Shader sepiaShader;
@@ -35,12 +26,6 @@ public class SnapshotMode : MonoBehaviour
 
     private void Awake()
     {
-        // Add a canvas to show the current filter name and the controls.
-        if (useCanvas)
-        {
-            snapshotCanvas = Instantiate(snapshotCanvasPrefab);
-        }
-
         // Find all shader files.
         noneShader = Shader.Find("Snapshot/Base");
         // greyscaleShader = Shader.Find("Snapshot/Greyscale");
@@ -49,7 +34,7 @@ public class SnapshotMode : MonoBehaviour
         // edgeBlurShader = Shader.Find("Snapshot/EdgeBlur");
         // silhouetteShader = Shader.Find("Snapshot/Silhouette");
         // outlineShader = Shader.Find("Snapshot/EdgeDetect");
-        neonShader = Shader.Find("Snapshot/Neon"); 
+        neonShader = Shader.Find("Snapshot/Neon");
         bloomShader = Shader.Find("Snapshot/Bloom");
         // crtShader = Shader.Find("Snapshot/CRTScreen");
         // nesShader = Shader.Find("Snapshot/PixelNES");
@@ -68,12 +53,12 @@ public class SnapshotMode : MonoBehaviour
         // filters.Add(new BaseFilter("Silhouette", new Color(0.89f, 0.71f, 0.56f), 
         //     silhouetteShader));
         // filters.Add(new BaseFilter("Outlines", Color.white, outlineShader));
-        
+
         // filters.Add(new NeonFilter("Neon", Color.cyan, bloomShader, 
         //     new BaseFilter("", Color.white, neonShader)));
-        
+
         filters.Add(new BaseFilter("Hacker Vision", Color.white, neonShader));
-        
+
         // filters.Add(new BloomFilter("Bloom", Color.white, bloomShader));
         // filters.Add(new CRTFilter("NES", new Color(0.66f, 1.00f, 1.00f), 
         //     crtShader, new PixelFilter("", Color.white, nesShader)));
@@ -85,40 +70,9 @@ public class SnapshotMode : MonoBehaviour
         // filters.Add(new BaseFilter("Pride", Color.white, prideShader));
     }
 
-    private void Update()
+    public void SetFilterProperties(int index)
     {
-        int lastIndex = filterIndex;
-
-        if (GameMode.Vision == VisionMode.HackVision)
-        {
-            filterIndex = 1;
-        }
-        else
-        {
-            filterIndex = 0;
-        }
-
-        // Logic to swap between filters.
-        /*if(Input.GetMouseButtonDown(0))
-        {
-            if(--filterIndex < 0)
-            {
-                filterIndex = filters.Count - 1;
-            }
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            if(++filterIndex >= filters.Count)
-            {
-                filterIndex = 0;
-            }
-        }*/
-
-        // Change the filter name when appropriate.
-        if(useCanvas && lastIndex != filterIndex)
-        {
-            snapshotCanvas.SetFilterProperties(filters[filterIndex]);
-        }
+        filterIndex = index;
     }
 
     // Delegate OnRenderImage() to a SnapshotFilter object.

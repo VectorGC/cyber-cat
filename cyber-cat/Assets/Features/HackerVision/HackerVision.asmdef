@@ -1,0 +1,16 @@
+{
+    "name": "HackerVision",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9e79e0850ea26cd4091c7c06f0b256f3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
