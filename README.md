@@ -63,7 +63,7 @@ Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity.com/pack
 | Кимсанбаев Карим | Team Lead | https://www.linkedin.com/in/karim-kimsanbaev-013851203/ или karim.kimsanbaev@gmail.com |
 | Крылов Кирилл | Backend Programmer | https://kee-reel.com/ |
 | Карпинский Артем (И904Б)    | Programmer of Gameplay | artem19051664@gmail.com |
-| Пекуш Даниил                | Programmer of Server (Backend) | - |
+| Пекуш Даниил                | Programmer of Server (Backend) | dap0602@mail.ru |
 | Ермолаев Святослав (И503Б)  | Programmer of code editor | ledumblasphemus@gmail.com |
 | Востриков Виталий (И594)    | 3D Artist | talytriko@gmail.com |
 | Слава Снегирев (И508Б)      | Leve Designer | slavick.snegirev@icloud.com |
