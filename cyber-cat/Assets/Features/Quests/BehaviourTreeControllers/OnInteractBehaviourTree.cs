@@ -12,7 +12,7 @@ public class OnInteractBehaviourTree : Interactable
         _pandaBehaviour.enabled = false;
     }
 
-    public override bool CanInteract => _pandaBehaviour.status == Status.Ready;
+    public override bool CanInteract => _pandaBehaviour.status == Status.Ready || _pandaBehaviour.status == Status.Running;
 
     public override void OnInteract()
     {

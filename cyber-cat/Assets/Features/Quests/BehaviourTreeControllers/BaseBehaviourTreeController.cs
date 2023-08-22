@@ -65,7 +65,7 @@ public class BaseBehaviourTreeController : MonoBehaviour
 
     [Task]
     [UsedImplicitly]
-    public bool IsActiveHackerMode()
+    public bool IsActiveHackerVision()
     {
         return HackerVisionSingleton.Instance.Active;
     }

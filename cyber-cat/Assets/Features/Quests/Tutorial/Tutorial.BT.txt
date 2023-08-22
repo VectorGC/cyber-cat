@@ -25,7 +25,7 @@ tree("Greetings")
         Modal "Обучение", "Чудесно, а теперь подойди к флешке (она находится впереди)!", "Ладно -_-"
         mute repeat not IsDistance_LessThan 2
         Modal "Переход в 'Режим Хакера'", "Для перехода в режим нажми Q!", "Понял!"
-        mute repeat not IsActiveHackerMode
+        mute repeat not IsActiveHackerVision
         Modal "Ух ты!!", "А теперь let's press F to start codding! Откроется окно с редактором. В этом окне Вам предстоит решать задачки. Протестируйте его и выйдите.", "Press F"
         // Ждем, когда откроется и закроется редактор кода.
         mute repeat not IsOpenCodeEditor
