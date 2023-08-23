@@ -65,7 +65,7 @@ public class BaseBehaviourTreeController : MonoBehaviour
 
     [Task]
     [UsedImplicitly]
-    public bool IsActiveHackerVision()
+    public bool IfActiveHackerVision()
     {
         return HackerVisionSingleton.Instance.Active;
     }
@@ -88,5 +88,9 @@ public class BaseBehaviourTreeController : MonoBehaviour
     [UsedImplicitly]
     public void Hint(string text)
     {
+        var hud = FindObjectOfType<HUDController>();
+        hud.HintText = text;
+
+        ThisTask.Succeed();
     }
 }

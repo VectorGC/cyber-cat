@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private HUDController _hud;
+    public const float InteractDistance = 2;
     private const float _moveSpeed = 4f;
-    private const float _interactDistance = 2;
 
     private NavMeshAgent _navMeshAgent;
     private InteractHandler _interactHandler;
@@ -22,7 +21,7 @@ public class Player : MonoBehaviour
         _hud.HintText = string.Empty;
 
         var interactables = FindObjectsOfType<Interactable>();
-        _interactHandler = new InteractHandler(_interactDistance, interactables, _hud, transform);
+        _interactHandler = new InteractHandler(InteractDistance, interactables, _hud, transform);
     }
 
     private void Update()

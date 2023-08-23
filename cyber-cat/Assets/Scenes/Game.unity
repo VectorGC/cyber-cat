@@ -6158,6 +6158,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89c0552433502f478b30bfaf747457a, type: 3}
+--- !u!114 &356180511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2832881281663701882, guid: a89c0552433502f478b30bfaf747457a, type: 3}
+  m_PrefabInstance: {fileID: 356180507}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9641bbb61ef4c8c45b9981310e19e370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &359470918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8439,7 +8450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf59e1857ab07449aea7335f51422a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskKeeper: {fileID: 0}
+  _player: {fileID: 356180511}
+  _taskKeeper: {fileID: 915883324}
 --- !u!114 &461014759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14752,7 +14764,7 @@ Transform:
   - {fileID: 204845411}
   - {fileID: 1807273021}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &817500399
 PrefabInstance:
@@ -16232,6 +16244,11 @@ PrefabInstance:
 --- !u!4 &915883323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4293850495013322, guid: 685803a48200879419cbf0f982932eb1, type: 3}
+  m_PrefabInstance: {fileID: 915883322}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &915883324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1537529156563862, guid: 685803a48200879419cbf0f982932eb1, type: 3}
   m_PrefabInstance: {fileID: 915883322}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &918282346
@@ -23124,7 +23141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1319039502
 Transform:
   m_ObjectHideFlags: 0
@@ -23152,6 +23169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf59e1857ab07449aea7335f51422a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
   _taskKeeper: {fileID: 0}
 --- !u!114 &1319039505
 MonoBehaviour:
@@ -33198,7 +33216,7 @@ Transform:
   - {fileID: 848928357}
   - {fileID: 17839530}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1843244830
 PrefabInstance:
@@ -33555,7 +33573,7 @@ Transform:
   - {fileID: 63229411}
   - {fileID: 192788170}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1876903414
 PrefabInstance:
