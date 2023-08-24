@@ -1,0 +1,20 @@
+{
+    "name": "Bonsai",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9304b1db5e4b0884589c00e2cafb14ac",
+        "GUID:e663252ae8cdac9448492a619a23dbb5",
+        "GUID:1a1f83471ba7f404da8a2066cb7bfabd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        ""
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
