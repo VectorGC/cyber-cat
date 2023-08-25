@@ -4,11 +4,14 @@ using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private HUDController _hud;
-    public const float InteractDistance = 2;
+
+    public bool IsPressInteract { get; private set; }
+    private float _pressTimer;
+
+    private const float _interactDistance = 2;
     private const float _moveSpeed = 4f;
 
     private NavMeshAgent _navMeshAgent;
-    private InteractHandler _interactHandler;
 
 
     private void Awake()
@@ -19,9 +22,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _hud.HintText = string.Empty;
-
-        var interactables = FindObjectsOfType<Interactable>();
-        _interactHandler = new InteractHandler(InteractDistance, interactables, _hud, transform);
     }
 
     private void Update()
@@ -32,6 +32,25 @@ public class Player : MonoBehaviour
         var directionVector = new Vector3(horizontal, 0, vertical);
         _navMeshAgent.velocity = Vector3.ClampMagnitude(directionVector, 1) * _moveSpeed;
 
-        _interactHandler.OnUpdate();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            IsPressInteract = true;
+            _pressTimer = 1;
+        }
+
+        if (_pressTimer > 0)
+            _pressTimer -= Time.deltaTime;
+        else
+            IsPressInteract = false;
+    }
+
+    public bool CanInteract(Interactable interactable)
+    {
+        if (!interactable.CanInteract)
+        {
+            return false;
+        }
+
+        return Vector3.Distance(transform.position, interactable.transform.position) <= _interactDistance;
     }
 }

@@ -1601,50 +1601,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3490688029692347803, guid: 538c0729d3ae0594487080801917d4f9, type: 3}
   m_PrefabInstance: {fileID: 324459933}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &75682475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 75682477}
-  - component: {fileID: 75682476}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &75682476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75682475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de49ee75718ef94398bd86a6a4f23fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TreeBlueprint: {fileID: 11400000, guid: 4025ba84111d1a444a387c1ce5f80e3a, type: 2}
---- !u!4 &75682477
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 75682475}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5085838, y: 1.4075575, z: 10.039343}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &81650807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6202,17 +6158,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89c0552433502f478b30bfaf747457a, type: 3}
---- !u!114 &356180511 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2832881281663701882, guid: a89c0552433502f478b30bfaf747457a, type: 3}
-  m_PrefabInstance: {fileID: 356180507}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9641bbb61ef4c8c45b9981310e19e370, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &359470918
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8458,7 +8403,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 461014756}
-  - component: {fileID: 461014759}
   - component: {fileID: 461014757}
   m_Layer: 0
   m_Name: Anna
@@ -8491,33 +8435,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 461014755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdf59e1857ab07449aea7335f51422a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6de49ee75718ef94398bd86a6a4f23fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 356180511}
-  _taskKeeper: {fileID: 915883324}
---- !u!114 &461014759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 461014755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scripts:
-  - {fileID: 4900000, guid: 839f252c605be494c90e210405c69d94, type: 3}
-  autoReset: 0
-  tickOn: 0
-  sourceInfos:
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
+  TreeBlueprint: {fileID: 11400000, guid: 4025ba84111d1a444a387c1ce5f80e3a, type: 2}
 --- !u!1 &461446509
 GameObject:
   m_ObjectHideFlags: 0
@@ -16290,11 +16211,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4293850495013322, guid: 685803a48200879419cbf0f982932eb1, type: 3}
   m_PrefabInstance: {fileID: 915883322}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &915883324 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1537529156563862, guid: 685803a48200879419cbf0f982932eb1, type: 3}
-  m_PrefabInstance: {fileID: 915883322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &918282346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23177,8 +23093,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319039502}
-  - component: {fileID: 1319039505}
-  - component: {fileID: 1319039503}
   m_Layer: 0
   m_Name: George
   m_TagString: Untagged
@@ -23201,42 +23115,6 @@ Transform:
   m_Father: {fileID: 1869717504}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1319039503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319039501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdf59e1857ab07449aea7335f51422a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _taskKeeper: {fileID: 0}
---- !u!114 &1319039505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319039501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e43e7170fb45b4b81dcd16d0ff55d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scripts:
-  - {fileID: 4900000, guid: 839f252c605be494c90e210405c69d94, type: 3}
-  autoReset: 0
-  tickOn: 0
-  sourceInfos:
-  - isFoldout: 1
-    breakPoints: 
-    breakPointStatuses: 
-    collapsedLines: 
-    btScript: 
 --- !u!1001 &1319368800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33595,7 +33473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1869717504
 Transform:
   m_ObjectHideFlags: 0

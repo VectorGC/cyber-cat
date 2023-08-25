@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TaskKeeper : Interactable
@@ -6,8 +7,31 @@ public class TaskKeeper : Interactable
 
     public override bool CanInteract => HackerVisionSingleton.Instance.Active;
 
-    public override void OnInteract()
+    public override IEnumerator Interact()
     {
-        CodeEditor.Open(_task.Id());
+        if (!CanInteract)
+        {
+            yield break;
+        }
+        
+        yield return CodeEditor.Open(_task.Id());
+        yield return new WaitWhile(() => CodeEditor.IsOpen);
+    }
+
+    private static TaskKeeper[] _keepersCache;
+
+    public static TaskKeeper FindKeeperForTask(TaskType task)
+    {
+        _keepersCache ??= FindObjectsOfType<TaskKeeper>();
+
+        foreach (var keeper in _keepersCache)
+        {
+            if (keeper._task == task)
+            {
+                return keeper;
+            }
+        }
+
+        return null;
     }
 }

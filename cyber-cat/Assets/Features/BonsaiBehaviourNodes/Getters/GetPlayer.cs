@@ -2,7 +2,7 @@ using Bonsai;
 using Bonsai.Core;
 using UnityEngine;
 
-[BonsaiNode("Getter/", "PlayerPosition")]
+[BonsaiNode("Getters/", "PlayerPosition")]
 public class GetPlayerPosition : GetterNode<Vector3>
 {
     public override Vector3 Get()
