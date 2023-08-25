@@ -1,37 +1,31 @@
-using System.Collections;
 using Bonsai;
 using Bonsai.Core;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 [BonsaiNode("Tasks/Interact/", "InteractToTaskKeeper")]
 public class InteractToTaskKeeper : Task
 {
-    [SerializeField] public TaskType _task;
-
-    private TaskKeeper _keeper;
-    private Player _player;
-    private Status _onEnterStatus;
-    private IEnumerator _coroutine;
+    private UniTask? _asyncTask;
 
     public override void OnEnter()
     {
-        _keeper = TaskKeeper.FindKeeperForTask(_task);
-        _player = FindObjectOfType<Player>();
+        var player = Blackboard.Get<Player>("player");
+        var keeper = Blackboard.Get<TaskKeeper>("task_keeper");
 
-        _onEnterStatus = _player.CanInteract(_keeper) ? Status.Success : Status.Failure;
-        if (_onEnterStatus == Status.Success)
+        var canInteract = player.InteractPosibility.CanInteract(keeper);
+        if (canInteract)
         {
-            _coroutine = _keeper.Interact();
+            _asyncTask = keeper.Interact();
         }
     }
 
     public override Status Run()
     {
-        if (_onEnterStatus == Status.Failure)
+        if (!_asyncTask.HasValue)
         {
             return Status.Failure;
         }
 
-        return _coroutine.MoveNext() ? Status.Running : Status.Success;
+        return _asyncTask.Value.Status == UniTaskStatus.Succeeded ? Status.Success : Status.Running;
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class TaskKeeper : Interactable
@@ -7,15 +7,10 @@ public class TaskKeeper : Interactable
 
     public override bool CanInteract => HackerVisionSingleton.Instance.Active;
 
-    public override IEnumerator Interact()
+    protected override async UniTask OnInteract()
     {
-        if (!CanInteract)
-        {
-            yield break;
-        }
-        
-        yield return CodeEditor.Open(_task.Id());
-        yield return new WaitWhile(() => CodeEditor.IsOpen);
+        await CodeEditor.OpenAsync(_task.Id());
+        await UniTask.WaitWhile(() => CodeEditor.IsOpen);
     }
 
     private static TaskKeeper[] _keepersCache;

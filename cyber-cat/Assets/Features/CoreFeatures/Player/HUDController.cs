@@ -9,18 +9,29 @@ public class HUDController : UIBehaviour
     public string HintText
     {
         get => _hintText.text;
-        set => _hintTextOnFrame = value;
+        set
+        {
+            _hintTextOnDelay = value;
+            _delay = 1f;
+        }
     }
 
-    private string _hintTextOnFrame;
+    private string _hintTextOnDelay;
+    private float _delay;
 
     private void LateUpdate()
     {
-        if (_hintTextOnFrame != _hintText.text)
+        if (_delay > 0)
         {
-            _hintText.text = _hintTextOnFrame;
+            _delay -= Time.deltaTime;
+            if (_hintTextOnDelay != _hintText.text)
+            {
+                _hintText.text = _hintTextOnDelay;
+            }
         }
-
-        _hintTextOnFrame = string.Empty;
+        else
+        {
+            _hintText.text = string.Empty;
+        }
     }
 }

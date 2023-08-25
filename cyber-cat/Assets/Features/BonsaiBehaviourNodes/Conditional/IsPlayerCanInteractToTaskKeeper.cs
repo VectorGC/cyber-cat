@@ -1,17 +1,14 @@
 using Bonsai;
 using Bonsai.Core;
-using UnityEngine;
 
 [BonsaiNode("Conditional/Interact/", "IsPlayerCanInteractToTaskKeeper")]
 public class IsPlayerCanInteractToTaskKeeper : ConditionalAbort
 {
-    [SerializeField] public TaskType _task;
-
     public override bool Condition()
     {
-        var keeper = TaskKeeper.FindKeeperForTask(_task);
-        var player = FindObjectOfType<Player>();
+        var keeper = Blackboard.Get<TaskKeeper>("task_keeper");
+        var player = Blackboard.Get<Player>("player");
 
-        return player.CanInteract(keeper);
+        return player.InteractPosibility.CanInteract(keeper);
     }
 }

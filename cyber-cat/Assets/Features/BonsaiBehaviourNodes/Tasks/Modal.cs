@@ -6,9 +6,9 @@ using UnityEngine;
 [BonsaiNode("UI/", "Modal")]
 public class Modal : Task
 {
-    [SerializeField] public string _header = "Info";
-    [SerializeField] [Multiline(10)] public string _body = "Text";
-    [SerializeField] public string _button = "OK";
+    [SerializeField] private string _header = "Info";
+    [SerializeField] [Multiline(10)] private string _body = "Text";
+    [SerializeField] private string _button = "OK";
 
     private SimpleModalWindow _visibleWindow;
 

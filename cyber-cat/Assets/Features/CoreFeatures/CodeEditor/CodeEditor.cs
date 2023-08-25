@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
@@ -9,12 +10,7 @@ public class CodeEditor : ICodeEditor
     public static bool IsOpen { get; private set; }
     public string TaskId { get; }
 
-    public static IEnumerator Open(string taskId)
-    {
-        return OpenAsync(taskId).ToCoroutine();
-    }
-
-    private static async UniTask OpenAsync(string taskId)
+    public static async Task OpenAsync(string taskId)
     {
         if (string.IsNullOrEmpty(taskId))
         {
