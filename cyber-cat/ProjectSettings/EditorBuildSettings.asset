@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CodeEditor.unity
     guid: 15651a159b27a3046bcbbeab2b7ce1b6
   - enabled: 1
-    path: Assets/Scenes/GameOld.unity
-    guid: 416a8e36df97b454a8e5af691788a9b3
+    path: Assets/Scenes/Game.unity
+    guid: 8a8d98e78c17fb54988ad4500a7367fe
   m_configObjects: {}
