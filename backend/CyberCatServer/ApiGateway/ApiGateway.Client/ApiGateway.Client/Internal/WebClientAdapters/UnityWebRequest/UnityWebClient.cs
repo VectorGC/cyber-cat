@@ -11,7 +11,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 
         public void Dispose()
         {
-        }
+        }   
 
         public void AddAuthorizationHeader(string type, string value)
         {
@@ -75,6 +75,21 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             }
         }
 
+        public async Task<string> PostAsync(string uri)
+        {
+            DebugOnly.Log($"Send POST to '{uri}'");
+            using (var request = UnityEngine.Networking.UnityWebRequest.Post(uri, ""))
+            {
+                SetAuthorizationIfNeeded(request);
+                await request.SendWebRequest().WaitAsync();
+                request.EnsureSuccessStatusCode();
+                var response = request.downloadHandler.text;
+
+                DebugOnly.Log($"Response from {uri} is '{response}'");
+                return response;
+            }
+        }
+
         public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
             var json = await PostAsync(uri, form);
@@ -83,6 +98,21 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             DebugOnly.Log($"Success deserialize object '{obj}'");
 
             return obj;
+        }
+
+        public async Task<string> PutAsync(string uri, Dictionary<string, string> form)
+        {
+            DebugOnly.Log($"Send PUT to '{uri}'");
+            using (var request = UnityEngine.Networking.UnityWebRequest.Put(uri, form.ToString()))
+            {
+                SetAuthorizationIfNeeded(request);
+                await request.SendWebRequest().WaitAsync();
+                request.EnsureSuccessStatusCode();
+                var response = request.downloadHandler.text;
+
+                DebugOnly.Log($"Response from {uri} is '{response}'");
+                return response;
+            }
         }
 
         public async Task DeleteAsync(string uri)

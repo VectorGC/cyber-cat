@@ -9,11 +9,12 @@ using Shared.Models.Models;
 
 namespace ApiGateway.Client.Internal
 {
-    internal class AuthorizedClient : IAuthorizedClient, ITaskRepository, ISolutionService, IJudgeService
+    internal class AuthorizedClient : IAuthorizedClient, ITaskRepository, ISolutionService, IJudgeService, IPlayerService
     {
         public ITaskRepository Tasks => this;
         public ISolutionService SolutionService => this;
         public IJudgeService JudgeService => this;
+        public IPlayerService PlayerService => this;
 
         private readonly IWebClient _webClient;
         private readonly Uri _uri;
@@ -55,6 +56,38 @@ namespace ApiGateway.Client.Internal
         public async Task RemoveSavedCode(string taskId)
         {
             await _webClient.DeleteAsync(_uri + $"solution/{taskId}");
+        }
+        
+        public async Task CreatePlayer()
+        {
+            await _webClient.PostAsync(_uri + "player/create");
+        }
+
+        public async Task RemovePlayer()
+        {
+            await _webClient.DeleteAsync(_uri + "player/delete");
+        }
+
+        public async Task<PlayerDto> GetPlayer()
+        {
+            var player = await _webClient.GetFromJsonAsync<PlayerDto>(_uri + "player/get");
+            return player;
+        }
+
+        public async Task AddBitcoins(int bitcoins)
+        {
+            await _webClient.PutAsync(_uri + "player/bitcoins/add", new Dictionary<string, string>
+            {
+                ["bitcoins"] = bitcoins.ToString()
+            });
+        }
+
+        public async Task RemoveBitcoins(int bitcoins)
+        {
+            await _webClient.PutAsync(_uri + "player/bitcoins/remove", new Dictionary<string, string>
+            {
+                ["bitcoins"] = bitcoins.ToString()
+            });
         }
     }
 }

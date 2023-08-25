@@ -44,6 +44,7 @@ internal class AuthUserManagerRepository : IAuthUserRepository
     public async Task<IUser> FindByEmailAsync(string email)
     {
         return await _userManager.FindByEmailAsync(email);
+        
     }
 
     public async Task<bool> CheckPasswordAsync(string email, string password)

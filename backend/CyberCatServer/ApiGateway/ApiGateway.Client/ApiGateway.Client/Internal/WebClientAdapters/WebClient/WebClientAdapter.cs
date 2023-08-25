@@ -60,12 +60,34 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return response;
         }
 
+        public async Task<string> PostAsync(string uri)
+        {
+            return await _client.UploadStringTaskAsync(uri, "");
+        }
+
+        
         public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
             var response = await PostAsync(uri, form);
             var obj = DeserializeJson<TResponse>(response);
 
             return obj;
+        }
+
+        public async Task<string> PutAsync(string uri, Dictionary<string, string> form)
+        {
+            _client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+
+            var formData = new System.Collections.Specialized.NameValueCollection();
+            foreach (var kvp in form)
+            {
+                formData.Add(kvp.Key, kvp.Value);
+            }
+
+            var responseBytes = await _client.UploadValuesTaskAsync(uri, "PUT" ,formData);
+            var response = System.Text.Encoding.UTF8.GetString(responseBytes);
+
+            return response;
         }
 
         public async Task DeleteAsync(string uri)
