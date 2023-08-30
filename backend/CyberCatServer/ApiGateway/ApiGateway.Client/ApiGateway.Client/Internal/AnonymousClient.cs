@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Clients;
 using ApiGateway.Client.Internal.WebClientAdapters;
-using ApiGateway.Client.Services;
 
 namespace ApiGateway.Client.Internal
 {
-    internal class AnonymousClient : IAnonymousClient, IAuthorizationService
+    internal class AnonymousClient : IAnonymousClient
     {
-        public IAuthorizationService Authorization => this;
-
         private readonly IWebClient _webClient;
         private readonly Uri _uri;
 
@@ -19,7 +17,25 @@ namespace ApiGateway.Client.Internal
             _webClient = webClient;
         }
 
-        async Task<string> IAuthorizationService.GetAuthenticationToken(string email, string password)
+        public async Task RegisterUser(string email, string password, string name)
+        {
+            var form = new Dictionary<string, string>
+            {
+                ["email"] = email,
+                ["password"] = password,
+                ["name"] = name,
+            };
+
+            await _webClient.PostAsync(_uri + "auth/register", form);
+        }
+
+        public async Task<IAuthorizedClient> Authorize(string email, string password)
+        {
+            var token = await GetAuthenticationToken(email, password);
+            return new AuthorizedClient(token, _uri, _webClient);
+        }
+
+        private async Task<string> GetAuthenticationToken(string email, string password)
         {
             var form = new Dictionary<string, string>
             {

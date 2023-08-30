@@ -12,7 +12,7 @@ using ProtoBuf.Grpc.Server;
 var builder = WebApplication.CreateBuilder(args);
 
 var appSettings = builder.Configuration.Get<AuthServiceAppSettings>();
-builder.Services.AddIdentity<User, Role>(AuthIdentity.SetServiceOptions).AddMongoDbStores<User, Role, Guid>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
+builder.Services.AddIdentity<UserDbModel, Role>(AuthIdentity.SetServiceOptions).AddMongoDbStores<UserDbModel, Role, long>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services

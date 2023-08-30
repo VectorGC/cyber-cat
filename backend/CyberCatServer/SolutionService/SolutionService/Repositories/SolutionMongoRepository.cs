@@ -1,8 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
+using Shared.Models.Dto;
 using Shared.Models.Models;
 using Shared.Server.Exceptions;
+using Shared.Server.Models;
 using SolutionService.Configurations;
 using SolutionService.Repositories.InternalModels;
 
@@ -13,7 +15,7 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
     public SolutionMongoRepository(IOptions<SolutionServiceAppSettings> appSettings)
         : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
     {
-        var indexes = new List<Expression<Func<SolutionModel, object>>>
+        var indexes = new List<Expression<Func<SolutionDbModel, object>>>
         {
             s => s.UserId,
             s => s.TaskId
@@ -22,18 +24,18 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         CreateCombinedTextIndexAsync(indexes);
     }
 
-    public async Task<string> GetSavedCode(string userId, string taskId)
+    public async Task<string> GetSavedCode(UserId userId, TaskId taskId)
     {
-        var solution = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == taskId);
+        var solution = await GetOneAsync<SolutionDbModel>(s => s.UserId == userId.Value && s.TaskId == taskId.Value);
         return solution?.SourceCode;
     }
 
-    public async Task Save(string userId, ISolution solution)
+    public async Task Save(UserId userId, SolutionDto solution)
     {
-        var solutionModel = await GetOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == solution.TaskId);
+        var solutionModel = await GetOneAsync<SolutionDbModel>(s => s.UserId == userId.Value && s.TaskId == solution.TaskId.Value);
         if (solutionModel == null)
         {
-            solutionModel = new SolutionModel(userId, solution);
+            solutionModel = new SolutionDbModel(userId, solution);
             await AddOneAsync(solutionModel);
             return;
         }
@@ -46,8 +48,8 @@ public class SolutionMongoRepository : BaseMongoRepository, ISolutionRepository
         }
     }
 
-    public async Task RemoveCode(string userId, string taskId)
+    public async Task RemoveCode(UserId userId, TaskId taskId)
     {
-        await DeleteOneAsync<SolutionModel>(s => s.UserId == userId && s.TaskId == taskId);
+        await DeleteOneAsync<SolutionDbModel>(s => s.UserId == userId.Value && s.TaskId == taskId.Value);
     }
 }

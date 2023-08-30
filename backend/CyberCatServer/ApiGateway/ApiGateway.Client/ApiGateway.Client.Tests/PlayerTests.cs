@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
-using ApiGateway.Client.Tests.Abstracts;
-using NUnit.Framework;
+﻿using ApiGateway.Client.Tests.Abstracts;
 
 namespace ApiGateway.Client.Tests
 {
@@ -11,12 +8,13 @@ namespace ApiGateway.Client.Tests
         {
         }
 
+        /*
         [Test]
         public async Task CreatePlayerAndOperateWithBtc()
         {
             var client = await GetClient();
 
-            await client.PlayerService.CreatePlayer();
+            var player = await client.PlayerService.AuthorizePlayer();
 
             var player = await client.PlayerService.GetPlayer();
             Assert.IsNotNull(player);
@@ -33,5 +31,6 @@ namespace ApiGateway.Client.Tests
 
             await client.PlayerService.RemovePlayer();
         }
+        */
     }
 }

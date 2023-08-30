@@ -1,23 +1,25 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
+using ApiGateway.Client.Clients;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
 {
-    [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
-    [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public abstract class AuthorizedClientTestFixture
+    public abstract class AuthorizedClientTestFixture : AnonymousClientTestFixture
     {
-        private readonly ServerEnvironment _serverEnvironment;
-
-        protected AuthorizedClientTestFixture(ServerEnvironment serverEnvironment)
+        protected AuthorizedClientTestFixture(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
-            _serverEnvironment = serverEnvironment;
         }
 
-        public async Task<IAuthorizedClient> GetClient()
+        private async Task<IAuthorizedClient> GetAuthorizedClient()
         {
-            return await ServerClientFactory.UseUniversalCredentials().Create(_serverEnvironment);
+            return await ServerClientFactory.CreateAuthorized(ServerEnvironment);
+        }
+
+        [TearDown]
+        public async Task TearDown()
+        {
+            var client = await GetAuthorizedClient();
+            await client.RemoveUser();
         }
     }
 }

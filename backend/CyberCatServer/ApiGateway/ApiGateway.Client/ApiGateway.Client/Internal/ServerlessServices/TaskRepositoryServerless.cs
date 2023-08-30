@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Services;
 using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
 
 namespace ApiGateway.Client.Internal.ServerlessServices
 {
@@ -10,8 +11,11 @@ namespace ApiGateway.Client.Internal.ServerlessServices
         {
             var task = new TaskDto()
             {
-                Name = "Hello world",
-                Description = "Вы играете без сервера. Чтобы решать задачи - включите интернет"
+                Description = new TaskDescription()
+                {
+                    Name = "Hello world",
+                    Description = "Вы играете без сервера. Чтобы решать задачи - включите интернет"
+                }
             };
 
             return Task.FromResult(task);

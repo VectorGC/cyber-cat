@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
-using Shared.Models.Models;
+using Shared.Models.Enums;
 
 namespace ApiGateway.Client.Tests
 {
-    public class VerifySolutionTests : AuthorizedClientTestFixture
+    public class VerifySolutionTests : PlayerClientTestFixture
     {
         public VerifySolutionTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -18,9 +17,9 @@ namespace ApiGateway.Client.Tests
         {
             var taskId = "tutorial";
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
+            var verdict = await client.PlayerService.VerifySolution(taskId, sourceCode);
 
             Assert.IsTrue(string.IsNullOrEmpty(verdict.Error));
             Assert.AreEqual(VerdictStatus.Success, verdict.Status);
@@ -33,9 +32,9 @@ namespace ApiGateway.Client.Tests
             var taskId = "tutorial";
             var sourceCode = "#include <stdio.h> \nint main()";
             var expectedErrorRegex = "Exit Code 1:.*: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
+            var verdict = await client.PlayerService.VerifySolution(taskId, sourceCode);
 
             Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
             Assert.AreEqual(0, verdict.TestsPassed);
@@ -48,9 +47,9 @@ namespace ApiGateway.Client.Tests
             var taskId = "tutorial";
             var sourceCode = "int main() { while(true){} }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
+            var verdict = await client.PlayerService.VerifySolution(taskId, sourceCode);
 
             Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
             Assert.AreEqual(0, verdict.TestsPassed);
@@ -86,9 +85,9 @@ namespace ApiGateway.Client.Tests
             const string taskId = "sum_ab";
             // We simply output the result of the first test. So that the first test passes, while the rest fail.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
+            var verdict = await client.PlayerService.VerifySolution(taskId, sourceCode);
 
             Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
             Assert.AreEqual(1, verdict.TestsPassed);
@@ -102,9 +101,9 @@ namespace ApiGateway.Client.Tests
             // We made an extra input and are waiting indefinitely for 'c' to be entered.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var verdict = await client.JudgeService.VerifySolution(taskId, sourceCode);
+            var verdict = await client.PlayerService.VerifySolution(taskId, sourceCode);
 
             Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
             Assert.AreEqual(0, verdict.TestsPassed);

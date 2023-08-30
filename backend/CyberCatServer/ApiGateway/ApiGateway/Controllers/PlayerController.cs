@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
+using Shared.Models.Dto.Data;
+using Shared.Models.Models;
+using Shared.Server.Dto.Args;
 using Shared.Server.Exceptions;
 using Shared.Server.Services;
 
@@ -16,45 +18,30 @@ namespace ApiGateway.Controllers;
 public class PlayerController : ControllerBase
 {
     private readonly IPlayerGrpcService _playerGrpcService;
+    private readonly IAuthGrpcService _authorizationService;
 
-    public PlayerController(IPlayerGrpcService playerGrpcService)
+    public PlayerController(IPlayerGrpcService playerGrpcService, IAuthGrpcService authorizationService)
     {
+        _authorizationService = authorizationService;
         _playerGrpcService = playerGrpcService;
     }
 
-    [HttpPost("create")]
+    [HttpDelete]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.BadRequest)]
-    public async Task<ActionResult> AddNewPlayer()
+    public async Task<ActionResult> RemovePlayer()
     {
-        var userId = User.Identity.GetUserId();
-        try
-        {
-            await _playerGrpcService.CreatePlayer(userId);
-            return Ok();
-        }
-        catch (PlayerAlreadyExistsException)
-        {
-            return BadRequest();
-        }
-    }
-
-    [HttpDelete("delete")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> DeletePlayer()
-    {
-        var playerId = User.Identity.GetUserId();
-        await _playerGrpcService.DeletePlayer(playerId);
+        var playerId = User.Identity.GetPlayerId();
+        await _playerGrpcService.RemovePlayer(playerId);
 
         return Ok();
     }
 
-    [HttpGet("get")]
+    [HttpGet]
     [ProducesResponseType(typeof(PlayerDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
     public async Task<ActionResult<PlayerDto>> GetPlayerById()
     {
-        var playerId = User.Identity.GetUserId();
+        var playerId = User.Identity.GetPlayerId();
         try
         {
             var player = await _playerGrpcService.GetPlayerById(playerId);
@@ -66,6 +53,56 @@ public class PlayerController : ControllerBase
         }
     }
 
+    [HttpPost("authorize")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> Authorize()
+    {
+        var userId = await User.GetUserId(_authorizationService);
+        await _playerGrpcService.AuthorizePlayer(userId);
+        return Ok();
+    }
+
+    [HttpPost("verify/{taskId}")]
+    [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromForm] string sourceCode)
+    {
+        if (string.IsNullOrEmpty(sourceCode))
+        {
+            throw new ArgumentNullException(nameof(sourceCode));
+        }
+
+        var playerId = User.Identity.GetPlayerId();
+        var args = new GetVerdictForPlayerArgs()
+        {
+            PlayerId = playerId,
+            SolutionDto = new SolutionDto()
+            {
+                TaskId = new TaskId(taskId),
+                SourceCode = sourceCode
+            }
+        };
+
+        var verdict = await _playerGrpcService.GetVerdict(args);
+        return verdict;
+    }
+
+    [HttpGet("tasks/{taskId}")]
+    [ProducesResponseType(typeof(TaskData), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<TaskData>> GetTaskData(string taskId)
+    {
+        var playerId = User.Identity.GetPlayerId();
+        var args = new GetTaskDataArgs()
+        {
+            PlayerId = playerId,
+            TaskId = new TaskId(taskId)
+        };
+        var taskData = await _playerGrpcService.GetTaskData(args);
+
+        return taskData;
+    }
+
+    /*
     [HttpPut("bitcoins/add")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
@@ -103,4 +140,5 @@ public class PlayerController : ControllerBase
             return NotFound();
         }
     }
+    */
 }

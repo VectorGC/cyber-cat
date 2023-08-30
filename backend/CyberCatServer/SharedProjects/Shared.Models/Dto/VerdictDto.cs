@@ -1,10 +1,10 @@
 using ProtoBuf;
-using Shared.Models.Models;
+using Shared.Models.Enums;
 
 namespace Shared.Models.Dto
 {
     [ProtoContract]
-    public class VerdictDto : IVerdict
+    public class VerdictDto
     {
         [ProtoMember(1)]
         public VerdictStatus Status

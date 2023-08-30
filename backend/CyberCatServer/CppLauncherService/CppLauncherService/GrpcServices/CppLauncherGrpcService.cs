@@ -1,7 +1,7 @@
 using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
-using Shared.Models.Dto;
 using Shared.Models.Dto.Args;
+using Shared.Server.Dto;
 using Shared.Server.Services;
 
 namespace CppLauncherService.GrpcServices;

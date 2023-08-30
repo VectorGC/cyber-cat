@@ -4,6 +4,6 @@ using MongoDbGenericRepository.Attributes;
 namespace AuthService.Repositories.InternalModels;
 
 [CollectionName("Roles")]
-internal class Role : MongoIdentityRole
+internal class Role : MongoIdentityRole<long>
 {
 }

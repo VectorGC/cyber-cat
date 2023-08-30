@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class SolutionClientTests : AuthorizedClientTestFixture
+    public class SolutionClientTests : PlayerClientTestFixture
     {
         public SolutionClientTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -18,7 +17,7 @@ namespace ApiGateway.Client.Tests
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
             var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
             // We are checking that there is no code initially.
             var lastSavedCode = await client.SolutionService.GetSavedCode(taskId);

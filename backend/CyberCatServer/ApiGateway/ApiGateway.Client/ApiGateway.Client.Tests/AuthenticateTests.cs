@@ -1,5 +1,7 @@
+using System;
+using System.Net;
+using System.Security.Authentication;
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
@@ -14,9 +16,17 @@ namespace ApiGateway.Client.Tests
         [Test]
         public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
         {
-            var token = await Client.Authorization.GetAuthenticationToken("cat", "cat");
+            var anonymous = GetAnonymousClient();
+            await anonymous.RegisterUser("test@test.com", "test_password", "Test_User");
 
-            Assert.IsNotEmpty(token);
+            var client = await anonymous.Authorize("test@test.com", "test_password");
+            Assert.IsNotNull(client);
+
+            await client.RemoveUser();
+
+            var ex = Assert.ThrowsAsync<WebException>(async () => await client.AuthorizePlayer());
+            var response = (HttpWebResponse) ex.Response;
+            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
         }
     }
 }

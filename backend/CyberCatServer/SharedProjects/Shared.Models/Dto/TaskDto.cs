@@ -1,4 +1,6 @@
 using ProtoBuf;
+using Shared.Models.Dto.Data;
+using Shared.Models.Dto.Descriptions;
 
 namespace Shared.Models.Dto
 {
@@ -6,25 +8,25 @@ namespace Shared.Models.Dto
     public class TaskDto
     {
         [ProtoMember(1)]
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
-
-        [ProtoMember(2)]
-        public string Description
+        public TaskDescription Description
         {
             get => description;
             set => description = value;
         }
 
-        public string name;
-        public string description;
+        [ProtoMember(2)]
+        public TaskData Data
+        {
+            get => data;
+            set => data = value;
+        }
+
+        public TaskDescription description;
+        public TaskData data;
 
         public override string ToString()
         {
-            return Name;
+            return Description.Name;
         }
     }
 }

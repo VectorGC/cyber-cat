@@ -1,6 +1,7 @@
 using Shared.Models.Dto;
 using Shared.Models.Dto.Args;
-using Shared.Models.Models;
+using Shared.Models.Enums;
+using Shared.Server.Dto;
 using Shared.Server.Services;
 
 namespace JudgeService.GrpcServices;

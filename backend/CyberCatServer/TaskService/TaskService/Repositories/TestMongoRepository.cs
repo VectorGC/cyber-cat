@@ -1,44 +1,45 @@
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
+using Shared.Models.Dto;
 using Shared.Models.Models;
 using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
 
-namespace TaskService.Repositories;
-
-public class TestMongoRepository : BaseMongoRepository<string>, ITestRepository
+namespace TaskService.Repositories
 {
-    public TestMongoRepository(IOptions<TaskServiceAppSettings> appSettings)
-        : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
+    public class TestMongoRepository : BaseMongoRepository<string>, ITestRepository
     {
-    }
-
-    public async Task Add(string taskId, IEnumerable<ITest> tests)
-    {
-        foreach (var test in tests)
+        public TestMongoRepository(IOptions<TaskServiceAppSettings> appSettings)
+            : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
         {
-            await Add(taskId, test);
         }
-    }
 
-    public async Task Add(string taskId, ITest test)
-    {
-        var testModel = new TestModel(test);
-        var task = await GetOneAsync<TaskModel>(task => task.Id == taskId);
-        task.Tests.Add(testModel);
-        
-        
-
-        var success = await UpdateOneAsync(task);
-        if (!success)
+        public async Task Add(TaskId taskId, TestsDto tests)
         {
-            throw new InvalidOperationException($"Failure update tests for task '{taskId}'");
+            foreach (var test in tests)
+            {
+                await Add(taskId, test);
+            }
         }
-    }
 
-    public async Task<ITests> GetTests(string taskId)
-    {
-        var task = await GetOneAsync<TaskModel>(task => task.Id == taskId);
-        return task.GetTests();
+        public async Task Add(TaskId taskId, TestDto test)
+        {
+            var testModel = new TestDbModel(test);
+            var task = await GetOneAsync<TaskDbModel>(task => task.Id == taskId.Value);
+            task.Tests.Add(testModel);
+
+
+            var success = await UpdateOneAsync(task);
+            if (!success)
+            {
+                throw new InvalidOperationException($"Failure update tests for task '{taskId}'");
+            }
+        }
+
+        public async Task<TestsDto> GetTests(TaskId taskId)
+        {
+            var task = await GetOneAsync<TaskDbModel>(task => task.Id == taskId.Value);
+            return task.Tests.ToDto();
+        }
     }
 }

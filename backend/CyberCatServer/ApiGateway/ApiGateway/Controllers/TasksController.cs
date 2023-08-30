@@ -2,7 +2,8 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
+using Shared.Models.Models;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -20,11 +21,11 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{taskId}")]
-    [ProducesResponseType(typeof(TaskDto), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(TaskDescription), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
+    public async Task<ActionResult<TaskDescription>> GetTask(string taskId)
     {
-        var task = await TaskGrpcService.GetTask(taskId);
+        var task = await TaskGrpcService.GetTask(new TaskId(taskId));
         return task;
     }
 }

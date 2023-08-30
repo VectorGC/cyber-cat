@@ -1,10 +1,12 @@
+using Shared.Models.Dto;
 using Shared.Models.Models;
+using Shared.Server.Models;
 
 namespace SolutionService.Repositories;
 
 public interface ISolutionRepository
 {
-    Task<string> GetSavedCode(string userId, string taskId);
-    Task Save(string userId, ISolution solution);
-    Task RemoveCode(string userId, string taskId);
+    Task<string> GetSavedCode(UserId userId, TaskId taskId);
+    Task Save(UserId userId, SolutionDto solution);
+    Task RemoveCode(UserId userId, TaskId taskId);
 }

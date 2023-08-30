@@ -1,13 +1,16 @@
 using System.Threading.Tasks;
-using Shared.Models.Models;
+using Shared.Models.Dto.ProtoHelpers;
+using Shared.Server.Dto;
+using Shared.Server.Models;
 
 namespace AuthService.Repositories;
 
 public interface IAuthUserRepository
 {
-    Task Add(IUser user, string password);
-    Task Remove(string email);
-    Task<IUser> FindByEmailAsync(string email);
-    Task<bool> CheckPasswordAsync(string email, string password);
-    Task SetJwtAuthenticationAccessTokenAsync(string email, string accessToken);
+    int Count { get; }
+    Task<UserId> Create(string email, string password, string name);
+    Task Remove(UserId id);
+    Task<UserDto> FindByEmailAsync(string email);
+    Task<bool> CheckPasswordAsync(UserId id, string password);
+    Task SetJwtAuthenticationAccessTokenAsync(UserId id, string accessToken);
 }

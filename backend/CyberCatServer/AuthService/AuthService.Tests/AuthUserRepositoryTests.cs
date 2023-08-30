@@ -1,5 +1,4 @@
 using AuthService.Repositories;
-using AuthService.Repositories.InternalModels;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,24 +21,23 @@ public class AuthUserRepositoryTests
     public async Task ShouldCreateAndRemoveUser_WhenPassValidParameters()
     {
         var password = "123";
-        var user = new User
-        {
-            Email = "test@email.com",
-            UserName = "Test User Name"
-        };
+        var email = "test@email.com";
+        var userName = "Test User Name";
 
         using var scope = _factory.Services.CreateScope();
         var userRepository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
 
-        var notExistingUser = await userRepository.FindByEmailAsync(user.Email);
+        var notExistingUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(notExistingUser);
 
-        await userRepository.Add(user, password);
-        var createdUser = await userRepository.FindByEmailAsync(user.Email);
+        var userId = await userRepository.Create(email, password, userName);
+        Assert.NotNull(userId);
+
+        var createdUser = await userRepository.FindByEmailAsync(email);
         Assert.NotNull(createdUser);
 
-        await userRepository.Remove(user.Email);
-        var removedUser = await userRepository.FindByEmailAsync(user.Email);
+        await userRepository.Remove(userId);
+        var removedUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(removedUser);
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
+using Shared.Server.Models;
 
 namespace Shared.Server.Exceptions;
 
 public class PlayerNotFoundException : Exception
 {
-    public static PlayerNotFoundException UserIdNotFound(string userId) => new($"Player with UserId '{userId}' not found");
-    private PlayerNotFoundException(string message) : base(message)
+    public PlayerNotFoundException(PlayerId playerId) : base($"Player '{playerId}' not found")
     {
-        
     }
 }

@@ -1,5 +1,5 @@
-using Shared.Models.Dto.Args;
 using Shared.Models.Dto.ProtoHelpers;
+using Shared.Server.Dto.Args;
 using Shared.Server.Services;
 using SolutionService.Repositories;
 

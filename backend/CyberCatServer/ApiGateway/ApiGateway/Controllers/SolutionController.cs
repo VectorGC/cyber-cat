@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
+using Shared.Models.Models;
+using Shared.Server.Dto.Args;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -15,9 +16,11 @@ namespace ApiGateway.Controllers;
 public class SolutionController : ControllerBase
 {
     private readonly ISolutionGrpcService _solutionGrpcService;
+    private readonly IAuthGrpcService _authGrpcService;
 
-    public SolutionController(ISolutionGrpcService solutionGrpcService)
+    public SolutionController(ISolutionGrpcService solutionGrpcService, IAuthGrpcService authGrpcService)
     {
+        _authGrpcService = authGrpcService;
         _solutionGrpcService = solutionGrpcService;
     }
 
@@ -26,11 +29,11 @@ public class SolutionController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<string>> GetLastSavedCode(string taskId)
     {
-        var userId = User.Identity.GetUserId();
+        var userId = await User.GetUserId(_authGrpcService);
         var args = new GetSavedCodeArgs
         {
             UserId = userId,
-            TaskId = taskId
+            TaskId = new TaskId(taskId)
         };
 
         var savedCode = await _solutionGrpcService.GetSavedCode(args);
@@ -46,13 +49,13 @@ public class SolutionController : ControllerBase
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var userId = User.Identity.GetUserId();
+        var userId = await User.GetUserId(_authGrpcService);
         var args = new SaveCodeArgs()
         {
             UserId = userId,
             Solution = new SolutionDto()
             {
-                TaskId = taskId,
+                TaskId = new TaskId(taskId),
                 SourceCode = sourceCode
             }
         };
@@ -67,11 +70,11 @@ public class SolutionController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<string>> DeleteSavedCode(string taskId)
     {
-        var userId = User.Identity.GetUserId();
+        var userId = await User.GetUserId(_authGrpcService);
         var args = new RemoveCodeArgs
         {
             UserId = userId,
-            TaskId = taskId
+            TaskId = new TaskId(taskId)
         };
 
         await _solutionGrpcService.RemoveCode(args);

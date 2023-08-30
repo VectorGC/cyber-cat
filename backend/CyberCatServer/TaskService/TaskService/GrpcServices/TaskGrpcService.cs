@@ -1,5 +1,6 @@
-using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
 using Shared.Models.Dto.ProtoHelpers;
+using Shared.Models.Models;
 using Shared.Server.Services;
 using TaskService.Repositories;
 
@@ -14,7 +15,7 @@ public class TaskGrpcService : ITaskGrpcService
         _taskRepository = taskRepository;
     }
 
-    public async Task<TaskDto> GetTask(StringProto taskId)
+    public async Task<TaskDescription> GetTask(TaskId taskId)
     {
         var task = await _taskRepository.GetTask(taskId);
         return task;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
-using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
+using Shared.Models.Models;
 using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
 
@@ -13,21 +14,21 @@ namespace TaskService.Repositories
         {
         }
 
-        public async Task Add(string id, TaskDto task)
+        public async Task Add(TaskId id, TaskDescription task)
         {
-            var taskModel = new TaskModel(id, task);
+            var taskModel = new TaskDbModel(id, task);
             await AddOneAsync(taskModel);
         }
 
-        public async Task<TaskDto> GetTask(string id)
+        public async Task<TaskDescription> GetTask(TaskId id)
         {
-            var task = await GetOneAsync<TaskModel>(task => task.Id == id);
-            return task.ToDto();
+            var task = await GetOneAsync<TaskDbModel>(task => task.Id == id.Value);
+            return task.ToDescription();
         }
 
-        public async Task<bool> Contains(string id)
+        public async Task<bool> Contains(TaskId id)
         {
-            return await AnyAsync<TaskModel>(task => task.Id == id);
+            return await AnyAsync<TaskDbModel>(task => task.Id == id.Value);
         }
     }
 }

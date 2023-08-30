@@ -1,15 +1,14 @@
 ﻿using ProtoBuf;
-using Shared.Models.Models;
 
 namespace Shared.Models.Dto
 {
     [ProtoContract]
-    public class PlayerDto : IPlayer
+    public class PlayerDto
     {
         [ProtoMember(1)]
         public int BitcoinsAmount
         {
-            get => bitcoinsAmount; 
+            get => bitcoinsAmount;
             set => bitcoinsAmount = value;
         }
 
