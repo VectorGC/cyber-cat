@@ -21,6 +21,11 @@ namespace ApiGateway.Client.Internal
             return Task.CompletedTask;
         }
 
+        public Task RegisterPlayer()
+        {
+            return Task.CompletedTask;
+        }
+
         public Task<IPlayerClient> AuthorizePlayer()
         {
             return Task.FromResult<IPlayerClient>(this);

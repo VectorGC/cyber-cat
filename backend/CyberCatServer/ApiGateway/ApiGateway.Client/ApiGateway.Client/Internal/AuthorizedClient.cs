@@ -18,6 +18,11 @@ namespace ApiGateway.Client.Internal
             _webClient.AddAuthorizationHeader(JwtBearerDefaults.AuthenticationScheme, token);
         }
 
+        public async Task RegisterPlayer()
+        {
+            await _webClient.PostAsync(_uri + "player/register");
+        }
+
         public async Task<IPlayerClient> AuthorizePlayer()
         {
             await _webClient.PostAsync(_uri + "player/authorize");

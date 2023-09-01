@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using ApiGateway.Extensions;
+using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@ using Shared.Models.Dto.Data;
 using Shared.Models.Models;
 using Shared.Server.Dto.Args;
 using Shared.Server.Exceptions;
+using Shared.Server.Models;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -28,20 +29,17 @@ public class PlayerController : ControllerBase
 
     [HttpDelete]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> RemovePlayer()
+    public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
     {
-        var playerId = User.Identity.GetPlayerId();
         await _playerGrpcService.RemovePlayer(playerId);
-
         return Ok();
     }
 
     [HttpGet]
     [ProducesResponseType(typeof(PlayerDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult<PlayerDto>> GetPlayerById()
+    public async Task<ActionResult<PlayerDto>> GetPlayerById([FromPlayer] PlayerId playerId)
     {
-        var playerId = User.Identity.GetPlayerId();
         try
         {
             var player = await _playerGrpcService.GetPlayerById(playerId);
@@ -53,25 +51,29 @@ public class PlayerController : ControllerBase
         }
     }
 
+    [HttpPost("register")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> Register([FromUser] UserId userId)
+    {
+        return await _playerGrpcService.CreatePlayer(userId);
+    }
+
     [HttpPost("authorize")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> Authorize()
+    public async Task<ActionResult> Authorize([FromUser] UserId userId)
     {
-        var userId = await User.GetUserId(_authorizationService);
-        await _playerGrpcService.AuthorizePlayer(userId);
-        return Ok();
+        return await _playerGrpcService.GetPlayerByUserId(userId);
     }
 
     [HttpPost("verify/{taskId}")]
     [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromForm] string sourceCode)
+    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
     {
         if (string.IsNullOrEmpty(sourceCode))
         {
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var playerId = User.Identity.GetPlayerId();
         var args = new GetVerdictForPlayerArgs()
         {
             PlayerId = playerId,
@@ -89,9 +91,8 @@ public class PlayerController : ControllerBase
     [HttpGet("tasks/{taskId}")]
     [ProducesResponseType(typeof(TaskData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskData>> GetTaskData(string taskId)
+    public async Task<ActionResult<TaskData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
     {
-        var playerId = User.Identity.GetPlayerId();
         var args = new GetTaskDataArgs()
         {
             PlayerId = playerId,

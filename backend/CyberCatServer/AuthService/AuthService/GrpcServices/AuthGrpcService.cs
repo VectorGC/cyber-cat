@@ -1,13 +1,13 @@
-using System;
 using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
 using Shared.Models.Dto.Args;
 using Shared.Models.Dto.ProtoHelpers;
-using Shared.Server.Dto;
 using Shared.Server.Dto.Args;
 using Shared.Server.Exceptions;
+using Shared.Server.Exceptions.AuthService;
 using Shared.Server.Models;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace AuthService.GrpcServices;
@@ -23,21 +23,25 @@ public class AuthGrpcService : IAuthGrpcService
         _tokenService = tokenService;
     }
 
-    public async Task<UserId> CreateUser(CreateUserArgs args)
+    public async Task<Response<UserId>> CreateUser(CreateUserArgs args)
     {
-        return await _authUserRepository.Create(args.Email, args.Password, args.Name);
+        try
+        {
+            return await _authUserRepository.Create(args.Email, args.Password, args.Name);
+        }
+        catch (IdentityUserException ex)
+        {
+            return ex;
+        }
     }
 
-    public async Task<FindUserByEmailResponse> FindByEmail(StringProto email)
+    public async Task<Response<UserId>> FindByEmail(StringProto email)
     {
         var user = await _authUserRepository.FindByEmailAsync(email);
-        return new FindUserByEmailResponse()
-        {
-            UserId = user?.Id
-        };
+        return user?.Id;
     }
 
-    public async Task<StringProto> GetAccessToken(GetAccessTokenArgs args)
+    public async Task<Response<string>> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
         var password = args.Password;
@@ -45,13 +49,13 @@ public class AuthGrpcService : IAuthGrpcService
         var user = await _authUserRepository.FindByEmailAsync(email);
         if (user == null)
         {
-            throw new UserNotFound(email);
+            return new UserNotFoundException(email);
         }
 
         var isPasswordValid = await _authUserRepository.CheckPasswordAsync(user.Id, password);
         if (!isPasswordValid)
         {
-            throw new UnauthorizedAccessException("Invalid password");
+            return new UnauthorizedException("Invalid password");
         }
 
         var accessToken = _tokenService.CreateToken(user.Email, user.UserName);

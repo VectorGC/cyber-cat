@@ -24,13 +24,13 @@ public class CreateAndRemovePlayerTests
         using var channel = _factory.CreateGrpcChannel();
         var service = channel.CreateGrpcService<IPlayerGrpcService>();
         var userId = new UserId(1234567);
-        var playerId = new PlayerId(1234567);
+        var expectedPlayerId = new PlayerId(1234567);
 
-        var ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(playerId));
+        var ex = Assert.ThrowsAsync<Grpc.Core.RpcException>(async () => await service.GetPlayerById(expectedPlayerId));
         Assert.That(ex.Message, Is.EqualTo("Status(StatusCode=\"Unknown\", Detail=\"Exception was thrown by handler. PlayerNotFoundException: Player with UserId '1234567' not found\")"));
 
-        var createdPlayerId = await service.AuthorizePlayer(userId);
-        Assert.AreEqual(playerId.Value, createdPlayerId.Value);
+        var playerId = await service.CreatePlayer(userId);
+        Assert.AreEqual(expectedPlayerId, playerId.Value);
 
         var player = await service.GetPlayerById(playerId);
 

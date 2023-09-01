@@ -1,3 +1,5 @@
+using System;
+using System.Net;
 using System.Threading.Tasks;
 using ApiGateway.Client.Clients;
 using NUnit.Framework;
@@ -10,9 +12,19 @@ namespace ApiGateway.Client.Tests.Abstracts
         {
         }
 
-        private async Task<IAuthorizedClient> GetAuthorizedClient()
+        protected async Task<IAuthorizedClient> GetAuthorizedClient()
         {
-            return await ServerClientFactory.CreateAuthorized(ServerEnvironment);
+            try
+            {
+                return await ServerClientFactory.CreateAuthorized(ServerEnvironment, "test@test.com", "test_password");
+            }
+            catch (WebException ex) when (ex.Response is HttpWebResponse httpWebResponse && httpWebResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                var anonymous = GetAnonymousClient();
+                await anonymous.RegisterUser("test@test.com", "test_password", "Test_Name");
+
+                return await ServerClientFactory.CreateAuthorized(ServerEnvironment, "test@test.com", "test_password");
+            }
         }
 
         [TearDown]

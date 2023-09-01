@@ -20,13 +20,13 @@ namespace ApiGateway.Client
             return new AnonymousClient(uri, webClient);
         }
 
-        public static async Task<IAuthorizedClient> CreateAuthorized(ServerEnvironment serverEnvironment, string email = "cat", string password = "cat")
+        public static async Task<IAuthorizedClient> CreateAuthorized(ServerEnvironment serverEnvironment, string email, string password)
         {
             var anonymous = CreateAnonymous(serverEnvironment);
             return await anonymous.Authorize(email, password);
         }
 
-        public static async Task<IPlayerClient> CreatePlayer(ServerEnvironment serverEnvironment, string email = "cat", string password = "cat")
+        public static async Task<IPlayerClient> CreatePlayer(ServerEnvironment serverEnvironment, string email, string password)
         {
             var authorized = await CreateAuthorized(serverEnvironment, email, password);
             return await authorized.AuthorizePlayer();

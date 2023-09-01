@@ -24,17 +24,17 @@ public class AuthController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<string>> Login(string email, string password, string name)
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> Register(string email, string password, string name)
     {
-        await _authGrpcService.CreateUser(new CreateUserArgs
+        var response = await _authGrpcService.CreateUser(new CreateUserArgs
         {
             Email = email,
             Password = password,
             Name = name
         });
 
-        return Ok();
+        return response;
     }
 
     [AllowAnonymous]
@@ -42,13 +42,13 @@ public class AuthController : ControllerBase
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     public async Task<ActionResult<string>> Login(string email, string password)
     {
-        var accessToken = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
+        var response = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
         {
             Email = email,
             Password = password
         });
 
-        return accessToken.Value;
+        return response;
     }
 
     [HttpDelete]
@@ -56,7 +56,6 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> Remove([FromUser] UserId userId)
     {
         await _authGrpcService.Remove(userId);
-
         return Ok();
     }
 }

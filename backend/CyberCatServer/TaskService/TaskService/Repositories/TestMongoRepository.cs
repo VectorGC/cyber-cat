@@ -22,7 +22,7 @@ namespace TaskService.Repositories
             }
         }
 
-        public async Task Add(TaskId taskId, TestDto test)
+        private async Task Add(TaskId taskId, TestDto test)
         {
             var testModel = new TestDbModel(test);
             var task = await GetOneAsync<TaskDbModel>(task => task.Id == taskId.Value);

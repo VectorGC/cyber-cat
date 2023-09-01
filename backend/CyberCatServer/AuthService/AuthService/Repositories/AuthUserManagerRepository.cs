@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Shared.Server.Dto;
 using Shared.Server.Exceptions;
+using Shared.Server.Exceptions.AuthService;
 using Shared.Server.Models;
 
 namespace AuthService.Repositories;

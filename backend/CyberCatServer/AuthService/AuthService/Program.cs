@@ -1,4 +1,3 @@
-using System;
 using AuthService.Configurations;
 using AuthService.GrpcServices;
 using AuthService.Repositories;

@@ -5,6 +5,7 @@ using Shared.Models.Enums;
 using Shared.Server.Dto.Args;
 using Shared.Server.Exceptions;
 using Shared.Server.Models;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace PlayerService.GrpcServices;
@@ -20,15 +21,16 @@ public class PlayerGrpcService : IPlayerGrpcService
         _playerRepository = playerRepository;
     }
 
-    public async Task<PlayerId> AuthorizePlayer(UserId userId)
+    public async Task<Response<PlayerId>> CreatePlayer(UserId userId)
     {
-        var player = await _playerRepository.GetPlayerByUserId(userId);
-        if (player == null)
+        try
         {
             return await _playerRepository.CreatePlayer(userId);
         }
-
-        return player;
+        catch (IdentityPlayerException exception)
+        {
+            return exception;
+        }
     }
 
     public async Task RemovePlayer(PlayerId playerId)
@@ -36,7 +38,18 @@ public class PlayerGrpcService : IPlayerGrpcService
         await _playerRepository.RemovePlayer(playerId);
     }
 
-    public async Task<PlayerDto> GetPlayerById(PlayerId playerId)
+    public async Task<Response<PlayerId>> GetPlayerByUserId(UserId userId)
+    {
+        var playerId = await _playerRepository.GetPlayerByUserId(userId);
+        if (playerId == null)
+        {
+            return new PlayerNotFoundException(userId);
+        }
+
+        return playerId;
+    }
+
+    public async Task<Response<PlayerDto>> GetPlayerById(PlayerId playerId)
     {
         var player = await _playerRepository.GetPlayerById(playerId);
         if (player == null)

@@ -44,7 +44,8 @@ public class AuthenticationAndPlayerAuthorization
             Email = Email,
             Password = UserPassword
         };
-        var token = await authenticationService.GetAccessToken(args);
+        var response = await authenticationService.GetAccessToken(args);
+        var token = (string) response;
 
         Assert.IsNotEmpty(token);
 

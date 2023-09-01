@@ -33,6 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<BindUserAuthorizationFilter>();
+    options.Filters.Add<BindPlayerAuthorizationFilter>();
 });
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.

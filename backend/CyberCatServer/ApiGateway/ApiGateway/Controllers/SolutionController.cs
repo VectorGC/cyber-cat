@@ -1,11 +1,12 @@
 using System.Net;
-using ApiGateway.Extensions;
+using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
 using Shared.Models.Models;
 using Shared.Server.Dto.Args;
+using Shared.Server.Models;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -27,9 +28,8 @@ public class SolutionController : ControllerBase
     [HttpGet("{taskId}")]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<string>> GetLastSavedCode(string taskId)
+    public async Task<ActionResult<string>> GetLastSavedCode(string taskId, [FromUser] UserId userId)
     {
-        var userId = await User.GetUserId(_authGrpcService);
         var args = new GetSavedCodeArgs
         {
             UserId = userId,
@@ -42,14 +42,13 @@ public class SolutionController : ControllerBase
 
     [HttpPost("{taskId}")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SaveCode(string taskId, [FromForm] string sourceCode)
+    public async Task<ActionResult> SaveCode(string taskId, [FromForm] string sourceCode, [FromUser] UserId userId)
     {
         if (string.IsNullOrEmpty(sourceCode))
         {
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var userId = await User.GetUserId(_authGrpcService);
         var args = new SaveCodeArgs()
         {
             UserId = userId,
@@ -68,9 +67,8 @@ public class SolutionController : ControllerBase
     [HttpDelete("{taskId}")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<string>> DeleteSavedCode(string taskId)
+    public async Task<ActionResult<string>> DeleteSavedCode(string taskId, [FromUser] UserId userId)
     {
-        var userId = await User.GetUserId(_authGrpcService);
         var args = new RemoveCodeArgs
         {
             UserId = userId,

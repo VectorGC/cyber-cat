@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Dto;
@@ -38,7 +39,15 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
             Id = userId.Value
         };
 
-        await AddOneAsync(playerModel);
+        try
+        {
+            await AddOneAsync(playerModel);
+        }
+        catch (MongoWriteException writeException)
+        {
+            throw new IdentityPlayerException(writeException.Message);
+        }
+
         _logger.LogInformation("Create player '{PlayerId}'", playerModel.Id);
 
         return new PlayerId(playerModel.Id);

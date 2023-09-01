@@ -27,12 +27,6 @@ namespace ApiGateway.Client.Internal
             _webClient = webClient;
         }
 
-        public async Task<PlayerDto> GetPlayer()
-        {
-            var player = await _webClient.GetFromJsonAsync<PlayerDto>(_uri + "player");
-            return player;
-        }
-
         public async Task<TaskDto> GetTask(string taskId)
         {
             var description = await _webClient.GetFromJsonAsync<TaskDescription>(_uri + $"tasks/{taskId}");
@@ -46,7 +40,7 @@ namespace ApiGateway.Client.Internal
 
         public async Task<VerdictDto> VerifySolution(string taskId, string sourceCode)
         {
-            return await _webClient.PostAsJsonAsync<VerdictDto>(_uri + $"judge/verify/{taskId}", new Dictionary<string, string>()
+            return await _webClient.PostAsJsonAsync<VerdictDto>(_uri + $"player/verify/{taskId}", new Dictionary<string, string>()
             {
                 ["sourceCode"] = sourceCode
             });

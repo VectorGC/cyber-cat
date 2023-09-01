@@ -1,4 +1,7 @@
-﻿using ApiGateway.Client.Tests.Abstracts;
+﻿using System.Net;
+using System.Threading.Tasks;
+using ApiGateway.Client.Tests.Abstracts;
+using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
@@ -6,6 +9,37 @@ namespace ApiGateway.Client.Tests
     {
         public PlayerTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
+        }
+
+        [Test]
+        public async Task CreatePlayerAndRemovePlayer_WhenPassValidCredentials()
+        {
+            var authorized = await GetAuthorizedClient();
+
+            var ex = Assert.ThrowsAsync<WebException>(async () => await authorized.AuthorizePlayer());
+            var response = (HttpWebResponse) ex.Response;
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+            await authorized.RegisterPlayer();
+
+            // Player is already registered.
+            ex = Assert.ThrowsAsync<WebException>(async () => await authorized.RegisterPlayer());
+            response = (HttpWebResponse) ex.Response;
+            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+
+            var client = await authorized.AuthorizePlayer();
+
+            Assert.IsNotNull(client);
+
+            await client.RemovePlayer();
+
+            ex = Assert.ThrowsAsync<WebException>(async () => await authorized.AuthorizePlayer());
+            response = (HttpWebResponse) ex.Response;
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+
+            ex = Assert.ThrowsAsync<WebException>(async () => await client.PlayerService.VerifySolution("tutorial", "Hello"));
+            response = (HttpWebResponse) ex.Response;
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         /*

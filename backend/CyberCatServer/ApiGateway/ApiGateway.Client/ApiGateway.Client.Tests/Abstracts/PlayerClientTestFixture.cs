@@ -12,7 +12,7 @@ namespace ApiGateway.Client.Tests.Abstracts
 
         protected async Task<IPlayerClient> GetPlayerClient()
         {
-            return await ServerClientFactory.CreatePlayer(ServerEnvironment);
+            return await ServerClientFactory.CreatePlayer(ServerEnvironment, "test@test.com", "test_password");
         }
 
         [TearDown]
