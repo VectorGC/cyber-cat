@@ -39,6 +39,9 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
         launchOutput = _errorFormatService.Format(launchOutput);
 
+        _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+        _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
+
         return new OutputDto
         {
             StandardOutput = launchOutput.StandardOutput,
