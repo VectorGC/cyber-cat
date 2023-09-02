@@ -1,5 +1,4 @@
 using System;
-using ApiGateway.Client.Factory;
 using Cysharp.Threading.Tasks;
 using Features.GameManager;
 using TaskUnits.TaskDataModels;
@@ -19,9 +18,16 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var client = await ServerClientFactory.UseCredentials("cat", "cat").Create(GameConfig.ServerEnvironment);
-            var task = await client.Tasks.GetTask(_task);
-            return TaskData.ConvertFrom(task);
+            var player = await GameConfig.GetOrPlayerClient();
+            var task = player.Tasks[_task];
+            var name = await task.GetName();
+            var description = await task.GetDescription();
+
+            return new TaskData
+            {
+                Name = name,
+                Description = description
+            };
         }
     }
 }

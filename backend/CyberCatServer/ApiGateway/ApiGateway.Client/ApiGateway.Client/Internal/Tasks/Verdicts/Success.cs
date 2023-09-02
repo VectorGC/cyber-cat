@@ -1,5 +1,4 @@
 using ApiGateway.Client.Models;
-using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 
 namespace ApiGateway.Client.Internal.Tasks.Verdicts
@@ -11,6 +10,11 @@ namespace ApiGateway.Client.Internal.Tasks.Verdicts
         public Success(VerdictData verdictData)
         {
             TestsPassed = verdictData.TestsPassed;
+        }
+
+        public override string ToString()
+        {
+            return $"Success: {TestsPassed} test passed";
         }
     }
 }

@@ -14,6 +14,5 @@ namespace ApiGateway.Client.Internal.WebClientAdapters
         Task<TResponse> PostAsJsonAsync<TResponse>(string uri, NameValueCollection form);
         Task<string> PutAsync(string uri, NameValueCollection form);
         Task DeleteAsync(string uri);
-        Task DeleteAsync(string uri, NameValueCollection form);
     }
 }

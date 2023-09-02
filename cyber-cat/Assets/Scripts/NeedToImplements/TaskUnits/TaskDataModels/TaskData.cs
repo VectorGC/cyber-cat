@@ -1,5 +1,5 @@
 using System;
-using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
 
 namespace TaskUnits.TaskDataModels
 {
@@ -17,8 +17,8 @@ namespace TaskUnits.TaskDataModels
         public bool? IsSolved => _completion >= 1f;
 
         // TODO:
-        [Obsolete("Не используйте его, он будет удален. Он нужен только для совеместимости старой ITaskData с новой сервисной архитекутрой ITask")]
-        public static ITaskData ConvertFrom(TaskDto task)
+        [Obsolete("Do not use it, it will be removed. It is only needed for compatibility of the old ITaskData with the new service architecture ITask.")]
+        public static ITaskData ConvertFrom(TaskDescription task)
         {
             return new TaskData
             {

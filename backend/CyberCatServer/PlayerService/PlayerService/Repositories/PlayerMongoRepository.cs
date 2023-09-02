@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
-using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
 using Shared.Models.Ids;

@@ -1,5 +1,7 @@
+using ApiGateway.Client.Models;
+
 public interface ICodeEditor
 {
-    string TaskId { get; }
+    ITask Task { get; }
     void Close();
 }

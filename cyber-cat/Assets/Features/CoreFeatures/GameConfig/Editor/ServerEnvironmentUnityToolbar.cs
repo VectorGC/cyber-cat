@@ -1,4 +1,4 @@
-using ApiGateway.Client.Factory;
+using ApiGateway.Client;
 using Features.GameManager;
 using UnityEditor;
 using UnityEngine;

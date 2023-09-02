@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Ids;
 using Shared.Server.Ids;

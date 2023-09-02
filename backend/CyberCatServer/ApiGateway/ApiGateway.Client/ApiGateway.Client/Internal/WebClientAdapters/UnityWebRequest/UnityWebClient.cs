@@ -1,5 +1,5 @@
 #if UNITY_WEBGL
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -60,10 +60,10 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             }
         }
 
-        public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
+        public async Task<string> PostAsync(string uri, NameValueCollection form)
         {
             DebugOnly.Log($"Send POST to '{uri}'");
-            using (var request = UnityEngine.Networking.UnityWebRequest.Post(uri, form))
+            using (var request = UnityEngine.Networking.UnityWebRequest.Post(uri, form.ToString()))
             {
                 SetAuthorizationIfNeeded(request);
                 await request.SendWebRequest().WaitAsync();
@@ -90,7 +90,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             }
         }
 
-        public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
+        public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, NameValueCollection form)
         {
             var json = await PostAsync(uri, form);
             DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
@@ -100,7 +100,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             return obj;
         }
 
-        public async Task<string> PutAsync(string uri, Dictionary<string, string> form)
+        public async Task<string> PutAsync(string uri, NameValueCollection form)
         {
             DebugOnly.Log($"Send PUT to '{uri}'");
             using (var request = UnityEngine.Networking.UnityWebRequest.Put(uri, form.ToString()))

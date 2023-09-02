@@ -36,7 +36,7 @@ public class AuthController : ControllerBase
         return await _authGrpcService.GetAccessToken(new GetAccessTokenArgs(email, password));
     }
 
-    [HttpDelete]
+    [HttpPost("remove")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> Remove([FromUser] UserId userId, string password)
     {

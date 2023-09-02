@@ -5,7 +5,6 @@ using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Dto.Descriptions;
 using Shared.Models.Enums;

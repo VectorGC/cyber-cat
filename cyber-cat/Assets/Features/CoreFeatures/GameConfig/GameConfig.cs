@@ -1,4 +1,6 @@
-using ApiGateway.Client.Factory;
+using System.Threading.Tasks;
+using ApiGateway.Client;
+using ApiGateway.Client.Models;
 using UnityEngine;
 
 namespace Features.GameManager
@@ -21,6 +23,19 @@ namespace Features.GameManager
                 PlayerPrefs.SetInt("server_environment", (int) value);
                 PlayerPrefs.Save();
             }
+        }
+
+        private static IPlayer _player;
+
+        public static async Task<IPlayer> GetOrPlayerClient()
+        {
+            if (_player == null)
+            {
+                var user = await ServerClientFactory.CreateAnonymous(ServerEnvironment).SignIn("cat", "cat");
+                _player = await user.SignInAsPlayer();
+            }
+
+            return _player;
         }
     }
 }

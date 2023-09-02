@@ -34,7 +34,7 @@ namespace ApiGateway.Client.Internal.Users
                 ["password"] = password
             };
 
-            await _webClient.DeleteAsync(_uri + "auth", form);
+            await _webClient.PostAsync(_uri + "auth/remove", form);
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
-using Shared.Models.Enums;
 
 namespace ApiGateway.Client.Tests
 {
