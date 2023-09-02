@@ -1,7 +1,10 @@
 ﻿using PlayerService.Repositories;
 using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
-using Shared.Models.Dto.ProtoHelpers;
+using Shared.Models.Dto.Data;
+using Shared.Models.Enums;
+using Shared.Server.Exceptions.PlayerService;
+using Shared.Server.Models;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace PlayerService.GrpcServices;
@@ -9,35 +12,86 @@ namespace PlayerService.GrpcServices;
 public class PlayerGrpcService : IPlayerGrpcService
 {
     private readonly IPlayerRepository _playerRepository;
+    private readonly IJudgeGrpcService _judgeGrpcService;
 
-    public PlayerGrpcService(IPlayerRepository playerRepository)
+    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeGrpcService judgeGrpcService)
     {
+        _judgeGrpcService = judgeGrpcService;
         _playerRepository = playerRepository;
     }
 
-    public async Task CreatePlayer(StringProto userId)
+    public async Task<Response<PlayerId>> CreatePlayer(UserId userId)
     {
-        await _playerRepository.CreatePlayer(userId);
+        try
+        {
+            return await _playerRepository.CreatePlayer(userId);
+        }
+        catch (IdentityPlayerException exception)
+        {
+            return exception;
+        }
     }
 
-    public async Task DeletePlayer(StringProto id)
+    public async Task<Response> RemovePlayer(PlayerId playerId)
     {
-        await _playerRepository.RemovePlayer(id);
+        await _playerRepository.RemovePlayer(playerId);
+        return new Response();
     }
 
-    public async Task<PlayerDto> GetPlayerById(StringProto id)
+    public async Task<Response<PlayerId>> GetPlayerByUserId(UserId userId)
     {
-        var player = await _playerRepository.GetPlayerById(id);
+        var playerId = await _playerRepository.GetPlayerByUserId(userId);
+        if (playerId == null)
+        {
+            return new PlayerNotFoundException(userId);
+        }
+
+        return playerId;
+    }
+
+    public async Task<Response<PlayerData>> GetPlayerById(PlayerId playerId)
+    {
+        var player = await _playerRepository.GetPlayerById(playerId);
+        if (player == null)
+        {
+            throw new PlayerNotFoundException(playerId);
+        }
+
         return player;
     }
 
-    public async Task AddBitcoinsToPlayer(PlayerBtcArgs playerArgs)
+    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
     {
-        await _playerRepository.AddBitcoins(playerArgs.PlayerId, playerArgs.BitcoinsAmount);
+        var (playerId, taskId, solution) = args;
+        var verdict = (VerdictData) await _judgeGrpcService.GetVerdict(args);
+        await _playerRepository.SaveCode(playerId, taskId, solution);
+        switch (verdict.Status)
+        {
+            case VerdictStatus.Success:
+                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
+                break;
+            case VerdictStatus.Failure:
+                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);
+                break;
+        }
+
+        return verdict;
     }
 
-    public async Task TakeBitcoinsFromPlayer(PlayerBtcArgs playerBtcArgs)
+    public async Task<Response<TaskData>> GetTaskData(GetTaskDataArgs args)
+    {
+        return await _playerRepository.GetTaskData(args.PlayerId, args.TaskId);
+    }
+
+    public async Task<Response> AddBitcoinsToPlayer(GetPlayerBtcArgs playerArgs)
+    {
+        await _playerRepository.AddBitcoins(playerArgs.PlayerId, playerArgs.BitcoinsAmount);
+        return new Response();
+    }
+
+    public async Task<Response> TakeBitcoinsFromPlayer(GetPlayerBtcArgs playerBtcArgs)
     {
         await _playerRepository.RemoveBitcoins(playerBtcArgs.PlayerId, playerBtcArgs.BitcoinsAmount);
+        return new Response();
     }
 }

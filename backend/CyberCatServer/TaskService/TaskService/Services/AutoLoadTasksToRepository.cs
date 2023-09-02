@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Shared.Models.Ids;
 using TaskService.Repositories;
 using TaskService.Repositories.InternalModels;
 
@@ -29,18 +30,18 @@ public class AutoLoadTasksToRepository : IHostedService
         var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
 
         await using var stream = File.OpenRead(fullPath);
-        var tasks = await JsonSerializer.DeserializeAsync<List<TaskModel>>(stream, cancellationToken: cancellationToken);
+        var tasks = await JsonSerializer.DeserializeAsync<List<TaskDbModel>>(stream, cancellationToken: cancellationToken);
 
         foreach (var task in tasks)
         {
-            var alreadyContainsTask = await taskRepository.Contains(task.Id);
+            var alreadyContainsTask = await taskRepository.Contains(new TaskId(task.Id));
             if (alreadyContainsTask)
             {
                 continue;
             }
 
-            await taskRepository.Add(task.Id, task.ToDto());
-            await testRepository.Add(task.Id, task.Tests);
+            await taskRepository.Add(new TaskId(task.Id), task.ToDescription());
+            await testRepository.Add(new TaskId(task.Id), task.Tests.ToDto());
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 

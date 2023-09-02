@@ -1,5 +1,5 @@
-using Shared.Models.Dto;
-using Shared.Models.Dto.ProtoHelpers;
+using Shared.Models.Ids;
+using Shared.Server.Dto;
 using Shared.Server.Services;
 using TaskService.Repositories;
 
@@ -14,9 +14,9 @@ public class TestGrpcService : ITestGrpcService
         _testRepository = testRepository;
     }
 
-    public async Task<TestsDto> GetTests(StringProto taskId)
+    public async Task<TestsDto> GetTests(TaskId taskId)
     {
         var tests = await _testRepository.GetTests(taskId);
-        return new TestsDto(tests);
+        return tests;
     }
 }

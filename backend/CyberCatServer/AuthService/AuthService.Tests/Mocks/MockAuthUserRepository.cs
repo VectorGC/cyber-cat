@@ -1,46 +1,54 @@
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
-using Shared.Models.Models;
+using Shared.Server.Dto;
+using Shared.Server.Models;
 
 namespace AuthService.Tests.Mocks;
 
 internal class MockAuthUserRepository : IAuthUserRepository
 {
-    private readonly List<User> _users = new();
+    public int Count => _users.Count;
 
-    public Task<IUser?> FindByEmailAsync(string email)
+    private readonly List<UserDbModel> _users = new();
+
+    public Task<UserDto> FindByEmailAsync(string email)
     {
         var user = _users.FirstOrDefault(user => user.Email == email);
-        return Task.FromResult<IUser?>(user);
+        return Task.FromResult(user?.ToDto());
     }
 
-    public Task<bool> CheckPasswordAsync(string email, string password)
+    public Task<bool> CheckPasswordAsync(UserId userId, string password)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Email == email);
-
+        var findingUser = _users.FirstOrDefault(u => u.Id == userId.Value);
         return Task.FromResult(findingUser.PasswordHash == password.GetHashCode().ToString());
     }
 
-    public Task SetJwtAuthenticationAccessTokenAsync(string email, string? accessToken)
+    public Task<bool> Contains(UserId userId)
     {
-        Console.WriteLine($"Set access token '{accessToken}' for user '{email}'");
+        var contains = _users.Count(user => user.Id == userId.Value) > 0;
+        return Task.FromResult(contains);
+    }
+
+    public Task SetJwtAuthenticationAccessTokenAsync(UserId userId, string accessToken)
+    {
+        Console.WriteLine($"Set access token '{accessToken}' for user '{userId}'");
         return Task.CompletedTask;
     }
 
-    public Task Add(IUser user, string password)
+    public Task<UserId> Create(string email, string password, string name)
     {
-        var authUser = new User(user)
+        var authUser = new UserDbModel(name, email, this)
         {
             PasswordHash = password.GetHashCode().ToString()
         };
         _users.Add(authUser);
 
-        return Task.CompletedTask;
+        return Task.FromResult(new UserId(authUser.Id));
     }
 
-    public Task Remove(string email)
+    public Task Remove(UserId userId)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Email == email);
+        var findingUser = _users.FirstOrDefault(u => u.Id == userId.Value);
         _users.Remove(findingUser);
 
         return Task.CompletedTask;

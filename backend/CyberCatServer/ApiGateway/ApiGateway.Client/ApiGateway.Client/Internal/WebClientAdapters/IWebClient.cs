@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters
@@ -9,10 +9,11 @@ namespace ApiGateway.Client.Internal.WebClientAdapters
         void AddAuthorizationHeader(string type, string value);
         Task<string> GetStringAsync(string uri);
         Task<T> GetFromJsonAsync<T>(string uri);
-        Task<string> PostAsync(string uri, Dictionary<string, string> form);
+        Task<string> PostAsync(string uri, NameValueCollection form);
         Task<string> PostAsync(string uri);
-        Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form);
-        Task<string> PutAsync(string uri, Dictionary<string, string> form);
+        Task<TResponse> PostAsJsonAsync<TResponse>(string uri, NameValueCollection form);
+        Task<string> PutAsync(string uri, NameValueCollection form);
         Task DeleteAsync(string uri);
+        Task DeleteAsync(string uri, NameValueCollection form);
     }
 }

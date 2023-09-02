@@ -1,10 +1,10 @@
-using Shared.Models.Models;
+using Shared.Models.Ids;
+using Shared.Server.Dto;
 
 namespace TaskService.Repositories;
 
 public interface ITestRepository
 {
-    Task Add(string taskId, ITest test);
-    Task Add(string taskId, IEnumerable<ITest> tests);
-    Task<ITests> GetTests(string taskId);
+    Task Add(TaskId taskId, TestsDto tests);
+    Task<TestsDto> GetTests(TaskId taskId);
 }

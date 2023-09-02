@@ -1,10 +1,9 @@
-using System;
 using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
-using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
-using Shared.Server.Exceptions;
+using Shared.Server.Exceptions.AuthService;
+using Shared.Server.Models;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace AuthService.GrpcServices;
@@ -20,7 +19,26 @@ public class AuthGrpcService : IAuthGrpcService
         _tokenService = tokenService;
     }
 
-    public async Task<TokenDto> GetAccessToken(GetAccessTokenArgs args)
+    public async Task<Response<UserId>> CreateUser(CreateUserArgs args)
+    {
+        var (email, password, userName) = args;
+        try
+        {
+            return await _authUserRepository.Create(email, password, userName);
+        }
+        catch (IdentityUserException ex)
+        {
+            return ex;
+        }
+    }
+
+    public async Task<Response<UserId>> FindByEmail(Args<string> email)
+    {
+        var user = await _authUserRepository.FindByEmailAsync(email);
+        return user?.Id;
+    }
+
+    public async Task<Response<string>> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
         var password = args.Password;
@@ -28,19 +46,31 @@ public class AuthGrpcService : IAuthGrpcService
         var user = await _authUserRepository.FindByEmailAsync(email);
         if (user == null)
         {
-            throw UserNotFound.NotFoundEmail(email);
+            return new UserNotFoundException(email);
         }
 
-        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(email, password);
+        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(user.Id, password);
         if (!isPasswordValid)
         {
-            throw new UnauthorizedAccessException("Invalid password");
+            return new UnauthorizedException("Invalid password");
         }
 
-        var accessToken = _tokenService.CreateToken(user);
-        await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(email, accessToken);
-        
+        var accessToken = _tokenService.CreateToken(user.Email, user.UserName);
+        await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(user.Id, accessToken);
 
-        return new TokenDto {AccessToken = accessToken};
+        return accessToken;
+    }
+
+    public async Task<Response> Remove(RemoveArgs args)
+    {
+        var (userId, password) = args;
+        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(userId, password);
+        if (!isPasswordValid)
+        {
+            return new UnauthorizedException("Invalid password");
+        }
+
+        await _authUserRepository.Remove(userId);
+        return new Response();
     }
 }

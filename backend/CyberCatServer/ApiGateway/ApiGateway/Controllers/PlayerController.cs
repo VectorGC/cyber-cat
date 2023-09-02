@@ -1,11 +1,12 @@
 ﻿using System.Net;
-using ApiGateway.Extensions;
+using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
-using Shared.Server.Exceptions;
+using Shared.Models.Dto.Data;
+using Shared.Server.Exceptions.PlayerService;
+using Shared.Server.Models;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -22,50 +23,55 @@ public class PlayerController : ControllerBase
         _playerGrpcService = playerGrpcService;
     }
 
-    [HttpPost("create")]
+    [HttpDelete]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.BadRequest)]
-    public async Task<ActionResult> AddNewPlayer()
+    public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
     {
-        var userId = User.Identity.GetUserId();
-        try
-        {
-            await _playerGrpcService.CreatePlayer(userId);
-            return Ok();
-        }
-        catch (PlayerAlreadyExistsException)
-        {
-            return BadRequest();
-        }
+        return await _playerGrpcService.RemovePlayer(playerId);
     }
 
-    [HttpDelete("delete")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> DeletePlayer()
-    {
-        var playerId = User.Identity.GetUserId();
-        await _playerGrpcService.DeletePlayer(playerId);
-
-        return Ok();
-    }
-
-    [HttpGet("get")]
-    [ProducesResponseType(typeof(PlayerDto), (int) HttpStatusCode.OK)]
+    [HttpGet]
+    [ProducesResponseType(typeof(PlayerData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult<PlayerDto>> GetPlayerById()
+    public async Task<ActionResult<PlayerData>> GetPlayerById([FromPlayer] PlayerId playerId)
     {
-        var playerId = User.Identity.GetUserId();
-        try
-        {
-            var player = await _playerGrpcService.GetPlayerById(playerId);
-            return Ok(player);
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
+        return await _playerGrpcService.GetPlayerById(playerId);
     }
 
+    [HttpPost("signIn")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> SignIn([FromUser] UserId userId)
+    {
+        var response = await _playerGrpcService.GetPlayerByUserId(userId);
+        if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
+        {
+            return await _playerGrpcService.CreatePlayer(userId);
+        }
+
+        return response;
+    }
+
+    [HttpPost("verify/{taskId}")]
+    [ProducesResponseType(typeof(VerdictData), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<VerdictData>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
+    {
+        if (string.IsNullOrEmpty(sourceCode))
+        {
+            throw new ArgumentNullException(nameof(sourceCode));
+        }
+
+        return await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
+    }
+
+    [HttpGet("tasks/{taskId}")]
+    [ProducesResponseType(typeof(TaskData), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<TaskData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
+    {
+        return await _playerGrpcService.GetTaskData(new(playerId, taskId));
+    }
+
+    /*
     [HttpPut("bitcoins/add")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
@@ -103,4 +109,5 @@ public class PlayerController : ControllerBase
             return NotFound();
         }
     }
+    */
 }

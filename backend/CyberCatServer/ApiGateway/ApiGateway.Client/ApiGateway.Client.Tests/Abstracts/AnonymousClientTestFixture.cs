@@ -1,4 +1,3 @@
-using ApiGateway.Client.Factory;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
@@ -7,11 +6,16 @@ namespace ApiGateway.Client.Tests.Abstracts
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
     public abstract class AnonymousClientTestFixture
     {
-        protected readonly IAnonymousClient Client;
+        protected readonly ServerEnvironment ServerEnvironment;
 
         protected AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
         {
-            Client = ServerClientFactory.Create(serverEnvironment);
+            ServerEnvironment = serverEnvironment;
+        }
+
+        protected IAnonymous GetAnonymousClient()
+        {
+            return ServerClientFactory.CreateAnonymous(ServerEnvironment);
         }
     }
 }

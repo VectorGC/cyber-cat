@@ -1,6 +1,8 @@
 using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
-using Shared.Models.Models;
+using Shared.Models.Dto.Data;
+using Shared.Models.Enums;
+using Shared.Server.Dto;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace JudgeService.GrpcServices;
@@ -16,14 +18,15 @@ public class JudgeGrpcService : IJudgeGrpcService
         _testGrpcService = testGrpcService;
     }
 
-    public async Task<VerdictDto> GetVerdict(SolutionDto solution)
+    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
     {
-        var tests = await _testGrpcService.GetTests(solution.TaskId);
+        var (_, taskId, solution) = args;
+        var tests = await _testGrpcService.GetTests(taskId);
         var testPassed = 0;
 
         foreach (var test in tests)
         {
-            var output = await LaunchCode(solution.SourceCode, test.Input);
+            var output = await LaunchCode(solution, test.Input);
             if (!output.Success)
             {
                 return Failure(testPassed, output.StandardError);
@@ -41,15 +44,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         return Success(testPassed);
     }
 
-    private async Task<OutputDto> LaunchCode(string sourceCode, string input)
+    private async Task<OutputDto> LaunchCode(string solution, string input)
     {
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = input
-        };
-
-        var output = await _codeLauncherService.Launch(args);
+        var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, input));
         return output;
     }
 
@@ -58,9 +55,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         return expected == actual;
     }
 
-    private VerdictDto Failure(int testPassed, string error)
+    private VerdictData Failure(int testPassed, string error)
     {
-        return new VerdictDto
+        return new VerdictData
         {
             Status = VerdictStatus.Failure,
             Error = error,
@@ -68,9 +65,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         };
     }
 
-    private VerdictDto Success(int testPassed)
+    private VerdictData Success(int testPassed)
     {
-        return new VerdictDto
+        return new VerdictData
         {
             Status = VerdictStatus.Success,
             TestsPassed = testPassed

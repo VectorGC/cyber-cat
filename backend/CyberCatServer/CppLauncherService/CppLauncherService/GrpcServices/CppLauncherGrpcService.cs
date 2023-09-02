@@ -1,7 +1,7 @@
 using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
-using Shared.Models.Dto;
-using Shared.Models.Dto.Args;
+using Shared.Server.Dto;
+using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace CppLauncherService.GrpcServices;
@@ -19,9 +19,10 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         _errorFormatService = errorFormatService;
     }
 
-    public async Task<OutputDto> Launch(LaunchCodeArgs args)
+    public async Task<Response<OutputDto>> Launch(LaunchCodeArgs args)
     {
-        return await Launch(args.SourceCode, args.Input);
+        var (solution, input) = args;
+        return await Launch(solution, input);
     }
 
     private async Task<OutputDto> Launch(string sourceCode, string input = null)
@@ -37,6 +38,9 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
 
         var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
         launchOutput = _errorFormatService.Format(launchOutput);
+
+        _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+        _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
 
         return new OutputDto
         {

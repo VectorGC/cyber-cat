@@ -1,6 +1,6 @@
 using CommandLine;
 
-namespace ApiGateway;
+namespace ApiGateway.Configurations;
 
 internal class Args
 {

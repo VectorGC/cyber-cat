@@ -22,6 +22,16 @@ internal readonly struct RunCommand
         return new RunCommand($"./{objectFileName}", string.Empty, input);
     }
 
+    public static RunCommand DeleteFile(string fileName)
+    {
+        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+        {
+            return new("wsl", $"rm {fileName}");
+        }
+
+        return new("rm", $"{fileName}");
+    }
+
     public string Command { get; }
     public string Arguments { get; }
     public string Input { get; }

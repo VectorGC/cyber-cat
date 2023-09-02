@@ -1,64 +1,123 @@
 ﻿using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Dto;
-using Shared.Server.Exceptions;
+using Shared.Models.Dto.Data;
+using Shared.Models.Enums;
+using Shared.Models.Ids;
+using Shared.Server.Exceptions.PlayerService;
+using Shared.Server.Models;
 
 namespace PlayerService.Repositories;
 
-public class PlayerMongoRepository : BaseMongoRepository<string>, IPlayerRepository
+public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepository
 {
-    public PlayerMongoRepository(IOptions<PlayerServiceAppSettings> appSettings)
+    private readonly ILogger<PlayerMongoRepository> _logger;
+
+    public PlayerMongoRepository(IOptions<PlayerServiceAppSettings> appSettings, ILogger<PlayerMongoRepository> logger)
         : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
     {
+        _logger = logger;
     }
 
-    public async Task CreatePlayer(string playerId)
+    public async Task<PlayerId> GetPlayerByUserId(UserId userId)
     {
-        var playerModel = await GetOneAsync<PlayerModel>(p => p.Id == playerId);
-        if (playerModel != null)
-            throw new PlayerAlreadyExistsException($"Error adding new player. Player with Id \"{playerId}\" already exists");
-
-        playerModel = new PlayerModel()
+        var player = await GetByIdAsync<PlayerDbModel>(userId.Value);
+        if (player == null)
         {
-            Id = playerId
+            return null;
+        }
+
+        return new PlayerId(player.Id);
+    }
+
+    public async Task<PlayerId> CreatePlayer(UserId userId)
+    {
+        var playerModel = new PlayerDbModel()
+        {
+            Id = userId.Value
         };
-        await AddOneAsync(playerModel);
+
+        try
+        {
+            await AddOneAsync(playerModel);
+        }
+        catch (MongoWriteException writeException)
+        {
+            throw new IdentityPlayerException(writeException.Message);
+        }
+
+        _logger.LogInformation("Create player '{PlayerId}'", playerModel.Id);
+
+        return new PlayerId(playerModel.Id);
     }
 
-    public async Task RemovePlayer(string playerId)
+    public async Task RemovePlayer(PlayerId playerId)
     {
-        await DeleteOneAsync<PlayerModel>(p => p.Id == playerId);
+        await DeleteOneAsync<PlayerDbModel>(p => p.Id == playerId.Value);
     }
 
-    public async Task<PlayerDto> GetPlayerById(string playerId)
+    public async Task SaveCode(PlayerId playerId, TaskId taskId, string solution)
     {
-        var player = await GetOneAsync<PlayerModel>(p => p.Id == playerId);
+        var player = new PlayerDbModel
+        {
+            Id = playerId.Value
+        };
+
+        await UpdateOneAsync(player, player => player.Tasks[taskId.Value].Solution, solution);
+    }
+
+    public async Task<PlayerData> GetPlayerById(PlayerId playerId)
+    {
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
+        return player?.ToDto();
+    }
+
+    public async Task SetTaskStatus(PlayerId playerId, TaskId taskId, TaskProgressStatus status)
+    {
+        var playerModel = new PlayerDbModel()
+        {
+            Id = playerId.Value,
+        };
+
+        await UpdateOneAsync(playerModel, player => player.Tasks[taskId.Value].Status, status);
+    }
+
+    public async Task<TaskData> GetTaskData(PlayerId playerId, TaskId taskId)
+    {
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
+        var task = player.Tasks.GetValueOrDefault(taskId.Value) ?? new TaskProgressDbModel();
+
+        return task.ToData();
+    }
+
+    public async Task AddBitcoins(PlayerId playerId, int bitcoins)
+    {
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         if (player == null)
-            throw PlayerNotFoundException.UserIdNotFound(playerId);
-        return player.ToDto();
-    }
+        {
+            throw new PlayerNotFoundException(playerId);
+        }
 
-    public async Task AddBitcoins(string playerId, int bitcoins)
-    {
-        var player = await GetOneAsync<PlayerModel>(p => p.Id == playerId);
-        if (player == null)
-            throw PlayerNotFoundException.UserIdNotFound(playerId);
         player.BitcoinsAmount += bitcoins;
         await UpdateOneAsync(player);
     }
 
-    public async Task RemoveBitcoins(string playerId, int bitcoins)
+    public async Task RemoveBitcoins(PlayerId playerId, int bitcoins)
     {
-        var player = await GetOneAsync<PlayerModel>(p => p.Id == playerId);
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         if (player == null)
-            throw PlayerNotFoundException.UserIdNotFound(playerId);
+        {
+            throw new PlayerNotFoundException(playerId);
+        }
+
         if (player.BitcoinsAmount >= bitcoins)
         {
             player.BitcoinsAmount -= bitcoins;
             await UpdateOneAsync(player);
         }
         else
-            throw BitcoinOperationException.NotEnoughBitcoins(playerId, bitcoins);
+            throw new NotEnoughBitcoinsException(playerId, bitcoins);
     }
 }

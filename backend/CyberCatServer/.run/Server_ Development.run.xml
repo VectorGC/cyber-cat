@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Server: Development" type="CompoundRunConfigurationType">
+    <toRun name="ApiGateway: Development" type="LaunchSettings" />
+    <toRun name="AuthService: Development" type="LaunchSettings" />
+    <toRun name="CppLauncherService: Development" type="LaunchSettings" />
+    <toRun name="JudgeService: Development" type="LaunchSettings" />
+    <toRun name="PlayerService: Development" type="LaunchSettings" />
+    <toRun name="TaskService: Development" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
