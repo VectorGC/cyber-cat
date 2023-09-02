@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
-using Shared.Models.Dto.Args;
+using Shared.Server.Dto;
 using Shared.Server.Services;
 using Shared.Tests;
 
@@ -21,16 +21,12 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsInt()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { int arg; scanf(\"%d\", &arg); printf(\"%d\", arg); }";
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = "10"
-        };
+        var args = new LaunchCodeArgs(sourceCode, "10");
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var output = await codeLauncherService.Launch(args);
+        var output = (OutputDto) await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
         Assert.AreEqual("10", output.StandardOutput);
@@ -40,16 +36,12 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsDouble()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { double arg; scanf(\"%lf\", &arg); printf(\"%lf\", arg); }";
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = "1.1111115"
-        };
+        var args = new LaunchCodeArgs(sourceCode, "1.1111115");
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var output = await codeLauncherService.Launch(args);
+        var output = (OutputDto) await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
         // This is normal, rounding occurs.
@@ -60,16 +52,12 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsDoubleWithSmallDigit()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { double arg; scanf(\"%lf\", &arg); printf(\"%lf\", arg); }";
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = "1.1"
-        };
+        var args = new LaunchCodeArgs(sourceCode, "1.1");
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var output = await codeLauncherService.Launch(args);
+        var output = (OutputDto) await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
         Assert.AreEqual("1.100000", output.StandardOutput);
@@ -79,16 +67,12 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsString()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { char arg[25]; scanf(\"%s\", arg); printf(\"%s\", arg); }";
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = "Hello"
-        };
+        var args = new LaunchCodeArgs(sourceCode, "Hello");
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var output = await codeLauncherService.Launch(args);
+        var output = (OutputDto) await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
         Assert.AreEqual("Hello", output.StandardOutput);
@@ -98,16 +82,12 @@ public class InputArgsTests
     public async Task CanOutputTwoInputArgsAsString()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { char arg1[25]; char arg2[25]; scanf(\"%s%s\", arg1, arg2); printf(\"%s%s\", arg1, arg2); }";
-        var args = new LaunchCodeArgs
-        {
-            SourceCode = sourceCode,
-            Input = "Hello Cat"
-        };
+        var args = new LaunchCodeArgs(sourceCode, "Hello Cat");
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
 
-        var output = await codeLauncherService.Launch(args);
+        var output = (OutputDto) await codeLauncherService.Launch(args);
 
         Assert.IsNull(output.StandardError);
         Assert.AreEqual("HelloCat", output.StandardOutput);

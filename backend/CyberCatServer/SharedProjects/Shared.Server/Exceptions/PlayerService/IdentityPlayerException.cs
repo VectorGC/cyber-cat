@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
-using Shared.Models.Dto.ProtoHelpers;
 
-namespace Shared.Server.Exceptions;
+namespace Shared.Server.Exceptions.PlayerService;
 
 [ProtoContract]
 public class IdentityPlayerException : ProtoExceptionModel

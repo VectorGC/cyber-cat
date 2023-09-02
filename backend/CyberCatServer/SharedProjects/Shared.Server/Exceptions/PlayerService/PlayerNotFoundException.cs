@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
-using Shared.Models.Dto.ProtoHelpers;
 using Shared.Server.Models;
 
-namespace Shared.Server.Exceptions;
+namespace Shared.Server.Exceptions.PlayerService;
 
 [ProtoContract]
 public class PlayerNotFoundException : ProtoExceptionModel

@@ -1,9 +1,5 @@
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Security.Principal;
-using Microsoft.AspNetCore.Authorization;
-using Shared.Server.Models;
-using Shared.Server.Services;
 
 namespace ApiGateway.Extensions;
 

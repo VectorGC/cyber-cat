@@ -1,8 +1,7 @@
-using System;
 using System.Net;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using ApiGateway.Client.Tests.Abstracts;
+using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
@@ -16,40 +15,31 @@ namespace ApiGateway.Client.Tests
         [Test]
         public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
         {
-            var email = "test@test.com";
-            var password = "test_password";
-            var userName = "Test_User";
-            var wrongPassword = "wrong_test_password";
+            const string email = "test@test.com";
+            const string password = "test_password";
+            const string userName = "Test_User";
+            const string wrongPassword = "wrong_test_password";
 
             var anonymous = GetAnonymousClient();
 
-            var ex = Assert.ThrowsAsync<WebException>(async () => await anonymous.Authorize(email, password));
-            var response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, password)).AreEqual(HttpStatusCode.NotFound);
 
-            await anonymous.RegisterUser(email, password, userName);
+            await anonymous.SignUp(email, password, userName);
 
             // User is already registered.
-            ex = Assert.ThrowsAsync<WebException>(async () => await anonymous.RegisterUser(email, password, userName));
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignUp(email, password, userName)).AreEqual(HttpStatusCode.Conflict);
+            // Wrong password.
+            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, wrongPassword)).AreEqual(HttpStatusCode.Forbidden);
 
-            ex = Assert.ThrowsAsync<WebException>(async () => await anonymous.Authorize(email, wrongPassword));
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
-
-            var client = await anonymous.Authorize(email, password);
+            var client = await anonymous.SignIn(email, password);
             Assert.IsNotNull(client);
 
-            await client.RemoveUser();
+            // Wrong password when removing.
+            Assert.ThrowsAsync<WebException>(async () => await client.Remove(wrongPassword)).AreEqual(HttpStatusCode.Forbidden);
 
-            ex = Assert.ThrowsAsync<WebException>(async () => await anonymous.Authorize(email, password));
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            await client.Remove(password);
 
-            ex = Assert.ThrowsAsync<WebException>(async () => await client.AuthorizePlayer());
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, password)).AreEqual(HttpStatusCode.NotFound);
         }
     }
 }

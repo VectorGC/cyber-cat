@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
-using Shared.Models.Dto.ProtoHelpers;
+using Shared.Server.Exceptions;
 
 namespace Shared.Server.ProtoHelpers
 {
     [ProtoContract]
-    public class Response<TValue> where TValue : class
+    public class Response
     {
-        [ProtoMember(1)] public TValue Value { get; set; }
-        [ProtoMember(2)] public ProtoExceptionModel Exception { get; set; }
-
-        public bool HasValue => Value != null;
+        [ProtoMember(1)] public ProtoExceptionModel Exception { get; set; }
         public bool IsSucceeded => Exception == null;
 
         public void EnsureSuccess()
@@ -21,47 +18,24 @@ namespace Shared.Server.ProtoHelpers
             }
         }
 
-        public static implicit operator TValue(Response<TValue> response)
-        {
-            return response.Value;
-        }
-
-        public static implicit operator Response<TValue>(TValue value)
-        {
-            return new Response<TValue>()
-            {
-                Value = value
-            };
-        }
-
-        public static implicit operator ProtoExceptionModel(Response<TValue> response)
+        public static implicit operator ProtoExceptionModel(Response response)
         {
             return response.Exception;
         }
 
-        public static implicit operator Response<TValue>(ProtoExceptionModel exception)
+        public static implicit operator Response(ProtoExceptionModel exception)
         {
-            return new Response<TValue>()
+            return new Response()
             {
                 Exception = exception
             };
         }
 
-        public static implicit operator ActionResult(Response<TValue> response)
+        public static implicit operator ActionResult(Response response)
         {
             if (response.IsSucceeded)
             {
                 return new OkResult();
-            }
-
-            return response.Exception.ToActionResult();
-        }
-
-        public static implicit operator ActionResult<TValue>(Response<TValue> response)
-        {
-            if (response.IsSucceeded)
-            {
-                return new OkObjectResult(response.Value);
             }
 
             return response.Exception.ToActionResult();

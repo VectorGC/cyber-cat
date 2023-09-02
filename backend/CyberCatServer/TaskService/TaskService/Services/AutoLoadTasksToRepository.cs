@@ -1,5 +1,5 @@
 using System.Text.Json;
-using Shared.Models.Models;
+using Shared.Models.Ids;
 using TaskService.Repositories;
 using TaskService.Repositories.InternalModels;
 

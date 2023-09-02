@@ -38,17 +38,6 @@
     depends_on:
       - mongo
   
-  solution-service:
-    image: solution-service
-    container_name: $SOLUTION_SERVICE_NAME
-    build:
-      dockerfile: SolutionService/SolutionService/Dockerfile
-    environment:
-      - Kestrel__EndPoints__Grpc__Url=$SOLUTION_SERVICE_GRPC_URL
-      - MongoRepository__ConnectionString=$MONGO_DB_URL
-    depends_on:
-      - mongo
-  
   judge-service:
     image: judge-service
     container_name: $JUDGE_SERVICE_NAME

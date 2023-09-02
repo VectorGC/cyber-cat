@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.Client;
-using Shared.Models.Dto.Args;
 using Shared.Server.Configurations;
 using Shared.Server.Services;
 using Shared.Tests;
@@ -39,11 +38,7 @@ public class AuthenticationAndPlayerAuthorization
         using var channel = _factory.CreateGrpcChannel();
         var authenticationService = channel.CreateGrpcService<IAuthGrpcService>();
 
-        var args = new GetAccessTokenArgs
-        {
-            Email = Email,
-            Password = UserPassword
-        };
+        var args = new GetAccessTokenArgs(Email, UserPassword);
         var response = await authenticationService.GetAccessToken(args);
         var token = (string) response;
 

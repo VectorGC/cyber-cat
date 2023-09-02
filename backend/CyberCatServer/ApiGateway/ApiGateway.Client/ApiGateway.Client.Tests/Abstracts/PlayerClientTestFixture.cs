@@ -1,25 +1,26 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Clients;
+using ApiGateway.Client.Models;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
 {
-    public abstract class PlayerClientTestFixture : AuthorizedClientTestFixture
+    public abstract class PlayerClientTestFixture : UserClientTestFixture
     {
         protected PlayerClientTestFixture(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
         }
 
-        protected async Task<IPlayerClient> GetPlayerClient()
+        protected async Task<IPlayer> GetPlayerClient()
         {
-            return await ServerClientFactory.CreatePlayer(ServerEnvironment, "test@test.com", "test_password");
+            var client = await GetUserClient();
+            return await client.SignInAsPlayer();
         }
 
         [TearDown]
         public new async Task TearDown()
         {
             var client = await GetPlayerClient();
-            await client.RemovePlayer();
+            await client.Remove();
         }
     }
 }

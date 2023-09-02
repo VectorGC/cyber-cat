@@ -5,8 +5,8 @@ using PlayerService.Repositories.InternalModels;
 using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
-using Shared.Models.Models;
-using Shared.Server.Exceptions;
+using Shared.Models.Ids;
+using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Models;
 
 namespace PlayerService.Repositories;
@@ -23,7 +23,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
 
     public async Task<PlayerId> GetPlayerByUserId(UserId userId)
     {
-        var player = await GetOneAsync<PlayerDbModel>(p => p.Id == userId.Value);
+        var player = await GetByIdAsync<PlayerDbModel>(userId.Value);
         if (player == null)
         {
             return null;
@@ -58,9 +58,19 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         await DeleteOneAsync<PlayerDbModel>(p => p.Id == playerId.Value);
     }
 
-    public async Task<PlayerDto> GetPlayerById(PlayerId playerId)
+    public async Task SaveCode(PlayerId playerId, TaskId taskId, string solution)
     {
-        var player = await GetOneAsync<PlayerDbModel>(p => p.Id == playerId.Value);
+        var player = new PlayerDbModel
+        {
+            Id = playerId.Value
+        };
+
+        await UpdateOneAsync(player, player => player.Tasks[taskId.Value].Solution, solution);
+    }
+
+    public async Task<PlayerData> GetPlayerById(PlayerId playerId)
+    {
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         return player?.ToDto();
     }
 
@@ -69,21 +79,14 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         var playerModel = new PlayerDbModel()
         {
             Id = playerId.Value,
-            Tasks = new Dictionary<string, TaskProgressDbModel>()
-            {
-                [taskId.Value] = new TaskProgressDbModel()
-                {
-                    Status = status
-                }
-            }
         };
 
-        await UpdateOneAsync(playerModel);
+        await UpdateOneAsync(playerModel, player => player.Tasks[taskId.Value].Status, status);
     }
 
     public async Task<TaskData> GetTaskData(PlayerId playerId, TaskId taskId)
     {
-        var player = await GetOneAsync<PlayerDbModel>(player => player.Id == playerId.Value);
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         var task = player.Tasks.GetValueOrDefault(taskId.Value) ?? new TaskProgressDbModel();
 
         return task.ToData();
@@ -91,7 +94,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
 
     public async Task AddBitcoins(PlayerId playerId, int bitcoins)
     {
-        var player = await GetOneAsync<PlayerDbModel>(p => p.Id == playerId.Value);
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         if (player == null)
         {
             throw new PlayerNotFoundException(playerId);
@@ -103,7 +106,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
 
     public async Task RemoveBitcoins(PlayerId playerId, int bitcoins)
     {
-        var player = await GetOneAsync<PlayerDbModel>(p => p.Id == playerId.Value);
+        var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         if (player == null)
         {
             throw new PlayerNotFoundException(playerId);

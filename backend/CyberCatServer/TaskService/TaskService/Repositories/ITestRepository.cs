@@ -1,5 +1,5 @@
-using Shared.Models.Dto;
-using Shared.Models.Models;
+using Shared.Models.Ids;
+using Shared.Server.Dto;
 
 namespace TaskService.Repositories;
 

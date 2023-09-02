@@ -1,6 +1,7 @@
 ﻿using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 using Shared.Models.Dto;
+using Shared.Models.Dto.Data;
 
 namespace PlayerService.Repositories.InternalModels;
 
@@ -13,9 +14,9 @@ internal class PlayerDbModel : IDocument<long>
 
     public int Version { get; set; }
 
-    public PlayerDto ToDto()
+    public PlayerData ToDto()
     {
-        return new PlayerDto
+        return new PlayerData
         {
             BitcoinsAmount = BitcoinsAmount
         };

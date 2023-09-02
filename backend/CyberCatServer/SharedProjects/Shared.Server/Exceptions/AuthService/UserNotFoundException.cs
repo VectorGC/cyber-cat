@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
-using Shared.Models.Dto.ProtoHelpers;
 
 namespace Shared.Server.Exceptions.AuthService;
 

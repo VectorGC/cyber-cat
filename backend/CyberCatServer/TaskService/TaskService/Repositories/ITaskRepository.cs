@@ -1,5 +1,5 @@
 ﻿using Shared.Models.Dto.Descriptions;
-using Shared.Models.Models;
+using Shared.Models.Ids;
 
 namespace TaskService.Repositories
 {
@@ -7,6 +7,7 @@ namespace TaskService.Repositories
     {
         Task<TaskDescription> GetTask(TaskId taskId);
         Task Add(TaskId taskId, TaskDescription task);
+        Task<List<TaskId>> GetTasks();
         Task<bool> Contains(TaskId id);
     }
 }

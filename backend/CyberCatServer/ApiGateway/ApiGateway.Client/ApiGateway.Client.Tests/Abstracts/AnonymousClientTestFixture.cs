@@ -1,4 +1,3 @@
-using ApiGateway.Client.Clients;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
@@ -14,7 +13,7 @@ namespace ApiGateway.Client.Tests.Abstracts
             ServerEnvironment = serverEnvironment;
         }
 
-        protected IAnonymousClient GetAnonymousClient()
+        protected IAnonymous GetAnonymousClient()
         {
             return ServerClientFactory.CreateAnonymous(ServerEnvironment);
         }

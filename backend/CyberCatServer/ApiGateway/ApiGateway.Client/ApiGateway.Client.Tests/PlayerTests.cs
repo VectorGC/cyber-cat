@@ -1,11 +1,13 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
+using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Tests.Abstracts;
+using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class PlayerTests : AuthorizedClientTestFixture
+    public class PlayerTests : UserClientTestFixture
     {
         public PlayerTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -14,32 +16,31 @@ namespace ApiGateway.Client.Tests
         [Test]
         public async Task CreatePlayerAndRemovePlayer_WhenPassValidCredentials()
         {
-            var authorized = await GetAuthorizedClient();
+            var user = await GetUserClient();
 
-            var ex = Assert.ThrowsAsync<WebException>(async () => await authorized.AuthorizePlayer());
-            var response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            var player = await user.SignInAsPlayer();
+            Assert.IsNotNull(player);
 
-            await authorized.RegisterPlayer();
+            var task = player.Tasks["tutorial"];
+            Assert.IsAssignableFrom<NotStarted>(await task.GetStatus());
 
-            // Player is already registered.
-            ex = Assert.ThrowsAsync<WebException>(async () => await authorized.RegisterPlayer());
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.Conflict, response.StatusCode);
+            await task.VerifySolution("Hello");
+            Assert.IsAssignableFrom<HaveSolution>(await task.GetStatus());
 
-            var client = await authorized.AuthorizePlayer();
+            await player.Remove();
 
-            Assert.IsNotNull(client);
+            Assert.ThrowsAsync<WebException>(async () => await task.VerifySolution("Hello")).AreEqual(HttpStatusCode.NotFound);
 
-            await client.RemovePlayer();
+            // Create player again.
+            player = await user.SignInAsPlayer();
+            Assert.IsNotNull(player);
 
-            ex = Assert.ThrowsAsync<WebException>(async () => await authorized.AuthorizePlayer());
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            // Progress has been lost.
+            Assert.IsAssignableFrom<NotStarted>(await task.GetStatus());
 
-            ex = Assert.ThrowsAsync<WebException>(async () => await client.PlayerService.VerifySolution("tutorial", "Hello"));
-            response = (HttpWebResponse) ex.Response;
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            await player.Remove();
+
+            Assert.ThrowsAsync<WebException>(async () => await player.Remove()).AreEqual(HttpStatusCode.NotFound);
         }
 
         /*

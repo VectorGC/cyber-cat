@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
+using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Dto.Args;
-using Shared.Models.Dto.ProtoHelpers;
-using Shared.Server.Dto.Args;
 using Shared.Server.Models;
 using Shared.Server.ProtoHelpers;
 
@@ -13,6 +11,22 @@ public interface IAuthGrpcService
 {
     Task<Response<UserId>> CreateUser(CreateUserArgs args);
     Task<Response<string>> GetAccessToken(GetAccessTokenArgs args);
-    Task Remove(UserId id);
-    Task<Response<UserId>> FindByEmail(StringProto email);
+    Task<Response> Remove(RemoveArgs args);
+    Task<Response<UserId>> FindByEmail(Args<string> email);
 }
+
+[ProtoContract(SkipConstructor = true)]
+public record CreateUserArgs(
+    [property: ProtoMember(1)] string Email,
+    [property: ProtoMember(2)] string Password,
+    [property: ProtoMember(3)] string UserName);
+
+[ProtoContract(SkipConstructor = true)]
+public record GetAccessTokenArgs(
+    [property: ProtoMember(1)] string Email,
+    [property: ProtoMember(2)] string Password);
+
+[ProtoContract(SkipConstructor = true)]
+public record RemoveArgs(
+    [property: ProtoMember(1)] UserId Email,
+    [property: ProtoMember(2)] string Password);

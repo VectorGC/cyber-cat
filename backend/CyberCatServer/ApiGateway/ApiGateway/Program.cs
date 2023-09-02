@@ -42,7 +42,6 @@ builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(hos
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<IPlayerGrpcService>(options => { options.Address = appSettings.ConnectionStrings.PlayerServiceGrpcAddress; });
 
 builder.WebHost.UseKestrel(options =>

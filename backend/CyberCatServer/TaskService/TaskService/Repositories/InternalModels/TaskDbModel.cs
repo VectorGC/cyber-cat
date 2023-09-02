@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 using Shared.Models.Dto.Descriptions;
-using Shared.Models.Models;
+using Shared.Models.Ids;
 
 namespace TaskService.Repositories.InternalModels
 {

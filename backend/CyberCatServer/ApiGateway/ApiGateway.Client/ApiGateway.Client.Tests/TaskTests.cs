@@ -16,10 +16,10 @@ namespace ApiGateway.Client.Tests
             var taskId = "tutorial";
             var client = await GetPlayerClient();
 
-            var task = await client.Tasks.GetTask(taskId);
+            var task = client.Tasks[taskId];
 
-            Assert.AreEqual("Hello cat!", task.Description.Name);
-            Assert.IsNotEmpty((string) task.Description.Description);
+            Assert.AreEqual("Hello cat!", await task.GetName());
+            Assert.IsNotEmpty(await task.GetDescription());
         }
     }
 }

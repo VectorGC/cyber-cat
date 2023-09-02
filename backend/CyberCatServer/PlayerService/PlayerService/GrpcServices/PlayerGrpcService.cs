@@ -2,8 +2,7 @@
 using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
-using Shared.Server.Dto.Args;
-using Shared.Server.Exceptions;
+using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Models;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
@@ -33,9 +32,10 @@ public class PlayerGrpcService : IPlayerGrpcService
         }
     }
 
-    public async Task RemovePlayer(PlayerId playerId)
+    public async Task<Response> RemovePlayer(PlayerId playerId)
     {
         await _playerRepository.RemovePlayer(playerId);
+        return new Response();
     }
 
     public async Task<Response<PlayerId>> GetPlayerByUserId(UserId userId)
@@ -49,7 +49,7 @@ public class PlayerGrpcService : IPlayerGrpcService
         return playerId;
     }
 
-    public async Task<Response<PlayerDto>> GetPlayerById(PlayerId playerId)
+    public async Task<Response<PlayerData>> GetPlayerById(PlayerId playerId)
     {
         var player = await _playerRepository.GetPlayerById(playerId);
         if (player == null)
@@ -60,34 +60,38 @@ public class PlayerGrpcService : IPlayerGrpcService
         return player;
     }
 
-    public async Task<VerdictDto> GetVerdict(GetVerdictForPlayerArgs args)
+    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
     {
-        var verdict = await _judgeGrpcService.GetVerdict(args.SolutionDto);
+        var (playerId, taskId, solution) = args;
+        var verdict = (VerdictData) await _judgeGrpcService.GetVerdict(args);
+        await _playerRepository.SaveCode(playerId, taskId, solution);
         switch (verdict.Status)
         {
             case VerdictStatus.Success:
-                await _playerRepository.SetTaskStatus(args.PlayerId, args.SolutionDto.TaskId, TaskProgressStatus.Complete);
+                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
                 break;
             case VerdictStatus.Failure:
-                await _playerRepository.SetTaskStatus(args.PlayerId, args.SolutionDto.TaskId, TaskProgressStatus.HaveSolutions);
+                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);
                 break;
         }
 
         return verdict;
     }
 
-    public async Task<TaskData> GetTaskData(GetTaskDataArgs args)
+    public async Task<Response<TaskData>> GetTaskData(GetTaskDataArgs args)
     {
         return await _playerRepository.GetTaskData(args.PlayerId, args.TaskId);
     }
 
-    public async Task AddBitcoinsToPlayer(GetPlayerBtcArgs playerArgs)
+    public async Task<Response> AddBitcoinsToPlayer(GetPlayerBtcArgs playerArgs)
     {
         await _playerRepository.AddBitcoins(playerArgs.PlayerId, playerArgs.BitcoinsAmount);
+        return new Response();
     }
 
-    public async Task TakeBitcoinsFromPlayer(GetPlayerBtcArgs playerBtcArgs)
+    public async Task<Response> TakeBitcoinsFromPlayer(GetPlayerBtcArgs playerBtcArgs)
     {
         await _playerRepository.RemoveBitcoins(playerBtcArgs.PlayerId, playerBtcArgs.BitcoinsAmount);
+        return new Response();
     }
 }

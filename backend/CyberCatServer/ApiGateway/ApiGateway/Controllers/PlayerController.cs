@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
-using Shared.Models.Models;
-using Shared.Server.Dto.Args;
-using Shared.Server.Exceptions;
+using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Models;
 using Shared.Server.Services;
 
@@ -19,11 +17,9 @@ namespace ApiGateway.Controllers;
 public class PlayerController : ControllerBase
 {
     private readonly IPlayerGrpcService _playerGrpcService;
-    private readonly IAuthGrpcService _authorizationService;
 
-    public PlayerController(IPlayerGrpcService playerGrpcService, IAuthGrpcService authorizationService)
+    public PlayerController(IPlayerGrpcService playerGrpcService)
     {
-        _authorizationService = authorizationService;
         _playerGrpcService = playerGrpcService;
     }
 
@@ -31,61 +27,40 @@ public class PlayerController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
     {
-        await _playerGrpcService.RemovePlayer(playerId);
-        return Ok();
+        return await _playerGrpcService.RemovePlayer(playerId);
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(PlayerDto), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(PlayerData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult<PlayerDto>> GetPlayerById([FromPlayer] PlayerId playerId)
+    public async Task<ActionResult<PlayerData>> GetPlayerById([FromPlayer] PlayerId playerId)
     {
-        try
-        {
-            var player = await _playerGrpcService.GetPlayerById(playerId);
-            return Ok(player);
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
+        return await _playerGrpcService.GetPlayerById(playerId);
     }
 
-    [HttpPost("register")]
+    [HttpPost("signIn")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> Register([FromUser] UserId userId)
+    public async Task<ActionResult> SignIn([FromUser] UserId userId)
     {
-        return await _playerGrpcService.CreatePlayer(userId);
-    }
+        var response = await _playerGrpcService.GetPlayerByUserId(userId);
+        if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
+        {
+            return await _playerGrpcService.CreatePlayer(userId);
+        }
 
-    [HttpPost("authorize")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> Authorize([FromUser] UserId userId)
-    {
-        return await _playerGrpcService.GetPlayerByUserId(userId);
+        return response;
     }
 
     [HttpPost("verify/{taskId}")]
-    [ProducesResponseType(typeof(VerdictDto), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictDto>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
+    [ProducesResponseType(typeof(VerdictData), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<VerdictData>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
     {
         if (string.IsNullOrEmpty(sourceCode))
         {
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var args = new GetVerdictForPlayerArgs()
-        {
-            PlayerId = playerId,
-            SolutionDto = new SolutionDto()
-            {
-                TaskId = new TaskId(taskId),
-                SourceCode = sourceCode
-            }
-        };
-
-        var verdict = await _playerGrpcService.GetVerdict(args);
-        return verdict;
+        return await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
     }
 
     [HttpGet("tasks/{taskId}")]
@@ -93,14 +68,7 @@ public class PlayerController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
     {
-        var args = new GetTaskDataArgs()
-        {
-            PlayerId = playerId,
-            TaskId = new TaskId(taskId)
-        };
-        var taskData = await _playerGrpcService.GetTaskData(args);
-
-        return taskData;
+        return await _playerGrpcService.GetTaskData(new(playerId, taskId));
     }
 
     /*

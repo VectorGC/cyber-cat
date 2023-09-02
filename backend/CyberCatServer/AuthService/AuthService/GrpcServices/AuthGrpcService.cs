@@ -1,10 +1,6 @@
 using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
-using Shared.Models.Dto.Args;
-using Shared.Models.Dto.ProtoHelpers;
-using Shared.Server.Dto.Args;
-using Shared.Server.Exceptions;
 using Shared.Server.Exceptions.AuthService;
 using Shared.Server.Models;
 using Shared.Server.ProtoHelpers;
@@ -25,9 +21,10 @@ public class AuthGrpcService : IAuthGrpcService
 
     public async Task<Response<UserId>> CreateUser(CreateUserArgs args)
     {
+        var (email, password, userName) = args;
         try
         {
-            return await _authUserRepository.Create(args.Email, args.Password, args.Name);
+            return await _authUserRepository.Create(email, password, userName);
         }
         catch (IdentityUserException ex)
         {
@@ -35,7 +32,7 @@ public class AuthGrpcService : IAuthGrpcService
         }
     }
 
-    public async Task<Response<UserId>> FindByEmail(StringProto email)
+    public async Task<Response<UserId>> FindByEmail(Args<string> email)
     {
         var user = await _authUserRepository.FindByEmailAsync(email);
         return user?.Id;
@@ -64,8 +61,16 @@ public class AuthGrpcService : IAuthGrpcService
         return accessToken;
     }
 
-    public async Task Remove(UserId id)
+    public async Task<Response> Remove(RemoveArgs args)
     {
-        await _authUserRepository.Remove(id);
+        var (userId, password) = args;
+        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(userId, password);
+        if (!isPasswordValid)
+        {
+            return new UnauthorizedException("Invalid password");
+        }
+
+        await _authUserRepository.Remove(userId);
+        return new Response();
     }
 }

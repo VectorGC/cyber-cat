@@ -1,4 +1,4 @@
-using Shared.Models.Dto;
+using Shared.Server.Dto;
 
 namespace TaskService.Repositories.InternalModels;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Shared.Server.Models;
 
-namespace Shared.Server.Exceptions;
+namespace Shared.Server.Exceptions.PlayerService;
 
 public class NotEnoughBitcoinsException : Exception
 {

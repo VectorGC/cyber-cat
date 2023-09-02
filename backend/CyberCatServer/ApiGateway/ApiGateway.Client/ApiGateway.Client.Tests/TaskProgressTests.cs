@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using ApiGateway.Client.Internal.Tasks.Statuses;
+using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
-using Shared.Models.Enums;
 
 namespace ApiGateway.Client.Tests
 {
@@ -16,43 +17,39 @@ namespace ApiGateway.Client.Tests
         {
             var taskId = "tutorial";
             var errorCode = "#include <stdio.h>\nint main() { printf(\"Unexpected output!\"); }";
-            var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
+            var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var client = await GetPlayerClient();
+            var player = await GetPlayerClient();
+            var task = player.Tasks[taskId];
 
-            var tutorialTask = await client.Tasks.GetTask(taskId);
-            Assert.AreEqual(TaskProgressStatus.NotStarted, tutorialTask.Data.Status);
+            Assert.IsAssignableFrom<NotStarted>(await task.GetStatus());
 
-            var verdict = await client.PlayerService.VerifySolution(taskId, errorCode);
-            Assert.AreEqual(VerdictStatus.Failure, verdict.Status);
+            var verdict = await task.VerifySolution(errorCode);
+            Assert.IsAssignableFrom<Failure>(verdict);
 
-            tutorialTask = await client.Tasks.GetTask(taskId);
-            Assert.AreEqual(TaskProgressStatus.HaveSolutions, tutorialTask.Data.Status);
+            Assert.IsAssignableFrom<HaveSolution>(await task.GetStatus());
 
-            verdict = await client.PlayerService.VerifySolution(taskId, completeCode);
-            Assert.AreEqual(VerdictStatus.Success, verdict.Status);
+            verdict = await task.VerifySolution(completeCode);
+            Assert.IsAssignableFrom<Success>(verdict);
 
-            tutorialTask = await client.Tasks.GetTask(taskId);
-            Assert.AreEqual(TaskProgressStatus.Complete, tutorialTask.Data.Status);
+            Assert.IsAssignableFrom<Complete>(await task.GetStatus());
         }
 
         [Test]
         public async Task CompleteTaskStatus_WhenPassCompleteSolutionOnStart()
         {
             var taskId = "tutorial";
-            var errorCode = "#include <stdio.h>\nint main() { printf(\"Unexpected output!\"); }";
-            var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
+            var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var client = await GetPlayerClient();
+            var player = await GetPlayerClient();
+            var task = player.Tasks[taskId];
 
-            var tutorialTask = await client.Tasks.GetTask(taskId);
-            Assert.AreEqual(TaskProgressStatus.NotStarted, tutorialTask.Data.Status);
+            Assert.IsAssignableFrom<NotStarted>(await task.GetStatus());
 
-            var verdict = await client.PlayerService.VerifySolution(taskId, completeCode);
-            Assert.Equals(VerdictStatus.Success, verdict.Status);
+            var verdict = await task.VerifySolution(completeCode);
+            Assert.IsAssignableFrom<Success>(verdict);
 
-            tutorialTask = await client.Tasks.GetTask(taskId);
-            Assert.AreEqual(TaskProgressStatus.Complete, tutorialTask.Data.Status);
+            Assert.IsAssignableFrom<Complete>(await task.GetStatus());
         }
     }
 }

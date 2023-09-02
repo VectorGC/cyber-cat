@@ -1,10 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
-using Shared.Server.Exceptions;
 using Shared.Server.Exceptions.AuthService;
+using Shared.Server.Exceptions.PlayerService;
 
-namespace Shared.Models.Dto.ProtoHelpers
+namespace Shared.Server.Exceptions
 {
     [ProtoContract]
     [ProtoInclude(100, typeof(UserNotFoundException))]

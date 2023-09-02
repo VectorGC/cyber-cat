@@ -5,7 +5,6 @@
     <toRun name="CppLauncherService: Development" type="LaunchSettings" />
     <toRun name="JudgeService: Development" type="LaunchSettings" />
     <toRun name="PlayerService: Development" type="LaunchSettings" />
-    <toRun name="SolutionService: Development" type="LaunchSettings" />
     <toRun name="TaskService: Development" type="LaunchSettings" />
     <method v="2" />
   </configuration>

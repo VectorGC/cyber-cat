@@ -13,6 +13,14 @@ namespace Shared.Models.Dto.Data
             set => status = value;
         }
 
+        [ProtoMember(2)]
+        public string Solution
+        {
+            get => solution;
+            set => solution = value;
+        }
+
+        public string solution;
         public TaskProgressStatus status;
 
         public override string ToString()

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Shared.Models.Dto.ProtoHelpers;
 using Shared.Server.Dto;
 using Shared.Server.Models;
 

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
-using Shared.Models.Dto;
-using Shared.Models.Models;
+using Shared.Models.Ids;
+using Shared.Server.Dto;
 using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
 
@@ -25,9 +25,8 @@ namespace TaskService.Repositories
         private async Task Add(TaskId taskId, TestDto test)
         {
             var testModel = new TestDbModel(test);
-            var task = await GetOneAsync<TaskDbModel>(task => task.Id == taskId.Value);
+            var task = await GetByIdAsync<TaskDbModel>(taskId);
             task.Tests.Add(testModel);
-
 
             var success = await UpdateOneAsync(task);
             if (!success)
@@ -38,7 +37,7 @@ namespace TaskService.Repositories
 
         public async Task<TestsDto> GetTests(TaskId taskId)
         {
-            var task = await GetOneAsync<TaskDbModel>(task => task.Id == taskId.Value);
+            var task = await GetByIdAsync<TaskDbModel>(taskId);
             return task.Tests.ToDto();
         }
     }
