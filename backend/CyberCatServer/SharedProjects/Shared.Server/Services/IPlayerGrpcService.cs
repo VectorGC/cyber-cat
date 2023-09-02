@@ -4,7 +4,7 @@ using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Ids;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;

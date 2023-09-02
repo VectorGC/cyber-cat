@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Server.Models;
+namespace Shared.Server.Ids;
 
 [ProtoContract]
 public class PlayerId

@@ -1,7 +1,7 @@
 using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
 using Shared.Server.Dto;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 
 namespace AuthService.Repositories.InternalModels;
 

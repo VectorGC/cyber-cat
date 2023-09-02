@@ -2,7 +2,7 @@
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 
 namespace PlayerService.Repositories;
 

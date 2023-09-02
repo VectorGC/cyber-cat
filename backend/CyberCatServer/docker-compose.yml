@@ -7,13 +7,13 @@
     environment:
       - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
       - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
-      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
+      - ConnectionStrings__PlayerServiceGrpcEndpoint=$PLAYER_SERVICE_GRPC_URL
     ports:
       - "80:80"
     depends_on:
       - auth-service
       - task-service
-      - solution-service
+      - player-service
       - judge-service
   
   auth-service:
@@ -34,6 +34,18 @@
       dockerfile: TaskService/TaskService/Dockerfile
     environment:
       - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_ENDPOINT
+      - MongoRepository__ConnectionString=$MONGO_DB_URL
+    depends_on:
+      - mongo
+  
+  player-service:
+    image: player-service
+    container_name: $PLAYER_SERVICE_NAME
+    build:
+      dockerfile: PlayerService/PlayerService/Dockerfile
+    environment:
+      - Kestrel__EndPoints__Grpc__Url=$PLAYER_SERVICE_GRPC_ENDPOINT
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
       - MongoRepository__ConnectionString=$MONGO_DB_URL
     depends_on:
       - mongo

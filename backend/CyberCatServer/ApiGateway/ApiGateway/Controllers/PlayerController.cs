@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;

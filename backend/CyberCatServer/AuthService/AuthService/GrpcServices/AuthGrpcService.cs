@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
 using Shared.Server.Exceptions.AuthService;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 

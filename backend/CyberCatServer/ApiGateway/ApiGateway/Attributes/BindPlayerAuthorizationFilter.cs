@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Attributes;

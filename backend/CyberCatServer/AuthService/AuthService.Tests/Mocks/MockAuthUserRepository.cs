@@ -1,7 +1,7 @@
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using Shared.Server.Dto;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 
 namespace AuthService.Tests.Mocks;
 

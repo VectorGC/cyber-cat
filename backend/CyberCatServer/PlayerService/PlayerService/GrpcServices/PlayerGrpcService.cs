@@ -3,7 +3,7 @@ using Shared.Models.Dto;
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
 using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Models;
+using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
