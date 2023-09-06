@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
@@ -55,7 +55,7 @@ namespace ApiGateway.Client.Internal.Tasks
 
         public async Task<IVerdict> VerifySolution(string sourceCode)
         {
-            var verdictDto = await _webClient.PostAsJsonAsync<VerdictData>(_uri + $"player/verify/{_taskId}", new NameValueCollection
+            var verdictDto = await _webClient.PostAsJsonAsync<VerdictData>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
             {
                 ["sourceCode"] = sourceCode
             });

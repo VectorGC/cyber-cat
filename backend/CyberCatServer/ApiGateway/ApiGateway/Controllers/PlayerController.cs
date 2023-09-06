@@ -22,7 +22,7 @@ public class PlayerController : ControllerBase
         _playerGrpcService = playerGrpcService;
     }
 
-    [HttpDelete]
+    [HttpPost("remove")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
     {

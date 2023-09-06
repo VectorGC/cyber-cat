@@ -24,12 +24,17 @@ namespace ApiGateway.Client.Tests.Abstracts
             return _user;
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task TearDown()
+        {
+            await OnTearDown();
+        }
+
+        protected virtual async Task OnTearDown()
         {
             var client = await GetUserClient();
             await client.Remove("test_password");
-            _user = null;
+            _user = null; 
         }
     }
 }

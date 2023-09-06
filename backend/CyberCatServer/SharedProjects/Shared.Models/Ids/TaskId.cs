@@ -6,14 +6,7 @@ namespace Shared.Models.Ids
     [ProtoContract]
     public class TaskId : IEquatable<TaskId>
     {
-        [ProtoMember(1)]
-        public string Value
-        {
-            get => value;
-            set => this.value = value;
-        }
-
-        public string value;
+        [ProtoMember(1)] public string Value { get; set; }
 
         public TaskId(string id)
         {
@@ -45,24 +38,24 @@ namespace Shared.Models.Ids
             if (ReferenceEquals(x, null)) return false;
             if (ReferenceEquals(y, null)) return false;
             if (x.GetType() != y.GetType()) return false;
-            return x.value == y.value;
+            return x.Value == y.Value;
         }
 
         public int GetHashCode(TaskId obj)
         {
-            return (obj.value != null ? obj.value.GetHashCode() : 0);
+            return (obj.Value != null ? obj.Value.GetHashCode() : 0);
         }
 
         public bool Equals(TaskId other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return value == other.value;
+            return Value == other.Value;
         }
 
         public override int GetHashCode()
         {
-            return (value != null ? value.GetHashCode() : 0);
+            return (Value != null ? Value.GetHashCode() : 0);
         }
     }
 }

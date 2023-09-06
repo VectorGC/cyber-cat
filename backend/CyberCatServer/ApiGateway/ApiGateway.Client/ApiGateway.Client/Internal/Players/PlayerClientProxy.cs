@@ -36,7 +36,7 @@ namespace ApiGateway.Client.Internal.Players
 
         public async Task Remove()
         {
-            await _webClient.DeleteAsync(_uri + "player");
+            await _webClient.PostAsync(_uri + "player/remove");
         }
     }
 }

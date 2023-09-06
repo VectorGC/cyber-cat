@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Players;
 using ApiGateway.Client.Internal.WebClientAdapters;
@@ -29,7 +29,7 @@ namespace ApiGateway.Client.Internal.Users
 
         public async Task Remove(string password)
         {
-            var form = new NameValueCollection
+            var form = new Dictionary<string, string>()
             {
                 ["password"] = password
             };

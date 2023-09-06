@@ -1,4 +1,3 @@
-using System;
 using ApiGateway.Client.Models;
 using Shared.Models.Dto.Data;
 

@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskService", "TaskService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskService", "TaskService\TaskService\TaskService.csproj", "{E79632D2-B7E9-437F-BFF6-54B2C7750C60}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{31577144-A5F9-4DC8-A5C0-41B6D688B801}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{31577144-A5F9-4DC8-A5C0-41B6D688B801}"
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
 		docker-compose.yml = docker-compose.yml
@@ -35,8 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerComp
 		docker-compose.Prod.yml = docker-compose.Prod.yml
 		README.md = README.md
 		docker-compose.Dev.yml = docker-compose.Dev.yml
-		start_local_mongo_in_docker.bat = start_local_mongo_in_docker.bat
 		start_server_in_docker_for_dev.bat = start_server_in_docker_for_dev.bat
+		start_local_mongo.bat = start_local_mongo.bat
+		start_mongo_in_docker.bat = start_mongo_in_docker.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedProjects", "SharedProjects", "{2C859AAA-6580-4039-82A2-A05EAFC79E57}"
@@ -125,13 +126,11 @@ Global
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Unity WebGL.ActiveCfg = Release|Any CPU
-		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Unity WebGL.Build.0 = Release|Any CPU
 		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Unity WebGL.ActiveCfg = Release|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Unity WebGL.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

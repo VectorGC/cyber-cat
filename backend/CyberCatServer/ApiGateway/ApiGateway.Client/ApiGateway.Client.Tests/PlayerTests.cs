@@ -29,7 +29,7 @@ namespace ApiGateway.Client.Tests
 
             await player.Remove();
 
-            Assert.ThrowsAsync<WebException>(async () => await task.VerifySolution("Hello")).AreEqual(HttpStatusCode.NotFound);
+            await AssertAsync.ThrowsWebException(async () => await task.VerifySolution("Hello"), HttpStatusCode.NotFound);
 
             // Create player again.
             player = await user.SignInAsPlayer();
@@ -40,7 +40,7 @@ namespace ApiGateway.Client.Tests
 
             await player.Remove();
 
-            Assert.ThrowsAsync<WebException>(async () => await player.Remove()).AreEqual(HttpStatusCode.NotFound);
+            await AssertAsync.ThrowsWebException(async () => await player.Remove(), HttpStatusCode.NotFound);
         }
 
         /*

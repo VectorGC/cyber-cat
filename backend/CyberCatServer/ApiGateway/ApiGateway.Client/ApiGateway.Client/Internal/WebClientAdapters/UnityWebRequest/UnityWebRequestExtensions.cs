@@ -1,4 +1,5 @@
 #if UNITY_WEBGL
+using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -28,7 +29,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 
             if (!webRequest.isDone || isNetworkError || isHttpError)
             {
-                throw new UnityWebException(webRequest.responseCode);
+                throw new UnityWebException((HttpStatusCode) webRequest.responseCode);
             }
         }
     }

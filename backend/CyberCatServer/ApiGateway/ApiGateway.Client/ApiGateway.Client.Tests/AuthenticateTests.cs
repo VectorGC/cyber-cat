@@ -21,25 +21,25 @@ namespace ApiGateway.Client.Tests
             const string wrongPassword = "wrong_test_password";
 
             var anonymous = GetAnonymousClient();
-
-            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, password)).AreEqual(HttpStatusCode.NotFound);
+            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, password), HttpStatusCode.NotFound);
 
             await anonymous.SignUp(email, password, userName);
 
             // User is already registered.
-            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignUp(email, password, userName)).AreEqual(HttpStatusCode.Conflict);
+            await AssertAsync.ThrowsWebException(async () => await anonymous.SignUp(email, password, userName), HttpStatusCode.Conflict);
+
             // Wrong password.
-            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, wrongPassword)).AreEqual(HttpStatusCode.Forbidden);
+            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, wrongPassword), HttpStatusCode.Forbidden);
 
             var client = await anonymous.SignIn(email, password);
             Assert.IsNotNull(client);
 
             // Wrong password when removing.
-            Assert.ThrowsAsync<WebException>(async () => await client.Remove(wrongPassword)).AreEqual(HttpStatusCode.Forbidden);
+            await AssertAsync.ThrowsWebException(async () => await client.Remove(wrongPassword), HttpStatusCode.Forbidden);
 
             await client.Remove(password);
 
-            Assert.ThrowsAsync<WebException>(async () => await anonymous.SignIn(email, password)).AreEqual(HttpStatusCode.NotFound);
+            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, password), HttpStatusCode.NotFound);
         }
     }
 }

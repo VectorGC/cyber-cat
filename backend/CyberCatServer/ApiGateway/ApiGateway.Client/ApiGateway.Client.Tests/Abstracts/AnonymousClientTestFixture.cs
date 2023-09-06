@@ -6,7 +6,7 @@ namespace ApiGateway.Client.Tests.Abstracts
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
     public abstract class AnonymousClientTestFixture
     {
-        protected readonly ServerEnvironment ServerEnvironment;
+        private readonly ServerEnvironment ServerEnvironment;
 
         protected AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
         {

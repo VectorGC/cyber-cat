@@ -1,12 +1,15 @@
 #if UNITY_WEBGL
-using System;
+using System.Net;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 {
-    public class UnityWebException : Exception
+    public class UnityWebException : WebException
     {
-        public UnityWebException(long statusCode) : base($"Status '{statusCode.ToString()}'")
+        public HttpStatusCode StatusCode { get; }
+
+        public UnityWebException(HttpStatusCode statusCode) : base($"Status '{statusCode.ToString()}'")
         {
+            StatusCode = statusCode;
         }
 
         public override string ToString()

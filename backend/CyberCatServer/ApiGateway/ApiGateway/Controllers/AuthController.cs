@@ -3,6 +3,7 @@ using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Dto.Data;
 using Shared.Server.Ids;
 using Shared.Server.Services;
 
@@ -21,7 +22,7 @@ public class AuthController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPut("signUp")]
+    [HttpPost("signUp")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> SignUp(string email, string password, string name)
     {

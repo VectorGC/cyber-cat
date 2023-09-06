@@ -16,11 +16,12 @@ namespace ApiGateway.Client.Tests.Abstracts
             return await client.SignInAsPlayer();
         }
 
-        [TearDown]
-        public new async Task TearDown()
+        protected override async Task OnTearDown()
         {
             var client = await GetPlayerClient();
             await client.Remove();
+
+            await base.OnTearDown();
         }
     }
 }

@@ -1,9 +1,10 @@
 using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Users;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
+using Shared.Models.Dto.Data;
 
 namespace ApiGateway.Client.Internal.Anonymous
 {
@@ -20,14 +21,14 @@ namespace ApiGateway.Client.Internal.Anonymous
 
         public async Task SignUp(string email, string password, string name)
         {
-            var form = new NameValueCollection()
+            var form = new Dictionary<string, string>()
             {
                 ["email"] = email,
                 ["password"] = password,
                 ["name"] = name,
             };
 
-            await _webClient.PutAsync(_uri + "auth/signUp", form);
+            await _webClient.PostAsync(_uri + "auth/signUp", form);
         }
 
         public async Task<IUser> SignIn(string email, string password)
@@ -38,7 +39,7 @@ namespace ApiGateway.Client.Internal.Anonymous
 
         private async Task<string> GetAuthenticationToken(string email, string password)
         {
-            var form = new NameValueCollection
+            var form = new Dictionary<string, string>
             {
                 ["email"] = email,
                 ["password"] = password

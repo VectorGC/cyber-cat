@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models.Dto;
 using Shared.Models.Dto.Descriptions;
 using Shared.Models.Ids;
 using Shared.Server.Services;
@@ -20,12 +21,19 @@ public class TasksController : ControllerBase
         _taskGrpcService = taskGrpcService;
     }
 
-    [HttpGet()]
-    [ProducesResponseType(typeof(TaskDescription), (int) HttpStatusCode.OK)]
+    [HttpGet]
+    [ProducesResponseType(typeof(TaskIdsDto), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<List<TaskId>>> GetTasks()
+    public async Task<ActionResult<TaskIdsDto>> GetTasks()
     {
-        return await _taskGrpcService.GetTasks();
+        var response = await _taskGrpcService.GetTasks();
+        response.EnsureSuccess();
+
+        var taskIds = response.Value.Select(taskId => taskId.Value).ToList();
+        return new TaskIdsDto
+        {
+            taskIds = taskIds
+        };
     }
 
     [HttpGet("{taskId}")]

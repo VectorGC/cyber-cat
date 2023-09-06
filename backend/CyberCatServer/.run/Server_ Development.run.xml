@@ -6,6 +6,7 @@
     <toRun name="JudgeService: Development" type="LaunchSettings" />
     <toRun name="PlayerService: Development" type="LaunchSettings" />
     <toRun name="TaskService: Development" type="LaunchSettings" />
+    <toRun name="start_local_mongo" type="BatchConfigurationType" />
     <method v="2" />
   </configuration>
 </component>
