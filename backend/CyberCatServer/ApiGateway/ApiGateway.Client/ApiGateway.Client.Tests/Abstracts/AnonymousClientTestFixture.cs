@@ -4,18 +4,18 @@ namespace ApiGateway.Client.Tests.Abstracts
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public abstract class AnonymousClientTestFixture
+    public class AnonymousClientTestFixture
     {
-        private readonly ServerEnvironment ServerEnvironment;
+        private readonly ServerEnvironment _serverEnvironment;
 
-        protected AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
+        public AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
         {
-            ServerEnvironment = serverEnvironment;
+            _serverEnvironment = serverEnvironment;
         }
 
-        protected IAnonymous GetAnonymousClient()
+        public IAnonymous GetAnonymousClient()
         {
-            return ServerClientFactory.CreateAnonymous(ServerEnvironment);
+            return ServerClientFactory.CreateAnonymous(_serverEnvironment);
         }
     }
 }

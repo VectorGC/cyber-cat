@@ -4,24 +4,30 @@ using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
 {
-    public abstract class PlayerClientTestFixture : UserClientTestFixture
+    [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
+    [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
+    public class PlayerClientTestFixture
     {
-        protected PlayerClientTestFixture(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        private readonly UserClientTestFixture _userClientTestFixture;
+
+        protected PlayerClientTestFixture(ServerEnvironment serverEnvironment)
         {
+            _userClientTestFixture = new UserClientTestFixture(serverEnvironment);
         }
 
         protected async Task<IPlayer> GetPlayerClient()
         {
-            var client = await GetUserClient();
+            var client = await _userClientTestFixture.GetUserClient();
             return await client.SignInAsPlayer();
         }
 
-        protected override async Task OnTearDown()
+        [TearDown]
+        public async Task TearDown()
         {
             var client = await GetPlayerClient();
             await client.Remove();
 
-            await base.OnTearDown();
+            await _userClientTestFixture.TearDown();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             var isNetworkError = webRequest.result == UnityEngine.Networking.UnityWebRequest.Result.ConnectionError;
             var isHttpError = webRequest.result == UnityEngine.Networking.UnityWebRequest.Result.ProtocolError;
 
-            if (!webRequest.isDone || isNetworkError || isHttpError)
+            if (!webRequest.isDone || isNetworkError || isHttpError || webRequest.responseCode != (int) HttpStatusCode.OK)
             {
                 throw new UnityWebException((HttpStatusCode) webRequest.responseCode);
             }

@@ -4,17 +4,21 @@ using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
 {
-    public abstract class UserClientTestFixture : AnonymousClientTestFixture
+    [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
+    [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
+    public class UserClientTestFixture
     {
         private IUser _user;
+        private readonly AnonymousClientTestFixture _anonymousClientTestFixture;
 
-        protected UserClientTestFixture(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        public UserClientTestFixture(ServerEnvironment serverEnvironment)
         {
+            _anonymousClientTestFixture = new AnonymousClientTestFixture(serverEnvironment);
         }
 
-        protected async Task<IUser> GetUserClient()
+        public async Task<IUser> GetUserClient()
         {
-            var anonymous = GetAnonymousClient();
+            var anonymous = _anonymousClientTestFixture.GetAnonymousClient();
             if (_user == null)
             {
                 await anonymous.SignUp("test@test.com", "test_password", "Test_Name");
@@ -24,17 +28,12 @@ namespace ApiGateway.Client.Tests.Abstracts
             return _user;
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public async Task TearDown()
-        {
-            await OnTearDown();
-        }
-
-        protected virtual async Task OnTearDown()
         {
             var client = await GetUserClient();
             await client.Remove("test_password");
-            _user = null; 
+            _user = null;
         }
     }
 }
