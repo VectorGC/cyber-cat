@@ -3,7 +3,7 @@ using Bonsai;
 using Bonsai.Core;
 using UnityEngine;
 
-[BonsaiNode("UI/", "Modal")]
+[BonsaiNode("UI/", "Log")]
 public class Modal : Task
 {
     [SerializeField] private string _header = "Info";
@@ -31,7 +31,12 @@ public class Modal : Task
         base.Description(builder);
 
         builder.AppendLine(_header);
-        builder.AppendLine(_body);
+        if (!string.IsNullOrEmpty(_body))
+        {
+            var text = _body.Length > 20 ? new string(_body.ToCharArray(0, 20)) + "..." : _body;
+            builder.AppendLine(text);
+        }
+
         builder.AppendLine("---------");
         builder.AppendLine(_button);
     }

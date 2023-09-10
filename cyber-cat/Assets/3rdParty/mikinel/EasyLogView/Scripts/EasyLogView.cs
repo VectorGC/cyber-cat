@@ -7,7 +7,7 @@ namespace mikinel.easylogview
 {
     public class EasyLogView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private Text text;
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private bool isAutoScroll = true;
         [SerializeField] private int maxLines = 30;

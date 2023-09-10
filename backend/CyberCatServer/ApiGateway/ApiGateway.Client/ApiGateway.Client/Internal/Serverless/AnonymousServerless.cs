@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Users;
 using ApiGateway.Client.Models;
 
-namespace ApiGateway.Client.Internal.Anonymous
+namespace ApiGateway.Client.Internal.Serverless
 {
     public class AnonymousServerless : IAnonymous
     {

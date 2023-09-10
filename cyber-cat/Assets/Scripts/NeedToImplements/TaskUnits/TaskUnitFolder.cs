@@ -18,7 +18,7 @@ namespace TaskUnits
 
         public readonly async UniTask<ITaskData> GetTask()
         {
-            var player = await GameConfig.GetOrPlayerClient();
+            var player = await GameConfig.GetOrCreatePlayerClient();
             var task = player.Tasks[_task];
             var name = await task.GetName();
             var description = await task.GetDescription();

@@ -4,7 +4,7 @@ using ApiGateway.Client.Internal.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
 
-namespace ApiGateway.Client.Internal.Players
+namespace ApiGateway.Client.Internal
 {
     internal class PlayerClientProxy : IPlayer
     {

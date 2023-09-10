@@ -7,13 +7,18 @@
         "GUID:0495632e7e8a22448b67788cf8066954",
         "GUID:9304b1db5e4b0884589c00e2cafb14ac",
         "GUID:4ec4370bdf8eab04eb5ce46de82cc39d",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b",
+        "GUID:a05720c07908a7649bad471efc0b41e0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Shared.Models.dll",
+        "ApiGateway.Client.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],

@@ -27,7 +27,7 @@ namespace Features.GameManager
 
         private static IPlayer _player;
 
-        public static async Task<IPlayer> GetOrPlayerClient()
+        public static async Task<IPlayer> GetOrCreatePlayerClient()
         {
             if (_player == null)
             {

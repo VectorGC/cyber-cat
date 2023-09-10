@@ -1,34 +1,30 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto;
 using Shared.Models.Ids;
 
-namespace ApiGateway.Client.Internal.Tasks
+namespace ApiGateway.Client.Internal.Serverless
 {
-    internal class TaskRepositoryProxy : ITaskRepository
+    internal class TaskRepositoryServerless : ITaskRepository
     {
-        private readonly Uri _uri;
-        private readonly IWebClient _webClient;
         private readonly Dictionary<TaskId, ITask> _tasks = new Dictionary<TaskId, ITask>();
 
-        public TaskRepositoryProxy(Uri uri, IWebClient webClient)
+        private static TaskRepositoryServerless _instance;
+
+        public static TaskRepositoryServerless GetOrCreate()
         {
-            _webClient = webClient;
-            _uri = uri;
+            if (_instance == null)
+            {
+                _instance = new TaskRepositoryServerless();
+            }
+
+            return _instance;
         }
 
-        public async Task Init()
+        private TaskRepositoryServerless()
         {
-            var tasks = await _webClient.GetFromJsonAsync<TaskIdsDto>(_uri + "tasks");
-            foreach (var taskId in tasks.taskIds)
-            {
-                var taskProxy = new TaskProxy(taskId, _uri, _webClient);
-                _tasks[taskId] = taskProxy;
-            }
+            _tasks["tutorial"] = new TaskServerless();
+            _tasks["task-1"] = new TaskServerless();
         }
 
         #region | Delegate implementation |

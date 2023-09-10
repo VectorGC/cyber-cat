@@ -1,15 +1,15 @@
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class TaskDescription : UIBehaviour
     {
-        [SerializeField] private TMP_Text goalTask;
-        [SerializeField] private TMP_Text descriptionTask;
+        [SerializeField] private Text goalTask;
+        [SerializeField] private Text descriptionTask;
 
         public ITask Task
         {

@@ -9,7 +9,7 @@ namespace TaskUnits
     {
         internal static async UniTask<ITaskData> GetTask(string token, string taskId, IProgress<float> progress = null)
         {
-            var player = await GameConfig.GetOrPlayerClient();
+            var player = await GameConfig.GetOrCreatePlayerClient();
             var task = player.Tasks[taskId];
             var name = await task.GetName();
             var description = await task.GetDescription();

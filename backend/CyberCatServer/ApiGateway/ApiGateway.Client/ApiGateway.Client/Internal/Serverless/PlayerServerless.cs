@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Models;
 
-namespace ApiGateway.Client.Internal.Players
+namespace ApiGateway.Client.Internal.Serverless
 {
     internal class ServerlessPlayer : IPlayer
     {
-        public ITaskRepository Tasks => throw new System.NotImplementedException();
+        public ITaskRepository Tasks => TaskRepositoryServerless.GetOrCreate();
 
         public Task Remove()
         {

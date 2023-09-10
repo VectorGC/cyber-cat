@@ -7,9 +7,9 @@ namespace ApiGateway.Client.Internal.Tasks.Statuses
     {
         public string Solution { get; }
 
-        public Complete(TaskData data)
+        public Complete(string solution)
         {
-            Solution = data.Solution;
+            Solution = solution;
         }
     }
 }

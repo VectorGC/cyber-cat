@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Users;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
 
-namespace ApiGateway.Client.Internal.Anonymous
+namespace ApiGateway.Client.Internal
 {
     internal class AnonymousClientProxy : IAnonymous
     {

@@ -70,9 +70,9 @@ namespace ApiGateway.Client.Internal.Tasks
                 case TaskProgressStatus.NotStarted:
                     return new NotStarted();
                 case TaskProgressStatus.HaveSolution:
-                    return new HaveSolution(data);
+                    return new HaveSolution(data.Solution);
                 case TaskProgressStatus.Complete:
-                    return new Complete(data);
+                    return new Complete(data.Solution);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

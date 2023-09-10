@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.Players;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
 

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.Players;
+using ApiGateway.Client.Internal.Serverless;
 using ApiGateway.Client.Models;
 
 namespace ApiGateway.Client.Internal.Users
