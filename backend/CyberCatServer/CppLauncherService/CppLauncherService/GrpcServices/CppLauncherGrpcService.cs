@@ -30,6 +30,8 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         var compileResult = await CompileCode(sourceCode);
         if (compileResult.Output.HasError)
         {
+            await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+            await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
             return new OutputDto
             {
                 StandardError = compileResult.Output.StandardError
@@ -39,8 +41,8 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
         launchOutput = _errorFormatService.Format(launchOutput);
 
-        _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
-        _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
+         await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+         await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
 
         return new OutputDto
         {
