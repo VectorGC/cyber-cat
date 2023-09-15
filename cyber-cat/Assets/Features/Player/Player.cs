@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private HUDController _hud;
 
-    public InteractPosibilityHandler InteractPosibility { get; private set; }
+    public InteractHandler Interact { get; private set; }
 
     private const float _moveSpeed = 4f;
 
@@ -17,7 +18,13 @@ public class Player : MonoBehaviour
         TryGetComponent(out _navMeshAgent);
 
         var interactables = FindObjectsOfType<Interactable>();
-        InteractPosibility = new InteractPosibilityHandler(interactables, _hud, transform);
+        Interact = new InteractHandler(interactables, _hud, transform);
+    }
+
+    [Inject]
+    public void Construct(Interactable interactable)
+    {
+        var t = 10;
     }
 
     private void Start()
@@ -33,6 +40,6 @@ public class Player : MonoBehaviour
         var directionVector = new Vector3(horizontal, 0, vertical);
         _navMeshAgent.velocity = Vector3.ClampMagnitude(directionVector, 1) * _moveSpeed;
 
-        InteractPosibility.OnUpdate();
+        Interact.OnUpdate();
     }
 }

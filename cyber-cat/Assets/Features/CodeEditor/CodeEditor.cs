@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
-using Features.GameManager;
+using Features.ServerConfig;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -18,7 +18,7 @@ public class CodeEditor : ICodeEditor
             throw new ArgumentNullException(nameof(taskId));
         }
 
-        var player = await GameManager.GetOrCreatePlayerClient();
+        var player = await ServerAPI.CreatePlayerClient();
         var task = player.Tasks[taskId];
 
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();
