@@ -18,7 +18,7 @@ public class CodeEditor : ICodeEditor
             throw new ArgumentNullException(nameof(taskId));
         }
 
-        var player = await GameConfig.GetOrCreatePlayerClient();
+        var player = await GameManager.GetOrCreatePlayerClient();
         var task = player.Tasks[taskId];
 
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();

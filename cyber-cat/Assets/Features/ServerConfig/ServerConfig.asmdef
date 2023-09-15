@@ -1,14 +1,13 @@
 {
-    "name": "GameConfig",
+    "name": "ServerConfig",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [
-        "ApiGateway.Client.dll",
-        "Shared.Models.dll"
+        "ApiGateway.Client.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

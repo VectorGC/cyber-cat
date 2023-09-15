@@ -17,7 +17,7 @@ public static class ServerEnvironmentUnityToolbar
     {
         EditorGUI.BeginDisabledGroup(Application.isPlaying);
 
-        GameConfig.ServerEnvironment = (ServerEnvironment) EditorGUILayout.EnumPopup(GameConfig.ServerEnvironment);
+        GameManager.ServerEnvironment = (ServerEnvironment) EditorGUILayout.EnumPopup(GameManager.ServerEnvironment);
 
         EditorGUI.EndDisabledGroup();
 

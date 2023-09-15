@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Features.GameManager
 {
-    public static class GameConfig
+    public static class GameManager
     {
         public static ServerEnvironment ServerEnvironment
         {
