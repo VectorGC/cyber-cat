@@ -1,17 +1,16 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
     public abstract bool CanInteract { get; }
 
-    protected abstract UniTask OnInteract();
+    protected abstract void OnInteract();
 
-    public async UniTask Interact()
+    public void Interact()
     {
         if (CanInteract)
         {
-            await OnInteract();
+            OnInteract();
         }
     }
 }

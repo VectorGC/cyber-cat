@@ -2,8 +2,11 @@
     "name": "BehaviourTrees",
     "rootNamespace": "",
     "references": [
+        "GUID:a05720c07908a7649bad471efc0b41e0",
+        "GUID:dc84ce382389add4ba1284e7a7f2e08c",
         "GUID:e663252ae8cdac9448492a619a23dbb5",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

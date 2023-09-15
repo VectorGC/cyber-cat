@@ -6,7 +6,6 @@
         "GUID:2bd87b1f29eb7864b90c7d0f6f76690b",
         "GUID:23eed6c2401dca1419d1ebd180e58c5a",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
     ],
     "includePlatforms": [],
@@ -17,7 +16,7 @@
         "Shared.Models.dll",
         "ApiGateway.Client.dll"
     ],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

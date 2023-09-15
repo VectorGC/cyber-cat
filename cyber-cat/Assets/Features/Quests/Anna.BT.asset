@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4982688171587762528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab706f9f6d491844eb47a0f5138feb9e, type: 3}
+  m_Name: OpenCodeEditor
+  m_EditorClassIdentifier: 
+  preOrderIndex: 2
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 136, y: -37.5}
+--- !u!114 &-1096039150067686413
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 1
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -110.5, y: -67.5}
+  _header: Info
+  _body: Text
+  _button: OK
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e327cacc628d65b4faa51b0a82bf63c2, type: 3}
   m_Name: Anna.BT
   m_EditorClassIdentifier: 
-  allNodes: []
+  allNodes:
+  - {fileID: 8240774264444297191}
+  - {fileID: -1096039150067686413}
+  - {fileID: -4982688171587762528}
   blackboard: {fileID: 2176452676719174397}
   actor: {fileID: 0}
   panPosition: {x: 0, y: 0}
@@ -31,3 +69,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: []
+--- !u!114 &8240774264444297191
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -40.5, y: -241.5}
+  children:
+  - {fileID: -1096039150067686413}
+  - {fileID: -4982688171587762528}

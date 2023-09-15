@@ -4,9 +4,7 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private HUDController _hud;
-
-    public InteractHandler Interact { get; private set; }
+    public PlayerInteractHandler Interact { get; private set; }
 
     private const float _moveSpeed = 4f;
 
@@ -16,20 +14,12 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out _navMeshAgent);
-
-        var interactables = FindObjectsOfType<Interactable>();
-        Interact = new InteractHandler(interactables, _hud, transform);
     }
 
     [Inject]
-    public void Construct(Interactable interactable)
+    public void Construct(PlayerInteractHandler interactHandler)
     {
-        var t = 10;
-    }
-
-    private void Start()
-    {
-        _hud.HintText = string.Empty;
+        Interact = interactHandler;
     }
 
     private void Update()
