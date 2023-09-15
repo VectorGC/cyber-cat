@@ -1,8 +1,7 @@
 {
-    "name": "Quests",
+    "name": "Modals",
     "rootNamespace": "",
     "references": [
-        "GUID:93f36dbafd5b944479ad69931bb1980b",
         "GUID:9304b1db5e4b0884589c00e2cafb14ac"
     ],
     "includePlatforms": [],
@@ -10,7 +9,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
