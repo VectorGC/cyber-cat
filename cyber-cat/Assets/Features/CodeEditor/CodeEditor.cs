@@ -11,15 +11,12 @@ public class CodeEditor : ICodeEditor
     public static bool IsOpen { get; private set; }
     public ITask Task { get; }
 
-    public static async Task OpenAsync(string taskId)
+    public static async Task OpenAsync(ITask task)
     {
-        if (string.IsNullOrEmpty(taskId))
+        if (task == null)
         {
-            throw new ArgumentNullException(nameof(taskId));
+            throw new ArgumentNullException(nameof(task));
         }
-
-        var player = await ServerAPI.CreatePlayerClient();
-        var task = player.Tasks[taskId];
 
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();
 
@@ -27,6 +24,20 @@ public class CodeEditor : ICodeEditor
         var controller = Object.FindObjectOfType<CodeEditorController>();
         controller.Construct(editor);
     }
+
+#if UNITY_EDITOR
+    public static async Task<CodeEditor> CreateInstance(ITask task)
+    {
+        if (task == null)
+        {
+            throw new ArgumentNullException(nameof(task));
+        }
+
+        var editor = new CodeEditor(task);
+        return editor;
+    }
+
+#endif
 
     private CodeEditor(ITask task)
     {

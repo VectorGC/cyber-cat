@@ -61,12 +61,10 @@ namespace InGameCodeEditor
         private bool lineNumbers = true;
         [SerializeField]
         private int lineNumbersSize = 20;
-
-#if UNITY_2018_2_OR_NEWER
-        [Header("TMP Compatibility")]
+        
         [SerializeField]
-        private bool applyLineOffsetFix = false;
-#endif
+        private int _lineOffset = -5;
+        
 #pragma warning restore 0649
 
 
@@ -374,6 +372,13 @@ namespace InGameCodeEditor
             DisplayedContentChanged(inputField.text, forceUpdate, updateLineOnly);
         }
 
+        private float CalculateHighlightYPosition(int lineIndex)
+        {
+            return (inputText.textInfo.lineInfo[inputText.textInfo.characterInfo[0].lineNumber].lineHeight *
+                    -lineIndex) + _lineOffset +
+                   inputTextTransform.anchoredPosition.y;
+        }
+
         /// <summary>
         /// Set the line where the line highlight bar will be positioned. Valid line numbers start at 1 and count up until <see cref="LineCount"/>.
         /// You may also like to lock the line highlight bar in position to prevent it being moved by the user which can be achieved by passing 'true' as second argument.
@@ -386,19 +391,10 @@ namespace InGameCodeEditor
             if (isActiveAndEnabled == false || lineNumber < 1 || lineNumber > LineCount)
                 return;
 
-            int lineOffset = 0;
-            int lineIndex = lineNumber - 1;// inputText.textInfo.lineCount - lineNumber - 1;
-
-#if UNITY_2018_2_OR_NEWER
-            if(applyLineOffsetFix == true)
-                lineOffset++;
-#endif
+            int lineIndex = lineNumber - 1; // inputText.textInfo.lineCount - lineNumber - 1;
 
             // Highlight the current line
-            lineHighlightTransform.anchoredPosition = new Vector2(5, 
-                (inputText.textInfo.lineInfo[inputText.textInfo.characterInfo[0].lineNumber].lineHeight *
-                -lineIndex) + lineOffset - 4f +
-                inputTextTransform.anchoredPosition.y);
+            lineHighlightTransform.anchoredPosition = new Vector2(5, CalculateHighlightYPosition(lineIndex));
 
             // Lock the line highlight so it cannot be moved
             if (lockLineHighlight == true)
@@ -579,17 +575,9 @@ namespace InGameCodeEditor
             if (isActiveAndEnabled == false || lineHighlightLocked == true)
                 return;
 
-            int lineOffset = 0;
-
-#if UNITY_2018_2_OR_NEWER
-            if(applyLineOffsetFix == true)
-                lineOffset++;
-#endif
-
+            var y = CalculateHighlightYPosition(inputText.textInfo.characterInfo[inputField.caretPosition].lineNumber);
             // Highlight the current line
-            lineHighlightTransform.anchoredPosition = new Vector2(5, inputText.textInfo.lineInfo[inputText.textInfo.characterInfo[0].lineNumber].lineHeight *
-                (-inputText.textInfo.characterInfo[inputField.caretPosition].lineNumber + lineOffset) - 4 +
-                inputTextTransform.anchoredPosition.y);
+            lineHighlightTransform.anchoredPosition = new Vector2(5, y);
         }
 
         private string SyntaxHighlightContent(string inputText)

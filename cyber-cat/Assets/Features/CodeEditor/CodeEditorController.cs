@@ -1,7 +1,9 @@
 using ApiGateway.Client.Internal.Tasks.Verdicts;
+using Features.ServerConfig;
 using Models;
 using TNRD;
 using UI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +17,9 @@ public class CodeEditorController : UIBehaviour
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
 
+    [Header("Debug")] [Tooltip("Enter to play mode, Context -> Load Debug Task")] [SerializeField]
+    private TaskType _debugTask;
+
     private ICodeEditor _codeEditor;
 
     public void Construct(ICodeEditor codeEditor)
@@ -24,6 +29,21 @@ public class CodeEditorController : UIBehaviour
         _taskDescription.Task = _codeEditor.Task;
         _codeEditorView.Value.Language = LanguageProg.Cpp;
     }
+
+#if UNITY_EDITOR
+    [MenuItem("CONTEXT/CodeEditorController/Load Debug Task")]
+    public static async void LoadTask()
+    {
+        var controller = FindObjectOfType<CodeEditorController>();
+        var taskId = controller._debugTask;
+
+        var player = await ServerAPI.CreatePlayerClient();
+        var task = player.Tasks[taskId.GetId()];
+        var codeEditor = await CodeEditor.CreateInstance(task);
+
+        controller.Construct(codeEditor);
+    }
+#endif
 
     protected override void OnEnable()
     {

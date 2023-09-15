@@ -6,13 +6,18 @@
         "GUID:dc84ce382389add4ba1284e7a7f2e08c",
         "GUID:e663252ae8cdac9448492a619a23dbb5",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b",
+        "GUID:9bf848f31e601a249a6bebdc53287470"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "ApiGateway.Client.dll",
+        "Shared.Models.dll",
+        "Zenject-usage.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
