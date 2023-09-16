@@ -2,7 +2,13 @@ using System;
 
 internal class SimpleModalWindowAdapter : IModal
 {
-    public bool IsShow => _window && _window.Visible;
+    public event Action Closed
+    {
+        add => _window.Closed += value;
+        remove => _window.Closed -= value;
+    }
+
+    public bool IsShow => _window.IsShow;
 
     private readonly SimpleModalWindow _window;
 

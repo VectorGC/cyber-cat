@@ -3057,6 +3057,8 @@ MonoBehaviour:
 
     7
 
+    8
+
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3221,8 +3223,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "#include <#957960><</color>stdio<#957960>.</color>h<#957960>></color>\r\n<#569CD6>int</color>
-    main<#957960>(</color><#957960>)</color>\n{\n    <#569CD6>int</color> a,b;scanf<#957960>(</color><#CB8554>\"%d%d\"</color>,<#957960>&</color>a,<#957960>&</color>b<#957960>)</color>;\n   
-    printf<#957960>(</color><#CB8554>\"%d\"</color>,a<#957960>+</color>b<#957960>)</color>;\n}"
+    main<#957960>(</color><#957960>)</color>\n{\n    <#569CD6>int</color> a,b;\n   
+    scanf<#957960>(</color><#CB8554>\"%d%d\"</color>,<#957960>&</color>a,<#957960>&</color>b<#957960>)</color>;\n   
+    printf<#957960>(</color><#CB8554>\"%d\"</color><#957960>)</color>;\n}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
   m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3385,8 +3388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#include <stdio.h>\r\nint main()\n{\n    int a,b;scanf(\"%d%d\",&a,&b);\n   
-    printf(\"%d\",a+b);\n}\u200B"
+  m_text: "#include <stdio.h>\r\nint main()\n{\n    printf(\"Hello world!\");\n}\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
   m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3692,8 +3694,7 @@ MonoBehaviour:
   m_CaretColor: {r: 1, g: 1, b: 1, a: 1}
   m_CustomCaretColor: 1
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: "#include <stdio.h>\r\nint main()\n{\n    int a,b;scanf(\"%d%d\",&a,&b);\n   
-    printf(\"%d\",a+b);\n}"
+  m_Text: "#include <stdio.h>\r\nint main()\n{\n    printf(\"Hello world!\");\n}"
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -3882,7 +3883,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224857266377106437}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3921,7 +3922,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224857266377106437}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3968,7 +3969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4}
+  m_AnchoredPosition: {x: 5, y: -3}
   m_SizeDelta: {x: 6, y: 40}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!224 &224745384857083661

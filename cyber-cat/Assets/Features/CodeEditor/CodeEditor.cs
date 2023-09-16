@@ -2,16 +2,17 @@ using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
-using Features.ServerConfig;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 public class CodeEditor : ICodeEditor
 {
-    public static bool IsOpen { get; private set; }
+    public event Action Closed;
+
+    public bool IsOpen { get; private set; }
     public ITask Task { get; }
 
-    public static async Task OpenAsync(ITask task)
+    public static async Task<ICodeEditor> OpenAsync(ITask task)
     {
         if (task == null)
         {
@@ -23,6 +24,10 @@ public class CodeEditor : ICodeEditor
         var editor = new CodeEditor(task);
         var controller = Object.FindObjectOfType<CodeEditorController>();
         controller.Construct(editor);
+
+        editor.IsOpen = true;
+
+        return editor;
     }
 
 #if UNITY_EDITOR
@@ -42,7 +47,6 @@ public class CodeEditor : ICodeEditor
     private CodeEditor(ITask task)
     {
         Task = task;
-        IsOpen = true;
     }
 
     public void Close()
@@ -54,5 +58,6 @@ public class CodeEditor : ICodeEditor
     {
         await SceneManager.UnloadSceneAsync("CodeEditor").ToUniTask(progress);
         IsOpen = false;
+        Closed?.Invoke();
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +25,8 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
 
     [SerializeField] protected Transform buttonsRoot;
 
+    public event Action Closed;
+    public bool IsShow { get; private set; }
     protected T Instance { get; set; }
 
     protected List<ModalWindowButton> buttons = new List<ModalWindowButton>();
@@ -149,6 +153,7 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
         OnBeforeShow();
 
         Visible = true;
+        IsShow = true;
         transform.SetAsLastSibling();
         return Instance;
     }
@@ -156,9 +161,18 @@ public abstract class ModalWindow<T> : MonoBehaviour where T : ModalWindow<T>
     public virtual T Close()
     {
         Visible = false;
-        Destroy(gameObject, 1f);
+        StartCoroutine(CloseCoroutine());
         return Instance;
-    }    
+    }
+
+    private IEnumerator CloseCoroutine()
+    {
+        yield return new WaitForSeconds(0.25f); // Close animation.
+        Closed?.Invoke();
+        Closed = null;
+        IsShow = false;
+        Destroy(gameObject, 0.75f);
+    }
 
     public virtual void UI_IgnorePopup()
     {

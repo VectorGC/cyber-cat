@@ -4,6 +4,7 @@ using TMPro;
 using System.Text;
 using InGameCodeEditor.Lexer;
 using System.Reflection;
+using UnityEditor;
 
 namespace InGameCodeEditor
 {
@@ -261,6 +262,14 @@ namespace InGameCodeEditor
             // Rebuild language colors
             if (languageTheme != null)
                 languageTheme.Invalidate();
+        }
+        
+        [ContextMenu("Refresh Text Highlight")]
+        public void RefreshTextHighlight()
+        {
+            Awake();
+            ApplyLanguage();
+            Refresh(true, false);
         }
 #endif
 

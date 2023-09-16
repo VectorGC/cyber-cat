@@ -1,17 +1,17 @@
 using System.Text;
+using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Models;
 using Bonsai;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-[BonsaiNode("CodeEditor/")]
-public class OpenCodeEditor : AsyncTask
+[BonsaiNode("Player/Tasks/", "Conditional")]
+public class IsTaskActive : ConditionalAbortAsync
 {
     [SerializeField] private TaskType _taskType;
 
     private ITask _task;
-    private ICodeEditor _codeEditor;
 
     [Inject]
     private async void Construct(AsyncInject<IPlayer> playerAsync)
@@ -20,19 +20,10 @@ public class OpenCodeEditor : AsyncTask
         _task = player.Tasks[_taskType.GetId()];
     }
 
-    protected override async UniTask OnEnterAsync()
+    protected override async UniTask<bool> ConditionAsync()
     {
-        _codeEditor = await CodeEditor.OpenAsync(_task);
-    }
-
-    protected override UniTask<Status> RunAsync()
-    {
-        if (!_codeEditor.IsOpen)
-        {
-            return UniTask.FromResult(Status.Success);
-        }
-
-        return UniTask.FromResult(Status.Running);
+        var status = await _task.GetStatus();
+        return status is NotStarted || status is HaveSolution;
     }
 
     public override void Description(StringBuilder builder)

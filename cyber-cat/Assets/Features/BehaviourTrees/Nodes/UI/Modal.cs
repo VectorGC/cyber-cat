@@ -1,12 +1,11 @@
-using System;
 using System.Text;
 using Bonsai;
-using Cysharp.Threading.Tasks;
+using Bonsai.Core;
 using UnityEngine;
 using Zenject;
 
 [BonsaiNode("UI/", "Log")]
-public class Modal : AsyncTask
+public class Modal : Task
 {
     [SerializeField] private string _header = "Info";
     [SerializeField] [Multiline(10)] private string _body = "Text";
@@ -29,11 +28,10 @@ public class Modal : AsyncTask
         _visibleWindow.Show();
     }
 
-    protected override async UniTask<Status> RunAsync()
+    public override Status Run()
     {
         if (!_visibleWindow.IsShow)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.25f));
             return Status.Success;
         }
 
