@@ -12,20 +12,19 @@ public class InGameCodeEditorAdapter : CodeEditorView
 
     private LanguageProg _language;
 
-    public LanguageProg Language
+    public override LanguageProg Language
     {
         get => _language;
         set => SetLanguage(value);
     }
 
-    public string SourceCode
+    public override string SourceCode
     {
         get => _inGameCodeEditor.Text;
         set
         {
             var text = value.Replace("\r", "");
             _inGameCodeEditor.Text = text;
-            _inGameCodeEditor.Refresh();
         }
     }
 
@@ -44,7 +43,5 @@ public class InGameCodeEditorAdapter : CodeEditorView
                 _inGameCodeEditor.LanguageTheme = _pascal;
                 break;
         }
-
-        _inGameCodeEditor.Refresh();
     }
 }

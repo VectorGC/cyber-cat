@@ -685,7 +685,6 @@ MonoBehaviour:
   _verifySolution: {fileID: 1584372984}
   _loadSavedCode: {fileID: 1928571767}
   _exit: {fileID: 2058194953}
-  _debugTask: 0
 --- !u!1 &258366789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,6 +2889,12 @@ MonoBehaviour:
 
     6
 
+    7
+
+    8
+
+    9
+
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3054,8 +3059,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "#include <#957960><</color>stdio<#957960>.</color>h<#957960>></color>\r\n<#569CD6>int</color>
-    main<#957960>(</color><#957960>)</color>\n{\n    printf<#957960>(</color><#CB8554>\"Hello
-    world!\"</color><#957960>)</color>;\n}"
+    main<#957960>(</color><#957960>)</color>\n{\n    <#569CD6>int</color> a, b;\n   
+    scanf<#957960>(</color><#CB8554>\"%d\"</color>, <#957960>&</color>a<#957960>)</color>;\n   
+    scanf<#957960>(</color><#CB8554>\"%d\"</color>, <#957960>&</color>b<#957960>)</color>;\n   
+    printf<#957960>(</color><#CB8554>\"%d\"</color>, a<#957960>+</color>b<#957960>)</color>;\n}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
   m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3218,7 +3225,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#include <stdio.h>\r\nint main()\n{\n    printf(\"Hello world!\");\n}\u200B"
+  m_text: "#include <stdio.h>\r\nint main()\n{\n    int a, b;\n    scanf(\"%d\",
+    &a);\n    scanf(\"%d\", &b);\n    printf(\"%d\", a+b);\n}\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
   m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
@@ -3524,7 +3532,8 @@ MonoBehaviour:
   m_CaretColor: {r: 1, g: 1, b: 1, a: 1}
   m_CustomCaretColor: 1
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: "#include <stdio.h>\r\nint main()\n{\n    printf(\"Hello world!\");\n}"
+  m_Text: "#include <stdio.h>\r\nint main()\n{\n    int a, b;\n    scanf(\"%d\",
+    &a);\n    scanf(\"%d\", &b);\n    printf(\"%d\", a+b);\n}"
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0

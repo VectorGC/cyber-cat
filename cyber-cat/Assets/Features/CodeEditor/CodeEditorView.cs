@@ -3,6 +3,6 @@ using UnityEngine.EventSystems;
 
 public abstract class CodeEditorView : UIBehaviour
 {
-    public LanguageProg Language { get; set; }
-    public string SourceCode { get; set; }
+    public abstract LanguageProg Language { get; set; }
+    public abstract string SourceCode { get; set; }
 }

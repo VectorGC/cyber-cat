@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using ApiGateway.Client;
 using ApiGateway.Client.Models;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Features.ServerConfig
 {
@@ -27,8 +29,28 @@ namespace Features.ServerConfig
 
         public static async Task<IPlayer> CreatePlayerClient()
         {
-            var user = await ServerClientFactory.CreateAnonymous(ServerEnvironment).SignIn("cat", "cat");
-            return await user.SignInAsPlayer();
+            var userSeed = PlayerPrefs.GetString("user_seed");
+            if (string.IsNullOrEmpty(userSeed))
+            {
+                userSeed = Random.Range(0, 10000).ToString();
+                var newEmail = $"cat_{userSeed}";
+                var newPassword = $"{userSeed}_cat";
+                await ServerClientFactory.CreateAnonymous(ServerEnvironment).SignUp(newEmail, newPassword, $"Cat_{userSeed}");
+                PlayerPrefs.SetString("user_seed", userSeed);
+            }
+
+            var email = $"cat_{userSeed}";
+            var password = $"{userSeed}_cat";
+            try
+            {
+                var user = await ServerClientFactory.CreateAnonymous(ServerEnvironment).SignIn(email, password);
+                return await user.SignInAsPlayer();
+            }
+            catch (Exception ex)
+            {
+                PlayerPrefs.DeleteKey("user_seed");
+                throw;
+            }
         }
     }
 }

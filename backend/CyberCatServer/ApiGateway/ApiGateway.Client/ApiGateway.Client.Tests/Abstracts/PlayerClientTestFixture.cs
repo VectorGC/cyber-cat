@@ -10,7 +10,7 @@ namespace ApiGateway.Client.Tests.Abstracts
     {
         private readonly UserClientTestFixture _userClientTestFixture;
 
-        protected PlayerClientTestFixture(ServerEnvironment serverEnvironment)
+        public PlayerClientTestFixture(ServerEnvironment serverEnvironment)
         {
             _userClientTestFixture = new UserClientTestFixture(serverEnvironment);
         }

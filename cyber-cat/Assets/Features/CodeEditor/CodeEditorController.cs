@@ -1,9 +1,6 @@
 using ApiGateway.Client.Internal.Tasks.Verdicts;
-using ApiGateway.Client.Models;
-using Features.ServerConfig;
 using Models;
 using UI;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,9 +14,6 @@ public class CodeEditorController : UIBehaviour
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
-
-    [Header("Debug")] [Tooltip("Enter to play mode, Context -> Load Debug Task")] [SerializeField]
-    private TaskType _debugTask;
 
     private ICodeEditor _codeEditor;
 

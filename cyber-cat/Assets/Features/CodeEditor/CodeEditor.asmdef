@@ -13,9 +13,9 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Shared.Models.dll",
+        "Zenject-usage.dll",
         "ApiGateway.Client.dll",
-        "Zenject-usage.dll"
+        "Shared.Models.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],
