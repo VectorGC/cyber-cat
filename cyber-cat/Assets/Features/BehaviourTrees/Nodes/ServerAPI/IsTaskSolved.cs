@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-[BonsaiNode("Player/Tasks/", "Conditional")]
+[BonsaiNode("ServerAPI/Tasks/", "Condition")]
 public class IsTaskSolved : ConditionalAbortAsync
 {
     [SerializeField] private TaskType _taskType;

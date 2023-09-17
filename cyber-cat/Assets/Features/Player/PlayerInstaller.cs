@@ -8,7 +8,7 @@ public class PlayerInstaller : MonoBehaviour
 
     public void InstallBindings(DiContainer container)
     {
-        container.Bind<Interactable[]>().FromMethod(FindObjectsOfType<Interactable>).AsSingle();
+        container.Bind<Interactable[]>().FromMethod(() => FindObjectsOfType<Interactable>(true)).AsSingle();
         container.BindInstance(_player).AsSingle();
         container.Bind<IHud>().FromInstance(_hud).AsSingle();
         container.Bind<PlayerInteractHandler>().AsSingle();

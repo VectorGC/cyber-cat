@@ -2,6 +2,7 @@
     "name": "BehaviourTrees",
     "rootNamespace": "",
     "references": [
+        "GUID:1a1f83471ba7f404da8a2066cb7bfabd",
         "GUID:a05720c07908a7649bad471efc0b41e0",
         "GUID:dc84ce382389add4ba1284e7a7f2e08c",
         "GUID:e663252ae8cdac9448492a619a23dbb5",

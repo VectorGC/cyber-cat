@@ -32126,6 +32126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319039502}
+  - component: {fileID: 1319039503}
   m_Layer: 0
   m_Name: George
   m_TagString: Untagged
@@ -32148,6 +32149,19 @@ Transform:
   m_Father: {fileID: 987292474}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319039503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319039501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50385389d58a382488c1e5179cfcfc90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TreeBlueprint: {fileID: 11400000, guid: a89f3426f4fff0f448ef884fd25bb304, type: 2}
 --- !u!1001 &1319368800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47690,13 +47704,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1930958707}
+  - component: {fileID: 1930958708}
   m_Layer: 0
-  m_Name: TaskKeeper
-  m_TagString: Untagged
+  m_Name: LibraryComputerTarget
+  m_TagString: Task 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1930958707
 Transform:
   m_ObjectHideFlags: 0
@@ -47705,13 +47720,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930958706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.29, y: 1.434, z: 2.212}
+  m_LocalPosition: {x: 6.29, y: 1.434, z: 1.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6927704}
   m_Father: {fileID: 987292474}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930958708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930958706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50385389d58a382488c1e5179cfcfc90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TreeBlueprint: {fileID: 11400000, guid: b5777534d1a85614fbd596f4bc02ff80, type: 2}
 --- !u!1 &1934493302
 GameObject:
   m_ObjectHideFlags: 3
