@@ -1,1 +1,0 @@
-dotnet run --profile Development --project %~dp0   
