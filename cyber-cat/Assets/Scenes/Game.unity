@@ -15587,6 +15587,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3587204764299144204, guid: a89c0552433502f478b30bfaf747457a, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3587204764299144204, guid: a89c0552433502f478b30bfaf747457a, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6062228565366326817, guid: a89c0552433502f478b30bfaf747457a, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -34223,7 +34231,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
+  _contractNames:
+  - GameContext
   _parentContractNames: []
 --- !u!4 &1451826749
 Transform:

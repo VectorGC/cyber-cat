@@ -1,9 +1,8 @@
 using InGameCodeEditor;
 using Models;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
+public class InGameCodeEditorAdapter : CodeEditorView
 {
     [SerializeField] private InGameCodeEditor.InGameCodeEditor _inGameCodeEditor;
 
@@ -11,8 +10,11 @@ public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
     [SerializeField] private CodeLanguageTheme _python;
     [SerializeField] private CodeLanguageTheme _pascal;
 
+    private LanguageProg _language;
+
     public LanguageProg Language
     {
+        get => _language;
         set => SetLanguage(value);
     }
 
@@ -29,6 +31,7 @@ public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
 
     private void SetLanguage(LanguageProg language)
     {
+        _language = language;
         switch (language)
         {
             case LanguageProg.Cpp:

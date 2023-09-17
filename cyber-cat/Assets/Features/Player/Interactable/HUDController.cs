@@ -38,5 +38,7 @@ public class HUDController : UIBehaviour, IHud
         {
             _hintText.text = string.Empty;
         }
+
+        _hintText.gameObject.SetActive(!string.IsNullOrEmpty(_hintText.text));
     }
 }

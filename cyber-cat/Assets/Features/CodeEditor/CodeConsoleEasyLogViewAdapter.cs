@@ -1,10 +1,13 @@
 using mikinel.easylogview;
+using UnityEngine;
 
-public class CodeConsoleEasyLogViewAdapter : EasyLogView, ICodeConsoleView
+public class CodeConsoleEasyLogViewAdapter : CodeConsoleView
 {
-    public void Log(string message) => OnLogMessage(message, LogMessageType.Log);
+    [SerializeField] private EasyLogView _easyLogView;
 
-    public void LogError(string message) => OnLogMessage(message, LogMessageType.Error);
+    public override void Log(string message) => _easyLogView.LogMessage(message, LogMessageType.Log, false);
 
-    public void LogSuccess(string message) => OnLogMessage(message, LogMessageType.Success);
+    public override void LogError(string message) => _easyLogView.LogMessage(message, LogMessageType.Error, false);
+
+    public override void LogSuccess(string message) => _easyLogView.LogMessage(message, LogMessageType.Success, false);
 }

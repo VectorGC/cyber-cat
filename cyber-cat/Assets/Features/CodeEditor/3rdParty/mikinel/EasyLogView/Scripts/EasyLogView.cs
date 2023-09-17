@@ -34,7 +34,7 @@ namespace mikinel.easylogview
             text.text = string.Empty;
         }
 
-        protected void OnLogMessage(string logText, LogMessageType type)
+        public void LogMessage(string logText, LogMessageType type, bool printTime)
         {
             if (text == null)
                 return;
@@ -44,7 +44,14 @@ namespace mikinel.easylogview
             text.text = tmp;
 
             var hashcode = GetColorHashCode(type);
-            PrintMessage(logText, hashcode);
+            if (printTime)
+            {
+                PrintMessageWithTime(logText, hashcode);
+            }
+            else
+            {
+                PrintMessage(logText, hashcode);
+            }
 
             if (isAutoScroll)
             {
@@ -53,7 +60,7 @@ namespace mikinel.easylogview
             }
         }
 
-        private void PrintMessage(string logText, string hashcode)
+        private void PrintMessageWithTime(string logText, string hashcode)
         {
             var seconds = $"{DateTime.Now:hh:mm:ss}";
             if (string.IsNullOrEmpty(hashcode))
@@ -63,6 +70,17 @@ namespace mikinel.easylogview
             }
 
             text.text = $"<color=#{hashcode}>[{seconds}] {logText}</color> \n" + text.text;
+        }
+        
+        private void PrintMessage(string logText, string hashcode)
+        {
+            if (string.IsNullOrEmpty(hashcode))
+            {
+                text.text = $"{logText} \n" + text.text;
+                return;
+            }
+
+            text.text = $"<color=#{hashcode}>{logText}</color> \n" + text.text;
         }
 
         private string GetColorHashCode(LogMessageType type)

@@ -2,11 +2,11 @@
     "name": "CodeEditor",
     "rootNamespace": "",
     "references": [
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:f4113365f11c42942b4c3ecc47e69ed7",
         "GUID:2bd87b1f29eb7864b90c7d0f6f76690b",
-        "GUID:23eed6c2401dca1419d1ebd180e58c5a",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b"
+        "GUID:9c5afd01d2e4dc74bbd83e2a7d355c4b",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -14,7 +14,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "Shared.Models.dll",
-        "ApiGateway.Client.dll"
+        "ApiGateway.Client.dll",
+        "Zenject-usage.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

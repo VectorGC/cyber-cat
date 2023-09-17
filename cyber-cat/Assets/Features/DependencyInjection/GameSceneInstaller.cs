@@ -11,5 +11,6 @@ public class GameSceneInstaller : MonoInstaller
 
         ServerAPIInstaller.InstallBindings(Container);
         UIInstaller.InstallBindings(Container);
+        CodeEditorInstaller.InstallBindings(Container);
     }
 }

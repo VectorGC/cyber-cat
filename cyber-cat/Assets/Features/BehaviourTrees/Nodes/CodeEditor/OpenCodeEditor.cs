@@ -1,12 +1,12 @@
 using System.Text;
 using ApiGateway.Client.Models;
 using Bonsai;
-using Cysharp.Threading.Tasks;
+using Bonsai.Core;
 using UnityEngine;
 using Zenject;
 
 [BonsaiNode("CodeEditor/")]
-public class OpenCodeEditor : AsyncTask
+public class OpenCodeEditor : Task
 {
     [SerializeField] private TaskType _taskType;
 
@@ -14,25 +14,26 @@ public class OpenCodeEditor : AsyncTask
     private ICodeEditor _codeEditor;
 
     [Inject]
-    private async void Construct(AsyncInject<IPlayer> playerAsync)
+    private async void Construct(AsyncInject<IPlayer> playerAsync, ICodeEditor codeEditor)
     {
         var player = await playerAsync;
         _task = player.Tasks[_taskType.GetId()];
+        _codeEditor = codeEditor;
     }
 
-    protected override async UniTask OnEnterAsync()
+    public override void OnEnter()
     {
-        _codeEditor = await CodeEditor.OpenAsync(_task);
+        _codeEditor.Open(_task);
     }
 
-    protected override UniTask<Status> RunAsync()
+    public override Status Run()
     {
         if (!_codeEditor.IsOpen)
         {
-            return UniTask.FromResult(Status.Success);
+            return Status.Success;
         }
 
-        return UniTask.FromResult(Status.Running);
+        return Status.Running;
     }
 
     public override void Description(StringBuilder builder)

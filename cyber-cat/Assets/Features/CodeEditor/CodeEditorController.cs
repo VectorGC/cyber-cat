@@ -1,18 +1,19 @@
 using ApiGateway.Client.Internal.Tasks.Verdicts;
+using ApiGateway.Client.Models;
 using Features.ServerConfig;
 using Models;
-using TNRD;
 using UI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 public class CodeEditorController : UIBehaviour
 {
     [SerializeField] private TaskDescription _taskDescription;
-    [SerializeField] private SerializableInterface<ICodeEditorView> _codeEditorView;
-    [SerializeField] private SerializableInterface<ICodeConsoleView> _console;
+    [SerializeField] private CodeEditorView _codeEditorView;
+    [SerializeField] private CodeConsoleView _console;
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
@@ -27,9 +28,16 @@ public class CodeEditorController : UIBehaviour
         _codeEditor = codeEditor;
 
         _taskDescription.Task = _codeEditor.Task;
-        _codeEditorView.Value.Language = LanguageProg.Cpp;
+        _codeEditorView.Language = LanguageProg.Cpp;
+    }
+    
+    [Inject]
+    public void Construct2(ICodeEditor inter)
+    {
+        var t = 10;
     }
 
+    /*
 #if UNITY_EDITOR
     [MenuItem("CONTEXT/CodeEditorController/Load Debug Task")]
     public static async void LoadTask()
@@ -44,6 +52,7 @@ public class CodeEditorController : UIBehaviour
         controller.Construct(codeEditor);
     }
 #endif
+*/
 
     protected override void OnEnable()
     {
@@ -65,16 +74,16 @@ public class CodeEditorController : UIBehaviour
 
     private async void VerifySolution()
     {
-        var sourceCode = _codeEditorView.Value.SourceCode;
+        var sourceCode = _codeEditorView.SourceCode;
         var verdict = await _codeEditor.Task.VerifySolution(sourceCode);
 
         switch (verdict)
         {
             case Success success:
-                _console.Value.LogSuccess(success.ToString());
+                _console.LogSuccess(success.ToString());
                 break;
             case Failure failure:
-                _console.Value.LogError(failure.ToString());
+                _console.LogError(failure.ToString());
                 break;
         }
     }
@@ -82,7 +91,7 @@ public class CodeEditorController : UIBehaviour
     private async void GetSavedCode()
     {
         var sourceCode = await _codeEditor.Task.GetLastSavedSolution();
-        _codeEditorView.Value.SourceCode = sourceCode;
+        _codeEditorView.SourceCode = sourceCode;
     }
 
     private void ExitEditor()
