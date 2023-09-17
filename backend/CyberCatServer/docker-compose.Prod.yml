@@ -5,9 +5,6 @@
       file: docker-compose.yml
       service: api-gateway
     entrypoint: dotnet ApiGateway.dll https --ssl /etc/letsencrypt/live/server.cyber-cat.pro/fullchain.pem --key /etc/letsencrypt/live/server.cyber-cat.pro/privkey.pem
-      #environment:
-      # - Https__CertificatePemPath=/etc/letsencrypt/live/server.cyber-cat.pro/fullchain.pem
-    # - Https__CertificateKeyPath=/etc/letsencrypt/live/server.cyber-cat.pro/privkey.pem
     ports:
       - "443:443"
     volumes:

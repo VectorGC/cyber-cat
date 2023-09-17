@@ -25,6 +25,11 @@ namespace ApiGateway.Client.Internal.Serverless
         {
             _tasks["tutorial"] = new TaskServerless();
             _tasks["task-1"] = new TaskServerless();
+            _tasks["task-2"] = new TaskServerless();
+            _tasks["task-3"] = new TaskServerless();
+            _tasks["task-4"] = new TaskServerless();
+            _tasks["task-5"] = new TaskServerless();
+            _tasks["task-6"] = new TaskServerless();
         }
 
         #region | Delegate implementation |

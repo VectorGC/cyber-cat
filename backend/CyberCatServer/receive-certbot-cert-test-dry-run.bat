@@ -1,0 +1,1 @@
+docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot-test-dry-run

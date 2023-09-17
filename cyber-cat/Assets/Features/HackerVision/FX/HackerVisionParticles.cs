@@ -1,13 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class HackerVisionParticles : MonoBehaviour
 {
     [SerializeField] private List<ParticleSystem> _particleSystems;
 
+    private HackerVision _hackerVision;
+
+    [Inject]
+    private void Construct(HackerVision hackerVision)
+    {
+        _hackerVision = hackerVision;
+    }
+
     void Update()
     {
-        SetEnabledOnUpdate(HackerVisionSingleton.Instance.Active);
+        SetEnabledOnUpdate(_hackerVision.Active);
     }
 
     private void SetEnabledOnUpdate(bool isEnabled)

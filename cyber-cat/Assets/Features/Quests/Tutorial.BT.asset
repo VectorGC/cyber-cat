@@ -1,0 +1,546 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9119885662548135851
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb6c55dfd21bcc44873449310915a0a, type: 3}
+  m_Name: IsKeyDown
+  m_EditorClassIdentifier: 
+  preOrderIndex: 5
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -981.5, y: 495}
+  child: {fileID: -2598762447739859729}
+  abortType: 0
+  _keyCode: 119
+--- !u!114 &-8692485310287324968
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a07908f6a5fd44e906d041ac135bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: []
+--- !u!114 &-8086984760911081448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb6c55dfd21bcc44873449310915a0a, type: 3}
+  m_Name: IsKeyPressed
+  m_EditorClassIdentifier: 
+  preOrderIndex: 13
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -153.5, y: 495}
+  child: {fileID: 420010544327463089}
+  abortType: 0
+  _keyCode: 100
+--- !u!114 &-6696791040504530079
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -90, y: -49.5}
+  child: {fileID: 1721393534879076878}
+--- !u!114 &-6479613405360791903
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 12
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -150, y: 370.5}
+  child: {fileID: -8086984760911081448}
+--- !u!114 &-4164399348091211320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e45fb0cab126d4780d7513a3a3a31b, type: 3}
+  m_Name: Success
+  m_EditorClassIdentifier: 
+  preOrderIndex: 10
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -551, y: 634.5}
+  child: {fileID: 0}
+--- !u!114 &-4065868600408758498
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: IsKeyDown
+  m_EditorClassIdentifier: BehaviourTrees::IsKeyDown
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -97, y: 39}
+  child: {fileID: 0}
+  abortType: 0
+  _keyCode: 0
+--- !u!114 &-3905634829717272129
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b7f808587b0ef4a8cf51547d03ee58, type: 3}
+  m_Name: IsActiveHackerVision
+  m_EditorClassIdentifier: 
+  preOrderIndex: 22
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 667, y: 495}
+  child: {fileID: 7011841262777442135}
+  abortType: 0
+--- !u!114 &-3590256076747263444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 16
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 53, y: 376.5}
+  _header: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435"
+  _body: "\u0427\u0443\u0434\u0435\u0441\u043D\u043E, \u0430 \u0442\u0435\u043F\u0435\u0440\u044C
+    \u043F\u043E\u0434\u043E\u0439\u0434\u0438 \u043A \u0444\u043B\u0435\u0448\u043A\u0435
+    (\u043E\u043D\u0430 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0432\u043F\u0435\u0440\u0435\u0434\u0438)!"
+  _button: "\u041B\u0430\u0434\u043D\u043E -_-"
+--- !u!114 &-2598762447739859729
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e45fb0cab126d4780d7513a3a3a31b, type: 3}
+  m_Name: Success
+  m_EditorClassIdentifier: 
+  preOrderIndex: 6
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -959, y: 634.5}
+  child: {fileID: 0}
+--- !u!114 &-1914506156341450111
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5205e7d861b4cf38a3796b58579ba39, type: 3}
+  m_Name: CanInteract
+  m_EditorClassIdentifier: 
+  preOrderIndex: 18
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 262.5, y: 499.5}
+  child: {fileID: -1260097388781209293}
+  abortType: 0
+  _gameObjectName: Fleshka
+--- !u!114 &-1260097388781209293
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e45fb0cab126d4780d7513a3a3a31b, type: 3}
+  m_Name: Success
+  m_EditorClassIdentifier: 
+  preOrderIndex: 19
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 277, y: 646.5}
+  child: {fileID: 0}
+--- !u!114 &-1255031913370612939
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 3
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -1200.5, y: 376.5}
+  _header: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435"
+  _body: "\u041D\u0430\u0436\u043C\u0438 W, \u0447\u0442\u043E\u0431\u044B \u0441\u0434\u0435\u043B\u0430\u0442\u044C
+    \u043F\u0430\u0440\u0443 \u0448\u0430\u0433\u043E\u0432!"
+  _button: "\u041B\u0430\u0434\u043D\u043E -_-"
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e327cacc628d65b4faa51b0a82bf63c2, type: 3}
+  m_Name: Tutorial.BT
+  m_EditorClassIdentifier: 
+  allNodes:
+  - {fileID: -6696791040504530079}
+  - {fileID: 1721393534879076878}
+  - {fileID: 204053469643957112}
+  - {fileID: -1255031913370612939}
+  - {fileID: 9104811497282404652}
+  - {fileID: -9119885662548135851}
+  - {fileID: -2598762447739859729}
+  - {fileID: 4359000995865613009}
+  - {fileID: 7314741680135630938}
+  - {fileID: 7039650354547880085}
+  - {fileID: -4164399348091211320}
+  - {fileID: 1631771979912215982}
+  - {fileID: -6479613405360791903}
+  - {fileID: -8086984760911081448}
+  - {fileID: 420010544327463089}
+  - {fileID: 5666423959964502508}
+  - {fileID: -3590256076747263444}
+  - {fileID: 1904897285006465715}
+  - {fileID: -1914506156341450111}
+  - {fileID: -1260097388781209293}
+  - {fileID: 7405689865091009749}
+  - {fileID: 440524521509316211}
+  - {fileID: -3905634829717272129}
+  - {fileID: 7011841262777442135}
+  - {fileID: 2453328623873318966}
+  blackboard: {fileID: -8692485310287324968}
+  actor: {fileID: 0}
+  panPosition: {x: 362, y: -482}
+  zoomPosition: {x: 2.6056776, y: 2.6056776}
+  unusedNodes: []
+--- !u!114 &204053469643957112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 2
+  title: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435"
+  comment: 
+  bonsaiNodePosition: {x: -661.5, y: 226.5}
+  children:
+  - {fileID: -1255031913370612939}
+  - {fileID: 9104811497282404652}
+  - {fileID: 4359000995865613009}
+  - {fileID: 7314741680135630938}
+  - {fileID: 1631771979912215982}
+  - {fileID: -6479613405360791903}
+--- !u!114 &420010544327463089
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e45fb0cab126d4780d7513a3a3a31b, type: 3}
+  m_Name: Success
+  m_EditorClassIdentifier: 
+  preOrderIndex: 14
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -131, y: 634.5}
+  child: {fileID: 0}
+--- !u!114 &440524521509316211
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 21
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 702, y: 370.5}
+  child: {fileID: -3905634829717272129}
+--- !u!114 &1631771979912215982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 11
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -357, y: 376.5}
+  _header: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435"
+  _body: "\u0412\u0435\u043B\u0438\u043A\u043E\u043B\u0435\u043F\u043D\u043E! \u0422\u0435\u043F\u0435\u0440\u044C
+    \u043F\u043E\u0432\u0435\u0440\u043D\u0438 \u043D\u0430\u043F\u0440\u0430\u0432\u043E,
+    \u043D\u0430\u0436\u0430\u0432 D!"
+  _button: "\u041B\u0430\u0434\u043D\u043E -_-"
+--- !u!114 &1721393534879076878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 1
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -76.5, y: 70.5}
+  children:
+  - {fileID: 204053469643957112}
+  - {fileID: 5666423959964502508}
+--- !u!114 &1904897285006465715
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 17
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 258, y: 370.5}
+  child: {fileID: -1914506156341450111}
+--- !u!114 &2453328623873318966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 24
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 936, y: 376.5}
+  _header: "\u0423\u0445 \u0442\u044B!!"
+  _body: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C let's press F to start codding!\n\u041E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F
+    \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u043A\u043E\u0434\u0430. \n\u041F\u0440\u043E\u0442\u0435\u0441\u0442\u0438\u0440\u0443\u0439\u0442\u0435
+    \u0435\u0433\u043E \u0438 \u0432\u044B\u0439\u0434\u0438\u0442\u0435."
+  _button: Press F
+--- !u!114 &4359000995865613009
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 7
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -777.5, y: 376.5}
+  _header: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435"
+  _body: "\u041F\u0440\u0435\u043A\u0440\u0430\u0441\u043D\u043E! \u0422\u0435\u043F\u0435\u0440\u044C
+    \u043D\u0430\u0436\u043C\u0438\u0442\u0435 A, \u0447\u0442\u043E\u0431\u044B
+    \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043D\u0430\u043B\u0435\u0432\u043E!"
+  _button: "\u041B\u0430\u0434\u043D\u043E -_-"
+--- !u!114 &5666423959964502508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 15
+  title: "\u0420\u0435\u0448\u0435\u043D\u0438\u0435 \u0437\u0430\u0434\u0430\u0447"
+  comment: 
+  bonsaiNodePosition: {x: 477.5, y: 226.5}
+  children:
+  - {fileID: -3590256076747263444}
+  - {fileID: 1904897285006465715}
+  - {fileID: 7405689865091009749}
+  - {fileID: 440524521509316211}
+  - {fileID: 2453328623873318966}
+--- !u!114 &7011841262777442135
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28e45fb0cab126d4780d7513a3a3a31b, type: 3}
+  m_Name: Success
+  m_EditorClassIdentifier: 
+  preOrderIndex: 23
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 721, y: 634.5}
+  child: {fileID: 0}
+--- !u!114 &7039650354547880085
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb6c55dfd21bcc44873449310915a0a, type: 3}
+  m_Name: IsKeyDown
+  m_EditorClassIdentifier: 
+  preOrderIndex: 9
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -573.5, y: 495}
+  child: {fileID: -4164399348091211320}
+  abortType: 0
+  _keyCode: 97
+--- !u!114 &7314741680135630938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 8
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -570, y: 370.5}
+  child: {fileID: 7039650354547880085}
+--- !u!114 &7405689865091009749
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 20
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 456.5, y: 376.5}
+  _header: "\u0420\u0435\u0436\u0438\u043C \u0425\u0430\u043A\u0435\u0440\u0430"
+  _body: "\u0414\u043B\u044F \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 \u0432
+    \u0440\u0435\u0436\u0438\u043C \u043D\u0430\u0436\u043C\u0438 Q!"
+  _button: "\u041F\u043E\u043D\u044F\u043B!"
+--- !u!114 &9104811497282404652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f06453c5f447ee488239189521c5ea9, type: 3}
+  m_Name: UntilSuccess
+  m_EditorClassIdentifier: 
+  preOrderIndex: 4
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -978, y: 370.5}
+  child: {fileID: -9119885662548135851}
