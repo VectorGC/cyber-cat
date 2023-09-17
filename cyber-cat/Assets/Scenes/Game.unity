@@ -38389,6 +38389,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1704627066494784722, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.030210024
+      objectReference: {fileID: 0}
     - target: {fileID: 1704627066735476550, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
       propertyPath: m_Name
       value: GameSceneContext
@@ -38435,6 +38439,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1704627066735476569, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704627067643373981, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.030210024
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024093874186100514, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024093874186100514, guid: a6f70ca97fe7d9641ae7d8fb3f86f58e, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
