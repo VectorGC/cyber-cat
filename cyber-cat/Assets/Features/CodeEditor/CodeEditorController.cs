@@ -23,36 +23,14 @@ public class CodeEditorController : UIBehaviour
 
     private ICodeEditor _codeEditor;
 
-    public void Construct(ICodeEditor codeEditor)
+    [Inject]
+    private void Construct(ICodeEditor codeEditor)
     {
         _codeEditor = codeEditor;
 
         _taskDescription.Task = _codeEditor.Task;
         _codeEditorView.Language = LanguageProg.Cpp;
     }
-    
-    [Inject]
-    public void Construct2(ICodeEditor inter)
-    {
-        var t = 10;
-    }
-
-    /*
-#if UNITY_EDITOR
-    [MenuItem("CONTEXT/CodeEditorController/Load Debug Task")]
-    public static async void LoadTask()
-    {
-        var controller = FindObjectOfType<CodeEditorController>();
-        var taskId = controller._debugTask;
-
-        var player = await ServerAPI.CreatePlayerClient();
-        var task = player.Tasks[taskId.GetId()];
-        var codeEditor = await CodeEditor.CreateInstance(task);
-
-        controller.Construct(codeEditor);
-    }
-#endif
-*/
 
     protected override void OnEnable()
     {

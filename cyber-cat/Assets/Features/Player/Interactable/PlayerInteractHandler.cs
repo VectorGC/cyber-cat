@@ -29,7 +29,7 @@ public class PlayerInteractHandler
         }
     }
 
-    private bool CanInteract(Interactable interactable)
+    public bool CanInteract(Interactable interactable)
     {
         if (!interactable.CanInteract)
         {

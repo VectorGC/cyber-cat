@@ -7,7 +7,23 @@ public class CodeEditor : ICodeEditor
 {
     public event Action Closed;
 
-    public bool IsOpen => SceneManager.GetSceneByName("CodeEditor").isLoaded;
+    public bool IsOpen
+    {
+        get
+        {
+            for (var i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var scene = SceneManager.GetSceneAt(i);
+                if (scene.name == "CodeEditor")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
     public ITask Task { get; private set; }
 
     public void Open(ITask task) => OpenAsync(task).Forget();
@@ -21,14 +37,6 @@ public class CodeEditor : ICodeEditor
 
         Task = task;
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();
-
-        /*
-        var editor = new CodeEditor(task);
-        var controller = Object.FindObjectOfType<CodeEditorController>();
-        controller.Construct(editor);
-        */
-
-        //return editor;
     }
 
     public void Close() => CloseAsync().Forget();

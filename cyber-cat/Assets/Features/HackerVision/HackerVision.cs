@@ -1,25 +1,9 @@
 using System;
 using UnityEngine;
+using Zenject;
 
-public class HackerVisionSingleton : MonoBehaviour
+public class HackerVision : IInitializable, ITickable
 {
-    public static HackerVisionSingleton Instance
-    {
-        get
-        {
-            if (!_instance)
-            {
-                var gameObject = new GameObject("HackerVisionSingleton");
-                _instance = gameObject.AddComponent<HackerVisionSingleton>();
-                Debug.Log($"Instantiate {nameof(HackerVisionSingleton)}");
-            }
-
-            return _instance;
-        }
-    }
-
-    private static HackerVisionSingleton _instance;
-
     public bool Active
     {
         get => _active;
@@ -42,7 +26,7 @@ public class HackerVisionSingleton : MonoBehaviour
     private SnapshotMode _snapshotMode;
     private bool _active;
 
-    public void Start()
+    public void Initialize()
     {
         if (Camera.main)
         {
@@ -55,7 +39,7 @@ public class HackerVisionSingleton : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void Tick()
     {
         var isHackModePressed = Input.GetKeyDown(KeyCode.Q);
         if (isHackModePressed)
