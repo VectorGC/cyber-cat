@@ -2,7 +2,7 @@
 ## [Играй сейчас в Кибер кот на itch.io](https://karim3d.itch.io/cyber-cat-programming-game)
 Лицензии:
   - Apache v2.0 ([Kimsanabev Karim](https://www.linkedin.com/in/karim-kimsanbaev-013851203/))
-  - Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity).com/packages/tools/gui/ingame-code-editor-144254)
+  - Apache v2.0([InGameCodeEditor - payment asset](https://assetstore.unity.com/packages/tools/gui/ingame-code-editor-144254))
 
 Игра с решением олимпиадных задач по программированию на языке Си. Вы играете котом в университете, помогаете студентами  преподавателям - решая задачи на языке Си.
 
@@ -57,4 +57,4 @@
 | Ермолаев Святослав (И503Б) | Programmer of code editor | ledumblasphemus@gmail.com                                                                          |
 | Востриков Виталий (И594)   | 3D Artist | talytriko@gmail.com                                                                                |
 | Слава Снегирев (И508Б)     | Leve Designer | slavick.snegirev@icloud.com                                                                        |
-| Миша Лукашев (И507Б)       | Game Designer | boyskyfall@vk~~~~.com                                                                              |
+| Миша Лукашев (И507Б)       | Game Designer | boyskyfall@vk.com                                                                              |
