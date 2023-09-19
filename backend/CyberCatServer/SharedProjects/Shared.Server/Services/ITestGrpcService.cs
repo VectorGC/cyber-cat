@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Dto;
-using Shared.Models.Dto.ProtoHelpers;
+using Shared.Models.Ids;
+using Shared.Server.Dto;
 
 namespace Shared.Server.Services;
 
 [Service]
 public interface ITestGrpcService
 {
-    Task<TestsDto> GetTests(StringProto taskId);
+    Task<TestsDto> GetTests(TaskId taskId);
 }

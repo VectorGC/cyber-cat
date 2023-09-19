@@ -1,0 +1,3 @@
+[submodule "cyber-cat/Assets/Features/BehaviourTrees/3rdParty/BonsaiBehaviourTree"]
+	path = cyber-cat/Assets/Features/BehaviourTrees/3rdParty/BonsaiBehaviourTree
+	url = https://github.com/karim-dev-coder/BonsaiBehaviourTree.git

@@ -1,5 +1,6 @@
 #if WEB_CLIENT
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
@@ -48,17 +49,17 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
         {
             _client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
 
-            var formData = new System.Collections.Specialized.NameValueCollection();
-            foreach (var kvp in form)
-            {
-                formData.Add(kvp.Key, kvp.Value);
-            }
-
-            var responseBytes = await _client.UploadValuesTaskAsync(uri, formData);
+            var responseBytes = await _client.UploadValuesTaskAsync(uri, FormToData(form));
             var response = System.Text.Encoding.UTF8.GetString(responseBytes);
 
             return response;
         }
+
+        public async Task<string> PostAsync(string uri)
+        {
+            return await _client.UploadStringTaskAsync(uri, "");
+        }
+
 
         public async Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
@@ -66,19 +67,6 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             var obj = DeserializeJson<TResponse>(response);
 
             return obj;
-        }
-
-        public async Task DeleteAsync(string uri)
-        {
-            await _client.UploadStringTaskAsync(uri, "DELETE", string.Empty);
-        }
-
-        public async Task DeleteAsync(string uri, string value)
-        {
-            _client.Headers[HttpRequestHeader.ContentType] = "application/json";
-
-            var json = SerializeToJson(value);
-            await _client.UploadStringTaskAsync(uri, "DELETE", json);
         }
 
         private static string SerializeToJson<TValue>(TValue value)
@@ -102,6 +90,17 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
                 var serializer = new DataContractJsonSerializer(typeof(T));
                 return (T) serializer.ReadObject(stream);
             }
+        }
+
+        private static NameValueCollection FormToData(Dictionary<string, string> form)
+        {
+            var collection = new NameValueCollection();
+            foreach (var kvp in form)
+            {
+                collection.Add(kvp.Key, kvp.Value);
+            }
+
+            return collection;
         }
     }
 }

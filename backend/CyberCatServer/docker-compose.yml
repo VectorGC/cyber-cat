@@ -7,14 +7,13 @@
     environment:
       - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
       - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
-      - ConnectionStrings__SolutionServiceGrpcEndpoint=$SOLUTION_SERVICE_GRPC_URL
-      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
+      - ConnectionStrings__PlayerServiceGrpcEndpoint=$PLAYER_SERVICE_GRPC_URL
     ports:
       - "80:80"
     depends_on:
       - auth-service
       - task-service
-      - solution-service
+      - player-service
       - judge-service
   
   auth-service:
@@ -39,13 +38,14 @@
     depends_on:
       - mongo
   
-  solution-service:
-    image: solution-service
-    container_name: $SOLUTION_SERVICE_NAME
+  player-service:
+    image: player-service
+    container_name: $PLAYER_SERVICE_NAME
     build:
-      dockerfile: SolutionService/SolutionService/Dockerfile
+      dockerfile: PlayerService/PlayerService/Dockerfile
     environment:
-      - Kestrel__EndPoints__Grpc__Url=$SOLUTION_SERVICE_GRPC_URL
+      - Kestrel__EndPoints__Grpc__Url=$PLAYER_SERVICE_GRPC_ENDPOINT
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
       - MongoRepository__ConnectionString=$MONGO_DB_URL
     depends_on:
       - mongo
@@ -72,7 +72,7 @@
       - Kestrel__EndPoints__Grpc__Protocols=Http2
   
   mongo:
-    image: mongo:5.0.15
+    image: mongo:4.4.24 # https://github.com/docker-library/mongo/issues/485#issuecomment-891991814
     container_name: $MONGO_DB_CONTAINER_NAME
   
   mongo-express: # Web interface for managing MongoDB

@@ -5,11 +5,11 @@ namespace ApiGateway.Extensions;
 
 public static class IdentityExtensions
 {
-    public static string GetUserId(this IIdentity identity)
+    public static string GetEmail(this IIdentity identity)
     {
         if (identity == null)
             throw new ArgumentNullException(nameof(identity));
-        return identity is ClaimsIdentity identity1 ? identity1.FindFirstValue(ClaimTypes.NameIdentifier) : string.Empty;
+        return identity is ClaimsIdentity identity1 ? identity1.FindFirstValue(ClaimTypes.Email) : string.Empty;
     }
 
     public static string FindFirstValue(this ClaimsIdentity identity, string claimType)

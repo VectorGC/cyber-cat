@@ -1,46 +1,49 @@
 using System;
+using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 
 public class CodeEditor : ICodeEditor
 {
-    public static bool IsOpen { get; private set; }
-    public string TaskId { get; }
+    public event Action Closed;
 
-    public static void Open(string taskId)
+    public bool IsOpen
     {
-        OpenAsync(taskId).Forget();
+        get
+        {
+            for (var i = 0; i < SceneManager.sceneCount; i++)
+            {
+                var scene = SceneManager.GetSceneAt(i);
+                if (scene.name == "CodeEditor")
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
-    private static async UniTaskVoid OpenAsync(string taskId)
+    public ITask Task { get; private set; }
+
+    public void Open(ITask task) => OpenAsync(task).Forget();
+
+    private async UniTaskVoid OpenAsync(ITask task)
     {
-        if (string.IsNullOrEmpty(taskId))
+        if (task == null)
         {
-            throw new ArgumentNullException(nameof(taskId));
+            throw new ArgumentNullException(nameof(task));
         }
 
+        Task = task;
         await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();
-
-        var editor = new CodeEditor(taskId);
-        var controller = Object.FindObjectOfType<CodeEditorController>();
-        await controller.Construct(editor);
     }
 
-    private CodeEditor(string taskId)
-    {
-        TaskId = taskId;
-        IsOpen = true;
-    }
+    public void Close() => CloseAsync().Forget();
 
-    public void Close()
+    private async UniTaskVoid CloseAsync()
     {
-        CloseAsync().Forget();
-    }
-
-    private async UniTaskVoid CloseAsync(IProgress<float> progress = null)
-    {
-        IsOpen = false;
-        await SceneManager.UnloadSceneAsync("CodeEditor").ToUniTask(progress);
+        await SceneManager.UnloadSceneAsync("CodeEditor").ToUniTask();
+        Closed?.Invoke();
     }
 }

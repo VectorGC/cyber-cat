@@ -1,12 +1,13 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using ApiGateway;
+using ApiGateway.Attributes;
+using ApiGateway.Configurations;
 using ApiGateway.Extensions;
-using AuthService.JwtValidation;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.ClientFactory;
+using Shared.Server.Configurations;
 using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +30,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<BindUserAuthorizationFilter>();
+    options.Filters.Add<BindPlayerAuthorizationFilter>();
+});
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(host.ToString()); });
@@ -37,8 +42,7 @@ builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(hos
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthGrpcService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
 builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<ISolutionGrpcService>(options => { options.Address = appSettings.ConnectionStrings.SolutionServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpcClient<IPlayerGrpcService>(options => { options.Address = appSettings.ConnectionStrings.PlayerServiceGrpcAddress; });
 
 builder.WebHost.UseKestrel(options =>
 {

@@ -1,11 +1,13 @@
-﻿using Shared.Models.Dto;
+﻿using Shared.Models.Dto.Descriptions;
+using Shared.Models.Ids;
 
 namespace TaskService.Repositories
 {
     public interface ITaskRepository
     {
-        Task<TaskDto> GetTask(string taskId);
-        Task Add(string taskId, TaskDto task);
-        Task<bool> Contains(string id);
+        Task<TaskDescription> GetTask(TaskId taskId);
+        Task Add(TaskId taskId, TaskDescription task);
+        Task<List<TaskId>> GetTasks();
+        Task<bool> Contains(TaskId id);
     }
 }

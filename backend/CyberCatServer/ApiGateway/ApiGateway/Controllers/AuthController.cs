@@ -1,7 +1,10 @@
+using System.Net;
+using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto.Args;
+using Shared.Models.Dto.Data;
+using Shared.Server.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -19,22 +22,25 @@ public class AuthController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("simple")]
-    public async Task<ActionResult<string>> Login()
+    [HttpPost("signUp")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> SignUp(string email, string password, string name)
     {
-        return "Hello";
+        return await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
     }
 
     [AllowAnonymous]
-    [HttpPost("login")]
-    public async Task<ActionResult<string>> Login(string email, string password)
+    [HttpPost("signIn")]
+    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<string>> SignIn(string email, string password)
     {
-        var response = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs
-        {
-            Email = email,
-            Password = password
-        });
+        return await _authGrpcService.GetAccessToken(new GetAccessTokenArgs(email, password));
+    }
 
-        return response.AccessToken;
+    [HttpPost("remove")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    public async Task<ActionResult> Remove([FromUser] UserId userId, string password)
+    {
+        return await _authGrpcService.Remove(new RemoveArgs(userId, password));
     }
 }

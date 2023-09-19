@@ -1,17 +1,21 @@
-using ApiGateway.Client.Factory;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Abstracts
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public abstract class AnonymousClientTestFixture
+    public class AnonymousClientTestFixture
     {
-        protected readonly IAnonymousClient Client;
+        private readonly ServerEnvironment _serverEnvironment;
 
-        protected AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
+        public AnonymousClientTestFixture(ServerEnvironment serverEnvironment)
         {
-            Client = ServerClientFactory.Create(serverEnvironment);
+            _serverEnvironment = serverEnvironment;
+        }
+
+        public IAnonymous GetAnonymousClient()
+        {
+            return ServerClientFactory.CreateAnonymous(_serverEnvironment);
         }
     }
 }

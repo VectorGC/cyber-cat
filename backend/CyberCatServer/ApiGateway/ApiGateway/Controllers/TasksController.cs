@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Dto;
+using Shared.Models.Dto.Descriptions;
+using Shared.Models.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -12,19 +14,33 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TasksController : ControllerBase
 {
-    public ITaskGrpcService TaskGrpcService { get; }
+    private readonly ITaskGrpcService _taskGrpcService;
 
     public TasksController(ITaskGrpcService taskGrpcService)
     {
-        TaskGrpcService = taskGrpcService;
+        _taskGrpcService = taskGrpcService;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(TaskIdsDto), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<TaskIdsDto>> GetTasks()
+    {
+        var response = await _taskGrpcService.GetTasks();
+        response.EnsureSuccess();
+
+        var taskIds = response.Value.Select(taskId => taskId.Value).ToList();
+        return new TaskIdsDto
+        {
+            taskIds = taskIds
+        };
     }
 
     [HttpGet("{taskId}")]
-    [ProducesResponseType(typeof(TaskDto), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(TaskDescription), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskDto>> ShouldGetTutorialTask(string taskId)
+    public async Task<ActionResult<TaskDescription>> GetTask(string taskId)
     {
-        var task = await TaskGrpcService.GetTask(taskId);
-        return task;
+        return await _taskGrpcService.GetTask(taskId);
     }
 }

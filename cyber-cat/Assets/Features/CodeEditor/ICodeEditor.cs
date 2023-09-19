@@ -1,5 +1,11 @@
+using System;
+using ApiGateway.Client.Models;
+
 public interface ICodeEditor
 {
-    string TaskId { get; }
+    event Action Closed;
+    bool IsOpen { get; }
+    ITask Task { get; }
+    void Open(ITask task);
     void Close();
 }

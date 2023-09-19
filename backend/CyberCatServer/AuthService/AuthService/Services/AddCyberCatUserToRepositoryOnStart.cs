@@ -23,14 +23,10 @@ public class AddCyberCatUserToRepositoryOnStart : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Attempt add default user");
-        var user = new User
-        {
-            UserName = "Cat",
-            Email = "cat"
-        };
 
         await using var scope = _serviceProvider.CreateAsyncScope();
         var repository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
+        var user = new UserDbModel("cat", "cat", repository);
 
         var exists = await repository.FindByEmailAsync(user.Email) != null;
         if (exists)
@@ -39,7 +35,7 @@ public class AddCyberCatUserToRepositoryOnStart : IHostedService
             return;
         }
 
-        await repository.Add(user, "cat");
+        await repository.Create(user.Email, "cat", user.UserName);
 
         _logger.LogInformation("Default user has been added");
     }

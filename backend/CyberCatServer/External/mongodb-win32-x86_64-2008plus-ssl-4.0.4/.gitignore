@@ -1,0 +1,4 @@
+!bin
+bin/ephemeral
+bin/local
+bin/test

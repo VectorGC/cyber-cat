@@ -1,11 +1,10 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class TaskTests : AuthorizedClientTestFixture
+    public class TaskTests : PlayerClientTestFixture
     {
         public TaskTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -15,12 +14,12 @@ namespace ApiGateway.Client.Tests
         public async Task GetTask()
         {
             var taskId = "tutorial";
-            var client = await GetClient();
+            var client = await GetPlayerClient();
 
-            var task = await client.Tasks.GetTask(taskId);
+            var task = client.Tasks[taskId];
 
-            Assert.AreEqual("Hello cat!", task.Name);
-            Assert.IsNotEmpty(task.Description);
+            Assert.AreEqual("Hello cat!", await task.GetName());
+            Assert.IsNotEmpty(await task.GetDescription());
         }
     }
 }

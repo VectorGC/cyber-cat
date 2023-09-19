@@ -1,25 +1,25 @@
-using Shared.Models.Dto;
-using Shared.Models.Models;
-using TMPro;
+using ApiGateway.Client.Models;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class TaskDescription : UIBehaviour
     {
-        [SerializeField] private TMP_Text goalTask;
-        [SerializeField] private TMP_Text descriptionTask;
+        [SerializeField] private Text goalTask;
+        [SerializeField] private Text descriptionTask;
 
-        public TaskDto Task
+        public ITask Task
         {
             set => SetTask(value);
         }
 
-        private void SetTask(TaskDto task)
+        private void SetTask(ITask task)
         {
-            goalTask.text = task.Name;
-            descriptionTask.text = task.Description;
+            StartCoroutine(task.GetName().AsUniTask().ContinueWith(name => goalTask.text = name).ToCoroutine());
+            StartCoroutine(task.GetDescription().AsUniTask().ContinueWith(description => descriptionTask.text = description).ToCoroutine());
         }
     }
 }

@@ -2,14 +2,15 @@
     "name": "HackerVision",
     "rootNamespace": "",
     "references": [
-        "GUID:9e79e0850ea26cd4091c7c06f0b256f3"
+        "GUID:9e79e0850ea26cd4091c7c06f0b256f3",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

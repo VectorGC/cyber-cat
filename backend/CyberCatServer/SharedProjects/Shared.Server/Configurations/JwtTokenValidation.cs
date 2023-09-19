@@ -1,4 +1,4 @@
-﻿namespace AuthService.JwtValidation;
+﻿namespace Shared.Server.Configurations;
 
 public static class JwtTokenValidation
 {

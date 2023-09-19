@@ -1,0 +1,12 @@
+﻿using System;
+using Shared.Server.Ids;
+
+namespace Shared.Server.Exceptions.PlayerService;
+
+public class NotEnoughBitcoinsException : Exception
+{
+    public NotEnoughBitcoinsException(PlayerId playerId, int bitcoins)
+        : base($"Error taking {bitcoins} bitcoins from player with Id {playerId}: Not Enough Bitcoins")
+    {
+    }
+}

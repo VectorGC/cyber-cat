@@ -1,16 +1,13 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AuthService.JwtValidation;
 using AuthService.Repositories;
-using AuthService.Repositories.InternalModels;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProtoBuf.Grpc.Client;
-using Shared.Models.Dto.Args;
-using Shared.Models.Models;
+using Shared.Server.Configurations;
 using Shared.Server.Services;
 using Shared.Tests;
 
@@ -22,12 +19,8 @@ public class AuthenticationAndPlayerAuthorization
     private WebApplicationFactory<Program> _factory;
     private readonly MockAuthUserRepository _mockAuthUserRepository = new();
     private const string UserPassword = "123";
-
-    private readonly IUser _user = new User
-    {
-        Email = "test@email.com",
-        UserName = "Test User Name"
-    };
+    private const string Email = "test@email.com";
+    private const string UserName = "Test User Name";
 
     [SetUp]
     public void Setup()
@@ -36,7 +29,7 @@ public class AuthenticationAndPlayerAuthorization
 
         using var scope = _factory.Services.CreateScope();
         var userRepository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
-        userRepository.Add(_user, UserPassword);
+        userRepository.Create(Email, UserPassword, UserName);
     }
 
     [Test]
@@ -45,14 +38,11 @@ public class AuthenticationAndPlayerAuthorization
         using var channel = _factory.CreateGrpcChannel();
         var authenticationService = channel.CreateGrpcService<IAuthGrpcService>();
 
-        var args = new GetAccessTokenArgs
-        {
-            Email = _user.Email,
-            Password = UserPassword
-        };
-        var token = await authenticationService.GetAccessToken(args);
+        var args = new GetAccessTokenArgs(Email, UserPassword);
+        var response = await authenticationService.GetAccessToken(args);
+        var token = (string) response;
 
-        Assert.IsNotEmpty(token.AccessToken);
+        Assert.IsNotEmpty(token);
 
         var parameters = new TokenValidationParameters
         {
@@ -65,9 +55,9 @@ public class AuthenticationAndPlayerAuthorization
         };
         var tokenHandler = new JwtSecurityTokenHandler();
 
-        var claims = tokenHandler.ValidateToken(token.AccessToken, parameters, out _);
+        var claims = tokenHandler.ValidateToken(token, parameters, out _);
 
-        Assert.AreEqual(_user.Email, claims.FindFirst(ClaimTypes.Email)!.Value);
-        Assert.AreEqual(_user.UserName, claims.FindFirst(ClaimTypes.Name)!.Value);
+        Assert.AreEqual(Email, claims.FindFirst(ClaimTypes.Email)!.Value);
+        Assert.AreEqual(UserName, claims.FindFirst(ClaimTypes.Name)!.Value);
     }
 }

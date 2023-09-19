@@ -1,9 +1,8 @@
 using InGameCodeEditor;
 using Models;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
+public class InGameCodeEditorAdapter : CodeEditorView
 {
     [SerializeField] private InGameCodeEditor.InGameCodeEditor _inGameCodeEditor;
 
@@ -11,24 +10,27 @@ public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
     [SerializeField] private CodeLanguageTheme _python;
     [SerializeField] private CodeLanguageTheme _pascal;
 
-    public LanguageProg Language
+    private LanguageProg _language;
+
+    public override LanguageProg Language
     {
+        get => _language;
         set => SetLanguage(value);
     }
 
-    public string SourceCode
+    public override string SourceCode
     {
         get => _inGameCodeEditor.Text;
         set
         {
             var text = value.Replace("\r", "");
             _inGameCodeEditor.Text = text;
-            _inGameCodeEditor.Refresh();
         }
     }
 
     private void SetLanguage(LanguageProg language)
     {
+        _language = language;
         switch (language)
         {
             case LanguageProg.Cpp:
@@ -41,7 +43,5 @@ public class InGameCodeEditorAdapter : UIBehaviour, ICodeEditorView
                 _inGameCodeEditor.LanguageTheme = _pascal;
                 break;
         }
-
-        _inGameCodeEditor.Refresh();
     }
 }

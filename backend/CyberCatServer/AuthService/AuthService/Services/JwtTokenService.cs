@@ -4,9 +4,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using AuthService.JwtValidation;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Models;
+using Shared.Server.Configurations;
 
 namespace AuthService.Services;
 
@@ -14,10 +13,10 @@ public class JwtTokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
 
-    public string CreateToken(IUser user)
+    public string CreateToken(string email, string userName)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
-        var claims = CreateClaims(user);
+        var claims = CreateClaims(email, userName);
         var signinCredentials = CreateSigningCredentials();
         var token = CreateJwtToken(claims, signinCredentials, expiration);
 
@@ -36,24 +35,15 @@ public class JwtTokenService : ITokenService
         );
     }
 
-    private List<Claim> CreateClaims(IUser user)
+    private List<Claim> CreateClaims(string email, string userName)
     {
-        try
+        var claims = new List<Claim>
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Email),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
-            };
+            new Claim(ClaimTypes.Name, userName),
+            new Claim(ClaimTypes.Email, email)
+        };
 
-            return claims;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return claims;
     }
 
     private SigningCredentials CreateSigningCredentials()

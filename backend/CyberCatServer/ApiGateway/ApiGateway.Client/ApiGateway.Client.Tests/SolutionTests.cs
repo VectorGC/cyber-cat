@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Factory;
+using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class SolutionClientTests : AuthorizedClientTestFixture
+    public class SolutionClientTests : PlayerClientTestFixture
     {
         public SolutionClientTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -18,31 +18,23 @@ namespace ApiGateway.Client.Tests
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
             var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var client = await GetClient();
+            var player = await GetPlayerClient();
+            var task = player.Tasks[taskId];
 
             // We are checking that there is no code initially.
-            var lastSavedCode = await client.SolutionService.GetSavedCode(taskId);
-            Assert.IsEmpty(lastSavedCode);
+            Assert.IsAssignableFrom<NotStarted>(await task.GetStatus());
 
             // We are saving the code.
-            await client.SolutionService.SaveCode(taskId, sourceCode);
+            await task.VerifySolution(sourceCode);
 
-            lastSavedCode = await client.SolutionService.GetSavedCode(taskId);
-            Assert.IsNotEmpty(lastSavedCode);
-            Assert.AreEqual(sourceCode, lastSavedCode);
+            var status = await task.GetStatus() as HaveSolution;
+            Assert.AreEqual(sourceCode, status.Solution);
 
             // We are modifying the saved code.
-            await client.SolutionService.SaveCode(taskId, sourceCodeToChange);
+            await task.VerifySolution(sourceCodeToChange);
 
-            lastSavedCode = await client.SolutionService.GetSavedCode(taskId);
-            Assert.IsNotEmpty(lastSavedCode);
-            Assert.AreEqual(sourceCodeToChange, lastSavedCode);
-
-            // We are deleting and verifying that everything has been cleared.
-            await client.SolutionService.RemoveSavedCode(taskId);
-
-            lastSavedCode = await client.SolutionService.GetSavedCode(taskId);
-            Assert.IsEmpty(lastSavedCode);
+            var complete = await task.GetStatus() as Complete;
+            Assert.AreEqual(sourceCodeToChange, complete.Solution);
         }
     }
 }
