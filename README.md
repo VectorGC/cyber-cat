@@ -50,7 +50,7 @@
 
 | ФИО                        | Роль | Контакты для связи                                                                                 |
 |----------------------------| ----------------------------- |----------------------------------------------------------------------------------------------------|
-| Кимсанбаев Карим           | Team Lead | [LimkedIn](https://www.linkedin.com/in/karim-kimsanbaev-013851203/) или karim.kimsanbaev@gmail.com |
+| Кимсанбаев Карим           | Team Lead | [LinkedIn](https://www.linkedin.com/in/karim-kimsanbaev-013851203/) или karim.kimsanbaev@gmail.com |
 | Крылов Кирилл              | Backend Programmer | https://kee-reel.com/                                                                              |
 | Карпинский Артем (И904Б)   | Programmer of Gameplay | artem19051664@gmail.com                                                                            |
 | Пекуш Даниил               | Programmer of Server (Backend) | dap0602@mail.ru                                                                                    |
