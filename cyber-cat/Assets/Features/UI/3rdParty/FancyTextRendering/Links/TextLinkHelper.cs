@@ -1,5 +1,6 @@
 ﻿using JimmysUnityUtilities;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ namespace LogicUI.FancyTextRendering
     public class TextLinkHelper : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private TMP_Text _Text;
+
         public TMP_Text Text
         {
             get
@@ -32,10 +34,15 @@ namespace LogicUI.FancyTextRendering
         private void OnEnable()
         {
             previouslyHoveredLinkIndex = -1;
+            StartCoroutine(SetAllLinksToNormalColorCoroutine());
+        }
 
+        private IEnumerator SetAllLinksToNormalColorCoroutine()
+        {
             // I'm not sure why the frame delay is necessary, but it is.
             // I suspect that TMP changes the colors in LateUpdate or something
-            CoroutineUtility.RunAfterOneFrame(SetAllLinksToNormalColor);
+            yield return new WaitForEndOfFrame();
+            SetAllLinksToNormalColor();
         }
 
         private void OnDisable()
@@ -82,7 +89,6 @@ namespace LogicUI.FancyTextRendering
         }
 
 
-
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
             PointerIsDown = true;
@@ -115,6 +121,7 @@ namespace LogicUI.FancyTextRendering
 
         bool CurrentlyHoveredOver;
         bool PointerIsDown;
+
         void Update()
         {
             if (!CurrentlyHoveredOver)
@@ -146,6 +153,7 @@ namespace LogicUI.FancyTextRendering
         public event Action OnLinkHoverEnded;
 
         private int previouslyHoveredLinkIndex = -1;
+
         private void HoverOnLink(int linkIndex)
         {
             if (linkIndex < 0 || linkIndex >= Text.textInfo.linkInfo.Length)

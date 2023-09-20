@@ -25,7 +25,7 @@ public class CodeEditorController : UIBehaviour
     {
         _codeEditor = codeEditor;
 
-        //_taskDescription.Value.Text = "# Test\n * Test2";
+        _taskDescription.Value.Text = "# Test\n [Test2](https://assetstore.unity.com/packages/tools/utilities/serialize-interfaces-187505)";
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 

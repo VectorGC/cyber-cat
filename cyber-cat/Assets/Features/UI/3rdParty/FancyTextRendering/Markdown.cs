@@ -56,7 +56,7 @@ namespace LogicUI.FancyTextRendering
 
         public static string MarkdownToRichText(string source, MarkdownRenderingSettings settings, params ICustomTextPreProcessor[] customTextPreProcessors)
         {
-            if (source.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(source))
                 return String.Empty;
 
 
