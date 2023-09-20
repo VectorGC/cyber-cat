@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics;
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
+using Features.ServerConfig;
 using UnityEngine.SceneManagement;
 
 public class CodeEditor : ICodeEditor
@@ -46,4 +48,13 @@ public class CodeEditor : ICodeEditor
         await SceneManager.UnloadSceneAsync("CodeEditor").ToUniTask();
         Closed?.Invoke();
     }
+
+#if UNITY_EDITOR
+    public async UniTask LoadTutorialCheat()
+    {
+        var player = await ServerAPI.CreatePlayerClient();
+        var task = player.Tasks["tutorial"];
+        Task = task;
+    }
+#endif
 }

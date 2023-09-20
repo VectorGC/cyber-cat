@@ -16,26 +16,38 @@ namespace TaskService.Repositories.InternalModels
 
         public int Version { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public TestsDbModel Tests { get; set; } = new TestsDbModel();
 
         public TaskDbModel(TaskId id, TaskDescription task)
         {
             Id = id.Value;
             Name = task.Name;
-            Description = task.Description;
         }
 
         public TaskDbModel()
         {
         }
 
-        public TaskDescription ToDescription()
+        public async Task<TaskDescription> ToDescription(IHostEnvironment hostEnvironment, ILogger logger)
         {
+            var rootPath = hostEnvironment.ContentRootPath;
+            var fullPath = Path.Combine(rootPath, $"Tasks/{Id}.md");
+
+            var description = string.Empty;
+            if (File.Exists(fullPath))
+            {
+                using var stream = File.OpenText(fullPath);
+                description = await stream.ReadToEndAsync();
+            }
+            else
+            {
+                logger.LogError("Not found description file by path \'{FullPath}\'", fullPath);
+            }
+
             return new TaskDescription
             {
                 Name = Name,
-                Description = Description
+                Description = description
             };
         }
     }
