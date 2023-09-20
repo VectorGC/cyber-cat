@@ -1,6 +1,5 @@
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using Models;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,21 +7,31 @@ using Zenject;
 
 public class CodeEditorController : UIBehaviour
 {
-    [SerializeField] private TaskDescription _taskDescription;
+    [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
     [SerializeField] private CodeConsoleView _console;
+
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
 
+    [Header("Debug")] [SerializeField] private bool _loadTutorial;
+
     private ICodeEditor _codeEditor;
 
     [Inject]
-    private void Construct(ICodeEditor codeEditor)
+    private async void Construct(ICodeEditor codeEditor)
     {
         _codeEditor = codeEditor;
 
-        _taskDescription.Task = _codeEditor.Task;
+        if (Application.isEditor && Application.isPlaying && _loadTutorial)
+        {
+            var typedEditor = (CodeEditor) codeEditor;
+            await typedEditor.LoadTutorialCheat();
+        }
+
+        var descriptionHandler = codeEditor.Task.GetDescription();
+        _taskDescription.Value.SetTextAsync(descriptionHandler);
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
