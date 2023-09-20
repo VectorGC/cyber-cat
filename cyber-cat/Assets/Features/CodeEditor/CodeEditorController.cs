@@ -25,7 +25,7 @@ public class CodeEditorController : UIBehaviour
     {
         _codeEditor = codeEditor;
 
-        _taskDescription.Value.Text = "# Test";
+        //_taskDescription.Value.Text = "# Test\n * Test2";
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
