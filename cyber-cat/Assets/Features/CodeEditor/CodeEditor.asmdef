@@ -2,6 +2,8 @@
     "name": "CodeEditor",
     "rootNamespace": "",
     "references": [
+        "GUID:48c8fa96129567249b34c80479d914df",
+        "GUID:c2d2a3b16d2ae4d4f9978f63ab011679",
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:f4113365f11c42942b4c3ecc47e69ed7",
         "GUID:2bd87b1f29eb7864b90c7d0f6f76690b",

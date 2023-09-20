@@ -1,0 +1,17 @@
+{
+    "name": "SharedInterfaces",
+    "rootNamespace": "",
+    "references": [
+        "GUID:12c2d181ff779a54e946cb0fd83a93b1",
+        "GUID:23eed6c2401dca1419d1ebd180e58c5a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

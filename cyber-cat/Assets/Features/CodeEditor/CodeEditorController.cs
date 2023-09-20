@@ -1,6 +1,6 @@
 using ApiGateway.Client.Internal.Tasks.Verdicts;
+using LogicUI.FancyTextRendering;
 using Models;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,10 +8,13 @@ using Zenject;
 
 public class CodeEditorController : UIBehaviour
 {
-    [SerializeField] private TaskDescription _taskDescription;
+    [SerializeField] private MarkdownRenderer _markdown;
+    [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
     [SerializeField] private CodeConsoleView _console;
-    [Header("Buttons")] [SerializeField] private Button _verifySolution;
+
+    [Header("Buttons")]
+    [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
 
@@ -22,7 +25,7 @@ public class CodeEditorController : UIBehaviour
     {
         _codeEditor = codeEditor;
 
-        _taskDescription.Task = _codeEditor.Task;
+        _taskDescription.Value.Text = "# Test";
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
