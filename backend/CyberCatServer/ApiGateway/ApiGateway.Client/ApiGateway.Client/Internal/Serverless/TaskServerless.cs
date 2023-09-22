@@ -1,9 +1,12 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Models;
 using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
+using Shared.Models.Ids;
 
 namespace ApiGateway.Client.Internal.Serverless
 {
@@ -33,6 +36,18 @@ namespace ApiGateway.Client.Internal.Serverless
                 default:
                     return Task.FromResult<ITaskProgressStatus>(new Complete(_solution));
             }
+        }
+
+        public Task<SortedDictionary<TestCaseId, ITestCase>> GetTestCases()
+        {
+            var testCases = new SortedDictionary<TestCaseId, ITestCase>()
+            {
+                [1] = new TestCaseServerless(Array.Empty<object>(), "Hello cat!"),
+                [2] = new TestCaseServerless(Array.Empty<object>(), "Hello mat!"),
+                [3] = new TestCaseServerless(new object[]{1, 2}, "Hello bred!"),
+            };
+
+            return Task.FromResult(testCases);
         }
 
         public Task<IVerdict> VerifySolution(string sourceCode)

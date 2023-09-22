@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Internal.Serverless;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Internal.WebClientAdapters;
@@ -51,6 +52,11 @@ namespace ApiGateway.Client.Internal.Tasks
         {
             var data = await _webClient.GetFromJsonAsync<TaskData>(_uri + $"player/tasks/{_taskId}");
             return GetStatus(data);
+        }
+
+        public Task<SortedDictionary<TestCaseId, ITestCase>> GetTestCases()
+        {
+            return new TaskServerless().GetTestCases();
         }
 
         public async Task<IVerdict> VerifySolution(string sourceCode)
