@@ -18,6 +18,7 @@ public class TestCaseToggle : UIBehaviour
         {
             _testCaseId = value;
             _name.text = $"Тест {_testCaseId}";
+            gameObject.SetActive(true);
         }
     }
 

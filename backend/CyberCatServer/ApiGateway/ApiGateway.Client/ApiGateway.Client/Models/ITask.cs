@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shared.Models.Ids;
 
 namespace ApiGateway.Client.Models
 {
@@ -9,7 +7,8 @@ namespace ApiGateway.Client.Models
         Task<string> GetName();
         Task<string> GetDescription();
         Task<ITaskProgressStatus> GetStatus();
-        Task<SortedDictionary<TestCaseId, ITestCase>> GetTestCases();
+        Task<TestCases> GetTestCases();
         Task<IVerdict> VerifySolution(string sourceCode);
+        Task<IVerdictV2> VerifySolutionV2(string sourceCode);
     }
 }

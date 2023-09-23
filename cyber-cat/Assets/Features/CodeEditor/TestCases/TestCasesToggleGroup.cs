@@ -1,59 +1,53 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using Shared.Models.Ids;
 using UnityEngine.UI;
-using Zenject;
 
 public class TestCasesToggleGroup : ToggleGroup
 {
     public event EventHandler<TestCaseId> Switched;
 
-    private ICodeEditor _codeEditor;
     private TestCaseToggle[] _toggles;
 
-    [Inject]
-    private void Construct(ICodeEditor codeEditor)
-    {
-        _codeEditor = codeEditor;
-    }
-
-    protected override async void Start()
+    protected override void Awake()
     {
         _toggles = GetComponentsInChildren<TestCaseToggle>();
         foreach (var toggle in _toggles)
         {
+            RegisterToggle(toggle.Toggle);
+            toggle.Toggle.group = this;
             toggle.Enabled += OnEnabled;
         }
-
-        var testCasesDict = await _codeEditor.Task.GetTestCases();
-        var testCases = testCasesDict.Keys.ToArray();
-        for (var i = 0; i < _toggles.Length; i++)
-        {
-            if (i < testCases.Length)
-            {
-                _toggles[i].TestCaseId = testCases[i];
-                _toggles[i].Enabled += OnEnabled;
-                RegisterToggle(_toggles[i].Toggle);
-                _toggles[i].Toggle.group = this;
-            }
-            else
-            {
-                _toggles[i].gameObject.SetActive(false);
-            }
-        }
-
-        base.Start();
     }
 
     protected override void OnDestroy()
     {
         foreach (var toggle in _toggles)
         {
-            toggle.Enabled -= OnEnabled;
             UnregisterToggle(toggle.Toggle);
+            toggle.Toggle.group = null;
+            toggle.Enabled -= OnEnabled;
+        }
+    }
+
+    public void Show(List<TestCaseId> testCaseIds)
+    {
+        var i = 0;
+        for (; i < testCaseIds.Count; i++)
+        {
+            _toggles[i].TestCaseId = testCaseIds[i];
         }
 
-        base.OnDestroy();
+        for (; i < _toggles.Length; i++)
+        {
+            _toggles[i].gameObject.SetActive(false);
+        }
+
+        EnsureValidState();
+    }
+
+    public void Hide()
+    {
     }
 
     private void OnEnabled(object sender, TestCaseId id)

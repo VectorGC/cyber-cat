@@ -54,7 +54,7 @@ namespace ApiGateway.Client.Internal.Tasks
             return GetStatus(data);
         }
 
-        public Task<SortedDictionary<TestCaseId, ITestCase>> GetTestCases()
+        public Task<TestCases> GetTestCases()
         {
             return new TaskServerless().GetTestCases();
         }
@@ -95,6 +95,11 @@ namespace ApiGateway.Client.Internal.Tasks
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public Task<IVerdictV2> VerifySolutionV2(string sourceCode)
+        {
+            return new TaskServerless().VerifySolutionV2(sourceCode);
         }
     }
 }

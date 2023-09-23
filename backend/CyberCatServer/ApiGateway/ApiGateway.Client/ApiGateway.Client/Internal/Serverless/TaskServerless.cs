@@ -38,13 +38,13 @@ namespace ApiGateway.Client.Internal.Serverless
             }
         }
 
-        public Task<SortedDictionary<TestCaseId, ITestCase>> GetTestCases()
+        public Task<TestCases> GetTestCases()
         {
-            var testCases = new SortedDictionary<TestCaseId, ITestCase>()
+            var testCases = new TestCases()
             {
                 [1] = new TestCaseServerless(Array.Empty<object>(), "Hello cat!"),
                 [2] = new TestCaseServerless(Array.Empty<object>(), "Hello mat!"),
-                [3] = new TestCaseServerless(new object[]{1, 2}, "Hello bred!"),
+                [3] = new TestCaseServerless(new object[] {1, 2}, "Hello bred!"),
             };
 
             return Task.FromResult(testCases);
@@ -70,6 +70,33 @@ namespace ApiGateway.Client.Internal.Serverless
                         Status = VerdictStatus.Success
                     }));
             }
+        }
+
+        public async Task<IVerdictV2> VerifySolutionV2(string sourceCode)
+        {
+            var testCases = await GetTestCases();
+            var data = new TestCasesVerdictData()
+            {
+                Verdicts = new Dictionary<TestCaseId, TestCaseVerdictData>()
+                {
+                    [1] = new TestCaseVerdictData()
+                    {
+                        IsSuccess = true,
+                        Output = "Hello cat!"
+                    },
+                    [2] = new TestCaseVerdictData()
+                    {
+                        IsSuccess = false,
+                        Output = "Hello cat!"
+                    },
+                    [3] = new TestCaseVerdictData()
+                    {
+                        IsSuccess = false,
+                        Output = "Hello cat!"
+                    },
+                }
+            };
+            return new TestCasesVerdict(data, testCases);
         }
     }
 }
