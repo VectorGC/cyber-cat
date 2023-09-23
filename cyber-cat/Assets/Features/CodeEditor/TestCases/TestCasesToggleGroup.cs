@@ -1,11 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Shared.Models.Ids;
+using UniMob;
 using UnityEngine.UI;
 
-public class TestCasesToggleGroup : ToggleGroup
+public class TestCasesToggleGroup : ToggleGroup, ILifetimeScope
 {
-    public event EventHandler<TestCaseId> Switched;
+    [Atom] public TestCaseId Selected { get; private set; }
+    [Atom] public List<TestCaseId> TestCaseIds { get; set; }
+
+    public Lifetime Lifetime => _lifetimeController.Lifetime;
+    private readonly LifetimeController _lifetimeController = new LifetimeController();
 
     private TestCaseToggle[] _toggles;
 
@@ -20,6 +24,12 @@ public class TestCasesToggleGroup : ToggleGroup
         }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        Atom.Reaction(Lifetime, OnUpdate, debugName: nameof(TestCasesToggleGroup));
+    }
+
     protected override void OnDestroy()
     {
         foreach (var toggle in _toggles)
@@ -30,12 +40,17 @@ public class TestCasesToggleGroup : ToggleGroup
         }
     }
 
-    public void Show(List<TestCaseId> testCaseIds)
+    private void OnUpdate()
     {
-        var i = 0;
-        for (; i < testCaseIds.Count; i++)
+        if (TestCaseIds == null)
         {
-            _toggles[i].TestCaseId = testCaseIds[i];
+            return;
+        }
+
+        var i = 0;
+        for (; i < TestCaseIds.Count; i++)
+        {
+            _toggles[i].TestCaseId = TestCaseIds[i];
         }
 
         for (; i < _toggles.Length; i++)
@@ -44,14 +59,14 @@ public class TestCasesToggleGroup : ToggleGroup
         }
 
         EnsureValidState();
-    }
 
-    public void Hide()
-    {
+        // Revoke update.
+        GetFirstActiveToggle().isOn = false;
+        GetFirstActiveToggle().isOn = true;
     }
 
     private void OnEnabled(object sender, TestCaseId id)
     {
-        Switched?.Invoke(sender, id);
+        Selected = id;
     }
 }

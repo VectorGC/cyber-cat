@@ -2,7 +2,6 @@ using ApiGateway.Client.Models;
 
 public interface ITestCasesView
 {
-    void Show(TestCases testCases);
-    void Show(TestCasesVerdict testCasesVerdict);
-    void Hide();
+    TestCases TestCases { get; set; }
+    TestCasesVerdict TestCasesVerdict { get; set; }
 }
