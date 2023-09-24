@@ -22,6 +22,25 @@ public abstract class LifetimeUIBehaviour<TState> : LifetimeMonoBehaviour
         Atom.When(Lifetime, () => State != null, () => OnInitState(State), debugName: $"{GetType().Name}.{nameof(OnInitState)}({nameof(State)})");
     }
 
+    private void Awake()
+    {
+        OnInitView();
+    }
+
+    protected override void OnDestroy()
+    {
+        OnDisposeView();
+        base.OnDestroy();
+    }
+
+    protected virtual void OnInitView()
+    {
+    }
+
+    protected virtual void OnDisposeView()
+    {
+    }
+
     protected virtual void OnInitState(TState state)
     {
     }

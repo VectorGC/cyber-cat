@@ -19,12 +19,12 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
     private TestCaseId _testCaseId;
     private int _index;
 
-    protected void OnEnable()
+    protected override void OnInitView()
     {
         Toggle.onValueChanged.AddListener(OnValueChanged);
     }
 
-    protected void OnDisable()
+    protected override void OnDisposeView()
     {
         Toggle.onValueChanged.RemoveListener(OnValueChanged);
     }

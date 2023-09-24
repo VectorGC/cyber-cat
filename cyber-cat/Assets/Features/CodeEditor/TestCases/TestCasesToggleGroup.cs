@@ -10,7 +10,7 @@ public class TestCasesToggleGroup : LifetimeUIBehaviour<ConsoleState>
 
     private TestCaseToggle[] _toggles;
 
-    protected void Awake()
+    protected override void OnInitView()
     {
         _toggles = GetComponentsInChildren<TestCaseToggle>();
         for (var i = 0; i < _toggles.Length; i++)
@@ -22,7 +22,7 @@ public class TestCasesToggleGroup : LifetimeUIBehaviour<ConsoleState>
         }
     }
 
-    protected override void OnDestroy()
+    protected override void OnDisposeView()
     {
         foreach (var toggle in _toggles)
         {

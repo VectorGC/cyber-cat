@@ -1,27 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
-using Shared.Models.Ids;
 using UniMob;
 using UnityEngine;
 using Zenject;
-
-public class ConsoleState : ILifetimeScope
-{
-    [Atom] public IVerdictV2 Verdict { get; set; }
-    [Atom] public TestCasesVerdict TestCasesVerdict => Verdict as TestCasesVerdict;
-    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Ids.ToList();
-    [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-
-    public Lifetime Lifetime { get; }
-
-    public ConsoleState(Lifetime lifetime)
-    {
-        Lifetime = lifetime;
-    }
-}
 
 public class ConsoleContentView : LifetimeMonoBehaviour
 {
