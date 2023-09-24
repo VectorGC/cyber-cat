@@ -1,16 +1,33 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApiGateway.Client.Models;
+using Cysharp.Threading.Tasks;
+using Shared.Models.Ids;
 using UniMob;
 using UnityEngine;
 using Zenject;
 
-public class ConsoleContentView : LifetimeUIBehaviour
+public class ConsoleState : ILifetimeScope
 {
-    [SerializeField] private SerializableInterface<ITestCasesView> _testCasesView;
+    [Atom] public IVerdictV2 Verdict { get; set; }
+    [Atom] public TestCasesVerdict TestCasesVerdict => Verdict as TestCasesVerdict;
+    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Ids.ToList();
+    [Atom] public TestCaseId SelectedTestCaseId { get; set; }
+
+    public Lifetime Lifetime { get; }
+
+    public ConsoleState(Lifetime lifetime)
+    {
+        Lifetime = lifetime;
+    }
+}
+
+public class ConsoleContentView : LifetimeMonoBehaviour
+{
+    [SerializeField] private TestCasesView _testCasesView;
 
     private ICodeEditor _codeEditor;
-
-    [Atom] public IVerdictV2 Verdict { get; private set; }
 
     [Inject]
     private void Construct(ICodeEditor codeEditor)
@@ -20,24 +37,11 @@ public class ConsoleContentView : LifetimeUIBehaviour
 
     protected override async void Start()
     {
-        base.Start();
-        Verdict = await _codeEditor.Task.VerifySolutionV2("Test");
-    }
+        var state = new ConsoleState(Lifetime);
 
-    protected override void OnUpdate()
-    {
-        if (Verdict != null)
-        {
-            switch (Verdict)
-            {
-                case CompileError compileError:
-                    break;
-                case TestCasesVerdict testCasesVerdict:
-                    _testCasesView.Value.TestCasesVerdict = testCasesVerdict;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Verdict));
-            }
-        }
+        _testCasesView.State = state;
+
+        await UniTask.WaitUntil(() => _codeEditor.Task != null);
+        state.Verdict = await _codeEditor.Task.VerifySolutionV2("Test");
     }
 }

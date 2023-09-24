@@ -1,44 +1,71 @@
 using System;
 using Shared.Models.Ids;
+using UniMob;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TestCaseToggle : UIBehaviour
+public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
 {
-    public event EventHandler<TestCaseId> Enabled;
-
     [field: SerializeField] public Toggle Toggle { get; private set; }
+    [SerializeField] private Image _statusIcon;
     [SerializeField] private Text _name;
+    [SerializeField] private Sprite _successIcon;
+    [SerializeField] private Sprite _failureIcon;
+    [SerializeField] private Color _success;
+    [SerializeField] private Color _failure;
 
-    public TestCaseId TestCaseId
-    {
-        get => _testCaseId;
-        set
-        {
-            _testCaseId = value;
-            _name.text = $"Тест {_testCaseId}";
-            gameObject.SetActive(true);
-        }
-    }
+    [Atom] public override ConsoleState State { get; set; }
 
     private TestCaseId _testCaseId;
+    private int _index;
 
-    protected override void OnEnable()
+    protected void OnEnable()
     {
         Toggle.onValueChanged.AddListener(OnValueChanged);
     }
 
-    protected override void OnDisable()
+    protected void OnDisable()
     {
         Toggle.onValueChanged.RemoveListener(OnValueChanged);
     }
 
+    public void SetIndexNumber(int index)
+    {
+        _index = index;
+    }
+
+    protected override void OnInitState(ConsoleState state)
+    {
+        if (Toggle.isOn && State != null)
+        {
+            var testCaseId = State.TestCaseIds[_index];
+            State.SelectedTestCaseId = testCaseId;
+        }
+    }
+
+    protected override void OnUpdate()
+    {
+        if (State?.TestCaseIds != null)
+        {
+            if (State.TestCaseIds.Count > _index)
+            {
+                _testCaseId = State.TestCaseIds[_index];
+                _name.text = $"Тест {_testCaseId}";
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     private void OnValueChanged(bool value)
     {
-        if (value)
+        if (value && State != null)
         {
-            Enabled?.Invoke(this, TestCaseId);
+            var testCaseId = State.TestCaseIds[_index];
+            State.SelectedTestCaseId = testCaseId;
         }
     }
 }

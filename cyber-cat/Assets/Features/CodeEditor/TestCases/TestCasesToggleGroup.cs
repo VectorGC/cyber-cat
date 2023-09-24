@@ -1,72 +1,41 @@
-using System.Collections.Generic;
-using Shared.Models.Ids;
 using UniMob;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class TestCasesToggleGroup : ToggleGroup, ILifetimeScope
+public class TestCasesToggleGroup : LifetimeUIBehaviour<ConsoleState>
 {
-    [Atom] public TestCaseId Selected { get; private set; }
-    [Atom] public List<TestCaseId> TestCaseIds { get; set; }
+    [SerializeField] private ToggleGroup _toggleGroup;
 
-    public Lifetime Lifetime => _lifetimeController.Lifetime;
-    private readonly LifetimeController _lifetimeController = new LifetimeController();
+    [Atom] public override ConsoleState State { get; set; }
 
     private TestCaseToggle[] _toggles;
 
-    protected override void Awake()
+    protected void Awake()
     {
         _toggles = GetComponentsInChildren<TestCaseToggle>();
-        foreach (var toggle in _toggles)
+        for (var i = 0; i < _toggles.Length; i++)
         {
-            RegisterToggle(toggle.Toggle);
-            toggle.Toggle.group = this;
-            toggle.Enabled += OnEnabled;
+            var toggle = _toggles[i];
+            _toggleGroup.RegisterToggle(toggle.Toggle);
+            toggle.Toggle.group = _toggleGroup;
+            toggle.SetIndexNumber(i);
         }
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-        Atom.Reaction(Lifetime, OnUpdate, debugName: nameof(TestCasesToggleGroup));
     }
 
     protected override void OnDestroy()
     {
         foreach (var toggle in _toggles)
         {
-            UnregisterToggle(toggle.Toggle);
+            _toggleGroup.UnregisterToggle(toggle.Toggle);
             toggle.Toggle.group = null;
-            toggle.Enabled -= OnEnabled;
         }
     }
 
-    private void OnUpdate()
+    protected override void OnInitState(ConsoleState state)
     {
-        if (TestCaseIds == null)
+        foreach (var toggle in _toggles)
         {
-            return;
+            toggle.State = State;
         }
-
-        var i = 0;
-        for (; i < TestCaseIds.Count; i++)
-        {
-            _toggles[i].TestCaseId = TestCaseIds[i];
-        }
-
-        for (; i < _toggles.Length; i++)
-        {
-            _toggles[i].gameObject.SetActive(false);
-        }
-
-        EnsureValidState();
-
-        // Revoke update.
-        GetFirstActiveToggle().isOn = false;
-        GetFirstActiveToggle().isOn = true;
-    }
-
-    private void OnEnabled(object sender, TestCaseId id)
-    {
-        Selected = id;
     }
 }
