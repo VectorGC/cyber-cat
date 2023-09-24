@@ -232,12 +232,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Toggle>k__BackingField: {fileID: 7433396144956467089}
-  _statusIcon: {fileID: 0}
+  _statusIcon: {fileID: 8760128216341292826}
   _name: {fileID: 3968661349011204877}
-  _successIcon: {fileID: 0}
-  _failureIcon: {fileID: 0}
-  _success: {r: 0, g: 0, b: 0, a: 0}
-  _failure: {r: 0, g: 0, b: 0, a: 0}
+  _successIcon: {fileID: 21300000, guid: affa287cf1c4e234fb22487005b42b01, type: 3}
+  _failureIcon: {fileID: 21300000, guid: d55de8ca8fcdf714a858fb50f3c46249, type: 3}
+  _success: {r: 0.15966538, g: 0.8679245, b: 0.185479, a: 1}
+  _failure: {r: 0.8584906, g: 0.2713154, b: 0.2713154, a: 1}
 --- !u!114 &7433396144956467089
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
-using System;
-using Shared.Models.Ids;
+using ApiGateway.Client.Models;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,12 +10,9 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
     [SerializeField] private Text _name;
     [SerializeField] private Sprite _successIcon;
     [SerializeField] private Sprite _failureIcon;
-    [SerializeField] private Color _success;
-    [SerializeField] private Color _failure;
 
     [Atom] public override ConsoleState State { get; set; }
 
-    private TestCaseId _testCaseId;
     private int _index;
 
     protected override void OnInitView()
@@ -36,27 +32,39 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
 
     protected override void OnInitState(ConsoleState state)
     {
-        if (Toggle.isOn && State != null)
+        if (Toggle.isOn)
         {
-            var testCaseId = State.TestCaseIds[_index];
-            State.SelectedTestCaseId = testCaseId;
+            OnValueChanged(true); // Revoke event
         }
     }
 
     protected override void OnUpdate()
     {
-        if (State?.TestCaseIds != null)
+        var testCaseId = State?.GetTestCaseIdAtIndex(_index);
+        if (testCaseId == null)
         {
-            if (State.TestCaseIds.Count > _index)
-            {
-                _testCaseId = State.TestCaseIds[_index];
-                _name.text = $"Тест {_testCaseId}";
-                gameObject.SetActive(true);
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(false);
+            return;
+        }
+
+        var testCaseVerdict = State.GetTestCaseVerdictById(testCaseId);
+        if (testCaseVerdict != null)
+        {
+            _name.text = $"Тест {testCaseId}";
+            _statusIcon.sprite = testCaseVerdict is SuccessTestCaseVerdict ? _successIcon : _failureIcon;
+            _statusIcon.color = testCaseVerdict is SuccessTestCaseVerdict ? Color.green : Color.red;
+            _statusIcon.gameObject.SetActive(true);
+            gameObject.SetActive(true);
+        }
+        else if (State.GetTestCaseById(testCaseId) != null)
+        {
+            _name.text = $"Тест {testCaseId}";
+            _statusIcon.gameObject.SetActive(false);
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
@@ -64,8 +72,7 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
     {
         if (value && State != null)
         {
-            var testCaseId = State.TestCaseIds[_index];
-            State.SelectedTestCaseId = testCaseId;
+            State.SelectTestCaseAtIndex(_index);
         }
     }
 }

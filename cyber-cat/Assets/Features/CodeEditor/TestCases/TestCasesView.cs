@@ -11,11 +11,6 @@ public class TestCasesView : LifetimeUIBehaviour<ConsoleState>
     protected override void OnInitState(ConsoleState state)
     {
         _testCasesToggleGroup.State = State;
-    }
-
-    protected override void OnUpdate()
-    {
-        if (State?.SelectedTestCaseId != null && State.TestCasesVerdict != null)
-            _descriptionView.SetTestCase(State.TestCasesVerdict[State.SelectedTestCaseId]);
+        _descriptionView.State = State;
     }
 }

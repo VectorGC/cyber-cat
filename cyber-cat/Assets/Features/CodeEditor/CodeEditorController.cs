@@ -10,7 +10,7 @@ public class CodeEditorController : UIBehaviour
     [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
     [SerializeField] private CodeConsoleView _console;
-
+    [SerializeField] private CodeConsole _consoleV2;
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;

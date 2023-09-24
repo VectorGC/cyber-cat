@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UniMob;
 using UnityEngine;
@@ -23,6 +22,19 @@ public class ConsoleContentView : LifetimeMonoBehaviour
         _testCasesView.State = state;
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
-        state.Verdict = await _codeEditor.Task.VerifySolutionV2("Test");
+
+        /*
+        var verdict = await _codeEditor.Task.VerifySolutionV2("Test");
+        state.Section = new ResultSection(Lifetime)
+        {
+            Verdict = verdict
+        };
+        */
+
+        var testCases = await _codeEditor.Task.GetTestCases();
+        state.Section = new TestCasesSection(Lifetime)
+        {
+            TestCases = testCases
+        };
     }
 }

@@ -1,20 +1,27 @@
 using System.Text;
 using ApiGateway.Client.Models;
+using UniMob;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class TestCaseDescriptionView : UIBehaviour
+public class TestCaseDescriptionView : LifetimeUIBehaviour<ConsoleState>
 {
     [SerializeField] private SerializableInterface<IText> _text;
 
-    public void SetTestCase(ITestCase testCase)
-    {
-        _text.Value.Text = GetDescription(testCase);
-    }
+    [Atom] public override ConsoleState State { get; set; }
 
-    public void SetTestCase(ITestCaseVerdict testCase)
+    protected override void OnUpdate()
     {
-        _text.Value.Text = GetDescription(testCase);
+        var selectedVerdict = State?.GetSelectedTestCaseVerdict();
+        if (selectedVerdict != null)
+        {
+            _text.Value.Text = GetDescription(selectedVerdict);
+        }
+
+        var selectedTestCase = State?.GetSelectedTestCase();
+        if (selectedTestCase != null)
+        {
+            _text.Value.Text = GetDescription(selectedTestCase);
+        }
     }
 
     private string GetDescription(ITestCase testCase)
