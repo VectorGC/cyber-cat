@@ -2,33 +2,6 @@ using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConsoleToolSectionToggle : LifetimeUIBehaviour<ConsoleState>
-{
-    private int _index;
-    [field: SerializeField] public Toggle Toggle { get; private set; }
-    
-    [Atom] public override ConsoleState State { get; set; }
-
-    protected override void OnInitView()
-    {
-        Toggle.onValueChanged.AddListener(OnValueChanged);
-    }
-
-    protected override void OnDisposeView()
-    {
-        Toggle.onValueChanged.RemoveListener(OnValueChanged);
-    }
-
-    public void SetIndexNumber(int index)
-    {
-        _index = index;
-    }
-    
-    private void OnValueChanged(bool value)
-    {
-    }
-}
-
 public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<ConsoleState>
 {
     [SerializeField] private ToggleGroup _toggleGroup;
@@ -45,7 +18,6 @@ public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<ConsoleState>
             var toggle = _toggles[i];
             _toggleGroup.RegisterToggle(toggle.Toggle);
             toggle.Toggle.group = _toggleGroup;
-            toggle.SetIndexNumber(i);
         }
     }
 
@@ -55,6 +27,14 @@ public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<ConsoleState>
         {
             _toggleGroup.UnregisterToggle(toggle.Toggle);
             toggle.Toggle.group = null;
+        }
+    }
+
+    protected override void OnInitState(ConsoleState state)
+    {
+        foreach (var toggle in _toggles)
+        {
+            toggle.State = state;
         }
     }
 }

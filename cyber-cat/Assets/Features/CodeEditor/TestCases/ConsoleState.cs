@@ -73,6 +73,16 @@ public class ConsoleState : ILifetimeScope
             _ => null
         };
     }
+
+    public TestCaseId GetSelectedTestCaseId()
+    {
+        return Section switch
+        {
+            TestCasesSection testCasesSection => testCasesSection.SelectedTestCaseId,
+            ResultSection resultSection => resultSection.SelectedTestCaseId,
+            _ => null
+        };
+    }
 }
 
 public interface ISection : ILifetimeScope
@@ -84,7 +94,7 @@ public class TestCasesSection : ISection
     [Atom] public TestCases TestCases { get; set; }
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
     [Atom] public List<TestCaseId> TestCaseIds => TestCases?.Ids.ToList();
-    [Atom] public ITestCase SelectedTestCase => TestCases?[SelectedTestCaseId];
+    [Atom] public ITestCase SelectedTestCase => SelectedTestCaseId != null ? TestCases?[SelectedTestCaseId] : null;
 
     public Lifetime Lifetime { get; }
 
@@ -100,7 +110,7 @@ public class ResultSection : ISection
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
     [Atom] public TestCasesVerdict TestCasesVerdict => Verdict as TestCasesVerdict;
     [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Ids.ToList();
-    [Atom] public ITestCaseVerdict SelectedTestCaseVerdict => TestCasesVerdict?[SelectedTestCaseId];
+    [Atom] public ITestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
 
     public Lifetime Lifetime { get; }
 
