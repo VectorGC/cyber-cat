@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class ConsoleToolSectionToggle : LifetimeUIBehaviour<ConsoleState>
+public class ConsoleToolSectionToggle : LifetimeUIBehaviour<CodeEditorState>
 {
     private enum SectionType
     {
@@ -15,7 +15,7 @@ public class ConsoleToolSectionToggle : LifetimeUIBehaviour<ConsoleState>
     [field: SerializeField] public Toggle Toggle { get; private set; }
     [SerializeField] private SectionType _type;
 
-    [Atom] public override ConsoleState State { get; set; }
+    [Atom] public override CodeEditorState State { get; set; }
 
     private ICodeEditor _codeEditor;
 
@@ -35,35 +35,36 @@ public class ConsoleToolSectionToggle : LifetimeUIBehaviour<ConsoleState>
         Toggle.onValueChanged.RemoveListener(OnValueChanged);
     }
 
-    protected override void OnInitState(ConsoleState state)
+    protected override void OnInitState(CodeEditorState state)
     {
         if (Toggle.isOn)
             OnValueChanged(true);
     }
 
-    private async void OnValueChanged(bool value)
+    private void OnValueChanged(bool value)
     {
         if (value == false || State == null)
             return;
+
 
         switch (_type)
         {
             case SectionType.TestCases:
                 State.Section = new TestCasesSection(Lifetime)
                 {
-                    TestCases = await _codeEditor.Task.GetTestCases(),
                     SelectedTestCaseId = State.GetSelectedTestCaseId()
                 };
                 break;
             case SectionType.Result:
                 State.Section = new ResultSection(Lifetime)
                 {
-                    Verdict = await _codeEditor.Task.VerifySolutionV2("Test"),
                     SelectedTestCaseId = State.GetSelectedTestCaseId()
                 };
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        State.CallSectionChanged();
     }
 }

@@ -1,11 +1,14 @@
+using System;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
+using ApiGateway.Client.Models;
+using Cysharp.Threading.Tasks;
 using Models;
+using UniMob;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-public class CodeEditorController : UIBehaviour
+public class CodeEditorController : LifetimeMonoBehaviour
 {
     [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
@@ -18,6 +21,9 @@ public class CodeEditorController : UIBehaviour
     [Header("Debug")] [SerializeField] private bool _loadTutorial;
 
     private ICodeEditor _codeEditor;
+    private CodeEditorState _state;
+    private TestCases _testCasesCache;
+    private IVerdictV2 _verdictCache;
 
     [Inject]
     private async void Construct(ICodeEditor codeEditor)
@@ -35,7 +41,55 @@ public class CodeEditorController : UIBehaviour
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
-    protected override void OnEnable()
+    protected override async void Start()
+    {
+        base.Start();
+
+        await UniTask.WaitUntil(() => _codeEditor.Task != null);
+        
+        _testCasesCache = await _codeEditor.Task.GetTestCases();
+        _state = new CodeEditorState(Lifetime)
+        {
+            Section = new TestCasesSection(Lifetime)
+            {
+                TestCases = _testCasesCache
+            }
+        };
+        _consoleV2.State = _state;
+
+        _state.SectionChanged += OnSectionChanged;
+    }
+
+    protected override void OnDestroy()
+    {
+        _state.SectionChanged -= OnSectionChanged;
+
+        base.OnDestroy();
+    }
+
+    private void OnSectionChanged()
+    {
+        OnSectionChangedAsync().Forget();
+    }
+
+    private async UniTaskVoid OnSectionChangedAsync()
+    {
+        switch (_state.Section)
+        {
+            case ResultSection resultSection:
+                if (_verdictCache != null)
+                    resultSection.Verdict = _verdictCache;
+                break;
+            case TestCasesSection testCasesSection:
+                _testCasesCache ??= await _codeEditor.Task.GetTestCases();
+                testCasesSection.TestCases = _testCasesCache;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void OnEnable()
     {
         Time.timeScale = 0f;
 
@@ -44,7 +98,7 @@ public class CodeEditorController : UIBehaviour
         _exit.onClick.AddListener(ExitEditor);
     }
 
-    protected override void OnDisable()
+    private void OnDisable()
     {
         Time.timeScale = 1f;
 
@@ -57,6 +111,7 @@ public class CodeEditorController : UIBehaviour
     {
         var sourceCode = _codeEditorView.SourceCode;
         var verdict = await _codeEditor.Task.VerifySolution(sourceCode);
+        _verdictCache = await _codeEditor.Task.VerifySolutionV2(sourceCode);
 
         switch (verdict)
         {

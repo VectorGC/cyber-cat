@@ -857,7 +857,7 @@ MonoBehaviour:
       id: 0
   _codeEditorView: {fileID: 1413505457356885688}
   _console: {fileID: 599078538202939252}
-  _consoleV2: {fileID: 0}
+  _consoleV2: {fileID: 1756595470}
   _verifySolution: {fileID: 1584372984}
   _loadSavedCode: {fileID: 1928571767}
   _exit: {fileID: 2058194953}

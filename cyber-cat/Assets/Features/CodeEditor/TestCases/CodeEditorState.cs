@@ -1,18 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApiGateway.Client.Models;
 using Shared.Models.Ids;
 using UniMob;
 
-public class ConsoleState : ILifetimeScope
+public class CodeEditorState : ILifetimeScope
 {
+    public event Action SectionChanged;
+
     [Atom] public ISection Section { get; set; }
 
     public Lifetime Lifetime { get; }
 
-    public ConsoleState(Lifetime lifetime)
+    public CodeEditorState(Lifetime lifetime)
     {
         Lifetime = lifetime;
+    }
+
+    public void CallSectionChanged()
+    {
+        SectionChanged?.Invoke();
     }
 
     public void SelectTestCaseAtIndex(int index)
@@ -20,10 +28,10 @@ public class ConsoleState : ILifetimeScope
         switch (Section)
         {
             case ResultSection resultSection:
-                resultSection.SelectedTestCaseId = resultSection.TestCaseIds[index];
+                resultSection.SelectedTestCaseId = resultSection.TestCaseIds?[index];
                 break;
             case TestCasesSection testCasesSection:
-                testCasesSection.SelectedTestCaseId = testCasesSection.TestCaseIds[index];
+                testCasesSection.SelectedTestCaseId = testCasesSection.TestCaseIds?[index];
                 break;
         }
     }
@@ -32,8 +40,8 @@ public class ConsoleState : ILifetimeScope
     {
         return Section switch
         {
-            ResultSection resultSection => resultSection.TestCaseIds[index],
-            TestCasesSection testCasesSection => testCasesSection.TestCaseIds[index],
+            ResultSection resultSection => resultSection.TestCaseIds?[index],
+            TestCasesSection testCasesSection => testCasesSection.TestCaseIds?[index],
             _ => null
         };
     }
@@ -42,7 +50,7 @@ public class ConsoleState : ILifetimeScope
     {
         return Section switch
         {
-            ResultSection resultSection => resultSection.TestCasesVerdict[testCaseId],
+            ResultSection resultSection => resultSection.TestCasesVerdict?[testCaseId],
             _ => null
         };
     }
@@ -51,7 +59,7 @@ public class ConsoleState : ILifetimeScope
     {
         return Section switch
         {
-            TestCasesSection testCasesSection => testCasesSection.TestCases[testCaseId],
+            TestCasesSection testCasesSection => testCasesSection.TestCases?[testCaseId],
             _ => null
         };
     }

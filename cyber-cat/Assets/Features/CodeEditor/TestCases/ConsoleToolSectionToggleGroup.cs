@@ -2,11 +2,11 @@ using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<ConsoleState>
+public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<CodeEditorState>
 {
     [SerializeField] private ToggleGroup _toggleGroup;
 
-    [Atom] public override ConsoleState State { get; set; }
+    [Atom] public override CodeEditorState State { get; set; }
 
     private ConsoleToolSectionToggle[] _toggles;
 
@@ -30,7 +30,7 @@ public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<ConsoleState>
         }
     }
 
-    protected override void OnInitState(ConsoleState state)
+    protected override void OnInitState(CodeEditorState state)
     {
         foreach (var toggle in _toggles)
         {

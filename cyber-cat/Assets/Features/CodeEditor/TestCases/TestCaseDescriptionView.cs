@@ -3,11 +3,11 @@ using ApiGateway.Client.Models;
 using UniMob;
 using UnityEngine;
 
-public class TestCaseDescriptionView : LifetimeUIBehaviour<ConsoleState>
+public class TestCaseDescriptionView : LifetimeUIBehaviour<CodeEditorState>
 {
     [SerializeField] private SerializableInterface<IText> _text;
 
-    [Atom] public override ConsoleState State { get; set; }
+    [Atom] public override CodeEditorState State { get; set; }
 
     protected override void OnUpdate()
     {

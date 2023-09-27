@@ -1,19 +1,16 @@
 using UniMob;
 using UnityEngine;
 
-public class CodeConsoleController : LifetimeMonoBehaviour
+public class CodeConsoleController : LifetimeUIBehaviour<CodeEditorState>
 {
     [SerializeField] private ConsoleToolSectionToggleGroup _sectionsToggleGroup;
     [SerializeField] private ConsoleContentView _consoleContentView;
 
-    [Atom] public ConsoleState State { get; set; }
+    [Atom] public override CodeEditorState State { get; set; }
 
-    protected override void Start()
+    protected override void OnInitState(CodeEditorState state)
     {
-        base.Start();
-
-        State = new ConsoleState(Lifetime);
-        _sectionsToggleGroup.State = State;
-        _consoleContentView.State = State;
+        _sectionsToggleGroup.State = state;
+        _consoleContentView.State = state;
     }
 }

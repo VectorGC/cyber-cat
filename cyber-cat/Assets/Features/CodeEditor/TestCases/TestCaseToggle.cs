@@ -3,7 +3,7 @@ using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
+public class TestCaseToggle : LifetimeUIBehaviour<CodeEditorState>
 {
     [field: SerializeField] public Toggle Toggle { get; private set; }
     [SerializeField] private Image _statusIcon;
@@ -11,7 +11,7 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
     [SerializeField] private Sprite _successIcon;
     [SerializeField] private Sprite _failureIcon;
 
-    [Atom] public override ConsoleState State { get; set; }
+    [Atom] public override CodeEditorState State { get; set; }
 
     private int _index;
 
@@ -30,7 +30,7 @@ public class TestCaseToggle : LifetimeUIBehaviour<ConsoleState>
         _index = index;
     }
 
-    protected override void OnInitState(ConsoleState state)
+    protected override void OnInitState(CodeEditorState state)
     {
         if (Toggle.isOn)
         {
