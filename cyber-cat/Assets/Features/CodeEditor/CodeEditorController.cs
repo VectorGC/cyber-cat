@@ -12,8 +12,8 @@ public class CodeEditorController : LifetimeMonoBehaviour
 {
     [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
-    [SerializeField] private CodeConsoleView _console;
-    [SerializeField] private CodeConsoleController _consoleV2;
+    [SerializeField] private CodeConsoleController _console;
+    [SerializeField] private CodeEditorStatusBar _statusBar;
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
@@ -46,7 +46,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
         base.Start();
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
-        
+
         _testCasesCache = await _codeEditor.Task.GetTestCases();
         _state = new CodeEditorState(Lifetime)
         {
@@ -55,7 +55,8 @@ public class CodeEditorController : LifetimeMonoBehaviour
                 TestCases = _testCasesCache
             }
         };
-        _consoleV2.State = _state;
+        _console.State = _state;
+        _statusBar.State = _state;
 
         _state.SectionChanged += OnSectionChanged;
     }
@@ -91,8 +92,6 @@ public class CodeEditorController : LifetimeMonoBehaviour
 
     private void OnEnable()
     {
-        Time.timeScale = 0f;
-
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.AddListener(GetSavedCode);
         _exit.onClick.AddListener(ExitEditor);
@@ -100,8 +99,6 @@ public class CodeEditorController : LifetimeMonoBehaviour
 
     private void OnDisable()
     {
-        Time.timeScale = 1f;
-
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.RemoveListener(GetSavedCode);
         _exit.onClick.RemoveListener(ExitEditor);
@@ -110,9 +107,10 @@ public class CodeEditorController : LifetimeMonoBehaviour
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        var verdict = await _codeEditor.Task.VerifySolution(sourceCode);
-        _verdictCache = await _codeEditor.Task.VerifySolutionV2(sourceCode);
+        var verdict = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(_state, "Проверяем...");
+        _verdictCache = await _codeEditor.Task.VerifySolutionV2(sourceCode).ToReportProgressStatus(_state, "Проверяем v2...");
 
+        /*
         switch (verdict)
         {
             case Success success:
@@ -122,6 +120,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
                 _console.LogError(failure.ToString());
                 break;
         }
+        */
     }
 
     private async void GetSavedCode()

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ApiGateway.Client.Models;
+using Cysharp.Threading.Tasks;
 using Shared.Models.Ids;
 using UniMob;
 
@@ -10,6 +12,7 @@ public class CodeEditorState : ILifetimeScope
     public event Action SectionChanged;
 
     [Atom] public ISection Section { get; set; }
+    [Atom] public ProgressStatus? ProgressStatus { get; set; }
 
     public Lifetime Lifetime { get; }
 
@@ -125,5 +128,27 @@ public class ResultSection : ISection
     public ResultSection(Lifetime lifetime)
     {
         Lifetime = lifetime;
+    }
+}
+
+public readonly struct ProgressStatus
+{
+    public string StatusText { get; }
+
+    public ProgressStatus(string statusText)
+    {
+        StatusText = statusText;
+    }
+}
+
+public static class CodeEditorStateExtensions
+{
+    public static async UniTask<T> ToReportProgressStatus<T>(this Task<T> task, CodeEditorState state, string statusText)
+    {
+        state.ProgressStatus = new ProgressStatus(statusText);
+        var result = await task;
+        state.ProgressStatus = null;
+
+        return result;
     }
 }
