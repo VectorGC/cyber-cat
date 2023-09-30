@@ -3,6 +3,7 @@
     "_id": "tutorial",
     "Name": "Hello cat!",
     "Description": "Вывести строку: Hello cat!",
+    "DefaultCode": "#include <iostream>\n\nint main() {\n\t//Твой код здесь\n\n\treturn 0;\n}",
     "Tests": [
       {
         "ExpectedOutput": "Hello cat!"
@@ -13,6 +14,7 @@
     "_id": "sum_ab",
     "Name": "А + B",
     "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b)",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 1",
@@ -32,6 +34,7 @@
     "_id": "task-1",
     "Name": "А + B",
     "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b)",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 1",
@@ -51,6 +54,7 @@
     "_id": "task-2",
     "Name": "Числа кратные 3",
     "Description": "Найти все числа от N до M, которые кратны трем и вывести сумму этих значений. N => 1, M <= 1",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 20",
@@ -74,6 +78,7 @@
     "_id": "task-3",
     "Name": "Факториал числа",
     "Description": "Посчитать факториал заданного числа N и вывести полученное значение. 1 <= N <= 10",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint res = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << res << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1",
@@ -89,6 +94,7 @@
     "_id": "task-4",
     "Name": "Зеркальное число",
     "Description": "Требуется написать программу, которая отзеркаливает вводимое натуральное число. Например для числа 12345 результат будет 54321. Если число оканчивается нулями, то они не отображаются: 12340500 будет 504321",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint res = 0;\n\n\t//Твой код здесь\n\nstd::cout << res << endl;\n\treturn res;\n}",
     "Tests": [
       {
         "Input": "12345",
@@ -108,6 +114,7 @@
     "_id": "task-5",
     "Name": "Простые числа",
     "Description": "Напишите программу, которая получает на вход число N и выводит на экран строку 'true' если число N простое или строку 'false', если число N не является простым. Примечание: Простое число – это натуральное число больше 1, которое не имеет положительных делителей, кроме 1 и самого себя. N <= 100",
+    "DefaultCode": "#include <iostream>\n\nint main() {\n\tstring res = \"\";\n\n\t//Твой код здесь\n\n\tstd::cout << res << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1",
@@ -127,6 +134,7 @@
     "_id": "task-6",
     "Name": "Будильник",
     "Description": "Дан список некоторых натуральных чисел, выведите этот список в обратном порядке",
+    "DefaultCode": "#include <iostream>\n\nint main() {\n\tint mas[5] = { 1,2,3,4,5 };\n\n\t//Твой код здесь\n\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1",
@@ -138,6 +146,7 @@
     "_id": "task-7",
     "Name": "А + B",
     "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 1",
@@ -157,6 +166,7 @@
     "_id": "task-8",
     "Name": "А + B",
     "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 1",
@@ -176,6 +186,7 @@
     "_id": "task-9",
     "Name": "А + B",
     "Description": "На вход поступает два числа - а и b. Выведи их сумму (а + b).",
+    "DefaultCode": "#include <iostream>\n\nint main() {\nint sum = 0;\n\n\t//Твой код здесь\n\n\tstd::cout << sum << endl;\n\treturn 0;\n}",
     "Tests": [
       {
         "Input": "1 1",

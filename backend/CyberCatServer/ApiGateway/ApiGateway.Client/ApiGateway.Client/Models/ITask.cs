@@ -6,6 +6,7 @@ namespace ApiGateway.Client.Models
     {
         Task<string> GetName();
         Task<string> GetDescription();
+        Task<string> GetDefaultCode();
         Task<ITaskProgressStatus> GetStatus();
         Task<IVerdict> VerifySolution(string sourceCode);
     }

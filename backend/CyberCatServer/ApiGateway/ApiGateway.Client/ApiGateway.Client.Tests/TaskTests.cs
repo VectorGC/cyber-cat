@@ -20,6 +20,7 @@ namespace ApiGateway.Client.Tests
 
             Assert.AreEqual("Hello cat!", await task.GetName());
             Assert.IsNotEmpty(await task.GetDescription());
+            Assert.AreEqual("#include <iostream>\n\nint main() {\n\t//Твой код здесь\n\n\treturn 0;\n}", await task.GetDefaultCode());
         }
     }
 }
