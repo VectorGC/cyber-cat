@@ -4,6 +4,8 @@ using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using Models;
 using Shared.Models.Models;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,22 +21,23 @@ public class CodeEditorController : LifetimeMonoBehaviour
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _exit;
 
-    [Header("Debug")] [SerializeField] private bool _loadTutorial;
+    [Header("Debug")] [SerializeField] private bool _loadDebugTask;
+    [SerializeField] private TaskType _taskTypeDebug;
 
     private ICodeEditor _codeEditor;
     private CodeEditorState _state;
     private TestCases _testCasesCache;
-    private VerdictV2 _verdictCache;
+    private Verdict _verdictCache;
 
     [Inject]
     private async void Construct(ICodeEditor codeEditor)
     {
         _codeEditor = codeEditor;
 
-        if (Application.isEditor && Application.isPlaying && _loadTutorial)
+        if (Application.isEditor && Application.isPlaying && _loadDebugTask)
         {
             var typedEditor = (CodeEditor) codeEditor;
-            await typedEditor.LoadTutorialCheat();
+            await typedEditor.LoadDebugTaskCheat(_taskTypeDebug);
         }
 
         var descriptionHandler = codeEditor.Task.GetDescription();
@@ -108,20 +111,13 @@ public class CodeEditorController : LifetimeMonoBehaviour
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        var verdict = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(_state, "Проверяем...");
-        _verdictCache = await _codeEditor.Task.VerifySolutionV2(sourceCode).ToReportProgressStatus(_state, "Проверяем v2...");
+        _verdictCache = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(_state, "Выполняется...");
 
-        /*
-        switch (verdict)
+        // Force select Result section.
+        _state.Section = new ResultSection(Lifetime)
         {
-            case Success success:
-                _console.LogSuccess(success.ToString());
-                break;
-            case Failure failure:
-                _console.LogError(failure.ToString());
-                break;
-        }
-        */
+            Verdict = _verdictCache
+        };
     }
 
     private async void GetSavedCode()

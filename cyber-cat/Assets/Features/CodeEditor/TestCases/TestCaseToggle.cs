@@ -1,5 +1,6 @@
 using ApiGateway.Client.Models;
 using Shared.Models.Models;
+using Shared.Models.Models.Verdicts;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,7 +52,7 @@ public class TestCaseToggle : LifetimeUIBehaviour<CodeEditorState>
         var testCaseVerdict = State.GetTestCaseVerdictById(testCaseId);
         if (testCaseVerdict != null)
         {
-            _name.text = $"Тест {testCaseId}";
+            _name.text = $"Тест {_index + 1}";
             _statusIcon.sprite = testCaseVerdict is SuccessTestCaseVerdict ? _successIcon : _failureIcon;
             _statusIcon.color = testCaseVerdict is SuccessTestCaseVerdict ? Color.green : Color.red;
             _statusIcon.gameObject.SetActive(true);
@@ -59,7 +60,7 @@ public class TestCaseToggle : LifetimeUIBehaviour<CodeEditorState>
         }
         else if (State.GetTestCaseById(testCaseId) != null)
         {
-            _name.text = $"Тест {testCaseId}";
+            _name.text = $"Тест {_index + 1}";
             _statusIcon.gameObject.SetActive(false);
             gameObject.SetActive(true);
         }

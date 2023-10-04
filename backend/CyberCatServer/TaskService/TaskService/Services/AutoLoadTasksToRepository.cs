@@ -61,6 +61,29 @@ public class AutoLoadTasksToRepository : IHostedService
                         Expected = "0"
                     }
                 }
+            },
+            new()
+            {
+                Id = "task-2",
+                Name = "A + B * C",
+                Tests = new TestsDbModel()
+                {
+                    new()
+                    {
+                        Inputs = new string[] {"1", "1", "2"},
+                        Expected = "3"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"5", "10", "8"},
+                        Expected = "85"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"-1000", "1000", "3"},
+                        Expected = "2000"
+                    }
+                }
             }
         };
 

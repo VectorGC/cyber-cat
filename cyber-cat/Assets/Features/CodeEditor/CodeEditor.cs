@@ -50,10 +50,10 @@ public class CodeEditor : ICodeEditor
     }
 
 #if UNITY_EDITOR
-    public async UniTask LoadTutorialCheat()
+    public async UniTask LoadDebugTaskCheat(TaskType taskType)
     {
         var player = await ServerAPI.CreatePlayerClient();
-        var task = player.Tasks["tutorial"];
+        var task = player.Tasks[taskType.GetId()];
         Task = task;
     }
 #endif

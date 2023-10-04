@@ -17,14 +17,6 @@ public class ConsoleToolSectionToggle : LifetimeUIBehaviour<CodeEditorState>
 
     [Atom] public override CodeEditorState State { get; set; }
 
-    private ICodeEditor _codeEditor;
-
-    [Inject]
-    private void Construct(ICodeEditor codeEditor)
-    {
-        _codeEditor = codeEditor;
-    }
-
     protected override void OnInitView()
     {
         Toggle.onValueChanged.AddListener(OnValueChanged);

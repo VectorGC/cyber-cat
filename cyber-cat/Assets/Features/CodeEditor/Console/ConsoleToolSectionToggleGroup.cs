@@ -37,4 +37,17 @@ public class ConsoleToolSectionToggleGroup : LifetimeUIBehaviour<CodeEditorState
             toggle.State = state;
         }
     }
+
+    protected override void OnUpdate()
+    {
+        switch (State?.Section)
+        {
+            case TestCasesSection testCasesSection:
+                _toggles[0].Toggle.SetIsOnWithoutNotify(true);
+                break;
+            case ResultSection resultSection:
+                _toggles[1].Toggle.SetIsOnWithoutNotify(true);
+                break;
+        }
+    }
 }

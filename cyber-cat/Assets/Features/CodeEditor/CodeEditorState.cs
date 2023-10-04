@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using Shared.Models.Ids;
-using Shared.Models.Models;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 using UniMob;
 
 public class CodeEditorState : ILifetimeScope
@@ -42,11 +42,26 @@ public class CodeEditorState : ILifetimeScope
 
     public TestCaseId GetTestCaseIdAtIndex(int index)
     {
+        if (GetTestCaseIdCount() <= index)
+        {
+            return null;
+        }
+
         return Section switch
         {
             ResultSection resultSection => resultSection.TestCaseIds?[index],
             TestCasesSection testCasesSection => testCasesSection.TestCaseIds?[index],
             _ => null
+        };
+    }
+
+    private int GetTestCaseIdCount()
+    {
+        return Section switch
+        {
+            ResultSection resultSection => resultSection.TestCaseIds?.Count ?? 0,
+            TestCasesSection testCasesSection => testCasesSection.TestCaseIds?.Count ?? 0,
+            _ => 0
         };
     }
 
@@ -95,6 +110,11 @@ public class CodeEditorState : ILifetimeScope
             _ => null
         };
     }
+
+    public Verdict GetVerdict()
+    {
+        return (Section as ResultSection)?.Verdict;
+    }
 }
 
 public interface ISection : ILifetimeScope
@@ -118,11 +138,20 @@ public class TestCasesSection : ISection
 
 public class ResultSection : ISection
 {
-    [Atom] public VerdictV2 Verdict { get; set; }
-    [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-    [Atom] public TestCasesVerdict TestCasesVerdict => (Verdict as SuccessV2)?.TestCases;
-    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Values.Select(test => test.TestCase.Id).ToList();
+    [Atom] public Verdict Verdict { get; set; }
+
+    [Atom]
+    public TestCaseId SelectedTestCaseId
+    {
+        get => TestCaseIds?[_selectedTestCaseIndex];
+        set => _selectedTestCaseIndex = TestCaseIds?.FindIndex(id => id == value) ?? 0;
+    }
+
+    [Atom] public TestCasesVerdict TestCasesVerdict => (Verdict as Success)?.TestCases ?? (Verdict as Failure)?.TestCases;
+    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Values.Values.Select(test => test.TestCase.Id).ToList();
     [Atom] public TestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
+
+    [Atom] private int _selectedTestCaseIndex { get; set; } = 0;
 
     public Lifetime Lifetime { get; }
 
