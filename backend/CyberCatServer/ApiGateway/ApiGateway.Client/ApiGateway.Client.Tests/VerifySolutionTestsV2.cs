@@ -1,15 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
+using Shared.Models.Models;
 
 namespace ApiGateway.Client.Tests
 {
-    public class VerifySolutionTests : PlayerClientTestFixture
+    public class VerifySolutionTestsV2 : PlayerClientTestFixture
     {
-        public VerifySolutionTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        public VerifySolutionTestsV2(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
         }
 
@@ -20,10 +20,10 @@ namespace ApiGateway.Client.Tests
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
             var player = await GetPlayerClient();
 
-            var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
+            var verdict = await player.Tasks[taskId].VerifySolutionV2(sourceCode);
 
-            var success = verdict as Success;
-            Assert.AreEqual(1, success.TestsPassed);
+            var success = verdict as SuccessV2;
+            Assert.AreEqual(1, success.TestCases.PassedCount);
         }
 
         [Test]
@@ -34,10 +34,9 @@ namespace ApiGateway.Client.Tests
             var expectedErrorRegex = "Exit Code 1:.*: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
             var player = await GetPlayerClient();
 
-            var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
+            var verdict = await player.Tasks[taskId].VerifySolutionV2(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
 
@@ -49,10 +48,9 @@ namespace ApiGateway.Client.Tests
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
             var player = await GetPlayerClient();
 
-            var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
+            var verdict = await player.Tasks[taskId].VerifySolutionV2(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
 
@@ -87,11 +85,19 @@ namespace ApiGateway.Client.Tests
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
             var player = await GetPlayerClient();
 
-            var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
+            var verdict = await player.Tasks[taskId].VerifySolutionV2(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(1, failure.TestsPassed);
-            Assert.AreEqual("Expected result '15', but was '2'", failure.Error);
+            Assert.IsAssignableFrom<FailureV2>(verdict);
+            var failure = verdict as FailureV2;
+            Assert.AreEqual(1, failure.TestCases.PassedCount);
+
+            var testCase1 = failure.TestCases[taskId, 0] as SuccessTestCaseVerdict;
+            var testCase2 = failure.TestCases[taskId, 1] as FailureTestCaseVerdict;
+            var testCase3 = failure.TestCases[taskId, 2] as FailureTestCaseVerdict;
+
+            Assert.AreEqual("2", testCase1.Output);
+            Assert.AreEqual("Expected result '15', but was '2'", testCase2.Error);
+            Assert.AreEqual("Expected result '0', but was '2'", testCase3.Error);
         }
 
         [Test]
@@ -103,10 +109,9 @@ namespace ApiGateway.Client.Tests
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
             var player = await GetPlayerClient();
 
-            var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
+            var verdict = await player.Tasks[taskId].VerifySolutionV2(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
     }

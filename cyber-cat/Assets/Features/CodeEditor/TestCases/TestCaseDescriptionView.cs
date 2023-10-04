@@ -1,5 +1,6 @@
 using System.Text;
 using ApiGateway.Client.Models;
+using Shared.Models.Models;
 using UniMob;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ public class TestCaseDescriptionView : LifetimeUIBehaviour<CodeEditorState>
         }
     }
 
-    private string GetDescription(ITestCase testCase)
+    private string GetDescription(TestCase testCase)
     {
         var sb = new StringBuilder();
         if (testCase.Inputs.Length > 0)
@@ -41,7 +42,7 @@ public class TestCaseDescriptionView : LifetimeUIBehaviour<CodeEditorState>
         return sb.ToString();
     }
 
-    private string GetDescription(ITestCaseVerdict testCaseVerdict)
+    private string GetDescription(TestCaseVerdict testCaseVerdict)
     {
         var testCase = testCaseVerdict.TestCase;
 

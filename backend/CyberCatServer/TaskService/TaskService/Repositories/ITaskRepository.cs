@@ -1,4 +1,4 @@
-﻿using Shared.Models.Dto.Descriptions;
+﻿using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 
 namespace TaskService.Repositories

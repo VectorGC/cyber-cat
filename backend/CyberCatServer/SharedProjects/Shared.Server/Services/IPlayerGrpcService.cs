@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 using Shared.Models.Ids;
+using Shared.Models.Models;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 
@@ -19,6 +20,7 @@ public interface IPlayerGrpcService
     Task<Response<PlayerData>> GetPlayerById(PlayerId playerId);
     Task<Response<PlayerId>> GetPlayerByUserId(UserId userId);
     Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args);
+    Task<Response<VerdictV2>> GetVerdictV2(GetVerdictArgs args);
     Task<Response<TaskData>> GetTaskData(GetTaskDataArgs args);
     Task<Response> AddBitcoinsToPlayer(GetPlayerBtcArgs playerBtcArgs);
     Task<Response> TakeBitcoinsFromPlayer(GetPlayerBtcArgs playerBtcArgs);

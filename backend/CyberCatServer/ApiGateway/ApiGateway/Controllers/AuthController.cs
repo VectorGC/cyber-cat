@@ -3,7 +3,6 @@ using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto.Data;
 using Shared.Server.Ids;
 using Shared.Server.Services;
 

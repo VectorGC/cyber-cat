@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Shared.Models.Dto
+namespace Shared.Models.Ids
 {
     [Serializable]
     public class TaskIdsDto

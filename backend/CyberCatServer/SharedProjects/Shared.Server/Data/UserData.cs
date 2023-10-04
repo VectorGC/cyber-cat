@@ -1,7 +1,7 @@
 using ProtoBuf;
 using Shared.Server.Ids;
 
-namespace Shared.Server.Dto
+namespace Shared.Server.Data
 {
     [ProtoContract]
     public class UserDto

@@ -1,7 +1,7 @@
 using ProtoBuf;
 using Shared.Models.Enums;
 
-namespace Shared.Models.Dto.Data
+namespace Shared.Models.Data
 {
     [ProtoContract]
     public class TaskData

@@ -1,5 +1,4 @@
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
 
 namespace ApiGateway.Client.Internal.Tasks.Statuses
 {

@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.Serverless;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
-using Shared.Models.Dto.Descriptions;
+using Shared.Models.Data;
+using Shared.Models.Descriptions;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
+using Shared.Models.Models;
+using Shared.Models.ProtoHelpers;
 
 namespace ApiGateway.Client.Internal.Tasks
 {
@@ -54,14 +55,15 @@ namespace ApiGateway.Client.Internal.Tasks
             return GetStatus(data);
         }
 
-        public Task<TestCases> GetTestCases()
+        public async Task<TestCases> GetTestCases()
         {
-            return new TaskServerless().GetTestCases();
+            var testCases = await _webClient.GetFromProtobufAsync<TestCases>(_uri + $"tasks/{_taskId}/tests");
+            return testCases;
         }
 
         public async Task<IVerdict> VerifySolution(string sourceCode)
         {
-            var verdictDto = await _webClient.PostAsJsonAsync<VerdictData>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
+            var verdictDto = await _webClient.PostAsJsonAsync<VerdictData>(_uri + $"player/verifyV1/{_taskId}", new Dictionary<string, string>
             {
                 ["sourceCode"] = sourceCode
             });
@@ -97,9 +99,14 @@ namespace ApiGateway.Client.Internal.Tasks
             }
         }
 
-        public Task<IVerdictV2> VerifySolutionV2(string sourceCode)
+        public async Task<VerdictV2> VerifySolutionV2(string sourceCode)
         {
-            return new TaskServerless().VerifySolutionV2(sourceCode);
+            var verdict = await _webClient.PostAsProtobufAsync<VerdictV2>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
+            {
+                ["sourceCode"] = sourceCode
+            });
+
+            return verdict;
         }
     }
 }

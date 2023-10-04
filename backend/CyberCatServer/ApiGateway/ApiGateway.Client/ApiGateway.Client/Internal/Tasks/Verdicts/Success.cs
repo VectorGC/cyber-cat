@@ -1,5 +1,5 @@
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 
 namespace ApiGateway.Client.Internal.Tasks.Verdicts
 {

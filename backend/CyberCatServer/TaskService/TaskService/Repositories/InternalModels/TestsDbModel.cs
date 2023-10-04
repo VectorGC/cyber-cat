@@ -1,14 +1,19 @@
-using Shared.Server.Dto;
+using Shared.Models.Ids;
+using Shared.Models.Models;
 
 namespace TaskService.Repositories.InternalModels;
 
 internal class TestsDbModel : List<TestDbModel>
 {
-    public TestsDto ToDto()
+    public TestCases ToDescription(TaskId taskId)
     {
-        return new TestsDto()
+        var testCases = new TestCases();
+        for (var i = 0; i < Count; i++)
         {
-            Tests = this.Select(test => test.ToDto()).ToList()
-        };
+            var test = this[i].ToDescription(taskId, i);
+            testCases.Add(test);
+        }
+
+        return testCases;
     }
 }

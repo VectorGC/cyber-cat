@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Models.Dto.Descriptions
+namespace Shared.Models.Descriptions
 {
     [ProtoContract]
     public class TaskDescription

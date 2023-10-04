@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
+using Shared.Models.Models;
 
 namespace ApiGateway.Client.Internal.Serverless
 {
@@ -42,9 +43,25 @@ namespace ApiGateway.Client.Internal.Serverless
         {
             var testCases = new TestCases()
             {
-                [1] = new TestCaseServerless(Array.Empty<object>(), "Hello cat!"),
-                [2] = new TestCaseServerless(Array.Empty<object>(), "Hello mat!"),
-                [3] = new TestCaseServerless(new object[] {1, 2}, "Hello bred!"),
+                Values = new Dictionary<TestCaseId, TestCase>()
+                {
+                    [new TestCaseId("tutorial", 0)] = new TestCase()
+                    {
+                        Id = new TestCaseId("tutorial", 0),
+                        Expected = "Hello cat!"
+                    },
+                    [new TestCaseId("tutorial", 1)] = new TestCase()
+                    {
+                        Id = new TestCaseId("tutorial", 1),
+                        Expected = "Hello mat!"
+                    },
+                    [new TestCaseId("tutorial", 2)] = new TestCase()
+                    {
+                        Id = new TestCaseId("tutorial", 2),
+                        Inputs = new[] {"1", "2"},
+                        Expected = "Hello bred!"
+                    }
+                }
             };
 
             return Task.FromResult(testCases);
@@ -72,31 +89,47 @@ namespace ApiGateway.Client.Internal.Serverless
             }
         }
 
-        public async Task<IVerdictV2> VerifySolutionV2(string sourceCode)
+        public Task<VerdictV2> VerifySolutionV2(string sourceCode)
         {
-            var testCases = await GetTestCases();
-            var data = new TestCasesVerdictData()
+            var testCases = new FailureV2()
             {
-                Verdicts = new Dictionary<TestCaseId, TestCaseVerdictData>()
+                TestCases = new TestCasesVerdict()
                 {
-                    [1] = new TestCaseVerdictData()
+                    Values = new Dictionary<TestCaseId, TestCaseVerdict>
                     {
-                        IsSuccess = true,
-                        Output = "Hello cat!"
-                    },
-                    [2] = new TestCaseVerdictData()
-                    {
-                        IsSuccess = false,
-                        Output = "Hello cat!"
-                    },
-                    [3] = new TestCaseVerdictData()
-                    {
-                        IsSuccess = false,
-                        Output = "Hello cat!"
-                    },
+                        [new TestCaseId("tutorial", 0)] = new SuccessTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 0),
+                                Expected = "Hello cat!"
+                            },
+                            Output = "Hello cat!"
+                        },
+                        [new TestCaseId("tutorial", 1)] = new FailureTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 1),
+                                Expected = "Hello mat!"
+                            },
+                            Output = "Hello cat!"
+                        },
+                        [new TestCaseId("tutorial", 2)] = new FailureTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 2),
+                                Inputs = new[] {"1", "2"},
+                                Expected = "Hello bred!"
+                            },
+                            Output = "Hello cat!"
+                        }
+                    }
                 }
             };
-            return new TestCasesVerdict(data, testCases);
+
+            return Task.FromResult<VerdictV2>(testCases);
         }
     }
 }

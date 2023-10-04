@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using Shared.Models.Ids;
+using Shared.Models.Models;
 using UniMob;
 
 public class CodeEditorState : ILifetimeScope
@@ -49,7 +50,7 @@ public class CodeEditorState : ILifetimeScope
         };
     }
 
-    public ITestCaseVerdict GetTestCaseVerdictById(TestCaseId testCaseId)
+    public TestCaseVerdict GetTestCaseVerdictById(TestCaseId testCaseId)
     {
         return Section switch
         {
@@ -58,16 +59,16 @@ public class CodeEditorState : ILifetimeScope
         };
     }
 
-    public ITestCase GetTestCaseById(TestCaseId testCaseId)
+    public TestCase GetTestCaseById(TestCaseId testCaseId)
     {
         return Section switch
         {
-            TestCasesSection testCasesSection => testCasesSection.TestCases?[testCaseId],
+            TestCasesSection testCasesSection => testCasesSection.TestCases?[testCaseId.TaskId, testCaseId.Index],
             _ => null
         };
     }
 
-    public ITestCaseVerdict GetSelectedTestCaseVerdict()
+    public TestCaseVerdict GetSelectedTestCaseVerdict()
     {
         return Section switch
         {
@@ -76,7 +77,7 @@ public class CodeEditorState : ILifetimeScope
         };
     }
 
-    public ITestCase GetSelectedTestCase()
+    public TestCase GetSelectedTestCase()
     {
         return Section switch
         {
@@ -104,8 +105,8 @@ public class TestCasesSection : ISection
 {
     [Atom] public TestCases TestCases { get; set; }
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-    [Atom] public List<TestCaseId> TestCaseIds => TestCases?.Ids.ToList();
-    [Atom] public ITestCase SelectedTestCase => SelectedTestCaseId != null ? TestCases?[SelectedTestCaseId] : null;
+    [Atom] public List<TestCaseId> TestCaseIds => TestCases.Values.Select(x => x.Key).ToList();
+    [Atom] public TestCase SelectedTestCase => SelectedTestCaseId != null ? TestCases?.Values[SelectedTestCaseId] : null;
 
     public Lifetime Lifetime { get; }
 
@@ -117,11 +118,11 @@ public class TestCasesSection : ISection
 
 public class ResultSection : ISection
 {
-    [Atom] public IVerdictV2 Verdict { get; set; }
+    [Atom] public VerdictV2 Verdict { get; set; }
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-    [Atom] public TestCasesVerdict TestCasesVerdict => Verdict as TestCasesVerdict;
-    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Ids.ToList();
-    [Atom] public ITestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
+    [Atom] public TestCasesVerdict TestCasesVerdict => (Verdict as SuccessV2)?.TestCases;
+    [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Values.Select(test => test.TestCase.Id).ToList();
+    [Atom] public TestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
 
     public Lifetime Lifetime { get; }
 

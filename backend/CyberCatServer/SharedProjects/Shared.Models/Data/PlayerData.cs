@@ -1,6 +1,6 @@
 ﻿using ProtoBuf;
 
-namespace Shared.Models.Dto.Data
+namespace Shared.Models.Data
 {
     [ProtoContract]
     public class PlayerData

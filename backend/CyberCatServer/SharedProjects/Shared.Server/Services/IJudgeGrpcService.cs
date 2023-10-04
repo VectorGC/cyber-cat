@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
+using Shared.Models.Models;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
@@ -9,4 +10,5 @@ namespace Shared.Server.Services;
 public interface IJudgeGrpcService
 {
     Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args);
+    Task<Response<VerdictV2>> GetVerdictV2(GetVerdictArgs args);
 }

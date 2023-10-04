@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
+using Shared.Models.ProtoHelpers;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
 {
@@ -37,12 +38,18 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return await _client.DownloadStringTaskAsync(uri);
         }
 
-        public async Task<T> GetFromJsonAsync<T>(string uri)
+        public async Task<TResponse> GetFromJsonAsync<TResponse>(string uri)
         {
             var response = await GetStringAsync(uri);
-            var obj = DeserializeJson<T>(response);
+            var obj = DeserializeJson<TResponse>(response);
 
             return obj;
+        }
+
+        public async Task<TResponse> GetFromProtobufAsync<TResponse>(string uri)
+        {
+            var response = await GetStringAsync(uri);
+            return response.ToProtobufObject<TResponse>();
         }
 
         public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
@@ -69,6 +76,12 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return obj;
         }
 
+        public async Task<TResponse> PostAsProtobufAsync<TResponse>(string uri, Dictionary<string, string> form)
+        {
+            var response = await PostAsync(uri, form);
+            return response.ToProtobufObject<TResponse>();
+        }
+
         private static string SerializeToJson<TValue>(TValue value)
         {
             using (var stream = new MemoryStream())
@@ -85,7 +98,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
 
         private static T DeserializeJson<T>(string jsonString)
         {
-            using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(jsonString)))
+            using (var stream = new MemoryStream(System.Text.Encoding.Unicode.GetBytes(jsonString)))
             {
                 var serializer = new DataContractJsonSerializer(typeof(T));
                 return (T) serializer.ReadObject(stream);

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
-using Shared.Server.Dto;
+using Shared.Server.Data;
 using Shared.Server.Services;
 using Shared.Tests;
 
@@ -21,7 +21,7 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsInt()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { int arg; scanf(\"%d\", &arg); printf(\"%d\", arg); }";
-        var args = new LaunchCodeArgs(sourceCode, "10");
+        var args = new LaunchCodeArgs(sourceCode, new[] {"10"});
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
@@ -36,7 +36,7 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsDouble()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { double arg; scanf(\"%lf\", &arg); printf(\"%lf\", arg); }";
-        var args = new LaunchCodeArgs(sourceCode, "1.1111115");
+        var args = new LaunchCodeArgs(sourceCode, new[] {"1.1111115"});
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
@@ -52,7 +52,7 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsDoubleWithSmallDigit()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { double arg; scanf(\"%lf\", &arg); printf(\"%lf\", arg); }";
-        var args = new LaunchCodeArgs(sourceCode, "1.1");
+        var args = new LaunchCodeArgs(sourceCode, new[] {"1.1"});
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
@@ -67,7 +67,7 @@ public class InputArgsTests
     public async Task CanOutputInputArgsAsString()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { char arg[25]; scanf(\"%s\", arg); printf(\"%s\", arg); }";
-        var args = new LaunchCodeArgs(sourceCode, "Hello");
+        var args = new LaunchCodeArgs(sourceCode, new[] {"Hello"});
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
@@ -82,7 +82,7 @@ public class InputArgsTests
     public async Task CanOutputTwoInputArgsAsString()
     {
         const string sourceCode = "#include <stdio.h>\nint main() { char arg1[25]; char arg2[25]; scanf(\"%s%s\", arg1, arg2); printf(\"%s%s\", arg1, arg2); }";
-        var args = new LaunchCodeArgs(sourceCode, "Hello Cat");
+        var args = new LaunchCodeArgs(sourceCode, new[] {"Hello Cat"});
 
         using var channel = _factory.CreateGrpcChannel();
         var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
 using Shared.Models.Ids;
-using Shared.Server.Dto;
+using Shared.Models.Models;
 using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
 
@@ -14,31 +14,36 @@ namespace TaskService.Repositories
         {
         }
 
-        public async Task Add(TaskId taskId, TestsDto tests)
+        public async Task Add(TestCases testCases)
         {
-            foreach (var test in tests)
+            foreach (var (id, testCase) in testCases.Values)
             {
-                await Add(taskId, test);
+                await Add(id, testCase);
             }
         }
 
-        private async Task Add(TaskId taskId, TestDto test)
+        private async Task Add(TestCaseId id, TestCase testCase)
         {
-            var testModel = new TestDbModel(test);
-            var task = await GetByIdAsync<TaskDbModel>(taskId);
-            task.Tests.Add(testModel);
+            var testModel = new TestDbModel(testCase);
+            var task = await GetByIdAsync<TaskDbModel>(id.TaskId);
+            if (task.Tests.Count > id.Index)
+            {
+                task.Tests.RemoveAt(id.Index);
+            }
+
+            task.Tests.Insert(id.Index, testModel);
 
             var success = await UpdateOneAsync(task);
             if (!success)
             {
-                throw new InvalidOperationException($"Failure update tests for task '{taskId}'");
+                throw new InvalidOperationException($"Failure update test case '{id}'");
             }
         }
 
-        public async Task<TestsDto> GetTests(TaskId taskId)
+        public async Task<TestCases> GetTestCases(TaskId taskId)
         {
             var task = await GetByIdAsync<TaskDbModel>(taskId);
-            return task.Tests.ToDto();
+            return task.Tests.ToDescription(taskId);
         }
     }
 }

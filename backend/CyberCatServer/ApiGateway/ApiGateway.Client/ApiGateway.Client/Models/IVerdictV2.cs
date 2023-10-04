@@ -1,6 +1,6 @@
 namespace ApiGateway.Client.Models
 {
-    public interface IVerdict
+    public interface IVerdictV2
     {
     }
 }

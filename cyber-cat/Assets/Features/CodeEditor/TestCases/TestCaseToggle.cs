@@ -1,4 +1,5 @@
 using ApiGateway.Client.Models;
+using Shared.Models.Models;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;

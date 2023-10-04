@@ -1,6 +1,7 @@
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 using Shared.Models.Enums;
-using Shared.Server.Dto;
+using Shared.Models.Models;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -9,32 +10,32 @@ namespace JudgeService.GrpcServices;
 public class JudgeGrpcService : IJudgeGrpcService
 {
     private readonly ICodeLauncherGrpcService _codeLauncherService;
-    private readonly ITestGrpcService _testGrpcService;
+    private readonly ITaskGrpcService _taskGrpcService;
 
-    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITestGrpcService testGrpcService)
+    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITaskGrpcService taskGrpcService)
     {
         _codeLauncherService = codeLauncherService;
-        _testGrpcService = testGrpcService;
+        _taskGrpcService = taskGrpcService;
     }
 
     public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
     {
         var (_, taskId, solution) = args;
-        var tests = await _testGrpcService.GetTests(taskId);
+        var tests = await _taskGrpcService.GetTestCases(taskId);
         var testPassed = 0;
 
-        foreach (var test in tests)
+        foreach (var (_, test) in tests.Value.Values)
         {
-            var output = await LaunchCode(solution, test.Input);
+            var output = await LaunchCode(solution, test.Inputs);
             if (!output.Success)
             {
                 return Failure(testPassed, output.StandardError);
             }
 
-            var equals = EqualsOutput(test.ExpectedOutput, output.StandardOutput);
+            var equals = EqualsOutput(test.Expected, output.StandardOutput);
             if (!equals)
             {
-                return Failure(testPassed, $"Expected result '{test.ExpectedOutput}', but was '{output.StandardOutput}'");
+                return Failure(testPassed, $"Expected result '{test.Expected}', but was '{output.StandardOutput}'");
             }
 
             testPassed++;
@@ -43,15 +44,9 @@ public class JudgeGrpcService : IJudgeGrpcService
         return Success(testPassed);
     }
 
-    private async Task<OutputDto> LaunchCode(string solution, string input)
+    private bool EqualsOutput(object expected, string actual)
     {
-        var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, input));
-        return output;
-    }
-
-    private bool EqualsOutput(string expected, string actual)
-    {
-        return expected == actual;
+        return Equals(expected, actual);
     }
 
     private VerdictData Failure(int testPassed, string error)
@@ -71,5 +66,46 @@ public class JudgeGrpcService : IJudgeGrpcService
             Status = VerdictStatus.Success,
             TestsPassed = testPassed
         };
+    }
+
+    private async Task<OutputDto> LaunchCode(string solution, string[] inputs)
+    {
+        var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, inputs));
+        return output;
+    }
+
+    public async Task<Response<VerdictV2>> GetVerdictV2(GetVerdictArgs args)
+    {
+        var (_, taskId, solution) = args;
+        var tests = await _taskGrpcService.GetTestCases(taskId);
+        var testsVerdict = new TestCasesVerdict();
+
+        foreach (var (_, test) in tests.Value.Values)
+        {
+            var output = (OutputDto) await _codeLauncherService.Launch(new LaunchCodeArgs(solution, test.Inputs));
+            if (!output.Success)
+            {
+                return new NativeFailure()
+                {
+                    Error = output.StandardError
+                };
+            }
+
+            var equals = test.Expected == output.StandardOutput;
+            if (equals)
+                testsVerdict.AddSuccess(test, output.StandardOutput);
+            else
+                testsVerdict.AddFailure(test, output.StandardOutput);
+        }
+
+        return testsVerdict.Values.Values.All(verdict => verdict is SuccessTestCaseVerdict)
+            ? new SuccessV2()
+            {
+                TestCases = testsVerdict
+            }
+            : new FailureV2()
+            {
+                TestCases = testsVerdict,
+            };
     }
 }

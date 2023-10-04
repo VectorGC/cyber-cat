@@ -32,25 +32,19 @@ namespace Shared.Models.Ids
             return taskId.Value;
         }
 
-        public bool Equals(TaskId x, TaskId y)
-        {
-            if (ReferenceEquals(x, y)) return true;
-            if (ReferenceEquals(x, null)) return false;
-            if (ReferenceEquals(y, null)) return false;
-            if (x.GetType() != y.GetType()) return false;
-            return x.Value == y.Value;
-        }
-
-        public int GetHashCode(TaskId obj)
-        {
-            return (obj.Value != null ? obj.Value.GetHashCode() : 0);
-        }
-
         public bool Equals(TaskId other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TaskId) obj);
         }
 
         public override int GetHashCode()

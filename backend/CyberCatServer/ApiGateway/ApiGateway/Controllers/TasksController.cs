@@ -2,9 +2,9 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto;
-using Shared.Models.Dto.Descriptions;
+using Shared.Models.Descriptions;
 using Shared.Models.Ids;
+using Shared.Models.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -30,10 +30,12 @@ public class TasksController : ControllerBase
         response.EnsureSuccess();
 
         var taskIds = response.Value.Select(taskId => taskId.Value).ToList();
-        return new TaskIdsDto
+        var responseDto = new TaskIdsDto
         {
             taskIds = taskIds
         };
+
+        return responseDto;
     }
 
     [HttpGet("{taskId}")]
@@ -41,6 +43,16 @@ public class TasksController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskDescription>> GetTask(string taskId)
     {
-        return await _taskGrpcService.GetTask(taskId);
+        var response = await _taskGrpcService.GetTask(taskId);
+        return response;
+    }
+
+    [HttpGet("{taskId}/tests")]
+    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<string>> GetTestCases(string taskId)
+    {
+        var response = await _taskGrpcService.GetTestCases(taskId);
+        return response.Value.ToProtobufBytesString();
     }
 }

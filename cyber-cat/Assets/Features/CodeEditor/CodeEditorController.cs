@@ -3,6 +3,7 @@ using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using Models;
+using Shared.Models.Models;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
     private ICodeEditor _codeEditor;
     private CodeEditorState _state;
     private TestCases _testCasesCache;
-    private IVerdictV2 _verdictCache;
+    private VerdictV2 _verdictCache;
 
     [Inject]
     private async void Construct(ICodeEditor codeEditor)
