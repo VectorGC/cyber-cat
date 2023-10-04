@@ -1,5 +1,5 @@
 using Shared.Models.Ids;
-using Shared.Models.Models;
+using Shared.Models.Models.TestCases;
 
 namespace TaskService.Repositories.InternalModels;
 

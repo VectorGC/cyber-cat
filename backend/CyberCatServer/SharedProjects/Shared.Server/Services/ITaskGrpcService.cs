@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Descriptions;
 using Shared.Models.Ids;
-using Shared.Models.Models;
+using Shared.Models.Models.TestCases;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;

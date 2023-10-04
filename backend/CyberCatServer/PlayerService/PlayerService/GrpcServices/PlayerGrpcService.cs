@@ -1,7 +1,7 @@
 ﻿using PlayerService.Repositories;
 using Shared.Models.Data;
 using Shared.Models.Enums;
-using Shared.Models.Models;
+using Shared.Models.Models.Verdicts;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
@@ -60,39 +60,19 @@ public class PlayerGrpcService : IPlayerGrpcService
         return player;
     }
 
-    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
+    public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (playerId, taskId, solution) = args;
-        var verdict = (VerdictData) await _judgeGrpcService.GetVerdict(args);
-        await _playerRepository.SaveCode(playerId, taskId, solution);
-        switch (verdict.Status)
-        {
-            case VerdictStatus.Success:
-                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
-                break;
-            case VerdictStatus.Failure:
-                await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);
-                break;
-        }
-
-        return verdict;
-    }
-
-    public async Task<Response<VerdictV2>> GetVerdictV2(GetVerdictArgs args)
-    {
-        var (playerId, taskId, solution) = args;
-        var verdict = await _judgeGrpcService.GetVerdictV2(args);
+        var verdict = await _judgeGrpcService.GetVerdict(args);
         await _playerRepository.SaveCode(playerId, taskId, solution);
         switch (verdict.Value)
         {
-            case SuccessV2 success:
+            case Success success:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
                 break;
-            /*
-            case VerdictStatus.Failure:
+            default:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);
                 break;
-                */
         }
 
         return verdict;

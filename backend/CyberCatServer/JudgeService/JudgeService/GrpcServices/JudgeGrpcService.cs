@@ -1,6 +1,5 @@
-using Shared.Models.Data;
 using Shared.Models.Enums;
-using Shared.Models.Models;
+using Shared.Models.Models.Verdicts;
 using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
@@ -18,63 +17,7 @@ public class JudgeGrpcService : IJudgeGrpcService
         _taskGrpcService = taskGrpcService;
     }
 
-    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
-    {
-        var (_, taskId, solution) = args;
-        var tests = await _taskGrpcService.GetTestCases(taskId);
-        var testPassed = 0;
-
-        foreach (var (_, test) in tests.Value.Values)
-        {
-            var output = await LaunchCode(solution, test.Inputs);
-            if (!output.Success)
-            {
-                return Failure(testPassed, output.StandardError);
-            }
-
-            var equals = EqualsOutput(test.Expected, output.StandardOutput);
-            if (!equals)
-            {
-                return Failure(testPassed, $"Expected result '{test.Expected}', but was '{output.StandardOutput}'");
-            }
-
-            testPassed++;
-        }
-
-        return Success(testPassed);
-    }
-
-    private bool EqualsOutput(object expected, string actual)
-    {
-        return Equals(expected, actual);
-    }
-
-    private VerdictData Failure(int testPassed, string error)
-    {
-        return new VerdictData
-        {
-            Status = VerdictStatus.Failure,
-            Error = error,
-            TestsPassed = testPassed
-        };
-    }
-
-    private VerdictData Success(int testPassed)
-    {
-        return new VerdictData
-        {
-            Status = VerdictStatus.Success,
-            TestsPassed = testPassed
-        };
-    }
-
-    private async Task<OutputDto> LaunchCode(string solution, string[] inputs)
-    {
-        var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, inputs));
-        return output;
-    }
-
-    public async Task<Response<VerdictV2>> GetVerdictV2(GetVerdictArgs args)
+    public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (_, taskId, solution) = args;
         var tests = await _taskGrpcService.GetTestCases(taskId);
@@ -99,11 +42,11 @@ public class JudgeGrpcService : IJudgeGrpcService
         }
 
         return testsVerdict.Values.Values.All(verdict => verdict is SuccessTestCaseVerdict)
-            ? new SuccessV2()
+            ? new Success()
             {
                 TestCases = testsVerdict
             }
-            : new FailureV2()
+            : new Failure()
             {
                 TestCases = testsVerdict,
             };

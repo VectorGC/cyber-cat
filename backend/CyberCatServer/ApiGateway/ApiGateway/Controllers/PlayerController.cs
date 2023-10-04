@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Data;
-using Shared.Models.Models;
 using Shared.Models.ProtoHelpers;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
@@ -52,18 +51,6 @@ public class PlayerController : ControllerBase
         return response;
     }
 
-    [HttpPost("verifyV1/{taskId}")]
-    [ProducesResponseType(typeof(VerdictData), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictData>> VerifySolutionV1(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
-    {
-        if (string.IsNullOrEmpty(sourceCode))
-        {
-            throw new ArgumentNullException(nameof(sourceCode));
-        }
-
-        return await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
-    }
-
     [HttpPost("verify/{taskId}")]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     public async Task<ActionResult<string>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
@@ -73,7 +60,7 @@ public class PlayerController : ControllerBase
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var response = await _playerGrpcService.GetVerdictV2(new(playerId, taskId, sourceCode));
+        var response = await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
         return response.Value.ToProtobufBytesString();
     }
 

@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Models;
-using Shared.Models.Data;
-using Shared.Models.Enums;
 using Shared.Models.Ids;
-using Shared.Models.Models;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Internal.Serverless
 {
@@ -67,31 +64,9 @@ namespace ApiGateway.Client.Internal.Serverless
             return Task.FromResult(testCases);
         }
 
-        public Task<IVerdict> VerifySolution(string sourceCode)
+        public Task<Verdict> VerifySolution(string sourceCode)
         {
-            _solution = sourceCode;
-            _verifyCount++;
-
-            switch (_verifyCount)
-            {
-                case 1:
-                    return Task.FromResult<IVerdict>(new Failure(new VerdictData()
-                    {
-                        Error = "Это режим без сервера. Отправьте задачу на проверку ещё раз, чтобы решение было успешным.",
-                        Status = VerdictStatus.Failure
-                    }));
-
-                default:
-                    return Task.FromResult<IVerdict>(new Success(new VerdictData()
-                    {
-                        Status = VerdictStatus.Success
-                    }));
-            }
-        }
-
-        public Task<VerdictV2> VerifySolutionV2(string sourceCode)
-        {
-            var testCases = new FailureV2()
+            var testCases = new Failure()
             {
                 TestCases = new TestCasesVerdict()
                 {
@@ -129,7 +104,7 @@ namespace ApiGateway.Client.Internal.Serverless
                 }
             };
 
-            return Task.FromResult<VerdictV2>(testCases);
+            return Task.FromResult<Verdict>(testCases);
         }
     }
 }
