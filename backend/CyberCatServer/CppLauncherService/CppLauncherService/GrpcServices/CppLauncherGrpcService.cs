@@ -1,6 +1,6 @@
 using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
-using Shared.Server.Dto;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -21,11 +21,11 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
 
     public async Task<Response<OutputDto>> Launch(LaunchCodeArgs args)
     {
-        var (solution, input) = args;
-        return await Launch(solution, input);
+        var (solution, inputs) = args;
+        return await Launch(solution, inputs);
     }
 
-    private async Task<OutputDto> Launch(string sourceCode, string input = null)
+    private async Task<OutputDto> Launch(string sourceCode, string[] inputs = null)
     {
         var compileResult = await CompileCode(sourceCode);
         if (compileResult.Output.HasError)
@@ -38,11 +38,11 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
             };
         }
 
-        var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
+        var launchOutput = await LaunchCode(compileResult.ObjectFileName, inputs);
         launchOutput = _errorFormatService.Format(launchOutput);
 
-         await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
-         await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
+        await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+        await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
 
         return new OutputDto
         {
@@ -65,8 +65,8 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         };
     }
 
-    private async Task<Output> LaunchCode(string objectFileName, string input)
+    private async Task<Output> LaunchCode(string objectFileName, string[] inputs)
     {
-        return await _processExecutorProxy.Run(RunCommand.CreateLaunch(objectFileName, input));
+        return await _processExecutorProxy.Run(RunCommand.CreateLaunch(objectFileName, inputs));
     }
 }

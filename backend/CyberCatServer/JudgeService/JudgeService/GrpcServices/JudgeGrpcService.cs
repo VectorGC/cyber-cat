@@ -1,6 +1,6 @@
-using Shared.Models.Dto.Data;
 using Shared.Models.Enums;
-using Shared.Server.Dto;
+using Shared.Models.Models.Verdicts;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -9,67 +9,46 @@ namespace JudgeService.GrpcServices;
 public class JudgeGrpcService : IJudgeGrpcService
 {
     private readonly ICodeLauncherGrpcService _codeLauncherService;
-    private readonly ITestGrpcService _testGrpcService;
+    private readonly ITaskGrpcService _taskGrpcService;
 
-    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITestGrpcService testGrpcService)
+    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITaskGrpcService taskGrpcService)
     {
         _codeLauncherService = codeLauncherService;
-        _testGrpcService = testGrpcService;
+        _taskGrpcService = taskGrpcService;
     }
 
-    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
+    public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (_, taskId, solution) = args;
-        var tests = await _testGrpcService.GetTests(taskId);
-        var testPassed = 0;
+        var tests = await _taskGrpcService.GetTestCases(taskId);
+        var testsVerdict = new TestCasesVerdict();
 
-        foreach (var test in tests)
+        foreach (var (_, test) in tests.Value.Values)
         {
-            var output = await LaunchCode(solution, test.Input);
+            var output = (OutputDto) await _codeLauncherService.Launch(new LaunchCodeArgs(solution, test.Inputs));
             if (!output.Success)
             {
-                return Failure(testPassed, output.StandardError);
+                return new NativeFailure()
+                {
+                    Error = output.StandardError
+                };
             }
 
-            var equals = EqualsOutput(test.ExpectedOutput, output.StandardOutput);
-            if (!equals)
-            {
-                return Failure(testPassed, $"Expected result '{test.ExpectedOutput}', but was '{output.StandardOutput}'");
-            }
-
-            testPassed++;
+            var equals = test.Expected == output.StandardOutput;
+            if (equals)
+                testsVerdict.AddSuccess(test, output.StandardOutput);
+            else
+                testsVerdict.AddFailure(test, output.StandardOutput);
         }
 
-        return Success(testPassed);
-    }
-
-    private async Task<OutputDto> LaunchCode(string solution, string input)
-    {
-        var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, input));
-        return output;
-    }
-
-    private bool EqualsOutput(string expected, string actual)
-    {
-        return expected == actual;
-    }
-
-    private VerdictData Failure(int testPassed, string error)
-    {
-        return new VerdictData
-        {
-            Status = VerdictStatus.Failure,
-            Error = error,
-            TestsPassed = testPassed
-        };
-    }
-
-    private VerdictData Success(int testPassed)
-    {
-        return new VerdictData
-        {
-            Status = VerdictStatus.Success,
-            TestsPassed = testPassed
-        };
+        return testsVerdict.Values.Values.All(verdict => verdict is SuccessTestCaseVerdict)
+            ? new Success()
+            {
+                TestCases = testsVerdict
+            }
+            : new Failure()
+            {
+                TestCases = testsVerdict,
+            };
     }
 }

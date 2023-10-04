@@ -1,10 +1,11 @@
+
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto;
 using Shared.Models.Ids;
 
 namespace ApiGateway.Client.Internal.Tasks

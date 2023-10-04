@@ -12,8 +12,9 @@ internal readonly struct RunCommand
         return new RunCommand("g++", $"-g {cppFileName} -Wall -o {objectFileName} -static-libgcc -static-libstdc++");
     }
 
-    public static RunCommand CreateLaunch(string objectFileName, string input)
+    public static RunCommand CreateLaunch(string objectFileName, string[] inputs)
     {
+        var input = inputs != null ? string.Join(" ", inputs) : string.Empty;
         if (Environment.OSVersion.Platform == PlatformID.Win32NT)
         {
             return new RunCommand("wsl", $"./{objectFileName}", input);

@@ -12,7 +12,7 @@ builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = tr
 
 var appSettings = builder.Configuration.Get<JudgeServiceAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<ICodeLauncherGrpcService>(options => { options.Address = appSettings.ConnectionStrings.CppLauncherServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<ITestGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TestServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
 
 var app = builder.Build();
 

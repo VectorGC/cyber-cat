@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ZenjectDefaultSceneContractConfig
   m_EditorClassIdentifier: 
   DefaultContracts:
-  - ContractName: GameContext
+  - ContractName: GameSceneContext
     Scene: {fileID: 102900000, guid: 8a8d98e78c17fb54988ad4500a7367fe, type: 3}

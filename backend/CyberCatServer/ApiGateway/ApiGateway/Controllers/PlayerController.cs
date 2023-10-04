@@ -3,7 +3,8 @@ using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
+using Shared.Models.ProtoHelpers;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 using Shared.Server.Services;
@@ -51,15 +52,16 @@ public class PlayerController : ControllerBase
     }
 
     [HttpPost("verify/{taskId}")]
-    [ProducesResponseType(typeof(VerdictData), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<VerdictData>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
+    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<string>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
     {
         if (string.IsNullOrEmpty(sourceCode))
         {
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        return await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
+        var response = await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
+        return response.Value.ToProtobufBytesString();
     }
 
     [HttpGet("tasks/{taskId}")]

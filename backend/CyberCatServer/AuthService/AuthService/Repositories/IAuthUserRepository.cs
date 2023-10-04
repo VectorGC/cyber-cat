@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Shared.Server.Dto;
+using Shared.Server.Data;
 using Shared.Server.Ids;
 
 namespace AuthService.Repositories;

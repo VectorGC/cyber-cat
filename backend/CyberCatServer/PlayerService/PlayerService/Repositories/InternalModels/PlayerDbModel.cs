@@ -1,6 +1,6 @@
 ﻿using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 
 namespace PlayerService.Repositories.InternalModels;
 

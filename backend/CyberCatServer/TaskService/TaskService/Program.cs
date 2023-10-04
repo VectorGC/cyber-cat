@@ -19,6 +19,5 @@ builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = tr
 var app = builder.Build();
 
 app.MapGrpcService<TaskGrpcService>();
-app.MapGrpcService<TestGrpcService>();
 
 app.Run();
