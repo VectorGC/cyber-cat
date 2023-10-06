@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDbGenericRepository;
-using Shared.Models.Dto.Descriptions;
+using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 using TaskService.Configurations;
 using TaskService.Repositories.InternalModels;
@@ -9,9 +9,14 @@ namespace TaskService.Repositories
 {
     public class TaskMongoRepository : BaseMongoRepository<string>, ITaskRepository
     {
-        public TaskMongoRepository(IOptions<TaskServiceAppSettings> appSettings)
+        private readonly IHostEnvironment _hostEnvironment;
+        private readonly ILogger<TaskMongoRepository> _logger;
+
+        public TaskMongoRepository(IOptions<TaskServiceAppSettings> appSettings, IHostEnvironment hostEnvironment, ILogger<TaskMongoRepository> logger)
             : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
         {
+            _logger = logger;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task Add(TaskId id, TaskDescription task)
@@ -29,7 +34,7 @@ namespace TaskService.Repositories
         public async Task<TaskDescription> GetTask(TaskId id)
         {
             var task = await GetByIdAsync<TaskDbModel>(id.Value);
-            return task.ToDescription();
+            return await task.ToDescription(_hostEnvironment, _logger);
         }
 
         public async Task<bool> Contains(TaskId id)

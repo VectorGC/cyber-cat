@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
-using Shared.Models.Dto.Descriptions;
+using Shared.Models.Data;
+using Shared.Models.Descriptions;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Internal.Tasks
 {
@@ -63,14 +64,10 @@ namespace ApiGateway.Client.Internal.Tasks
             return GetStatus(data);
         }
 
-        public async Task<IVerdict> VerifySolution(string sourceCode)
+        public async Task<TestCases> GetTestCases()
         {
-            var verdictDto = await _webClient.PostAsJsonAsync<VerdictData>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
-            {
-                ["sourceCode"] = sourceCode
-            });
-
-            return GetVerdict(verdictDto);
+            var testCases = await _webClient.GetFromProtobufAsync<TestCases>(_uri + $"tasks/{_taskId}/tests");
+            return testCases;
         }
 
         private ITaskProgressStatus GetStatus(TaskData data)
@@ -88,17 +85,14 @@ namespace ApiGateway.Client.Internal.Tasks
             }
         }
 
-        private IVerdict GetVerdict(VerdictData verdictData)
+        public async Task<Verdict> VerifySolution(string sourceCode)
         {
-            switch (verdictData.Status)
+            var verdict = await _webClient.PostAsProtobufAsync<Verdict>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
             {
-                case VerdictStatus.Success:
-                    return new Success(verdictData);
-                case VerdictStatus.Failure:
-                    return new Failure(verdictData);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                ["sourceCode"] = sourceCode
+            });
+
+            return verdict;
         }
     }
 }

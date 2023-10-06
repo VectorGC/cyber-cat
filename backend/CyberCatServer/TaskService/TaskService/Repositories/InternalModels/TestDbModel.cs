@@ -1,28 +1,30 @@
-using Shared.Server.Dto;
+using Shared.Models.Ids;
+using Shared.Models.Models.TestCases;
 
 namespace TaskService.Repositories.InternalModels;
 
 internal class TestDbModel
 {
-    public string Input { get; set; }
-    public string ExpectedOutput { get; set; }
+    public string[] Inputs { get; set; }
+    public string Expected { get; set; }
 
-    public TestDbModel(TestDto test)
+    public TestDbModel(TestCase test)
     {
-        Input = test.Input;
-        ExpectedOutput = test.ExpectedOutput;
+        Inputs = test.Inputs;
+        Expected = test.Expected;
     }
 
     public TestDbModel()
     {
     }
 
-    public TestDto ToDto()
+    public TestCase ToDescription(TaskId taskId, int index)
     {
-        return new TestDto()
+        return new TestCase()
         {
-            Input = Input,
-            ExpectedOutput = ExpectedOutput
+            Id = new TestCaseId(taskId, index),
+            Inputs = Inputs,
+            Expected = Expected
         };
     }
 }

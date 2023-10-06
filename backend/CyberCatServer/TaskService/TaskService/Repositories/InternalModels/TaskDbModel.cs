@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
-using Shared.Models.Dto.Descriptions;
+using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 
 namespace TaskService.Repositories.InternalModels
@@ -16,7 +16,6 @@ namespace TaskService.Repositories.InternalModels
 
         public int Version { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public string DefaultCode { get; set; }
         public TestsDbModel Tests { get; set; } = new TestsDbModel();
 
@@ -24,7 +23,6 @@ namespace TaskService.Repositories.InternalModels
         {
             Id = id.Value;
             Name = task.Name;
-            Description = task.Description;
             DefaultCode = task.DefaultCode;
         }
 
@@ -32,12 +30,25 @@ namespace TaskService.Repositories.InternalModels
         {
         }
 
-        public TaskDescription ToDescription()
+        public async Task<TaskDescription> ToDescription(IHostEnvironment hostEnvironment, ILogger logger)
         {
+            var rootPath = hostEnvironment.ContentRootPath;
+            var fullPath = Path.Combine(rootPath, $"Tasks/{Id}.md");
+
+            var description = string.Empty;
+            if (File.Exists(fullPath))
+            {
+                using var stream = File.OpenText(fullPath);
+                description = await stream.ReadToEndAsync();
+            }
+            else
+            {
+                logger.LogError("Not found description file by path \'{FullPath}\'", fullPath);
+            }
+
             return new TaskDescription
             {
                 Name = Name,
-                Description = Description,
                 DefaultCode = DefaultCode
             };
         }

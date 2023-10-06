@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Server.Dto;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
@@ -15,4 +15,4 @@ public interface ICodeLauncherGrpcService
 [ProtoContract(SkipConstructor = true)]
 public record LaunchCodeArgs(
     [property: ProtoMember(1)] string Solution,
-    [property: ProtoMember(2)] string Input = null);
+    [property: ProtoMember(2)] string[] Inputs = null);

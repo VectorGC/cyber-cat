@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Tests
 {

@@ -5,10 +5,10 @@ public class JudgeServiceAppSettings
     public class ConnectionStringsSettings
     {
         public string CppLauncherServiceGrpcEndpoint { get; set; }
-        public string TestServiceGrpcEndpoint { get; set; }
+        public string TaskServiceGrpcEndpoint { get; set; }
 
         public Uri CppLauncherServiceGrpcAddress => new(CppLauncherServiceGrpcEndpoint);
-        public Uri TestServiceGrpcAddress => new(TestServiceGrpcEndpoint);
+        public Uri TaskServiceGrpcAddress => new(TaskServiceGrpcEndpoint);
     }
 
     public ConnectionStringsSettings ConnectionStrings { get; set; }

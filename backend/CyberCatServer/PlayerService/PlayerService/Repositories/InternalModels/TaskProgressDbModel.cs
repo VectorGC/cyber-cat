@@ -1,5 +1,5 @@
 using MongoDB.Bson.Serialization.Attributes;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 using Shared.Models.Enums;
 
 namespace PlayerService.Repositories.InternalModels;

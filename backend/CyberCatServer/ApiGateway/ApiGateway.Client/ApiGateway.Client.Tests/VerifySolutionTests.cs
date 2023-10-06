@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Tests
 {
@@ -22,7 +22,7 @@ namespace ApiGateway.Client.Tests
             var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
 
             var success = verdict as Success;
-            Assert.AreEqual(1, success.TestsPassed);
+            Assert.AreEqual(1, success.TestCases.PassedCount);
         }
 
         [Test]
@@ -35,8 +35,7 @@ namespace ApiGateway.Client.Tests
 
             var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
 
@@ -45,13 +44,12 @@ namespace ApiGateway.Client.Tests
         {
             var taskId = "tutorial";
             var sourceCode = "int main() { while(true){} }";
-            var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
+            var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
             var player = await GetPlayerClient();
 
             var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
 
@@ -81,31 +79,38 @@ namespace ApiGateway.Client.Tests
         [Test]
         public async Task FailureWithInput_WhenPassNotAllTests()
         {
-            const string taskId = "sum_ab";
+            const string taskId = "task-1";
             // We simply output the result of the first test. So that the first test passes, while the rest fail.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
             var player = await GetPlayerClient();
 
             var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
 
+            Assert.IsAssignableFrom<Failure>(verdict);
             var failure = verdict as Failure;
-            Assert.AreEqual(1, failure.TestsPassed);
-            Assert.AreEqual("Expected result '15', but was '2'", failure.Error);
+            Assert.AreEqual(1, failure.TestCases.PassedCount);
+
+            var testCase1 = failure.TestCases[taskId, 0] as SuccessTestCaseVerdict;
+            var testCase2 = failure.TestCases[taskId, 1] as FailureTestCaseVerdict;
+            var testCase3 = failure.TestCases[taskId, 2] as FailureTestCaseVerdict;
+
+            Assert.AreEqual("2", testCase1.Output);
+            Assert.AreEqual("Expected result '15', but was '2'", testCase2.Error);
+            Assert.AreEqual("Expected result '0', but was '2'", testCase3.Error);
         }
 
         [Test]
         public async Task Failure_WhenWaitInputInfinity()
         {
-            const string taskId = "sum_ab";
+            const string taskId = "task-1";
             // We made an extra input and are waiting indefinitely for 'c' to be entered.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
-            var expectedErrorRegex = "Exit Code .*: The process took more than 2 seconds";
+            var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
             var player = await GetPlayerClient();
 
             var verdict = await player.Tasks[taskId].VerifySolution(sourceCode);
 
-            var failure = verdict as Failure;
-            Assert.AreEqual(0, failure.TestsPassed);
+            var failure = verdict as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
         }
     }

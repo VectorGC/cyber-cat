@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Shared.Models.Ids;
 using TaskService.Repositories;
 using TaskService.Repositories.InternalModels;
@@ -26,11 +25,67 @@ public class AutoLoadTasksToRepository : IHostedService
         var taskRepository = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
         var testRepository = scope.ServiceProvider.GetRequiredService<ITestRepository>();
 
-        var rootPath = _hostEnvironment.ContentRootPath;
-        var fullPath = Path.Combine(rootPath, "Tasks/auto_loading_tasks.json");
-
-        await using var stream = File.OpenRead(fullPath);
-        var tasks = await JsonSerializer.DeserializeAsync<List<TaskDbModel>>(stream, cancellationToken: cancellationToken);
+        var tasks = new List<TaskDbModel>()
+        {
+            new()
+            {
+                Id = "tutorial",
+                Name = "Hello cat!",
+                Tests = new TestsDbModel()
+                {
+                    new()
+                    {
+                        Expected = "Hello cat!"
+                    }
+                }
+            },
+            new()
+            {
+                Id = "task-1",
+                Name = "A + B",
+                Tests = new TestsDbModel()
+                {
+                    new()
+                    {
+                        Inputs = new string[] {"1", "1"},
+                        Expected = "2"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"5", "10"},
+                        Expected = "15"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"-1000", "1000"},
+                        Expected = "0"
+                    }
+                }
+            },
+            new()
+            {
+                Id = "task-2",
+                Name = "A + B * C",
+                Tests = new TestsDbModel()
+                {
+                    new()
+                    {
+                        Inputs = new string[] {"1", "1", "2"},
+                        Expected = "3"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"5", "10", "8"},
+                        Expected = "85"
+                    },
+                    new()
+                    {
+                        Inputs = new string[] {"-1000", "1000", "3"},
+                        Expected = "2000"
+                    }
+                }
+            }
+        };
 
         foreach (var task in tasks)
         {
@@ -40,8 +95,8 @@ public class AutoLoadTasksToRepository : IHostedService
                 continue;
             }
 
-            await taskRepository.Add(new TaskId(task.Id), task.ToDescription());
-            await testRepository.Add(new TaskId(task.Id), task.Tests.ToDto());
+            await taskRepository.Add(new TaskId(task.Id), await task.ToDescription(_hostEnvironment, _logger));
+            await testRepository.Add(task.Tests.ToDescription(task.Id));
             _logger.LogInformation("Not found task '{Id}', it's has been added", task.Id);
         }
 
