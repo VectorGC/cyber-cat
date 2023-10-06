@@ -18,11 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
+    <Content Include="Tasks\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services" />
+    <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
   </ItemGroup>
 
 </Project>

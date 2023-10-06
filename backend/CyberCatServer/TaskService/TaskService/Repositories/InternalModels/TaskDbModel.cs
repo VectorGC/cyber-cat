@@ -61,7 +61,7 @@ namespace TaskService.Repositories.InternalModels
             if (!File.Exists(fullPath))
             {
                 logger.LogError("Not found default code file by path \'{FullPath}\'", fullPath);
-                return string.Empty;
+                fullPath = Path.Combine(rootPath, "Tasks/default_code.cpp");
             }
 
             using var stream = File.OpenText(fullPath);

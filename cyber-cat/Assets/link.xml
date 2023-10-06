@@ -1,0 +1,7 @@
+<linker>
+    <assembly fullname="Google.Protobuf" preserve="all"/>
+    <assembly fullname="Protobuf" preserve="all"/>
+    <assembly fullname="protobuf-net" preserve="all"/>
+    <assembly fullname="Shared.Models" preserve="all"/>
+    <assembly fullname="ApiGateway.Client" preserve="all"/>
+</linker>

@@ -10,5 +10,5 @@ internal class Args
     [Option("key", Required = false, HelpText = "Set the path to the private key and password for using the SSL certificate")]
     public string CertificateKeyPath { get; set; }
 
-    public bool UseHttps => !string.IsNullOrEmpty(CertificatePemPath);
+    public bool UseHttps => !string.IsNullOrEmpty(CertificatePemPath) && File.Exists(CertificatePemPath);
 }
