@@ -22,6 +22,7 @@ namespace ApiGateway.Client.Tests
             
             var description = await task.GetDescription();
             StringAssert.StartsWith("# Hello cat!", description);
+            Assert.AreEqual("#include <iostream>\n\nint main() {\n\t//Твой код здесь\n\n\treturn 0;\n}", await task.GetDefaultCode());
         }
     }
 }

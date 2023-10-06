@@ -16,12 +16,14 @@ namespace TaskService.Repositories.InternalModels
 
         public int Version { get; set; }
         public string Name { get; set; }
+        public string DefaultCode { get; set; }
         public TestsDbModel Tests { get; set; } = new TestsDbModel();
 
         public TaskDbModel(TaskId id, TaskDescription task)
         {
             Id = id.Value;
             Name = task.Name;
+            DefaultCode = task.DefaultCode;
         }
 
         public TaskDbModel()
@@ -47,7 +49,7 @@ namespace TaskService.Repositories.InternalModels
             return new TaskDescription
             {
                 Name = Name,
-                Description = description
+                DefaultCode = DefaultCode
             };
         }
     }

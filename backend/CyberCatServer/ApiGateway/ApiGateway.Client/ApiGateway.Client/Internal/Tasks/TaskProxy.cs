@@ -48,6 +48,16 @@ namespace ApiGateway.Client.Internal.Tasks
             return _description.Description;
         }
 
+        public async Task<string> GetDefaultCode()
+        {
+            if (_description == null)
+            {
+                _description = await _webClient.GetFromJsonAsync<TaskDescription>(_uri + $"tasks/{_taskId}");
+            }
+
+            return _description.DefaultCode;
+        }
+
         public async Task<ITaskProgressStatus> GetStatus()
         {
             var data = await _webClient.GetFromJsonAsync<TaskData>(_uri + $"player/tasks/{_taskId}");

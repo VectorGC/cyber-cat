@@ -19,8 +19,16 @@ namespace Shared.Models.Descriptions
             set => description = value;
         }
 
+        [ProtoMember(3)]
+        public string DefaultCode
+        {
+            get => defaultCode;
+            set => defaultCode = value;
+        }
+
         public string name;
         public string description;
+        public string defaultCode;
 
         public override string ToString()
         {

@@ -23,6 +23,11 @@ namespace ApiGateway.Client.Internal.Serverless
             return Task.FromResult("Вы играете в режиме без сервера. Первая проверка задачи - всегда ошибка. Вторая проверка - всегда успех.");
         }
 
+        public Task<string> GetDefaultCode()
+        {
+            return Task.FromResult("Вы играете в режиме без сервера. Невозможно получить код по умолчанию");
+        }
+
         public Task<ITaskProgressStatus> GetStatus()
         {
             switch (_verifyCount)

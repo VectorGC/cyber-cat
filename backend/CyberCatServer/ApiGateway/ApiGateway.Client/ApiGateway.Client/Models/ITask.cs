@@ -8,6 +8,7 @@ namespace ApiGateway.Client.Models
     {
         Task<string> GetName();
         Task<string> GetDescription();
+        Task<string> GetDefaultCode();
         Task<ITaskProgressStatus> GetStatus();
         Task<TestCases> GetTestCases();
         Task<Verdict> VerifySolution(string sourceCode);
