@@ -34,9 +34,6 @@
       dockerfile: TaskService/TaskService/Dockerfile
     environment:
       - Kestrel__EndPoints__Grpc__Url=$TASK_SERVICE_GRPC_ENDPOINT
-      - MongoRepository__ConnectionString=$MONGO_DB_URL
-    depends_on:
-      - mongo
   
   player-service:
     image: player-service

@@ -5,9 +5,7 @@ namespace TaskService.Repositories
 {
     public interface ITaskRepository
     {
-        Task<TaskDescription> GetTask(TaskId taskId);
-        Task Add(TaskId taskId, TaskDescription task);
+        Task<TaskDescription> GetTask(TaskId id);
         Task<List<TaskId>> GetTasks();
-        Task<bool> Contains(TaskId id);
     }
 }
