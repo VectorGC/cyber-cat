@@ -1,9 +1,8 @@
 using System;
+using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.Tasks.Verdicts;
-using ApiGateway.Client.Models;
 using Cysharp.Threading.Tasks;
 using Models;
-using Shared.Models.Models;
 using Shared.Models.Models.TestCases;
 using Shared.Models.Models.Verdicts;
 using UniMob;
@@ -19,10 +18,10 @@ public class CodeEditorController : LifetimeMonoBehaviour
     [SerializeField] private CodeEditorStatusBar _statusBar;
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
+    [SerializeField] private Button _resetCode;
     [SerializeField] private Button _exit;
 
-    [Header("Debug")] [SerializeField] private bool _loadDebugTask;
-    [SerializeField] private TaskType _taskTypeDebug;
+    [Header("Debug")] [SerializeField] private TaskType _taskTypeDebug;
 
     private ICodeEditor _codeEditor;
     private CodeEditorState _state;
@@ -34,7 +33,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
     {
         _codeEditor = codeEditor;
 
-        if (Application.isEditor && Application.isPlaying && _loadDebugTask)
+        if (Application.isEditor && _codeEditor.Task == null)
         {
             var typedEditor = (CodeEditor) codeEditor;
             await typedEditor.LoadDebugTaskCheat(_taskTypeDebug);
@@ -50,6 +49,20 @@ public class CodeEditorController : LifetimeMonoBehaviour
         base.Start();
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
+
+        var progress = await _codeEditor.Task.GetStatus();
+        switch (progress)
+        {
+            case NotStarted notStarted:
+                _codeEditorView.SourceCode = await _codeEditor.Task.GetDefaultCode();
+                break;
+            case Complete complete:
+                _codeEditorView.SourceCode = complete.Solution;
+                break;
+            case HaveSolution haveSolution:
+                _codeEditorView.SourceCode = haveSolution.Solution;
+                break;
+        }
 
         _testCasesCache = await _codeEditor.Task.GetTestCases();
         _state = new CodeEditorState(Lifetime)
@@ -98,6 +111,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
     {
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.AddListener(GetSavedCode);
+        _resetCode.onClick.AddListener(ResetCode);
         _exit.onClick.AddListener(ExitEditor);
     }
 
@@ -105,6 +119,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
     {
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.RemoveListener(GetSavedCode);
+        _resetCode.onClick.RemoveListener(ResetCode);
         _exit.onClick.RemoveListener(ExitEditor);
     }
 
@@ -123,6 +138,12 @@ public class CodeEditorController : LifetimeMonoBehaviour
     private async void GetSavedCode()
     {
         var sourceCode = await _codeEditor.Task.GetLastSavedSolution();
+        _codeEditorView.SourceCode = sourceCode;
+    }
+
+    private async void ResetCode()
+    {
+        var sourceCode = await _codeEditor.Task.GetDefaultCode();
         _codeEditorView.SourceCode = sourceCode;
     }
 

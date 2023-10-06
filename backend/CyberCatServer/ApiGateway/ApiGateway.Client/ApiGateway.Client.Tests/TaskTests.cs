@@ -19,10 +19,10 @@ namespace ApiGateway.Client.Tests
             var task = client.Tasks[taskId];
 
             Assert.AreEqual("Hello cat!", await task.GetName());
-            
+
             var description = await task.GetDescription();
             StringAssert.StartsWith("# Hello cat!", description);
-            Assert.AreEqual("#include <iostream>\n\nint main() {\n\tprintf(\"Hello cat!\")\n\n\treturn 0;\n}", await task.GetDefaultCode());
+            Assert.AreEqual("#include <iostream>\r\n#include <stdio.h>\r\n\r\nint main()\r\n{\r\n    printf(\"Hello world!\");\r\n}\r\n", await task.GetDefaultCode());
         }
     }
 }

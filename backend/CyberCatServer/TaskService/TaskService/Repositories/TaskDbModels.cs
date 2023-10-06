@@ -10,7 +10,6 @@ internal static class TaskDbModels
         {
             Id = "tutorial",
             Name = "Hello cat!",
-            DefaultCode = "#include <iostream>\n\nint main() {\n\tprintf(\"Hello cat!\")\n\n\treturn 0;\n}",
             Tests = new TestsDbModel()
             {
                 new()
@@ -23,7 +22,6 @@ internal static class TaskDbModels
         {
             Id = "task-1",
             Name = "A + B",
-            DefaultCode = "#include <iostream>\n\nint main() {\n\tprintf(\"Hello cat!\")\n\n\treturn 0;\n}",
             Tests = new TestsDbModel()
             {
                 new()
@@ -47,7 +45,6 @@ internal static class TaskDbModels
         {
             Id = "task-2",
             Name = "A + B * C",
-            DefaultCode = "#include <iostream>\n\nint main() {\n\tprintf(\"Hello cat!\")\n\n\treturn 0;\n}",
             Tests = new TestsDbModel()
             {
                 new()
