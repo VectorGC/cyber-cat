@@ -49,6 +49,7 @@ namespace TaskService.Repositories.InternalModels
             return new TaskDescription
             {
                 Name = Name,
+                Description = description,
                 DefaultCode = DefaultCode
             };
         }

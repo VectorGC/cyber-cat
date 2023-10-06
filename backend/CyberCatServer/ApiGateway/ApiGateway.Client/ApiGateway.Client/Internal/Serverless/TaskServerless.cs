@@ -25,7 +25,7 @@ namespace ApiGateway.Client.Internal.Serverless
 
         public Task<string> GetDefaultCode()
         {
-            return Task.FromResult("Вы играете в режиме без сервера. Невозможно получить код по умолчанию");
+            return Task.FromResult("#include <iostream>\n\nint main() {\nprintf(\"Hello world!\");\n}");
         }
 
         public Task<ITaskProgressStatus> GetStatus()
