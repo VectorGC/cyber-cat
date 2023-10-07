@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
-using Shared.Models.ProtoHelpers;
+using fastJSON;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
 {
@@ -46,10 +46,10 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return obj;
         }
 
-        public async Task<TResponse> GetFromProtobufAsync<TResponse>(string uri)
+        public async Task<TResponse> GetFromFastJsonPolymorphicAsync<TResponse>(string uri)
         {
             var response = await GetStringAsync(uri);
-            return response.ToProtobufObject<TResponse>();
+            return JSON.ToObject<TResponse>(response);
         }
 
         public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
@@ -76,10 +76,10 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
             return obj;
         }
 
-        public async Task<TResponse> PostAsProtobufAsync<TResponse>(string uri, Dictionary<string, string> form)
+        public async Task<TResponse> PostAsFastJsonPolymorphicAsync<TResponse>(string uri, Dictionary<string, string> form)
         {
             var response = await PostAsync(uri, form);
-            return response.ToProtobufObject<TResponse>();
+            return JSON.ToObject<TResponse>(response);
         }
 
         private static string SerializeToJson<TValue>(TValue value)

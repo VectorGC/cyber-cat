@@ -125,7 +125,7 @@ public class TestCasesSection : ISection
 {
     [Atom] public TestCases TestCases { get; set; }
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-    [Atom] public List<TestCaseId> TestCaseIds => TestCases.Values.Select(x => x.Key).ToList();
+    [Atom] public List<TestCaseId> TestCaseIds => TestCases.Values.Select(x => (TestCaseId) x.Key).ToList();
     [Atom] public TestCase SelectedTestCase => SelectedTestCaseId != null ? TestCases?.Values[SelectedTestCaseId] : null;
 
     public Lifetime Lifetime { get; }

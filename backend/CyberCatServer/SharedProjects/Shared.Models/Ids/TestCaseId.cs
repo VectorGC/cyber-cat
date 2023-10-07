@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ProtoBuf;
 
 namespace Shared.Models.Ids
@@ -28,6 +29,18 @@ namespace Shared.Models.Ids
         {
             taskId = TaskId;
             index = Index;
+        }
+
+        public static implicit operator string(TestCaseId id)
+        {
+            return $"{id.TaskId}:{id.Index}";
+        }
+
+        public static implicit operator TestCaseId(string str)
+        {
+            var splitted = str.Split(':').ToList();
+            var index = int.Parse(splitted[1]);
+            return new TestCaseId(splitted[0], index);
         }
 
         public bool Equals(TestCaseId other)
