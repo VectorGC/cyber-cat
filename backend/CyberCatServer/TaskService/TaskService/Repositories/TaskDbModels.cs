@@ -50,17 +50,17 @@ internal static class TaskDbModels
                 new()
                 {
                     Inputs = new string[] {"1", "1", "2"},
-                    Expected = "3"
+                    Expected = "Пароль: 3"
                 },
                 new()
                 {
                     Inputs = new string[] {"5", "10", "8"},
-                    Expected = "85"
+                    Expected = "Пароль: 85"
                 },
                 new()
                 {
                     Inputs = new string[] {"-1000", "1000", "3"},
-                    Expected = "2000"
+                    Expected = "Пароль: 2000"
                 }
             }
         }
