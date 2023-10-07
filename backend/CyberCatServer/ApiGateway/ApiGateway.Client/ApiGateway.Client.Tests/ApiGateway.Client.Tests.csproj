@@ -18,6 +18,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ApiGateway.Client\ApiGateway.Client.csproj" />
+        <Reference Include="..\..\..\SharedProjects\Shared.Models\JsonSerializer\fastJSON.dll" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(UNITY_WEBGL))">

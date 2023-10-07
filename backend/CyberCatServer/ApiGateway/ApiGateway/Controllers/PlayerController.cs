@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using ApiGateway.Attributes;
+using fastJSON;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Data;
-using Shared.Models.ProtoHelpers;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 using Shared.Server.Services;
@@ -61,7 +61,9 @@ public class PlayerController : ControllerBase
         }
 
         var response = await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
-        return response.Value.ToProtobufBytesString();
+        var json = JSON.ToJSON(response.Value);
+
+        return json;
     }
 
     [HttpGet("tasks/{taskId}")]

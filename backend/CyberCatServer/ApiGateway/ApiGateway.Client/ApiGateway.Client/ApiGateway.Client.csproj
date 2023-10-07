@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj" />
+        <Reference Include="..\..\..\SharedProjects\Shared.Models\JsonSerializer\fastJSON.dll" />
     </ItemGroup>
 
     <ItemGroup Condition="$(DefineConstants.Contains(UNITY_WEBGL))">

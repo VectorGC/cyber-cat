@@ -33,11 +33,13 @@ public class CodeEditorController : LifetimeMonoBehaviour
     {
         _codeEditor = codeEditor;
 
+#if UNITY_EDITOR
         if (Application.isEditor && _codeEditor.Task == null)
         {
             var typedEditor = (CodeEditor) codeEditor;
             await typedEditor.LoadDebugTaskCheat(_taskTypeDebug);
         }
+#endif
 
         var descriptionHandler = codeEditor.Task.GetDescription();
         _taskDescription.Value.SetTextAsync(descriptionHandler);

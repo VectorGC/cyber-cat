@@ -45,7 +45,7 @@ namespace ApiGateway.Client.Internal.Serverless
         {
             var testCases = new TestCases()
             {
-                Values = new Dictionary<TestCaseId, TestCase>()
+                Values = new Dictionary<string, TestCase>()
                 {
                     [new TestCaseId("tutorial", 0)] = new TestCase()
                     {
@@ -75,7 +75,7 @@ namespace ApiGateway.Client.Internal.Serverless
             {
                 TestCases = new TestCasesVerdict()
                 {
-                    Values = new Dictionary<TestCaseId, TestCaseVerdict>
+                    Values = new Dictionary<string, TestCaseVerdict>
                     {
                         [new TestCaseId("tutorial", 0)] = new SuccessTestCaseVerdict()
                         {

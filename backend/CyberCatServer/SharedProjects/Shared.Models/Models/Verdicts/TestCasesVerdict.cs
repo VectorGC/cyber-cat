@@ -9,7 +9,7 @@ namespace Shared.Models.Models.Verdicts
     [ProtoContract]
     public class TestCasesVerdict
     {
-        [ProtoMember(1)] public Dictionary<TestCaseId, TestCaseVerdict> Values { get; set; } = new Dictionary<TestCaseId, TestCaseVerdict>();
+        [ProtoMember(1)] public Dictionary<string, TestCaseVerdict> Values { get; set; } = new Dictionary<string, TestCaseVerdict>();
 
         public TestCaseVerdict this[TestCaseId id] => Values[id];
         public TestCaseVerdict this[TaskId taskId, int index] => this[new TestCaseId(taskId, index)];

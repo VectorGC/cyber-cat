@@ -66,7 +66,7 @@ namespace ApiGateway.Client.Internal.Tasks
 
         public async Task<TestCases> GetTestCases()
         {
-            var testCases = await _webClient.GetFromProtobufAsync<TestCases>(_uri + $"tasks/{_taskId}/tests");
+            var testCases = await _webClient.GetFromFastJsonPolymorphicAsync<TestCases>(_uri + $"tasks/{_taskId}/tests");
             return testCases;
         }
 
@@ -87,7 +87,7 @@ namespace ApiGateway.Client.Internal.Tasks
 
         public async Task<Verdict> VerifySolution(string sourceCode)
         {
-            var verdict = await _webClient.PostAsProtobufAsync<Verdict>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
+            var verdict = await _webClient.PostAsFastJsonPolymorphicAsync<Verdict>(_uri + $"player/verify/{_taskId}", new Dictionary<string, string>
             {
                 ["sourceCode"] = sourceCode
             });

@@ -55,7 +55,7 @@
     environment:
       - Kestrel__EndPoints__Grpc__Url=$JUDGE_SERVICE_GRPC_URL
       - ConnectionStrings__CppLauncherServiceGrpcEndpoint=$CPP_LAUNCHER_SERVICE_GRPC_URL
-      - ConnectionStrings__TestServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
+      - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
     depends_on:
       - cpp-launcher-service
 

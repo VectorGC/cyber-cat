@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Descriptions;
 using Shared.Models.Ids;
-using Shared.Models.ProtoHelpers;
+using Shared.Models.Models.TestCases;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -48,11 +48,11 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet("{taskId}/tests")]
-    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(TestCases), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<string>> GetTestCases(string taskId)
+    public async Task<ActionResult<TestCases>> GetTestCases(string taskId)
     {
         var response = await _taskGrpcService.GetTestCases(taskId);
-        return response.Value.ToProtobufBytesString();
+        return response;
     }
 }

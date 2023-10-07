@@ -1571,7 +1571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 19.904037
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1675,11 +1675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 55.19192
+      value: 59
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 22.421719
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2431,15 +2431,6 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 19.4
       objectReference: {fileID: 0}
-    - target: {fileID: 7295236050633451428, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
-      propertyPath: m_Text
-      value: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043D\u044B\u0439
-        \u043A\u043E\u0434"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7295236050633451428, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
-      propertyPath: m_FontData.m_VerticalOverflow
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
 --- !u!1 &1013016857
@@ -2989,7 +2980,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1366, y: 768}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -4304,7 +4295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 19.904037
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4408,11 +4399,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 55.19192
+      value: 59
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 22.421719
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -7595,7 +7586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 19.904037
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2054228190919982733, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7699,11 +7690,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 55.19192
+      value: 59
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 22.421719
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3968661349011204876, guid: 0e085f0767bc1aa46aedc4bbb38e0351, type: 3}
       propertyPath: m_AnchoredPosition.x

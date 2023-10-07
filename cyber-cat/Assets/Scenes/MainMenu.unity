@@ -614,6 +614,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 7295236050633451428, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
+      propertyPath: m_Text
+      value: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7295236050633451428, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 53
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db3f5d316068b664c9d5fca296b4d4ad, type: 3}
 --- !u!1 &651914066
@@ -1386,7 +1394,7 @@ RectTransform:
   m_Father: {fileID: 9056343159700027147}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.65, y: 0}
+  m_AnchorMin: {x: 0.6534167, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}

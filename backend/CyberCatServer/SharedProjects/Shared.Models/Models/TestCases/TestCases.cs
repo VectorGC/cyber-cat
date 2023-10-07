@@ -7,7 +7,7 @@ namespace Shared.Models.Models.TestCases
     [ProtoContract]
     public class TestCases
     {
-        [ProtoMember(1)] public Dictionary<TestCaseId, TestCase> Values { get; set; } = new Dictionary<TestCaseId, TestCase>();
+        [ProtoMember(1)] public Dictionary<string, TestCase> Values { get; set; } = new Dictionary<string, TestCase>();
 
         public TestCase this[string taskId, int index] => Values[new TestCaseId(taskId, index)];
 
