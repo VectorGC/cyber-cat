@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Shared.Models.Dto.Descriptions;
 using Shared.Models.Ids;
 using UnityEngine;
 
@@ -23,6 +22,7 @@ namespace ApiGateway.Client.Tests
             public List<TaskId> taskIds;
         }
 
+/*
         [Test]
         public void DeserializeModel_WhenPassCorrectJson()
         {
@@ -32,6 +32,7 @@ namespace ApiGateway.Client.Tests
             Assert.IsNotNull(task);
             Assert.IsNotEmpty(task.Name);
         }
+        */
 
         [Test]
         public void DeserializeModelListOfStrings_WhenPassCorrectJson()

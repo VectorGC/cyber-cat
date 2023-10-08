@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Models
 {
@@ -6,7 +8,9 @@ namespace ApiGateway.Client.Models
     {
         Task<string> GetName();
         Task<string> GetDescription();
+        Task<string> GetDefaultCode();
         Task<ITaskProgressStatus> GetStatus();
-        Task<IVerdict> VerifySolution(string sourceCode);
+        Task<TestCases> GetTestCases();
+        Task<Verdict> VerifySolution(string sourceCode);
     }
 }

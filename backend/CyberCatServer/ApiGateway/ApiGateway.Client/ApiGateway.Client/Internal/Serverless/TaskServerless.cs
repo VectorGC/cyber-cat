@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
 using ApiGateway.Client.Models;
-using Shared.Models.Dto.Data;
-using Shared.Models.Enums;
+using Shared.Models.Ids;
+using Shared.Models.Models.TestCases;
+using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Internal.Serverless
 {
@@ -22,6 +23,11 @@ namespace ApiGateway.Client.Internal.Serverless
             return Task.FromResult("Вы играете в режиме без сервера. Первая проверка задачи - всегда ошибка. Вторая проверка - всегда успех.");
         }
 
+        public Task<string> GetDefaultCode()
+        {
+            return Task.FromResult("#include <iostream>\n\nint main() {\nprintf(\"Hello world!\");\n}");
+        }
+
         public Task<ITaskProgressStatus> GetStatus()
         {
             switch (_verifyCount)
@@ -35,26 +41,75 @@ namespace ApiGateway.Client.Internal.Serverless
             }
         }
 
-        public Task<IVerdict> VerifySolution(string sourceCode)
+        public Task<TestCases> GetTestCases()
         {
-            _solution = sourceCode;
-            _verifyCount++;
-
-            switch (_verifyCount)
+            var testCases = new TestCases()
             {
-                case 1:
-                    return Task.FromResult<IVerdict>(new Failure(new VerdictData()
+                Values = new Dictionary<string, TestCase>()
+                {
+                    [new TestCaseId("tutorial", 0)] = new TestCase()
                     {
-                        Error = "Это режим без сервера. Отправьте задачу на проверку ещё раз, чтобы решение было успешным.",
-                        Status = VerdictStatus.Failure
-                    }));
+                        Id = new TestCaseId("tutorial", 0),
+                        Expected = "Hello cat!"
+                    },
+                    [new TestCaseId("tutorial", 1)] = new TestCase()
+                    {
+                        Id = new TestCaseId("tutorial", 1),
+                        Expected = "Hello mat!"
+                    },
+                    [new TestCaseId("tutorial", 2)] = new TestCase()
+                    {
+                        Id = new TestCaseId("tutorial", 2),
+                        Inputs = new[] {"1", "2"},
+                        Expected = "Hello bred!"
+                    }
+                }
+            };
 
-                default:
-                    return Task.FromResult<IVerdict>(new Success(new VerdictData()
+            return Task.FromResult(testCases);
+        }
+
+        public Task<Verdict> VerifySolution(string sourceCode)
+        {
+            var testCases = new Failure()
+            {
+                TestCases = new TestCasesVerdict()
+                {
+                    Values = new Dictionary<string, TestCaseVerdict>
                     {
-                        Status = VerdictStatus.Success
-                    }));
-            }
+                        [new TestCaseId("tutorial", 0)] = new SuccessTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 0),
+                                Expected = "Hello cat!"
+                            },
+                            Output = "Hello cat!"
+                        },
+                        [new TestCaseId("tutorial", 1)] = new FailureTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 1),
+                                Expected = "Hello mat!"
+                            },
+                            Output = "Hello cat!"
+                        },
+                        [new TestCaseId("tutorial", 2)] = new FailureTestCaseVerdict()
+                        {
+                            TestCase = new TestCase()
+                            {
+                                Id = new TestCaseId("tutorial", 2),
+                                Inputs = new[] {"1", "2"},
+                                Expected = "Hello bred!"
+                            },
+                            Output = "Hello cat!"
+                        }
+                    }
+                }
+            };
+
+            return Task.FromResult<Verdict>(testCases);
         }
     }
 }

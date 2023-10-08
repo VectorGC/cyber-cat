@@ -1,6 +1,7 @@
 ﻿using PlayerService.Repositories;
-using Shared.Models.Dto.Data;
+using Shared.Models.Data;
 using Shared.Models.Enums;
+using Shared.Models.Models.Verdicts;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
@@ -59,17 +60,17 @@ public class PlayerGrpcService : IPlayerGrpcService
         return player;
     }
 
-    public async Task<Response<VerdictData>> GetVerdict(GetVerdictArgs args)
+    public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (playerId, taskId, solution) = args;
-        var verdict = (VerdictData) await _judgeGrpcService.GetVerdict(args);
+        var verdict = await _judgeGrpcService.GetVerdict(args);
         await _playerRepository.SaveCode(playerId, taskId, solution);
-        switch (verdict.Status)
+        switch (verdict.Value)
         {
-            case VerdictStatus.Success:
+            case Success success:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
                 break;
-            case VerdictStatus.Failure:
+            default:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);
                 break;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using fastJSON;
 using UnityEngine;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
@@ -12,7 +13,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 
         public void Dispose()
         {
-        }   
+        }
 
         public void AddAuthorizationHeader(string type, string value)
         {
@@ -41,7 +42,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             }
         }
 
-        public async Task<T> GetFromJsonAsync<T>(string uri)
+        public async Task<TResponse> GetFromJsonAsync<TResponse>(string uri)
         {
             DebugOnly.Log($"Send GET to '{uri}'");
             using (var request = UnityEngine.Networking.UnityWebRequest.Get(uri))
@@ -52,13 +53,22 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
                 var response = request.downloadHandler.text;
 
                 DebugOnly.Log($"Response from {uri} is '{response}'");
-                var json = request.downloadHandler.text;
-                DebugOnly.Log($"Try deserialize response to object of type '{typeof(T)}'");
-                var obj = JsonUtility.FromJson<T>(json);
+                DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
+                var obj = JsonUtility.FromJson<TResponse>(response);
                 DebugOnly.Log($"Success deserialize object '{obj}'");
 
                 return obj;
             }
+        }
+
+        public async Task<TResponse> GetFromFastJsonPolymorphicAsync<TResponse>(string uri)
+        {
+            DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
+            var response = await GetStringAsync(uri);
+            var obj = JSON.ToObject<TResponse>(response);
+            DebugOnly.Log($"Success deserialize object '{obj}'");
+
+            return obj;
         }
 
         public async Task<string> PostAsync(string uri, Dictionary<string, string> form)
@@ -96,6 +106,16 @@ namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
             var json = await PostAsync(uri, form);
             DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
             var obj = JsonUtility.FromJson<TResponse>(json);
+            DebugOnly.Log($"Success deserialize object '{obj}'");
+
+            return obj;
+        }
+
+        public async Task<TResponse> PostAsFastJsonPolymorphicAsync<TResponse>(string uri, Dictionary<string, string> form)
+        {
+            var response = await PostAsync(uri, form);
+            DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
+            var obj = JSON.ToObject<TResponse>(response);
             DebugOnly.Log($"Success deserialize object '{obj}'");
 
             return obj;

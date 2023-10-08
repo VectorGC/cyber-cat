@@ -1,10 +1,9 @@
 using Shared.Models.Ids;
-using Shared.Server.Dto;
+using Shared.Models.Models.TestCases;
 
 namespace TaskService.Repositories;
 
 public interface ITestRepository
 {
-    Task Add(TaskId taskId, TestsDto tests);
-    Task<TestsDto> GetTests(TaskId taskId);
+    Task<TestCases> GetTestCases(TaskId id);
 }

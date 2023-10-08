@@ -1,4 +1,4 @@
-﻿using Shared.Models.Dto.Data;
+﻿using Shared.Models.Data;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
 using Shared.Server.Ids;

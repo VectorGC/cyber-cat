@@ -1,6 +1,6 @@
 using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
-using Shared.Server.Dto;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -11,21 +11,28 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
     private readonly IProcessExecutorProxy _processExecutorProxy;
     private readonly ICppFileCreator _cppFileCreator;
     private readonly ICppErrorFormatService _errorFormatService;
+    private readonly ILogger<CppLauncherGrpcService> _logger;
 
-    public CppLauncherGrpcService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator, ICppErrorFormatService errorFormatService)
+    public CppLauncherGrpcService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator,
+        ICppErrorFormatService errorFormatService, ILogger<CppLauncherGrpcService> logger)
     {
         _processExecutorProxy = processExecutorProxy;
         _cppFileCreator = cppFileCreator;
         _errorFormatService = errorFormatService;
+        _logger = logger;
     }
 
     public async Task<Response<OutputDto>> Launch(LaunchCodeArgs args)
     {
-        var (solution, input) = args;
-        return await Launch(solution, input);
+        _logger.LogInformation("Launch solution '{ArgsSolution}'", args.Solution);
+        var (solution, inputs) = args;
+        var output = await Launch(solution, inputs);
+
+        _logger.LogInformation("Output '{Output}'", output.ToString());
+        return output;
     }
 
-    private async Task<OutputDto> Launch(string sourceCode, string input = null)
+    private async Task<OutputDto> Launch(string sourceCode, string[] inputs = null)
     {
         var compileResult = await CompileCode(sourceCode);
         if (compileResult.Output.HasError)
@@ -38,11 +45,11 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
             };
         }
 
-        var launchOutput = await LaunchCode(compileResult.ObjectFileName, input);
+        var launchOutput = await LaunchCode(compileResult.ObjectFileName, inputs);
         launchOutput = _errorFormatService.Format(launchOutput);
 
-         await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
-         await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
+        await _processExecutorProxy.Run(RunCommand.DeleteFile(compileResult.ObjectFileName));
+        await _processExecutorProxy.Run(RunCommand.DeleteFile($"{Path.GetFileNameWithoutExtension(compileResult.ObjectFileName)}.cpp"));
 
         return new OutputDto
         {
@@ -65,8 +72,8 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         };
     }
 
-    private async Task<Output> LaunchCode(string objectFileName, string input)
+    private async Task<Output> LaunchCode(string objectFileName, string[] inputs)
     {
-        return await _processExecutorProxy.Run(RunCommand.CreateLaunch(objectFileName, input));
+        return await _processExecutorProxy.Run(RunCommand.CreateLaunch(objectFileName, inputs));
     }
 }
