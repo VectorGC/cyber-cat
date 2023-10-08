@@ -9,14 +9,17 @@ namespace CppLauncherService.Services
     internal class ConsoleExecutorProxy : IProcessExecutorProxy
     {
         private readonly TimeSpan _timeOut;
+        private readonly ILogger<ConsoleExecutorProxy> _logger;
 
-        public ConsoleExecutorProxy(IOptions<CppLauncherAppSettings> appSettings)
+        public ConsoleExecutorProxy(IOptions<CppLauncherAppSettings> appSettings, ILogger<ConsoleExecutorProxy> logger)
         {
+            _logger = logger;
             _timeOut = appSettings.Value.ProcessTimeout;
         }
 
         public async Task<Output> Run(RunCommand command)
         {
+            _logger.LogInformation("Run '{Command}'", command.ToString());
             var startInfo = new ProcessStartInfo()
             {
                 FileName = command.Command,
@@ -28,9 +31,13 @@ namespace CppLauncherService.Services
             };
 
             var process = Process.Start(startInfo);
-            await process.StandardInput.WriteAsync(command.Input);
-            // After entering, you need to send the "\n" character (as if you pressed Enter) for the program to register the input.
-            await process.StandardInput.WriteAsync(Environment.NewLine);
+
+            if (!string.IsNullOrEmpty(command.Input))
+            {
+                await process.StandardInput.WriteAsync(command.Input);
+                // After entering, you need to send the "\n" character (as if you pressed Enter) for the program to register the input.
+                await process.StandardInput.WriteAsync(Environment.NewLine);
+            }
 
             var output = await WaitForExit(process, _timeOut);
             if (output.HasError)

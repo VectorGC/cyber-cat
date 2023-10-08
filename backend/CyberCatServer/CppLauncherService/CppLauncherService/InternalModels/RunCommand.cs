@@ -43,4 +43,15 @@ internal readonly struct RunCommand
         Arguments = arguments;
         Input = input;
     }
+
+    public override string ToString()
+    {
+        var log = $"{Command} {Arguments}";
+        if (!string.IsNullOrEmpty(Input))
+        {
+            log = $"{log}, {nameof(Input)}: {Input}";
+        }
+
+        return log;
+    }
 }

@@ -29,6 +29,11 @@ public abstract class LifetimeUIBehaviour<TState> : LifetimeMonoBehaviour
 
     protected override void OnDestroy()
     {
+        if (State != null)
+        {
+            OnDisposeState(State);
+        }
+
         OnDisposeView();
         base.OnDestroy();
     }
@@ -42,6 +47,10 @@ public abstract class LifetimeUIBehaviour<TState> : LifetimeMonoBehaviour
     }
 
     protected virtual void OnInitState(TState state)
+    {
+    }
+
+    protected virtual void OnDisposeState(TState state)
     {
     }
 

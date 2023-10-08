@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class CodeEditorController : LifetimeMonoBehaviour
+public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 {
     [SerializeField] private SerializableInterface<IText> _taskDescription;
     [SerializeField] private CodeEditorView _codeEditorView;
@@ -19,12 +19,13 @@ public class CodeEditorController : LifetimeMonoBehaviour
     [Header("Buttons")] [SerializeField] private Button _verifySolution;
     [SerializeField] private Button _loadSavedCode;
     [SerializeField] private Button _resetCode;
-    [SerializeField] private Button _exit;
+    [SerializeField] private IButtonInterface _exit;
 
     [Header("Debug")] [SerializeField] private TaskType _taskTypeDebug;
 
+    [Atom] public override CodeEditorState State { get; set; }
+
     private ICodeEditor _codeEditor;
-    private CodeEditorState _state;
     private TestCases _testCasesCache;
     private Verdict _verdictCache;
 
@@ -67,24 +68,13 @@ public class CodeEditorController : LifetimeMonoBehaviour
         }
 
         _testCasesCache = await _codeEditor.Task.GetTestCases();
-        _state = new CodeEditorState(Lifetime)
+        State = new CodeEditorState(Lifetime)
         {
             Section = new TestCasesSection(Lifetime)
             {
                 TestCases = _testCasesCache
             }
         };
-        _console.State = _state;
-        _statusBar.State = _state;
-
-        _state.SectionChanged += OnSectionChanged;
-    }
-
-    protected override void OnDestroy()
-    {
-        _state.SectionChanged -= OnSectionChanged;
-
-        base.OnDestroy();
     }
 
     private void OnSectionChanged()
@@ -94,7 +84,7 @@ public class CodeEditorController : LifetimeMonoBehaviour
 
     private async UniTaskVoid OnSectionChangedAsync()
     {
-        switch (_state.Section)
+        switch (State.Section)
         {
             case ResultSection resultSection:
                 if (_verdictCache != null)
@@ -109,29 +99,54 @@ public class CodeEditorController : LifetimeMonoBehaviour
         }
     }
 
-    private void OnEnable()
+    protected override void OnInitView()
     {
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.AddListener(GetSavedCode);
         _resetCode.onClick.AddListener(ResetCode);
-        _exit.onClick.AddListener(ExitEditor);
+        _exit.Clicked += ExitEditor;
     }
 
-    private void OnDisable()
+    protected override void OnDisposeView()
     {
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.RemoveListener(GetSavedCode);
         _resetCode.onClick.RemoveListener(ResetCode);
-        _exit.onClick.RemoveListener(ExitEditor);
+        _exit.Clicked -= ExitEditor;
+    }
+
+    protected override void OnInitState(CodeEditorState state)
+    {
+        _console.State = State;
+        _statusBar.State = State;
+
+        State.SectionChanged += OnSectionChanged;
+    }
+
+    protected override void OnDisposeState(CodeEditorState state)
+    {
+        State.SectionChanged -= OnSectionChanged;
+    }
+
+    protected override void OnUpdate()
+    {
+        if (_verdictCache is Success)
+        {
+            _exit.SetActiveHighlight(true);
+        }
+        else
+        {
+            _exit.SetActiveHighlight(false);
+        }
     }
 
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        _verdictCache = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(_state, "Выполняется...");
+        _verdictCache = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(State, "Выполняется...");
 
         // Force select Result section.
-        _state.Section = new ResultSection(Lifetime)
+        State.Section = new ResultSection(Lifetime)
         {
             Verdict = _verdictCache
         };

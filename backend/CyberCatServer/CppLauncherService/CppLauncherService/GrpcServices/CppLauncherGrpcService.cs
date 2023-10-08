@@ -11,18 +11,25 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
     private readonly IProcessExecutorProxy _processExecutorProxy;
     private readonly ICppFileCreator _cppFileCreator;
     private readonly ICppErrorFormatService _errorFormatService;
+    private readonly ILogger<CppLauncherGrpcService> _logger;
 
-    public CppLauncherGrpcService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator, ICppErrorFormatService errorFormatService)
+    public CppLauncherGrpcService(IProcessExecutorProxy processExecutorProxy, ICppFileCreator cppFileCreator,
+        ICppErrorFormatService errorFormatService, ILogger<CppLauncherGrpcService> logger)
     {
         _processExecutorProxy = processExecutorProxy;
         _cppFileCreator = cppFileCreator;
         _errorFormatService = errorFormatService;
+        _logger = logger;
     }
 
     public async Task<Response<OutputDto>> Launch(LaunchCodeArgs args)
     {
+        _logger.LogInformation("Launch solution '{ArgsSolution}'", args.Solution);
         var (solution, inputs) = args;
-        return await Launch(solution, inputs);
+        var output = await Launch(solution, inputs);
+
+        _logger.LogInformation("Output '{Output}'", output.ToString());
+        return output;
     }
 
     private async Task<OutputDto> Launch(string sourceCode, string[] inputs = null)
