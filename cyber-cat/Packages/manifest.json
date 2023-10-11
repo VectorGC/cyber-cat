@@ -5,6 +5,7 @@
     "com.marijnzwemmer.unity-toolbar-extender": "https://github.com/marijnz/unity-toolbar-extender.git",
     "com.unity.cinemachine": "2.6.17",
     "com.unity.ide.rider": "2.0.7",
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
     "com.unity.postprocessing": "3.2.2",
     "com.unity.test-framework": "2.0.1-exp.2",
     "com.unity.textmeshpro": "3.0.6",
