@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6589b99e8dd5f494aa889a3f124f85c8, type: 3}
   m_Name: Settings
   m_EditorClassIdentifier: 
-  _appId: 51732203
-  _secureKey: j3lvv5oL98V6qjaKGpPp
-  CustomUriScheme: simple.oauth
+  _appId: 51767916
+  _secureKey: 1QrdZjzkC7Ii6Lu5x8Yd
+  CustomUriScheme: cyber-cat.oauth
