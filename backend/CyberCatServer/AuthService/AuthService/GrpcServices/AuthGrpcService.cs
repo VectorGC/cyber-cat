@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
+using Shared.Server.Data;
 using Shared.Server.Exceptions.AuthService;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
@@ -24,7 +25,8 @@ public class AuthGrpcService : IAuthGrpcService
         var (email, password, userName) = args;
         try
         {
-            return await _authUserRepository.Create(email, password, userName);
+            var user = await _authUserRepository.Create(email, password, userName);
+            return user.Id;
         }
         catch (IdentityUserException ex)
         {
@@ -72,5 +74,26 @@ public class AuthGrpcService : IAuthGrpcService
 
         await _authUserRepository.Remove(userId);
         return new Response();
+    }
+
+    public async Task<Response> RemoveDev(RemoveDevArgs args)
+    {
+        var user = await _authUserRepository.FindByEmailAsync(args.Email);
+        if (user != null)
+        {
+            await _authUserRepository.Remove(user.Id);
+        }
+
+        return new Response();
+    }
+
+    public async Task<Response<UserDto>> SignInWithVk(OAuthSignIn args)
+    {
+        var email = args.Email;
+        var userName = args.UserName;
+
+        var user = await _authUserRepository.FindByEmailAsync(email)
+                   ?? await _authUserRepository.Create(email, $"{email}_vk", userName);
+        return user;
     }
 }

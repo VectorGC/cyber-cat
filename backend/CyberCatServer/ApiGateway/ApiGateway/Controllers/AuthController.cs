@@ -42,4 +42,15 @@ public class AuthController : ControllerBase
     {
         return await _authGrpcService.Remove(new RemoveArgs(userId, password));
     }
+
+    [HttpPost("dev/remove")]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    [AllowAnonymous]
+    public async Task<ActionResult> RemoveDev(string userEmail, string key)
+    {
+        if (key != "cyber")
+            return Ok();
+
+        return await _authGrpcService.RemoveDev(new RemoveDevArgs(userEmail));
+    }
 }

@@ -35,7 +35,7 @@ internal class MockAuthUserRepository : IAuthUserRepository
         return Task.CompletedTask;
     }
 
-    public Task<UserId> Create(string email, string password, string name)
+    public Task<UserDto> Create(string email, string password, string name)
     {
         var authUser = new UserDbModel(name, email, this)
         {
@@ -43,7 +43,7 @@ internal class MockAuthUserRepository : IAuthUserRepository
         };
         _users.Add(authUser);
 
-        return Task.FromResult(new UserId(authUser.Id));
+        return Task.FromResult(authUser.ToDto());
     }
 
     public Task Remove(UserId userId)
