@@ -22,25 +22,34 @@ namespace ApiGateway.Client.Tests
             var userName = "TestVkOauth";
 
             var client = new V2.ApiGateway.Client(_serverEnvironment);
+
             var user = client.User;
-
+            Assert.IsNotNull(user.Access<VK>());
             Assert.IsFalse(user.Access<VK>().IsSignedIn);
-            Assert.IsTrue(user.IsAnonymous);
-
-            var success = await user.Access<VK>().SignIn(email, userName);
-
-            Assert.IsTrue(success);
+            await user.Access<VK>().SignIn(email, userName);
             Assert.IsTrue(user.Access<VK>().IsSignedIn);
-            Assert.IsFalse(user.IsAnonymous);
+            Assert.AreEqual(email, user.Email);
+            Assert.AreEqual(userName, user.Name);
+
+            user.Access<VK>().SignOut();
+            Assert.IsFalse(user.Access<VK>().IsSignedIn);
+            Assert.AreEqual(string.Empty, user.Email);
+            Assert.AreEqual(string.Empty, user.Name);
+
+            user = client.User;
+            Assert.IsNotNull(user.Access<VK>());
+            Assert.IsFalse(user.Access<VK>().IsSignedIn);
+            await user.Access<VK>().SignIn(email, userName);
+            Assert.IsTrue(user.Access<VK>().IsSignedIn);
+            Assert.IsNotNull(user.Access<VK>());
             Assert.AreEqual(email, user.Email);
             Assert.AreEqual(userName, user.Name);
 
             // Clean up.
             await user.Access<Dev>().RemoveUser(email);
-
-            // TODO: Support web sockets.
+            
+            // Support web sockets.
             // Assert.IsFalse(user.Access<VK>().IsSignedIn);
-            // Assert.IsTrue(user.IsAnonymous);
         }
     }
 }

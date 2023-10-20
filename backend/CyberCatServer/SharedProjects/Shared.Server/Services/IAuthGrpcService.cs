@@ -15,7 +15,7 @@ public interface IAuthGrpcService
     Task<Response> Remove(RemoveArgs args);
     Task<Response> RemoveDev(RemoveDevArgs args);
     Task<Response<UserId>> FindByEmail(Args<string> email);
-    Task<Response<UserDto>> SignInWithVk(OAuthSignIn args);
+    Task<Response<string>> SignInWithVk(OAuthSignIn args);
 }
 
 [ProtoContract(SkipConstructor = true)]

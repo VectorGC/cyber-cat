@@ -1,27 +1,29 @@
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.WebClientAdapters;
 
 namespace ApiGateway.Client.V2
 {
-    public class Dev : IAccess
+    public class Dev : IAccessV2
     {
-        private readonly IWebClient _webClient = WebClientFactory.Create();
-        private readonly ServerEnvironment _serverEnvironment;
+        public bool IsAvailable { get; private set; }
 
-        public Dev(ServerEnvironment serverEnvironment)
+        private readonly WebClient _webClient;
+
+        public Dev(WebClient webClient)
         {
-            _serverEnvironment = serverEnvironment;
+            _webClient = webClient;
+            SetDebug();
         }
 
-        public async Task RemoveUser(string userEmail)
+        public async Task RemoveUser(string email)
         {
-            var webClient = WebClientFactory.Create();
-            await webClient.PostAsync(_serverEnvironment.GetUri() + "auth/dev/remove", new Dictionary<string, string>()
-            {
-                ["userEmail"] = userEmail,
-                ["key"] = "cyber"
-            });
+            await _webClient.RemoveUser(email);
+        }
+
+        [Conditional("DEBUG")]
+        private void SetDebug()
+        {
+            IsAvailable = true;
         }
 
         public void Dispose()

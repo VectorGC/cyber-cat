@@ -3,51 +3,46 @@ using System.Collections.Generic;
 
 namespace ApiGateway.Client.V2
 {
-    public class AccessRights : IDisposable
+    public class AccessRights : IRole
     {
-        public Func<ServerEnvironment, IAccess> this[Type type]
-        {
-            get => _accessFactory[type];
-            set => _accessFactory[type] = value;
-        }
-
-        private readonly Dictionary<Type, IAccess> _accessCache = new Dictionary<Type, IAccess>();
-        private readonly Dictionary<Type, Func<ServerEnvironment, IAccess>> _accessFactory = new Dictionary<Type, Func<ServerEnvironment, IAccess>>();
-
-        private readonly ServerEnvironment _serverEnvironment;
+        private readonly Dictionary<Type, IAccessV2> _accessRights = new Dictionary<Type, IAccessV2>();
 
         public AccessRights(ServerEnvironment serverEnvironment)
         {
-            _serverEnvironment = serverEnvironment;
+            Register(new Credentials());
+            Register(new WebClient(serverEnvironment, Access<Credentials>()));
+            Register(new VK(Access<WebClient>(), Access<Credentials>()));
+            Register(new Dev(Access<WebClient>()));
         }
 
-        public TAccess Access<TAccess>() where TAccess : class, IAccess
+        public T Access<T>() where T : class, IAccessV2
         {
-            if (_accessCache.TryGetValue(typeof(TAccess), out var cached))
+            if (!_accessRights.TryGetValue(typeof(T), out var access))
             {
-                return cached as TAccess;
+                return default;
             }
 
-            if (_accessFactory.TryGetValue(typeof(TAccess), out var factoryFunc))
+            if (!access.IsAvailable)
             {
-                var access = factoryFunc.Invoke(_serverEnvironment);
-                _accessCache[typeof(TAccess)] = access;
-
-                return access as TAccess;
+                return default;
             }
 
-            return null;
+            return access as T;
+        }
+
+        private void Register(IAccessV2 access)
+        {
+            _accessRights.Add(access.GetType(), access);
         }
 
         public void Dispose()
         {
-            foreach (var access in _accessCache.Values)
+            foreach (var access in _accessRights.Values)
             {
                 access.Dispose();
             }
 
-            _accessCache.Clear();
-            _accessFactory.Clear();
+            _accessRights.Clear();
         }
     }
 }

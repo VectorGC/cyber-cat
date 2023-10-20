@@ -1,42 +1,55 @@
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using ApiGateway.Client.Internal.WebClientAdapters;
 
 namespace ApiGateway.Client.V2
 {
-    public class VK : IAccess
+    public class VK : IAccessV2
     {
-        public bool IsSignedIn { get; private set; }
-        public string FirstName { get; private set; }
         public string Email { get; private set; }
+        public string Name { get; private set; }
+        public string Token { get; private set; }
 
-        private readonly IWebClient _webClient = WebClientFactory.Create();
-        private readonly ServerEnvironment _serverEnvironment;
+        public bool IsAvailable => true;
+        public bool IsSignedIn => !string.IsNullOrEmpty(Token);
 
-        public VK(ServerEnvironment serverEnvironment)
+        private readonly WebClient _webClient;
+        private readonly Credentials _credentials;
+
+        public VK(WebClient webClient, Credentials credentials)
         {
-            _serverEnvironment = serverEnvironment;
+            _credentials = credentials;
+            _webClient = webClient;
         }
 
-        public async Task<bool> SignIn(string email, string userName)
+        public async Task SignIn(string email, string userName)
         {
-            var uri = _serverEnvironment.GetUri();
-            await _webClient.PostAsync(uri + "Vk/signIn", new Dictionary<string, string>()
+            Token = await _webClient.SignWithOAuth(email, userName);
+            if (string.IsNullOrEmpty(Token))
             {
-                ["email"] = email,
-                ["name"] = userName
-            });
+                return;
+            }
 
-            FirstName = userName;
             Email = email;
-            IsSignedIn = true;
+            Name = userName;
 
-            return true;
+            _credentials.Email = email;
+            _credentials.Name = Name;
+            _credentials.Token = Token;
+        }
+
+        public void SignOut()
+        {
+            Email = string.Empty;
+            Name = string.Empty;
+            Token = string.Empty;
+
+            _credentials.Email = string.Empty;
+            _credentials.Name = string.Empty;
+            _credentials.Token = string.Empty;
         }
 
         public void Dispose()
         {
-            _webClient.Dispose();
         }
     }
 }

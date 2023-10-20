@@ -7,6 +7,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters
     internal interface IWebClient : IDisposable
     {
         void AddAuthorizationHeader(string type, string value);
+        void RemoveAuthorizationHeader();
         Task<string> GetStringAsync(string uri);
         Task<TResponse> GetFromJsonAsync<TResponse>(string uri);
         Task<TResponse> GetFromFastJsonPolymorphicAsync<TResponse>(string uri);
