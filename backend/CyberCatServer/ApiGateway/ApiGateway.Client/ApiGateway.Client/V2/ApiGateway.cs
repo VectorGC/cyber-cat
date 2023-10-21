@@ -33,7 +33,7 @@ namespace ApiGateway.Client.V2
             _role = role;
         }
 
-        public T Access<T>() where T : class, IAccessV2
+        public T Access<T>() where T : class, IAccess
         {
             return _role.Access<T>();
         }

@@ -2,7 +2,7 @@ using System;
 
 namespace ApiGateway.Client.V2
 {
-    public class Credentials : IAccessV2
+    public class Credentials : IAccess
     {
         public event Action<string> TokenChanged;
 

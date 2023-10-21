@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ApiGateway.Client.V2
 {
-    public class Dev : IAccessV2
+    public class Dev : IAccess
     {
         public bool IsAvailable { get; private set; }
 

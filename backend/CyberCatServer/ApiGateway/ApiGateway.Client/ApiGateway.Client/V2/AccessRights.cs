@@ -5,7 +5,7 @@ namespace ApiGateway.Client.V2
 {
     public class AccessRights : IRole
     {
-        private readonly Dictionary<Type, IAccessV2> _accessRights = new Dictionary<Type, IAccessV2>();
+        private readonly Dictionary<Type, IAccess> _accessRights = new Dictionary<Type, IAccess>();
 
         public AccessRights(ServerEnvironment serverEnvironment)
         {
@@ -15,7 +15,7 @@ namespace ApiGateway.Client.V2
             Register(new Dev(Access<WebClient>()));
         }
 
-        public T Access<T>() where T : class, IAccessV2
+        public T Access<T>() where T : class, IAccess
         {
             if (!_accessRights.TryGetValue(typeof(T), out var access))
             {
@@ -30,7 +30,7 @@ namespace ApiGateway.Client.V2
             return access as T;
         }
 
-        private void Register(IAccessV2 access)
+        private void Register(IAccess access)
         {
             _accessRights.Add(access.GetType(), access);
         }

@@ -4,7 +4,7 @@ using ApiGateway.Client.Internal.WebClientAdapters;
 
 namespace ApiGateway.Client.V2
 {
-    public class WebClient : IAccessV2
+    public class WebClient : IAccess
     {
         public bool IsAvailable => _serverEnvironment != ServerEnvironment.Serverless;
 

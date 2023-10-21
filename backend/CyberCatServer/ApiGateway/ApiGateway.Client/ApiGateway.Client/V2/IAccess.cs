@@ -2,7 +2,7 @@ using System;
 
 namespace ApiGateway.Client.V2
 {
-    public interface IAccessV2 : IDisposable
+    public interface IAccess : IDisposable
     {
         bool IsAvailable { get; }
     }

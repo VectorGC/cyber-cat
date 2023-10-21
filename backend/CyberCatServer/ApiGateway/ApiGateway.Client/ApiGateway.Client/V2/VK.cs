@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ApiGateway.Client.V2
 {
-    public class VK : IAccessV2
+    public class VK : IAccess
     {
         public string Email { get; private set; }
         public string Name { get; private set; }
