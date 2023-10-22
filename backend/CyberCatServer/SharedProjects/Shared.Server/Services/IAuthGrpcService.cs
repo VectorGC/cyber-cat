@@ -15,7 +15,6 @@ public interface IAuthGrpcService
     Task<Response> Remove(RemoveArgs args);
     Task<Response> RemoveDev(RemoveDevArgs args);
     Task<Response<UserId>> FindByEmail(Args<string> email);
-    Task<Response<string>> SignInWithVk(OAuthSignIn args);
 }
 
 [ProtoContract(SkipConstructor = true)]
@@ -37,8 +36,3 @@ public record RemoveArgs(
 [ProtoContract(SkipConstructor = true)]
 public record RemoveDevArgs(
     [property: ProtoMember(1)] string Email);
-
-[ProtoContract(SkipConstructor = true)]
-public record OAuthSignIn(
-    [property: ProtoMember(1)] string Email,
-    [property: ProtoMember(2)] string UserName);

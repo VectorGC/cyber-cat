@@ -1,4 +1,5 @@
 using System;
+using ApiGateway.Client.V3;
 
 namespace ApiGateway.Client.V2
 {
@@ -7,40 +8,19 @@ namespace ApiGateway.Client.V2
         public class Client : IDisposable
         {
             public UserV2 User { get; }
+            public UserV3 UserV3 { get; }
 
             public Client(ServerEnvironment serverEnvironment)
             {
                 var role = new AccessRights(serverEnvironment);
                 User = new UserV2(role);
+                UserV3 = new UserV3(serverEnvironment);
             }
 
             public void Dispose()
             {
                 User.Dispose();
             }
-        }
-    }
-
-    public class UserV2 : IDisposable
-    {
-        public string Email => Access<Credentials>()?.Email;
-        public string Name => Access<Credentials>()?.Name;
-
-        private readonly IRole _role;
-
-        public UserV2(IRole role)
-        {
-            _role = role;
-        }
-
-        public T Access<T>() where T : class, IAccess
-        {
-            return _role.Access<T>();
-        }
-
-        public void Dispose()
-        {
-            _role.Dispose();
         }
     }
 }

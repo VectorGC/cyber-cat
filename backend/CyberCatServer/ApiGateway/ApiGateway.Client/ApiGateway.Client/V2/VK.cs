@@ -12,18 +12,18 @@ namespace ApiGateway.Client.V2
         public bool IsAvailable => true;
         public bool IsSignedIn => !string.IsNullOrEmpty(Token);
 
-        private readonly WebClient _webClient;
+        private readonly WebClientAccess _webClientAccess;
         private readonly Credentials _credentials;
 
-        public VK(WebClient webClient, Credentials credentials)
+        public VK(WebClientAccess webClientAccess, Credentials credentials)
         {
             _credentials = credentials;
-            _webClient = webClient;
+            _webClientAccess = webClientAccess;
         }
 
         public async Task SignIn(string email, string userName)
         {
-            Token = await _webClient.SignWithOAuth(email, userName);
+            Token = await _webClientAccess.SignWithOAuth(email, userName);
             if (string.IsNullOrEmpty(Token))
             {
                 return;

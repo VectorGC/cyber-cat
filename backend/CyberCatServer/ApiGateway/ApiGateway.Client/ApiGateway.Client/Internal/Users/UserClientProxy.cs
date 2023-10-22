@@ -11,9 +11,9 @@ namespace ApiGateway.Client.Internal.Users
         private const string AuthenticationScheme = "Bearer";
 
         private readonly Uri _uri;
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
 
-        public UserClientProxy(string token, Uri uri, IWebClient webClient)
+        public UserClientProxy(string token, Uri uri, IWebClientAdapter webClient)
         {
             _uri = uri;
             _webClient = webClient;

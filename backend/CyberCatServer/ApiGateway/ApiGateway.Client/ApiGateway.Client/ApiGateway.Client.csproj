@@ -16,4 +16,11 @@
         <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="TinyIoC" Version="1.4.0-rc1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
 </Project>

@@ -86,17 +86,4 @@ public class AuthGrpcService : IAuthGrpcService
 
         return new Response();
     }
-
-    public async Task<Response<string>> SignInWithVk(OAuthSignIn args)
-    {
-        var email = args.Email;
-        var userName = args.UserName;
-        var password = $"{email}_vk";
-
-        var user = await _authUserRepository.FindByEmailAsync(email)
-                   ?? await _authUserRepository.Create(email, password, userName);
-
-        var token = await GetAccessToken(new GetAccessTokenArgs(user.Email, password));
-        return token;
-    }
 }

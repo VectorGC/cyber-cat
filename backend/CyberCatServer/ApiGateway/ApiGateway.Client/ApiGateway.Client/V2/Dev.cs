@@ -7,17 +7,17 @@ namespace ApiGateway.Client.V2
     {
         public bool IsAvailable { get; private set; }
 
-        private readonly WebClient _webClient;
+        private readonly WebClientAccess _webClientAccess;
 
-        public Dev(WebClient webClient)
+        public Dev(WebClientAccess webClientAccess)
         {
-            _webClient = webClient;
+            _webClientAccess = webClientAccess;
             SetDebug();
         }
 
         public async Task RemoveUser(string email)
         {
-            await _webClient.RemoveUser(email);
+            await _webClientAccess.RemoveUser(email);
         }
 
         [Conditional("DEBUG")]
@@ -28,7 +28,7 @@ namespace ApiGateway.Client.V2
 
         public void Dispose()
         {
-            _webClient.Dispose();
+            _webClientAccess.Dispose();
         }
     }
 }

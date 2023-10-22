@@ -10,9 +10,9 @@ namespace ApiGateway.Client.V2
         public AccessRights(ServerEnvironment serverEnvironment)
         {
             Register(new Credentials());
-            Register(new WebClient(serverEnvironment, Access<Credentials>()));
-            Register(new VK(Access<WebClient>(), Access<Credentials>()));
-            Register(new Dev(Access<WebClient>()));
+            Register(new WebClientAccess(serverEnvironment, Access<Credentials>()));
+            Register(new VK(Access<WebClientAccess>(), Access<Credentials>()));
+            Register(new Dev(Access<WebClientAccess>()));
         }
 
         public T Access<T>() where T : class, IAccess

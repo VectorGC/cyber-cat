@@ -25,7 +25,8 @@ public class AuthController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> SignUp(string email, string password, string name)
     {
-        return await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+        var response = await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+        return response.ToActionResult();
     }
 
     [AllowAnonymous]
@@ -41,16 +42,5 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> Remove([FromUser] UserId userId, string password)
     {
         return await _authGrpcService.Remove(new RemoveArgs(userId, password));
-    }
-
-    [HttpPost("dev/remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [AllowAnonymous]
-    public async Task<ActionResult> RemoveDev(string userEmail, string key)
-    {
-        if (key != "cyber")
-            return Ok();
-
-        return await _authGrpcService.RemoveDev(new RemoveDevArgs(userEmail));
     }
 }

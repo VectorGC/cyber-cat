@@ -1,22 +1,24 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
+using ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter;
+using Shared.Models;
 
 namespace ApiGateway.Client.V2
 {
-    public class WebClient : IAccess
+    public class WebClientAccess : IAccess
     {
         public bool IsAvailable => _serverEnvironment != ServerEnvironment.Serverless;
 
         private readonly ServerEnvironment _serverEnvironment;
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
         private readonly Credentials _credentials;
 
-        public WebClient(ServerEnvironment serverEnvironment, Credentials credentials)
+        public WebClientAccess(ServerEnvironment serverEnvironment, Credentials credentials)
         {
             _credentials = credentials;
             _serverEnvironment = serverEnvironment;
-            _webClient = WebClientFactory.Create();
+            _webClient = new WebClientAdapter();
 
             _credentials.TokenChanged += OnTokenChanged;
         }
@@ -41,8 +43,8 @@ namespace ApiGateway.Client.V2
 
         public async Task<string> SignWithOAuth(string email, string userName)
         {
-            var uri = _serverEnvironment.GetUri();
-            var token = await _webClient.PostAsync(uri + "OAuth/signIn", new Dictionary<string, string>()
+            var uri = _serverEnvironment.ToUri();
+            var token = await _webClient.PostAsync(uri + "vk/signIn", new Dictionary<string, string>()
             {
                 ["email"] = email,
                 ["name"] = userName
@@ -53,10 +55,11 @@ namespace ApiGateway.Client.V2
 
         public async Task RemoveUser(string email)
         {
-            await _webClient.PostAsync(_serverEnvironment.GetUri() + "auth/dev/remove", new Dictionary<string, string>()
+            var devKeyEncrypted = await Crypto.EncryptAsync("cyber-cat", "cyber");
+            await _webClient.PostAsync(_serverEnvironment.ToUri() + "dev/users/remove", new Dictionary<string, string>()
             {
-                ["userEmail"] = email,
-                ["key"] = "cyber"
+                ["email"] = email,
+                ["devKey"] = devKeyEncrypted
             });
         }
     }

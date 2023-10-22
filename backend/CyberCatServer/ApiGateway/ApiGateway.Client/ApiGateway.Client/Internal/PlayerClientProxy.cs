@@ -11,10 +11,10 @@ namespace ApiGateway.Client.Internal
         public ITaskRepository Tasks => _tasks;
 
         private readonly Uri _uri;
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
         private readonly TaskRepositoryProxy _tasks;
 
-        public static async Task<PlayerClientProxy> Create(Uri uri, IWebClient webClient)
+        public static async Task<PlayerClientProxy> Create(Uri uri, IWebClientAdapter webClient)
         {
             var client = new PlayerClientProxy(uri, webClient);
             await client.Init();
@@ -27,7 +27,7 @@ namespace ApiGateway.Client.Internal
             await _tasks.Init();
         }
 
-        private PlayerClientProxy(Uri uri, IWebClient webClient)
+        private PlayerClientProxy(Uri uri, IWebClientAdapter webClient)
         {
             _uri = uri;
             _webClient = webClient;

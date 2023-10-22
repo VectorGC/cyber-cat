@@ -9,9 +9,9 @@ namespace ApiGateway.Client
         Production
     }
 
-    internal static class ServerEnvironmentMap
+    internal static class ServerEnvironmentExtensions
     {
-        public static Uri Get(ServerEnvironment environment)
+        public static Uri ToUri(this ServerEnvironment environment)
         {
             switch (environment)
             {
@@ -25,18 +25,9 @@ namespace ApiGateway.Client
             }
         }
 
-        public static Uri GetUri(this ServerEnvironment environment)
+        public static string ToUri(this ServerEnvironment environment, string path)
         {
-            switch (environment)
-            {
-                case ServerEnvironment.Localhost:
-                    // Send to Api Gateway local instance directly.
-                    return new Uri("http://localhost");
-                case ServerEnvironment.Production:
-                    return new Uri("https://server.cyber-cat.pro");
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(ServerEnvironment));
-            }
+            return $"{ToUri(environment)}{path}";
         }
     }
 }

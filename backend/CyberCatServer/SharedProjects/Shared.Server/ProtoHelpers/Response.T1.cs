@@ -47,16 +47,6 @@ public class Response<TValue> where TValue : class
         };
     }
 
-    public static implicit operator ActionResult(Response<TValue> response)
-    {
-        if (response.IsSucceeded)
-        {
-            return new OkResult();
-        }
-
-        return response.Exception.ToActionResult();
-    }
-
     public static implicit operator ActionResult<TValue>(Response<TValue> response)
     {
         if (response.IsSucceeded)
@@ -65,5 +55,15 @@ public class Response<TValue> where TValue : class
         }
 
         return response.Exception.ToActionResult();
+    }
+
+    public ActionResult ToActionResult()
+    {
+        if (IsSucceeded)
+        {
+            return new OkResult();
+        }
+
+        return Exception.ToActionResult();
     }
 }
