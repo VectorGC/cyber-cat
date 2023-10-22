@@ -7,9 +7,9 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using fastJSON;
 
-namespace ApiGateway.Client.Internal.WebClientAdapters.WebClient
+namespace ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter
 {
-    internal class WebClientAdapter : IWebClient
+    internal class WebClientAdapter : IWebClientAdapter
     {
         private readonly System.Net.WebClient _client = new System.Net.WebClient();
 

@@ -45,10 +45,11 @@ public class PlayerController : ControllerBase
         var response = await _playerGrpcService.GetPlayerByUserId(userId);
         if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
         {
-            return await _playerGrpcService.CreatePlayer(userId);
+            response = await _playerGrpcService.CreatePlayer(userId);
+            return response.ToActionResult();
         }
 
-        return response;
+        return response.ToActionResult();
     }
 
     [HttpPost("verify/{taskId}")]

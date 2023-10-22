@@ -30,13 +30,13 @@ public class AuthUserRepositoryTests
         var notExistingUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(notExistingUser);
 
-        var userId = await userRepository.Create(email, password, userName);
-        Assert.NotNull(userId);
+        var user = await userRepository.Create(email, password, userName);
+        Assert.NotNull(user);
 
         var createdUser = await userRepository.FindByEmailAsync(email);
         Assert.NotNull(createdUser);
 
-        await userRepository.Remove(userId);
+        await userRepository.Remove(user.Id);
         var removedUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(removedUser);
     }

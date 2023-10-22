@@ -19,9 +19,9 @@ namespace ApiGateway.Client.Internal.Tasks
 
         private readonly TaskId _taskId;
         private readonly Uri _uri;
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
 
-        public TaskProxy(TaskId taskId, Uri uri, IWebClient webClient)
+        public TaskProxy(TaskId taskId, Uri uri, IWebClientAdapter webClient)
         {
             _webClient = webClient;
             _uri = uri;

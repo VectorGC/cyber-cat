@@ -9,10 +9,10 @@ namespace ApiGateway.Client.Internal
 {
     internal class AnonymousClientProxy : IAnonymous
     {
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
         private readonly Uri _uri;
 
-        public AnonymousClientProxy(Uri uri, IWebClient webClient)
+        public AnonymousClientProxy(Uri uri, IWebClientAdapter webClient)
         {
             _uri = uri;
             _webClient = webClient;

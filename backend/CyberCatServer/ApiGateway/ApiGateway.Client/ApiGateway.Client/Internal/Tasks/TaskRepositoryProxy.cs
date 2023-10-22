@@ -13,10 +13,10 @@ namespace ApiGateway.Client.Internal.Tasks
     internal class TaskRepositoryProxy : ITaskRepository
     {
         private readonly Uri _uri;
-        private readonly IWebClient _webClient;
+        private readonly IWebClientAdapter _webClient;
         private readonly Dictionary<TaskId, ITask> _tasks = new Dictionary<TaskId, ITask>();
 
-        public TaskRepositoryProxy(Uri uri, IWebClient webClient)
+        public TaskRepositoryProxy(Uri uri, IWebClientAdapter webClient)
         {
             _webClient = webClient;
             _uri = uri;

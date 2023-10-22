@@ -20,7 +20,7 @@ internal class AuthUserManagerRepository : IAuthUserRepository
         _userManager = userManager;
     }
 
-    public async Task<UserId> Create(string email, string password, string name)
+    public async Task<UserDto> Create(string email, string password, string name)
     {
         var authUser = new UserDbModel(name, email, this);
 
@@ -31,7 +31,7 @@ internal class AuthUserManagerRepository : IAuthUserRepository
             throw new IdentityUserException(errors);
         }
 
-        return new UserId(authUser.Id);
+        return authUser.ToDto();
     }
 
     public async Task Remove(UserId userId)

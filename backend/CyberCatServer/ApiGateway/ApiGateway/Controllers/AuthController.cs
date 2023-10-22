@@ -25,7 +25,8 @@ public class AuthController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> SignUp(string email, string password, string name)
     {
-        return await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+        var response = await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+        return response.ToActionResult();
     }
 
     [AllowAnonymous]

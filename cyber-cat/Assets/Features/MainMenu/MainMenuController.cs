@@ -1,22 +1,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
 
 namespace UI
 {
     public class MainMenuController : UIBehaviour
     {
-        [SerializeField] private Text _greetingsText;
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _inGameButton;
         [SerializeField] private Button _signOut;
-
-        protected override void Start()
-        {
-            _greetingsText.text = "Доступ получен: Cat";
-        }
 
         protected override void OnEnable()
         {

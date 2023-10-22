@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ApiGateway.Client;
 using ApiGateway.Client.Models;
+using ApiGateway.Client.V2;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -27,7 +28,7 @@ namespace Features.ServerConfig
             }
         }
 
-        public static async Task<IPlayer> CreatePlayerClient()
+        public static async Task<IUser> CreateUserClient()
         {
             var userSeed = PlayerPrefs.GetString("user_seed");
             if (string.IsNullOrEmpty(userSeed))
@@ -44,13 +45,25 @@ namespace Features.ServerConfig
             try
             {
                 var user = await ServerClientFactory.CreateAnonymous(ServerEnvironment).SignIn(email, password);
-                return await user.SignInAsPlayer();
+                return user;
             }
             catch (Exception ex)
             {
                 PlayerPrefs.DeleteKey("user_seed");
                 throw;
             }
+        }
+
+        public static async Task<IPlayer> CreatePlayerClient()
+        {
+            var user = await CreateUserClient();
+            return await user.SignInAsPlayer();
+        }
+
+        public static User CreateUserProxy()
+        {
+            var client = new ApiGateway.Client.V2.ApiGateway.Client(ServerEnvironment);
+            return client.User;
         }
     }
 }

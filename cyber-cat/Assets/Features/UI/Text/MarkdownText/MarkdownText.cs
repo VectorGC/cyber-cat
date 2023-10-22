@@ -17,7 +17,13 @@ public class MarkdownText : UIBehaviour, IText
         set => _markdownRenderer.Source = value;
     }
 
-    private void Awake()
+    public Color Color
+    {
+        get => _markdownRenderer.TextMesh.color;
+        set => _markdownRenderer.TextMesh.color = value;
+    }
+
+    protected override void Awake()
     {
         TryGetComponent(out _markdownRenderer);
     }
