@@ -1,3 +1,4 @@
+using System;
 using UniMob;
 using Zenject;
 
@@ -48,6 +49,7 @@ public abstract class LifetimeUIBehaviourV2<TState> : LifetimeMonoBehaviour wher
     }
 }
 
+[Obsolete]
 public abstract class LifetimeUIBehaviour<TState> : LifetimeMonoBehaviour
 {
     [Atom] public abstract TState State { get; set; }

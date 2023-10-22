@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
@@ -21,6 +22,12 @@ namespace ApiGateway.Client.V2.Access
 
         public async Task SignIn(string email, string userName)
         {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException(nameof(email));
+
+            if (string.IsNullOrEmpty(userName))
+                throw new ArgumentNullException(nameof(userName));
+
             var token = await _webClient.PostAsync<VkToken>("vk/signin", new Dictionary<string, string>()
             {
                 ["email"] = email,

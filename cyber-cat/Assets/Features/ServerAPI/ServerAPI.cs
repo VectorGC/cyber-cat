@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using ApiGateway.Client;
 using ApiGateway.Client.Models;
+using ApiGateway.Client.V2;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -57,6 +58,12 @@ namespace Features.ServerConfig
         {
             var user = await CreateUserClient();
             return await user.SignInAsPlayer();
+        }
+
+        public static User CreateUserProxy()
+        {
+            var client = new ApiGateway.Client.V2.ApiGateway.Client(ServerEnvironment);
+            return client.User;
         }
     }
 }

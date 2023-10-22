@@ -2,7 +2,7 @@ using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignInWithVK : LifetimeUIBehaviourV2<AccountState>
+public class SignOutWithVK : LifetimeUIBehaviourV2<AccountState>
 {
     [SerializeField] private Button _button;
     [Atom] protected override AccountState State { get; set; }
@@ -23,11 +23,11 @@ public class SignInWithVK : LifetimeUIBehaviourV2<AccountState>
         if (State == null)
             return;
 
-        button.Enable = !State.IsSignedIn;
+        button.Enable = State.IsSignedIn;
     }
 
     private void OnClicked()
     {
-        State?.SignIn();
+        State?.SignOut();
     }
 }
