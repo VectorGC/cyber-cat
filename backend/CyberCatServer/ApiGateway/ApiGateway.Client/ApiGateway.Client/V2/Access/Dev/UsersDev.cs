@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using Shared.Models;
 
-namespace ApiGateway.Client.V3
+namespace ApiGateway.Client.V2.Access.Dev
 {
     public class UsersDev
     {

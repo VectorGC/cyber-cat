@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
 {
-    internal class UnityWebClient : IWebClient
+    internal class UnityWebClient : IWebClientAdapter
     {
         private string _authorizationHeaderValue;
 

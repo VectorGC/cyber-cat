@@ -1,14 +1,14 @@
 using System.Diagnostics;
 using ApiGateway.Client.Internal.WebClientAdapters;
 
-namespace ApiGateway.Client.V3
+namespace ApiGateway.Client.V2.Access.Dev
 {
-    public class DevV3 : IAccessV3
+    public class Dev : IAccess
     {
         public bool IsAvailable { get; private set; }
         public UsersDev Users { get; }
 
-        internal DevV3(WebClient webClient)
+        internal Dev(WebClient webClient)
         {
             Users = new UsersDev(webClient);
             SetDebug();

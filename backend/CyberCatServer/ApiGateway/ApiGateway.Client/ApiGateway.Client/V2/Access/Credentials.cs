@@ -1,8 +1,8 @@
 using Shared.Models.Models.AuthorizationTokens;
 
-namespace ApiGateway.Client.V3
+namespace ApiGateway.Client.V2.Access
 {
-    internal class CredentialsV3 : IAccessV3
+    internal class Credentials : IAccess
     {
         public string Email { get; set; }
         public string Name { get; set; }

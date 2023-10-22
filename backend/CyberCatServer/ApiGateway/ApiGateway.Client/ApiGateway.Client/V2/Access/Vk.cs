@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using Shared.Models.Models.AuthorizationTokens;
 
-namespace ApiGateway.Client.V3
+namespace ApiGateway.Client.V2.Access
 {
-    public class VK_V3 : IAccessV3
+    public class Vk : IAccess
     {
         public bool IsAvailable => true;
         public bool IsSignedIn => _credentials.AuthorizationTokenHolder.Token is VkToken;
 
-        private readonly CredentialsV3 _credentials;
+        private readonly Credentials _credentials;
         private readonly WebClient _webClient;
 
-        internal VK_V3(CredentialsV3 credentials, WebClient webClient)
+        internal Vk(Credentials credentials, WebClient webClient)
         {
             _credentials = credentials;
             _webClient = webClient;
