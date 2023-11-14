@@ -63,6 +63,29 @@ internal static class TaskDbModels
                     Expected = "Пароль: 2000"
                 }
             }
+        },
+        new()
+        {
+            Id = "task-3",
+            Name = "Шкафчик с паролем",
+            Tests = new TestsDbModel()
+            {
+                new()
+                {
+                    Inputs = new string[] {"1", "1", "2"},
+                    Expected = "Пароль: 3"
+                },
+                new()
+                {
+                    Inputs = new string[] {"5", "10", "8"},
+                    Expected = "Пароль: 85"
+                },
+                new()
+                {
+                    Inputs = new string[] {"-1000", "1000", "3"},
+                    Expected = "Пароль: 2000"
+                }
+            }
         }
     };
 }
