@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="CommandLineParser" Version="2.9.1" />
+      <PackageReference Include="Faker.Net" Version="2.0.154" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.19" />

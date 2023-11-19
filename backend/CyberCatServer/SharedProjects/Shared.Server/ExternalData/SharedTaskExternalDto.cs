@@ -1,7 +1,7 @@
 using Shared.Server.Data;
 using TaskService.Repositories;
 
-namespace TaskService.Services;
+namespace Shared.Server.ExternalData;
 
 public class SharedTaskExternalDto
 {
@@ -14,5 +14,9 @@ public class SharedTaskExternalDto
         TaskId = data.Id;
         PlayerName = data.PlayerIdData.ToString();
         IsSolved = data.Status == SharedTaskStatus.Solved;
+    }
+
+    public SharedTaskExternalDto()
+    {
     }
 }

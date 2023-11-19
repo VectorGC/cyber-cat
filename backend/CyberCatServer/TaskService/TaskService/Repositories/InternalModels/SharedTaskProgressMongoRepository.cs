@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using MongoDbGenericRepository;
 using Shared.Models.Ids;
 using Shared.Server;
@@ -44,5 +45,11 @@ internal class SharedTaskProgressMongoRepository : BaseMongoRepository<string>, 
         }
 
         return null;
+    }
+
+    public async Task<List<SharedTaskProgressData>> GetTasks()
+    {
+        var tasks = await GetAllAsync<SharedTaskProgressData>(task => true);
+        return tasks;
     }
 }

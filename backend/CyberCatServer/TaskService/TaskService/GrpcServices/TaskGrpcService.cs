@@ -48,4 +48,10 @@ public class TaskGrpcService : ITaskService
             await _taskWebHookProcessor.ProcessWebHook(sharedTask);
         }
     }
+
+    public async Task<Response<List<SharedTaskProgressData>>> GetSharedTasks()
+    {
+        var tasks = await _sharedTaskProgressRepository.GetTasks();
+        return tasks;
+    }
 }

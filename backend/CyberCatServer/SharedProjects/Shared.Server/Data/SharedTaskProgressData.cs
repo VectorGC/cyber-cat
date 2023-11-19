@@ -1,15 +1,17 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
+using ProtoBuf;
 using TaskService.Repositories;
 
 namespace Shared.Server.Data;
 
+[ProtoContract]
 [CollectionName("SharedTask")]
 public class SharedTaskProgressData : IDocument<string>
 {
-    [BsonId] public string Id { get; set; }
+    [ProtoMember(1)] [BsonId] public string Id { get; set; }
+    [ProtoMember(2)] public long PlayerIdData { get; set; }
+    [ProtoMember(3)] public SharedTaskStatus Status { get; set; }
     public int Version { get; set; }
-    public long PlayerIdData { get; set; }
-    public SharedTaskStatus Status { get; set; }
 }

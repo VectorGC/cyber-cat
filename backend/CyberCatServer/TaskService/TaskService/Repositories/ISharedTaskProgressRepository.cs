@@ -7,5 +7,6 @@ namespace TaskService.Repositories;
 public interface ISharedTaskProgressRepository
 {
     Task<SharedTaskProgressData> GetTask(TaskId id);
+    Task<List<SharedTaskProgressData>> GetTasks();
     Task<SharedTaskProgressData> SetSolved(TaskId id, PlayerId playerId);
 }
