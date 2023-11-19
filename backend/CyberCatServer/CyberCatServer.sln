@@ -40,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		receive-certbot-cert.bat = receive-certbot-cert.bat
 		receive-certbot-cert-test-dry-run.bat = receive-certbot-cert-test-dry-run.bat
 		start_server_in_docker_for_prod.bat = start_server_in_docker_for_prod.bat
-		start_server_in_docker_for_prod_all_rebuild.bat = start_server_in_docker_for_prod_all_rebuild.bat
+		start_server_in_docker_for_prod_force_rebuild.bat = start_server_in_docker_for_prod_force_rebuild.bat
 		docker_system_memory_clear.bat = docker_system_memory_clear.bat
 	EndProjectSection
 EndProject

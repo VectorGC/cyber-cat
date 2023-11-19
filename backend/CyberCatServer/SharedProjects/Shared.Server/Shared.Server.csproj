@@ -12,6 +12,7 @@
       </PackageReference>
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
+      <PackageReference Include="Faker.Net" Version="2.0.154" />
     </ItemGroup>
 
     <ItemGroup>

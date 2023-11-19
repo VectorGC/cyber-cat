@@ -6,6 +6,7 @@ using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;
+using Shared.Server.ExternalData;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 
@@ -19,6 +20,7 @@ public interface ITaskService
     Task<Response<TestCases>> GetTestCases(TaskId taskId);
     Task OnTaskSolved(OnTaskSolvedArgs args);
     Task<Response<List<SharedTaskProgressData>>> GetSharedTasks();
+    Task<Response<WebHookResultStatus>> ProcessWebHookTest();
 }
 
 [ProtoContract(SkipConstructor = true)]

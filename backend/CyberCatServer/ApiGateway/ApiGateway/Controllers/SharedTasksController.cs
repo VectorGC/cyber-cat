@@ -1,6 +1,7 @@
 using System.Net;
 using Faker;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Server.Data;
 using Shared.Server.ExternalData;
 using Shared.Server.Services;
 using Boolean = Faker.Boolean;
@@ -26,6 +27,9 @@ public class SharedTasksController : ControllerBase
         var response = await _taskService.GetSharedTasks();
         response.EnsureSuccess();
 
+        if (!response.HasValue)
+            return new List<SharedTaskExternalDto>();
+
         var tasksDto = response.Value.Select(task => new SharedTaskExternalDto(task)).ToList();
         return tasksDto;
     }
@@ -39,17 +43,18 @@ public class SharedTasksController : ControllerBase
         var count = RandomNumber.Next(1, 6);
         for (var i = 0; i < count; i++)
         {
-            var model = new SharedTaskExternalDto()
-            {
-                TaskId = Lorem.Words(1).First(),
-                PlayerName = Name.First(),
-                IsSolved = Boolean.Random()
-            };
-
-            tasks.Add(model);
+            tasks.Add(SharedTaskExternalDto.Mock());
         }
 
         return tasks;
+    }
+
+    [HttpPost("webHook/test")]
+    [ProducesResponseType(typeof(WebHookResultStatus), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<WebHookResultStatus>> ProcessWebHookTest()
+    {
+        var response = await _taskService.ProcessWebHookTest();
+        return response;
     }
 
     [HttpPost("wip/clearProgress")]

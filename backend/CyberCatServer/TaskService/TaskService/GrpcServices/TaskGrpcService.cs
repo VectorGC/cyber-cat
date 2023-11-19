@@ -2,6 +2,7 @@ using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;
+using Shared.Server.ExternalData;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 using TaskService.Repositories;
@@ -53,5 +54,10 @@ public class TaskGrpcService : ITaskService
     {
         var tasks = await _sharedTaskProgressRepository.GetTasks();
         return tasks;
+    }
+
+    public async Task<Response<WebHookResultStatus>> ProcessWebHookTest()
+    {
+        return await _taskWebHookProcessor.ProcessWebHook(SharedTaskExternalDto.Mock(true));
     }
 }

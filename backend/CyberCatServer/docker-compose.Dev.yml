@@ -1,7 +1,14 @@
 ﻿services:
+  api-gateway:
+    extends:
+      file: docker-compose.yml
+      service: api-gateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  
   mongo:
     extends:
       file: docker-compose.yml
-      service:   mongo
+      service: mongo
     ports:
       - "27017:27017"
