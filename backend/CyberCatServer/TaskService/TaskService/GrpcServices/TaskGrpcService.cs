@@ -1,9 +1,11 @@
 using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
+using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 using TaskService.Repositories;
+using TaskService.Services;
 
 namespace TaskService.GrpcServices;
 
@@ -12,9 +14,11 @@ public class TaskGrpcService : ITaskService
     private readonly ITaskRepository _taskRepository;
     private readonly ITestRepository _testRepository;
     private readonly ISharedTaskProgressRepository _sharedTaskProgressRepository;
+    private readonly SharedTaskWebHookProcessor _taskWebHookProcessor;
 
-    public TaskGrpcService(ITaskRepository taskRepository, ITestRepository testRepository, ISharedTaskProgressRepository sharedTaskProgressRepository)
+    public TaskGrpcService(ITaskRepository taskRepository, ITestRepository testRepository, ISharedTaskProgressRepository sharedTaskProgressRepository, SharedTaskWebHookProcessor taskWebHookProcessor)
     {
+        _taskWebHookProcessor = taskWebHookProcessor;
         _taskRepository = taskRepository;
         _testRepository = testRepository;
         _sharedTaskProgressRepository = sharedTaskProgressRepository;
@@ -40,7 +44,8 @@ public class TaskGrpcService : ITaskService
         var sharedTask = await _sharedTaskProgressRepository.GetTask(args.TaskId);
         if (sharedTask == null || sharedTask.Status == SharedTaskStatus.NotSolved)
         {
-            await _sharedTaskProgressRepository.SetSolved(args.TaskId, args.PlayerId);
+            sharedTask = await _sharedTaskProgressRepository.SetSolved(args.TaskId, args.PlayerId);
+            await _taskWebHookProcessor.ProcessWebHook(sharedTask);
         }
     }
 }

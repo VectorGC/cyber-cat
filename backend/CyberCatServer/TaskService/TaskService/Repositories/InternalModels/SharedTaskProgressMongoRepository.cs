@@ -21,28 +21,28 @@ internal class SharedTaskProgressMongoRepository : BaseMongoRepository<string>, 
         return await GetOneAsync<SharedTaskProgressData>(task => task.Id == id.Value);
     }
 
-    public async Task SetSolved(TaskId id, PlayerId playerId)
+    public async Task<SharedTaskProgressData> SetSolved(TaskId id, PlayerId playerId)
     {
+        var model = new SharedTaskProgressData()
+        {
+            Id = id.Value,
+            PlayerIdData = playerId.Value,
+            Status = SharedTaskStatus.Solved
+        };
+
         var task = await GetTask(id);
         if (task == null)
         {
-            await AddOneAsync(new SharedTaskProgressData()
-            {
-                Id = id.Value,
-                PlayerIdData = playerId.Value
-            });
-            return;
+            await AddOneAsync(model);
+            return model;
         }
 
         if (task.Status == SharedTaskStatus.NotSolved)
         {
-            await UpdateOneAsync(new SharedTaskProgressData()
-            {
-                Id = id.Value,
-                PlayerIdData = playerId.Value,
-                Status = SharedTaskStatus.Solved
-            });
-            return;
+            await UpdateOneAsync(model);
+            return model;
         }
+
+        return null;
     }
 }
