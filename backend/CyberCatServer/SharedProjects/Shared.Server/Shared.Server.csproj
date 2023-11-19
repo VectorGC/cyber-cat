@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MongoDbGenericRepository" Version="1.4.8" />
       <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

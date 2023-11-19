@@ -14,11 +14,11 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TasksController : ControllerBase
 {
-    private readonly ITaskGrpcService _taskGrpcService;
+    private readonly ITaskService _taskService;
 
-    public TasksController(ITaskGrpcService taskGrpcService)
+    public TasksController(ITaskService taskService)
     {
-        _taskGrpcService = taskGrpcService;
+        _taskService = taskService;
     }
 
     [HttpGet]
@@ -26,7 +26,7 @@ public class TasksController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskIdsDto>> GetTasks()
     {
-        var response = await _taskGrpcService.GetTasks();
+        var response = await _taskService.GetTasks();
         response.EnsureSuccess();
 
         var taskIds = response.Value.Select(taskId => taskId.Value).ToList();
@@ -43,7 +43,7 @@ public class TasksController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TaskDescription>> GetTask(string taskId)
     {
-        var response = await _taskGrpcService.GetTask(taskId);
+        var response = await _taskService.GetTask(taskId);
         return response;
     }
 
@@ -52,7 +52,7 @@ public class TasksController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<TestCases>> GetTestCases(string taskId)
     {
-        var response = await _taskGrpcService.GetTestCases(taskId);
+        var response = await _taskService.GetTestCases(taskId);
         return response;
     }
 }

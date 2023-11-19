@@ -8,7 +8,7 @@ using Shared.Server.ProtoHelpers;
 namespace Shared.Server.Services;
 
 [Service]
-public interface IAuthGrpcService
+public interface IAuthService
 {
     Task<Response<UserId>> CreateUser(CreateUserArgs args);
     Task<Response<string>> GetAccessToken(GetAccessTokenArgs args);

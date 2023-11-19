@@ -6,21 +6,21 @@ using Shared.Server.Services;
 
 namespace JudgeService.GrpcServices;
 
-public class JudgeGrpcService : IJudgeGrpcService
+public class JudgeService : IJudgeService
 {
     private readonly ICodeLauncherGrpcService _codeLauncherService;
-    private readonly ITaskGrpcService _taskGrpcService;
+    private readonly ITaskService _taskService;
 
-    public JudgeGrpcService(ICodeLauncherGrpcService codeLauncherService, ITaskGrpcService taskGrpcService)
+    public JudgeService(ICodeLauncherGrpcService codeLauncherService, ITaskService taskService)
     {
         _codeLauncherService = codeLauncherService;
-        _taskGrpcService = taskGrpcService;
+        _taskService = taskService;
     }
 
     public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (_, taskId, solution) = args;
-        var tests = await _taskGrpcService.GetTestCases(taskId);
+        var tests = await _taskService.GetTestCases(taskId);
         var testsVerdict = new TestCasesVerdict();
 
         foreach (var (_, test) in tests.Value.Values)

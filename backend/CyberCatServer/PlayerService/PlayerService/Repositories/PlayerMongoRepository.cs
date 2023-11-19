@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Data;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
+using Shared.Server;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 
@@ -14,8 +14,8 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
 {
     private readonly ILogger<PlayerMongoRepository> _logger;
 
-    public PlayerMongoRepository(IOptions<PlayerServiceAppSettings> appSettings, ILogger<PlayerMongoRepository> logger)
-        : base(appSettings.Value.MongoRepository.ConnectionString, appSettings.Value.MongoRepository.DatabaseName)
+    public PlayerMongoRepository(IConfiguration configuration, ILogger<PlayerMongoRepository> logger)
+        : base(configuration.GetMongoConnectionString(), configuration.GetMongoDatabase())
     {
         _logger = logger;
     }

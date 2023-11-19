@@ -9,12 +9,12 @@ using Shared.Server.Services;
 
 namespace AuthService.GrpcServices;
 
-public class AuthGrpcService : IAuthGrpcService
+public class AuthService : IAuthService
 {
     private readonly IAuthUserRepository _authUserRepository;
     private readonly ITokenService _tokenService;
 
-    public AuthGrpcService(IAuthUserRepository authUserRepository, ITokenService tokenService)
+    public AuthService(IAuthUserRepository authUserRepository, ITokenService tokenService)
     {
         _authUserRepository = authUserRepository;
         _tokenService = tokenService;

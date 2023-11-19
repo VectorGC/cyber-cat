@@ -2,7 +2,7 @@ using Shared.Models.Descriptions;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 
-namespace TaskService.Repositories;
+namespace TaskService.Repositories.InternalModels;
 
 internal class TaskModelConstRepository : ITaskRepository, ITestRepository
 {

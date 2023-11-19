@@ -12,11 +12,15 @@ namespace PlayerService.GrpcServices;
 public class PlayerGrpcService : IPlayerGrpcService
 {
     private readonly IPlayerRepository _playerRepository;
-    private readonly IJudgeGrpcService _judgeGrpcService;
+    private readonly IJudgeService _judgeService;
+    private readonly ITaskService _taskService;
+    private readonly ILogger<PlayerGrpcService> _logger;
 
-    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeGrpcService judgeGrpcService)
+    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeService judgeService, ITaskService taskService, ILogger<PlayerGrpcService> logger)
     {
-        _judgeGrpcService = judgeGrpcService;
+        _logger = logger;
+        _taskService = taskService;
+        _judgeService = judgeService;
         _playerRepository = playerRepository;
     }
 
@@ -63,12 +67,14 @@ public class PlayerGrpcService : IPlayerGrpcService
     public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
     {
         var (playerId, taskId, solution) = args;
-        var verdict = await _judgeGrpcService.GetVerdict(args);
+        var verdict = await _judgeService.GetVerdict(args);
         await _playerRepository.SaveCode(playerId, taskId, solution);
+        _logger.LogInformation("{Task} verdict: {Verdict}. Player '{Player}'", args.TaskId, verdict.Value.ToString(), args.PlayerId);
         switch (verdict.Value)
         {
             case Success success:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.Complete);
+                await _taskService.OnTaskSolved(new OnTaskSolvedArgs(playerId, taskId));
                 break;
             default:
                 await _playerRepository.SetTaskStatus(playerId, taskId, TaskProgressStatus.HaveSolution);

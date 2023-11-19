@@ -13,11 +13,11 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class DevController : ControllerBase
 {
-    private readonly IAuthGrpcService _authGrpcService;
+    private readonly IAuthService _authService;
 
-    public DevController(IAuthGrpcService authGrpcService)
+    public DevController(IAuthService authService)
     {
-        _authGrpcService = authGrpcService;
+        _authService = authService;
     }
 
     [HttpPost("users/remove")]
@@ -30,6 +30,6 @@ public class DevController : ControllerBase
             return Ok();
         }
 
-        return await _authGrpcService.RemoveDev(new RemoveDevArgs(email));
+        return await _authService.RemoveDev(new RemoveDevArgs(email));
     }
 }

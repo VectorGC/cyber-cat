@@ -7,15 +7,17 @@ using TaskService.Repositories;
 
 namespace TaskService.GrpcServices;
 
-public class TaskGrpcService : ITaskGrpcService
+public class TaskGrpcService : ITaskService
 {
     private readonly ITaskRepository _taskRepository;
     private readonly ITestRepository _testRepository;
+    private readonly ISharedTaskProgressRepository _sharedTaskProgressRepository;
 
-    public TaskGrpcService(ITaskRepository taskRepository, ITestRepository testRepository)
+    public TaskGrpcService(ITaskRepository taskRepository, ITestRepository testRepository, ISharedTaskProgressRepository sharedTaskProgressRepository)
     {
         _taskRepository = taskRepository;
         _testRepository = testRepository;
+        _sharedTaskProgressRepository = sharedTaskProgressRepository;
     }
 
     public async Task<Response<List<TaskId>>> GetTasks()
@@ -31,5 +33,14 @@ public class TaskGrpcService : ITaskGrpcService
     public async Task<Response<TestCases>> GetTestCases(TaskId taskId)
     {
         return await _testRepository.GetTestCases(taskId);
+    }
+
+    public async Task OnTaskSolved(OnTaskSolvedArgs args)
+    {
+        var sharedTask = await _sharedTaskProgressRepository.GetTask(args.TaskId);
+        if (sharedTask == null || sharedTask.Status == SharedTaskStatus.NotSolved)
+        {
+            await _sharedTaskProgressRepository.SetSolved(args.TaskId, args.PlayerId);
+        }
     }
 }

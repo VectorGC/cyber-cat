@@ -6,7 +6,7 @@ using Shared.Server.ProtoHelpers;
 namespace Shared.Server.Services;
 
 [Service]
-public interface IJudgeGrpcService
+public interface IJudgeService
 {
     Task<Response<Verdict>> GetVerdict(GetVerdictArgs args);
 }

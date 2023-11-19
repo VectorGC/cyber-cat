@@ -8,13 +8,13 @@ namespace ApiGateway.Attributes
 {
     public class BindUserAuthorizationFilter : IAsyncAuthorizationFilter
     {
-        private readonly IAuthGrpcService _authGrpcService;
+        private readonly IAuthService _authService;
         private readonly ILogger<BindUserAuthorizationFilter> _logger;
 
-        public BindUserAuthorizationFilter(IAuthGrpcService authGrpcService, ILogger<BindUserAuthorizationFilter> logger)
+        public BindUserAuthorizationFilter(IAuthService authService, ILogger<BindUserAuthorizationFilter> logger)
         {
             _logger = logger;
-            _authGrpcService = authGrpcService;
+            _authService = authService;
         }
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
@@ -25,7 +25,7 @@ namespace ApiGateway.Attributes
                 return;
             }
 
-            var response = await _authGrpcService.FindByEmail(email);
+            var response = await _authService.FindByEmail(email);
             if (!response.HasValue)
             {
                 context.Result = new NotFoundResult();

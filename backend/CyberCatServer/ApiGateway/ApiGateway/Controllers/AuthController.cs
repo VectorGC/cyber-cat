@@ -13,11 +13,11 @@ namespace ApiGateway.Controllers;
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthGrpcService _authGrpcService;
+    private readonly IAuthService _authService;
 
-    public AuthController(IAuthGrpcService authGrpcService)
+    public AuthController(IAuthService authService)
     {
-        _authGrpcService = authGrpcService;
+        _authService = authService;
     }
 
     [AllowAnonymous]
@@ -25,7 +25,7 @@ public class AuthController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> SignUp(string email, string password, string name)
     {
-        var response = await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+        var response = await _authService.CreateUser(new CreateUserArgs(email, password, name));
         return response.ToActionResult();
     }
 
@@ -34,13 +34,13 @@ public class AuthController : ControllerBase
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
     public async Task<ActionResult<string>> SignIn(string email, string password)
     {
-        return await _authGrpcService.GetAccessToken(new GetAccessTokenArgs(email, password));
+        return await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));
     }
 
     [HttpPost("remove")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> Remove([FromUser] UserId userId, string password)
     {
-        return await _authGrpcService.Remove(new RemoveArgs(userId, password));
+        return await _authService.Remove(new RemoveArgs(userId, password));
     }
 }

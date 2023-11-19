@@ -45,6 +45,7 @@ internal static class TaskDbModels
         {
             Id = "task-2",
             Name = "A + B * C",
+            IsShared = true,
             Tests = new TestsDbModel()
             {
                 new()

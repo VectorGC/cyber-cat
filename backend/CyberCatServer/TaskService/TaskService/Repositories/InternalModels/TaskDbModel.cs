@@ -16,6 +16,7 @@ namespace TaskService.Repositories.InternalModels
 
         public int Version { get; set; }
         public string Name { get; set; }
+        public bool IsShared { get; set; }
         public TestsDbModel Tests { get; set; } = new TestsDbModel();
 
         public TaskDbModel(TaskId id, TaskDescription task)

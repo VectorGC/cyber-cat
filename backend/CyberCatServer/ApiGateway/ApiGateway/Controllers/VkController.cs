@@ -8,24 +8,24 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class VkController : ControllerBase
 {
-    private readonly IAuthGrpcService _authGrpcService;
+    private readonly IAuthService _authService;
 
-    public VkController(IAuthGrpcService authGrpcService)
+    public VkController(IAuthService authService)
     {
-        _authGrpcService = authGrpcService;
+        _authService = authService;
     }
 
     [HttpPost("signIn")]
     public async Task<ActionResult<VkToken>> SignIn(string email, string name, string userVkId)
     {
-        var userId = await _authGrpcService.FindByEmail(email);
+        var userId = await _authService.FindByEmail(email);
         var password = $"{userVkId}_vk";
         if (!userId.HasValue)
         {
-            await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
+            await _authService.CreateUser(new CreateUserArgs(email, password, name));
         }
 
-        var token = await _authGrpcService.GetAccessToken(new GetAccessTokenArgs(email, password));
+        var token = await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));
         return new VkToken()
         {
             Value = token

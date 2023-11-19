@@ -36,7 +36,7 @@ public class AuthenticationAndPlayerAuthorization
     public async Task ShouldGetToken_WhenPassValidUserCredentials()
     {
         using var channel = _factory.CreateGrpcChannel();
-        var authenticationService = channel.CreateGrpcService<IAuthGrpcService>();
+        var authenticationService = channel.CreateGrpcService<IAuthService>();
 
         var args = new GetAccessTokenArgs(Email, UserPassword);
         var response = await authenticationService.GetAccessToken(args);
