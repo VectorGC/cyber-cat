@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
 using Shared.Models.Models.AuthorizationTokens;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters
@@ -31,7 +33,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters
             _webClient.Dispose();
         }
 
-        private void OnTokenChanged(IAuthorizationToken token)
+        private void OnTokenChanged(AuthorizationToken token)
         {
             _webClient.RemoveAuthorizationHeader();
             if (token != null)

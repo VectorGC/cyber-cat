@@ -14,7 +14,7 @@ public class AuthUserRepositoryTests
     [SetUp]
     public void Setup()
     {
-        _factory = new WebApplicationFactory<Program>().AddScoped<Program, IAuthUserRepository, MockAuthUserRepository>();
+        _factory = new WebApplicationFactory<Program>().AddScoped<Program, IUserRepository, MockUserRepository>();
     }
 
     [Test]
@@ -25,12 +25,12 @@ public class AuthUserRepositoryTests
         var userName = "Test User Name";
 
         using var scope = _factory.Services.CreateScope();
-        var userRepository = scope.ServiceProvider.GetRequiredService<IAuthUserRepository>();
+        var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
 
         var notExistingUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(notExistingUser);
 
-        var user = await userRepository.Create(email, password, userName);
+        var user = await userRepository.CreateUser(email, password, userName);
         Assert.NotNull(user);
 
         var createdUser = await userRepository.FindByEmailAsync(email);

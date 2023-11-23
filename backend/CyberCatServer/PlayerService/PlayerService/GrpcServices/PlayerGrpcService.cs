@@ -1,5 +1,6 @@
 ﻿using PlayerService.Repositories;
 using Shared.Models.Data;
+using Shared.Models.Domain.Users;
 using Shared.Models.Enums;
 using Shared.Models.Models.Verdicts;
 using Shared.Server.Exceptions.PlayerService;

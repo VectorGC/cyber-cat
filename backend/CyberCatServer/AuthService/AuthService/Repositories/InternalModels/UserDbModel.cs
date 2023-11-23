@@ -1,25 +1,27 @@
+using System.Collections.Generic;
 using AspNetCore.Identity.MongoDbCore.Models;
 using MongoDbGenericRepository.Attributes;
-using Shared.Server.Data;
-using Shared.Server.Ids;
+using Shared.Models.Domain.Users;
 
 namespace AuthService.Repositories.InternalModels;
 
 [CollectionName("Users")]
-internal sealed class UserDbModel : MongoIdentityUser<long>
+internal sealed class UserDbModel : MongoIdentityUser<string>
 {
-    public UserDbModel(string userName, string email, IAuthUserRepository repository) : base(userName, email)
+    public void SetData(User user, string roleId)
     {
-        Id = repository.Count + 1;
+        Roles = new List<string>()
+        {
+            roleId
+        };
+
+        Email = user.Email;
+        UserName = user.UserName;
     }
 
-    public UserDbModel()
+    public User ToDomainModel()
     {
-    }
-
-    public UserDto ToDto()
-    {
-        return new UserDto
+        return new User
         {
             Id = new UserId(Id),
             Email = Email,

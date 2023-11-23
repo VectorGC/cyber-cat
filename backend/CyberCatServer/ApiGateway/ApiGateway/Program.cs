@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using ApiGateway.Attributes;
@@ -17,18 +18,12 @@ builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
 var appArgs = Parser.Default.ParseArguments<Args>(args).Value;
 var host = appArgs.UseHttps ? new Uri("https://0.0.0.0:443") : new Uri("http://0.0.0.0:80");
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+builder.Services.AddAuthentication(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = JwtTokenValidation.Issuer,
-        ValidAudience = JwtTokenValidation.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtTokenValidation.IssuerSigningKey).ToArray())
-    };
-});
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.TokenValidationParameters; });
 
 builder.Services.AddControllers(options =>
 {
@@ -37,7 +32,7 @@ builder.Services.AddControllers(options =>
 });
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
-builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(host.ToString()); });
+builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(); });
 
 var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
 builder.Services.AddCodeFirstGrpcClient<IAuthService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });

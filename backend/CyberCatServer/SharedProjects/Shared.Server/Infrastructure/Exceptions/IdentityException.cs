@@ -1,16 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
+using Shared.Server.Exceptions;
 
-namespace Shared.Server.Exceptions.AuthService
+namespace Shared.Server.Infrastructure.Exceptions
 {
     [ProtoContract]
-    public class IdentityUserException : ProtoExceptionModel
+    public class IdentityException : ProtoExceptionModel
     {
-        public IdentityUserException(string message) : base(message)
+        public IdentityException(string message) : base(message)
         {
         }
 
-        public IdentityUserException()
+        public IdentityException()
         {
         }
 

@@ -4,7 +4,7 @@ namespace AuthService.Configurations;
 
 public static class AuthIdentity
 {
-    public static void SetServiceOptions(IdentityOptions options)
+    public static void IdentityOptions(IdentityOptions options)
     {
         options.Password.RequireDigit = false;
         options.Password.RequireNonAlphanumeric = false;

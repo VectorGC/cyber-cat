@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
 using AuthService.Repositories;
 using AuthService.Services;
+using Shared.Models.Domain.Users;
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Data;
-using Shared.Server.Exceptions.AuthService;
 using Shared.Server.Ids;
+using Shared.Server.Infrastructure.Exceptions;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -11,12 +14,12 @@ namespace AuthService.GrpcServices;
 
 public class AuthService : IAuthService
 {
-    private readonly IAuthUserRepository _authUserRepository;
+    private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
 
-    public AuthService(IAuthUserRepository authUserRepository, ITokenService tokenService)
+    public AuthService(IUserRepository userRepository, ITokenService tokenService)
     {
-        _authUserRepository = authUserRepository;
+        _userRepository = userRepository;
         _tokenService = tokenService;
     }
 
@@ -25,10 +28,10 @@ public class AuthService : IAuthService
         var (email, password, userName) = args;
         try
         {
-            var user = await _authUserRepository.Create(email, password, userName);
+            var user = await _userRepository.CreateUser(email, password, userName);
             return user.Id;
         }
-        catch (IdentityUserException ex)
+        catch (IdentityException ex)
         {
             return ex;
         }
@@ -36,52 +39,52 @@ public class AuthService : IAuthService
 
     public async Task<Response<UserId>> FindByEmail(Args<string> email)
     {
-        var user = await _authUserRepository.FindByEmailAsync(email);
+        var user = await _userRepository.FindByEmailAsync(email);
         return user?.Id;
     }
 
-    public async Task<Response<string>> GetAccessToken(GetAccessTokenArgs args)
+    public async Task<Response<AuthorizationToken>> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
         var password = args.Password;
 
-        var user = await _authUserRepository.FindByEmailAsync(email);
+        var user = await _userRepository.FindByEmailAsync(email);
         if (user == null)
         {
             return new UserNotFoundException(email);
         }
 
-        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(user.Id, password);
+        var isPasswordValid = await _userRepository.CheckPasswordAsync(user.Id, password);
         if (!isPasswordValid)
         {
             return new UnauthorizedException("Invalid password");
         }
 
-        var accessToken = _tokenService.CreateToken(user.Email, user.UserName);
-        await _authUserRepository.SetJwtAuthenticationAccessTokenAsync(user.Id, accessToken);
+        var token = _tokenService.CreateToken(user);
+        await _userRepository.SetAuthenticationTokenAsync(user.Id, token);
 
-        return accessToken;
+        return token;
     }
 
     public async Task<Response> Remove(RemoveArgs args)
     {
         var (userId, password) = args;
-        var isPasswordValid = await _authUserRepository.CheckPasswordAsync(userId, password);
+        var isPasswordValid = await _userRepository.CheckPasswordAsync(userId, password);
         if (!isPasswordValid)
         {
             return new UnauthorizedException("Invalid password");
         }
 
-        await _authUserRepository.Remove(userId);
+        await _userRepository.Remove(userId);
         return new Response();
     }
 
     public async Task<Response> RemoveDev(RemoveDevArgs args)
     {
-        var user = await _authUserRepository.FindByEmailAsync(args.Email);
+        var user = await _userRepository.FindByEmailAsync(args.Email);
         if (user != null)
         {
-            await _authUserRepository.Remove(user.Id);
+            await _userRepository.Remove(user.Id);
         }
 
         return new Response();

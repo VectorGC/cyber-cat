@@ -26,9 +26,6 @@ public class VkController : ControllerBase
         }
 
         var token = await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));
-        return new VkToken()
-        {
-            Value = token
-        };
+        return new VkToken(token.Value.Value);
     }
 }

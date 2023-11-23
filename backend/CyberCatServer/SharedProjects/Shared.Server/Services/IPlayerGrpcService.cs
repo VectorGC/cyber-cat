@@ -2,6 +2,7 @@
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Data;
+using Shared.Models.Domain.Users;
 using Shared.Models.Ids;
 using Shared.Models.Models.Verdicts;
 using Shared.Server.Ids;

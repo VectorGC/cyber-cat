@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -7,13 +8,8 @@ namespace ApiGateway.Extensions;
 
 public static class SwaggerGetOptionsAuthExtensions
 {
-    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options, string host)
+    public static void AddJwtSecurityDefinition(this SwaggerGenOptions options)
     {
-        if (string.IsNullOrEmpty(host))
-        {
-            throw new ArgumentNullException(nameof(host));
-        }
-
         // https://stackoverflow.com/questions/38784537/use-jwt-authorization-bearer-in-swagger-in-asp-net-core/47709074#47709074
         // https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/1257
         options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
@@ -26,7 +22,7 @@ public static class SwaggerGetOptionsAuthExtensions
             {
                 Password = new OpenApiOAuthFlow
                 {
-                    TokenUrl = new Uri($"{host}/auth/login")
+                    TokenUrl = new Uri("/auth/signIn", UriKind.Relative)
                 }
             }
         });

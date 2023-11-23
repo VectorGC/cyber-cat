@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
+using Shared.Server.Exceptions;
 
-namespace Shared.Server.Exceptions.AuthService;
+namespace Shared.Server.Infrastructure.Exceptions;
 
-[ProtoContract]
+[ProtoContract(SkipConstructor = true)]
 public class UserNotFoundException : ProtoExceptionModel
 {
     private readonly string _email;
@@ -11,10 +12,6 @@ public class UserNotFoundException : ProtoExceptionModel
     public UserNotFoundException(string email) : base($"User with email '{email}' not found")
     {
         _email = email;
-    }
-
-    public UserNotFoundException()
-    {
     }
 
     public override ActionResult ToActionResult()

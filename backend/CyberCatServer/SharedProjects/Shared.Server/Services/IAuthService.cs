@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
+using Shared.Models.Domain.Users;
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Data;
 using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
@@ -11,7 +14,7 @@ namespace Shared.Server.Services;
 public interface IAuthService
 {
     Task<Response<UserId>> CreateUser(CreateUserArgs args);
-    Task<Response<string>> GetAccessToken(GetAccessTokenArgs args);
+    Task<Response<AuthorizationToken>> GetAccessToken(GetAccessTokenArgs args);
     Task<Response> Remove(RemoveArgs args);
     Task<Response> RemoveDev(RemoveDevArgs args);
     Task<Response<UserId>> FindByEmail(Args<string> email);

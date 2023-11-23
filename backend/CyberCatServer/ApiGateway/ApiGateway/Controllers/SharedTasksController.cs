@@ -1,5 +1,7 @@
 using System.Net;
 using Faker;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Server.Data;
 using Shared.Server.ExternalData;
@@ -57,6 +59,7 @@ public class SharedTasksController : ControllerBase
         return response;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost("wip/clearProgress")]
     [ProducesResponseType(typeof(List<SharedTaskExternalDto>), (int) HttpStatusCode.OK)]
     public async Task<ActionResult> ClearProgress()

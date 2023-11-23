@@ -13,10 +13,16 @@
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
       <PackageReference Include="Faker.Net" Version="2.0.154" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.19" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Models\Shared.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Exceptions\AuthService" />
+      <Folder Include="Infrastructure\Authorization" />
     </ItemGroup>
 
 </Project>

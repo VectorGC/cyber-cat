@@ -1,4 +1,5 @@
 ﻿using Shared.Models.Data;
+using Shared.Models.Domain.Users;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
 using Shared.Server.Ids;

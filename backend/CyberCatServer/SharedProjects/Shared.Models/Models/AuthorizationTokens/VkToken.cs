@@ -1,8 +1,17 @@
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
+
 namespace Shared.Models.Models.AuthorizationTokens
 {
-    public class VkToken : IAuthorizationToken
+    public class VkToken : AuthorizationToken
     {
-        public string Type => "Bearer"; // Vk signed in client side. Server-side use JwtBearer token.
-        public string Value { get; set; }
+        public override string Type => "Bearer"; // Vk signed in client side. Server-side use JwtBearer token.
+        public override string Value { get; }
+        public override string TokenName => "vk_api_token";
+
+        public VkToken(string value)
+        {
+            Value = value;
+        }
     }
 }

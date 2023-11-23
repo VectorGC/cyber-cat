@@ -1,13 +1,12 @@
 using ProtoBuf;
-using Shared.Server.Ids;
 
-namespace Shared.Server.Data
+namespace Shared.Models.Domain.Users
 {
-    [ProtoContract]
-    public class UserDto
+    public class User
     {
         [ProtoMember(1)] public UserId Id { get; set; }
         [ProtoMember(2)] public string UserName { get; set; }
         [ProtoMember(3)] public string Email { get; set; }
+        [ProtoMember(4)] public Role Role { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Data;
+using Shared.Models.Domain.Users;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 using Shared.Server.Services;
@@ -13,7 +14,7 @@ namespace ApiGateway.Controllers;
 
 [Controller]
 [Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize]
 public class PlayerController : ControllerBase
 {
     private readonly IPlayerGrpcService _playerGrpcService;

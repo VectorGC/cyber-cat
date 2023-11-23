@@ -40,7 +40,7 @@ namespace ApiGateway.Client.Internal
         {
             var form = new Dictionary<string, string>
             {
-                ["email"] = email,
+                ["username"] = email,
                 ["password"] = password
             };
 

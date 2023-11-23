@@ -1,12 +1,14 @@
 using System;
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
 
 namespace Shared.Models.Models.AuthorizationTokens
 {
     public class AuthorizationTokenHolder
     {
-        public event Action<IAuthorizationToken> TokenChanged;
+        public event Action<AuthorizationToken> TokenChanged;
 
-        public IAuthorizationToken Token
+        public AuthorizationToken Token
         {
             get => _token;
             set
@@ -16,6 +18,6 @@ namespace Shared.Models.Models.AuthorizationTokens
             }
         }
 
-        private IAuthorizationToken _token;
+        private AuthorizationToken _token;
     }
 }

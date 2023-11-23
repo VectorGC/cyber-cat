@@ -1,22 +1,22 @@
 using AuthService.Configurations;
-using AuthService.GrpcServices;
 using AuthService.Repositories;
 using AuthService.Repositories.InternalModels;
 using AuthService.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
+using Shared.Server.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appSettings = builder.Configuration.Get<AuthServiceAppSettings>();
-builder.Services.AddIdentity<UserDbModel, Role>(AuthIdentity.SetServiceOptions).AddMongoDbStores<UserDbModel, Role, long>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
+builder.Services
+    .AddIdentity<UserDbModel, RoleDbModel>(AuthIdentity.IdentityOptions)
+    .AddMongoDbStores<UserDbModel, RoleDbModel, string>(builder.Configuration.GetDatabaseConnectionString(), builder.Configuration.GetDatabaseName());
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services
-    .AddScoped<IAuthUserRepository, AuthUserManagerRepository>()
-    .AddHostedService<AddCyberCatUserToRepositoryOnStart>();
+    .AddScoped<IUserRepository, UserManagerRepository>()
+    .AddHostedService<AddAdminUserIfNeeded>();
 
 builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
 

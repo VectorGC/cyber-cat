@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
+using Shared.Server.Exceptions;
 
-namespace Shared.Server.Exceptions.AuthService;
+namespace Shared.Server.Infrastructure.Exceptions;
 
 [ProtoContract]
 public class UnauthorizedException : ProtoExceptionModel

@@ -1,6 +1,12 @@
+using Shared.Models.Domain.Users;
+using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
+using Shared.Models.Models.AuthorizationTokens;
+using Shared.Server.Data;
+
 namespace AuthService.Services;
 
 public interface ITokenService
 {
-    string CreateToken(string email, string userName);
+    AuthorizationToken CreateToken(User user);
 }

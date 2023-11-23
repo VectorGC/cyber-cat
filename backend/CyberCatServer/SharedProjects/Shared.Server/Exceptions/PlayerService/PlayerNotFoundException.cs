@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
+using Shared.Models.Domain.Users;
 using Shared.Server.Ids;
 
 namespace Shared.Server.Exceptions.PlayerService;

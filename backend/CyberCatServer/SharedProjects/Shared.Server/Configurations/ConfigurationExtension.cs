@@ -5,16 +5,16 @@ using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.ClientFactory;
 using Shared.Server.Services;
 
-namespace Shared.Server;
+namespace Shared.Server.Configurations;
 
 public static class ConfigurationExtension
 {
-    public static string GetMongoConnectionString(this IConfiguration configuration)
+    public static string GetDatabaseConnectionString(this IConfiguration configuration)
     {
         return configuration["MongoRepository:ConnectionString"];
     }
 
-    public static string GetMongoDatabase(this IConfiguration configuration)
+    public static string GetDatabaseName(this IConfiguration configuration)
     {
         return configuration["MongoRepository:DatabaseName"];
     }

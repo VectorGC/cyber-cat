@@ -2,6 +2,7 @@ using PlayerService.GrpcServices;
 using PlayerService.Repositories;
 using ProtoBuf.Grpc.Server;
 using Shared.Server;
+using Shared.Server.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 

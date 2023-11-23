@@ -2,9 +2,11 @@
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Data;
+using Shared.Models.Domain.Users;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
 using Shared.Server;
+using Shared.Server.Configurations;
 using Shared.Server.Exceptions.PlayerService;
 using Shared.Server.Ids;
 
@@ -15,7 +17,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
     private readonly ILogger<PlayerMongoRepository> _logger;
 
     public PlayerMongoRepository(IConfiguration configuration, ILogger<PlayerMongoRepository> logger)
-        : base(configuration.GetMongoConnectionString(), configuration.GetMongoDatabase())
+        : base(configuration.GetDatabaseConnectionString(), configuration.GetDatabaseName())
     {
         _logger = logger;
     }
