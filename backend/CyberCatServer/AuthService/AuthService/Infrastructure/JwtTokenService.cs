@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
+using AuthService.Domain;
+using AuthService.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Domain.Users;
-using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Models.Models.AuthorizationTokens;
 using Shared.Server.Configurations;
-using Shared.Server.Data;
 
-namespace AuthService.Services;
+namespace AuthService.Infrastructure;
 
 public class JwtTokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
 
-    public AuthorizationToken CreateToken(User user)
+    public AuthorizationToken CreateToken(UserModel user)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var claims = CreateClaims(user);
@@ -43,15 +40,17 @@ public class JwtTokenService : ITokenService
         );
     }
 
-    private List<Claim> CreateClaims(User user)
+    private List<Claim> CreateClaims(UserModel user)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, "Admin")
+            new Claim(ClaimTypes.Email, user.Email)
         };
+
+        var rolesClaims = user.Roles.Select(role => new Claim(ClaimTypes.Role, role));
+        claims.AddRange(rolesClaims);
 
         return claims;
     }

@@ -1,45 +1,46 @@
 using System.Linq;
 using System.Threading.Tasks;
-using AuthService.Repositories.InternalModels;
+using AuthService.Domain;
+using AuthService.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Infrastructure.Exceptions;
 
-namespace AuthService.Repositories;
+namespace AuthService.Infrastructure;
 
 internal class UserManagerRepository : IUserRepository
 {
-    private readonly UserManager<UserDbModel> _userManager;
-    private readonly RoleManager<RoleDbModel> _roleManager;
+    private readonly UserManager<UserModel> _userManager;
+    private readonly RoleManager<RoleModel> _roleManager;
 
-    public UserManagerRepository(UserManager<UserDbModel> userManager, RoleManager<RoleDbModel> roleManager)
+    public UserManagerRepository(UserManager<UserModel> userManager, RoleManager<RoleModel> roleManager)
     {
         _roleManager = roleManager;
         _userManager = userManager;
     }
 
-    public async Task<User> CreateUser(string email, string password, string name)
+    public async Task<CreateUserResult> CreateUser(string email, string password, string name)
     {
         var nextId = _userManager.Users.Count() + 1;
-        var authUser = new UserDbModel
+        var userModel = new UserModel
         {
             Id = nextId.ToString(),
             Email = email,
             UserName = name,
         };
 
-        var result = await _userManager.CreateAsync(authUser, password);
+        var result = await _userManager.CreateAsync(userModel, password);
         if (!result.Succeeded)
         {
             var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            throw new IdentityException(errors);
+            return new CreateUserResult(false, errors, userModel);
         }
 
-        return authUser.ToDomainModel();
+        return new CreateUserResult(true, string.Empty, userModel);
     }
 
-    public async Task Remove(UserId userId)
+    public async Task<RemoveUserResult> RemoveUser(UserId userId)
     {
         var user = await _userManager.FindByIdAsync(userId.Value.ToString());
 
@@ -47,44 +48,40 @@ internal class UserManagerRepository : IUserRepository
         if (!result.Succeeded)
         {
             var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            throw new IdentityException(errors);
+            return new RemoveUserResult(false, errors, user);
         }
+
+        return new RemoveUserResult(true, string.Empty, user);
     }
 
-    public async Task<User> FindByEmailAsync(string email)
+    public async Task<UserModel> FindByEmailAsync(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        return user?.ToDomainModel();
+        return user;
     }
 
-    public async Task<bool> CheckPasswordAsync(UserId userId, string password)
+    public async Task<bool> CheckPasswordAsync(UserModel user, string password)
     {
-        var user = await _userManager.FindByIdAsync(userId.Value.ToString());
         return await _userManager.CheckPasswordAsync(user, password);
     }
 
-    public async Task SetAuthenticationTokenAsync(UserId id, AuthorizationToken token)
+    public async Task SetAuthenticationTokenAsync(UserModel user, AuthorizationToken token)
     {
-        var user = await _userManager.FindByIdAsync(id.Value.ToString());
         await _userManager.SetAuthenticationTokenAsync(user, token.Type, token.TokenName, token.Value);
     }
 
-    public async Task<User> GetUser(UserId userId)
+    public async Task<UserModel> GetUser(UserId userId)
     {
         var userModel = await _userManager.FindByIdAsync(userId.Value.ToString());
-        return userModel.ToDomainModel();
+        return userModel;
     }
 
-    public async Task<SaveUserResult> SaveUser(User user)
+    public async Task<SaveUserResult> SaveUser(UserModel userModel)
     {
-        var userModel = await _userManager.FindByIdAsync(user.Id.Value.ToString());
         if (userModel == null)
         {
-            return new SaveUserResult(false, $"User with id '{user.Id}' not found");
+            return new SaveUserResult(false, "User can't be null");
         }
-
-        var roleId = await GetRoleId(user.Role);
-        userModel.SetData(user, roleId);
 
         var result = await _userManager.UpdateAsync(userModel);
         if (!result.Succeeded)
@@ -121,9 +118,9 @@ internal class UserManagerRepository : IUserRepository
         return await _roleManager.FindByIdAsync(role.Id) != null;
     }
 
-    public async Task<AddRoleResult> CreateRole(Role role)
+    public async Task<CreateRoleResult> CreateRole(Role role)
     {
-        var roleModel = new RoleDbModel(role)
+        var roleModel = new RoleModel(role)
         {
             Id = role.Id
         };
@@ -132,9 +129,9 @@ internal class UserManagerRepository : IUserRepository
         if (!result.Succeeded)
         {
             var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            return new AddRoleResult(false, errors);
+            return new CreateRoleResult(false, errors);
         }
 
-        return new AddRoleResult(true, string.Empty);
+        return new CreateRoleResult(true, string.Empty);
     }
 }

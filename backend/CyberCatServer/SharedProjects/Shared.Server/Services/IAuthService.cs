@@ -15,8 +15,7 @@ public interface IAuthService
 {
     Task<Response<UserId>> CreateUser(CreateUserArgs args);
     Task<Response<AuthorizationToken>> GetAccessToken(GetAccessTokenArgs args);
-    Task<Response> Remove(RemoveArgs args);
-    Task<Response> RemoveDev(RemoveDevArgs args);
+    Task<Response> RemoveUser(RemoveUserArgs args);
     Task<Response<UserId>> FindByEmail(Args<string> email);
 }
 
@@ -32,10 +31,6 @@ public record GetAccessTokenArgs(
     [property: ProtoMember(2)] string Password);
 
 [ProtoContract(SkipConstructor = true)]
-public record RemoveArgs(
+public record RemoveUserArgs(
     [property: ProtoMember(1)] UserId Email,
     [property: ProtoMember(2)] string Password);
-
-[ProtoContract(SkipConstructor = true)]
-public record RemoveDevArgs(
-    [property: ProtoMember(1)] string Email);

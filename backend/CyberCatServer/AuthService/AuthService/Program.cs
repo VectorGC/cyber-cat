@@ -1,28 +1,38 @@
-using AuthService.Configurations;
-using AuthService.Repositories;
-using AuthService.Repositories.InternalModels;
-using AuthService.Services;
+using AuthService.Application;
+using AuthService.Domain;
+using AuthService.Domain.Models;
+using AuthService.Infrastructure;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 using Shared.Server.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = true;
+    options.Password.RequiredLength = 3;
+});
+
 builder.Services
-    .AddIdentity<UserDbModel, RoleDbModel>(AuthIdentity.IdentityOptions)
-    .AddMongoDbStores<UserDbModel, RoleDbModel, string>(builder.Configuration.GetDatabaseConnectionString(), builder.Configuration.GetDatabaseName());
+    .AddIdentity<UserModel, RoleModel>()
+    .AddMongoDbStores<UserModel, RoleModel, string>(builder.Configuration.GetDatabaseConnectionString(), builder.Configuration.GetDatabaseName());
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services
     .AddScoped<IUserRepository, UserManagerRepository>()
     .AddHostedService<AddAdminUserIfNeeded>();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 
-app.MapGrpcService<AuthService.GrpcServices.AuthService>();
+app.MapGrpcService<AuthGrpcService>();
 
 app.Run();
 

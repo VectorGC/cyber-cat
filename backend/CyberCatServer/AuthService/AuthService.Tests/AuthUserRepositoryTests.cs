@@ -1,7 +1,8 @@
-using AuthService.Repositories;
+using AuthService.Domain;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Models.Domain.Users;
 using Shared.Tests;
 
 namespace AuthService.Tests;
@@ -30,13 +31,16 @@ public class AuthUserRepositoryTests
         var notExistingUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(notExistingUser);
 
-        var user = await userRepository.CreateUser(email, password, userName);
+        var resultCreated = await userRepository.CreateUser(email, password, userName);
+        Assert.IsTrue(resultCreated.Success);
+        var user = resultCreated.CreatedUser;
         Assert.NotNull(user);
 
         var createdUser = await userRepository.FindByEmailAsync(email);
         Assert.NotNull(createdUser);
 
-        await userRepository.Remove(user.Id);
+        var resultRemovable = await userRepository.RemoveUser(new UserId(user.Id));
+        Assert.IsTrue(resultRemovable.Success);
         var removedUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(removedUser);
     }

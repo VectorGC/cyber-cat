@@ -1,5 +1,5 @@
-using AuthService.Repositories;
-using AuthService.Repositories.InternalModels;
+using AuthService.Domain;
+using AuthService.Domain.Models;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 
@@ -7,78 +7,80 @@ namespace AuthService.Tests.Mocks;
 
 internal class MockUserRepository : IUserRepository
 {
-    private readonly List<UserDbModel> _users = new();
+    private readonly Dictionary<string, UserModel> _users = new();
+    private readonly Dictionary<string, RoleModel> _roles = new();
 
-    public Task<User> FindByEmailAsync(string email)
+    public async Task<UserModel> FindByEmailAsync(string email)
     {
-        var user = _users.FirstOrDefault(user => user.Email == email);
-        return Task.FromResult(user?.ToDomainModel());
+        return _users.Values.FirstOrDefault(user => user.Email == email);
     }
 
-    public Task<bool> CheckPasswordAsync(UserId userId, string password)
+    public async Task<bool> CheckPasswordAsync(UserModel user, string password)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Id == userId.Value);
-        return Task.FromResult(findingUser.PasswordHash == password.GetHashCode().ToString());
+        return user.PasswordHash == password.GetHashCode().ToString();
     }
 
-    public Task<bool> Contains(UserId userId)
+    public async Task SetAuthenticationTokenAsync(UserModel user, AuthorizationToken token)
     {
-        var contains = _users.Count(user => user.Id == userId.Value) > 0;
-        return Task.FromResult(contains);
+        Console.WriteLine($"Set access token '{token.Value}' for user '{user.Id}'");
     }
 
-    public Task SetAuthenticationTokenAsync(UserId id, AuthorizationToken token)
+    public async Task<CreateUserResult> CreateUser(string email, string password, string name)
     {
-        Console.WriteLine($"Set access token '{token.Value}' for user '{id}'");
-        return Task.CompletedTask;
-    }
-
-    public Task<User> CreateUser(string email, string password, string name)
-    {
-        var authUser = new UserDbModel(name, email, this)
+        var user = new UserModel()
         {
+            Id = (_users.Count + 1).ToString(),
+            UserName = name,
+            Email = email,
             PasswordHash = password.GetHashCode().ToString()
         };
-        _users.Add(authUser);
-
-        return Task.FromResult(authUser.ToDomainModel());
+        _users[user.Id] = user;
+        return new CreateUserResult(true, string.Empty, user);
     }
 
-    public Task Remove(UserId userId)
+    public async Task<RemoveUserResult> RemoveUser(UserId userId)
     {
-        var findingUser = _users.FirstOrDefault(u => u.Id == userId.Value);
-        _users.Remove(findingUser);
+        var user = _users[userId.Value.ToString()];
+        var success = _users.Remove(userId.ToString());
 
-        return Task.CompletedTask;
+        return new RemoveUserResult(success, string.Empty, user);
     }
 
-    public Task<int> GetUsersCountWithRole(Role role)
+    public async Task<int> GetUsersCountWithRole(Role role)
     {
-        return Task.FromResult(1);
+        return 1;
     }
 
-    public Task<User> GetUser(UserId userId)
+    public async Task<UserModel> GetUser(UserId userId)
     {
-        throw new NotImplementedException();
+        return _users[userId.Value.ToString()];
     }
 
-    public Task<SaveUserResult> SaveUser(User user)
+    public async Task<SaveUserResult> SaveUser(UserModel user)
     {
-        throw new NotImplementedException();
+        var success = _users.Remove(user.Id);
+        _users[user.Id] = user;
+
+        return new SaveUserResult(success, string.Empty);
     }
 
-    public Task<string> GetRoleId(Role role)
+    public async Task<string> GetRoleId(Role role)
     {
-        throw new NotImplementedException();
+        return _roles[role.Id].Id;
     }
 
-    public Task<bool> RoleExists(Role role)
+    public async Task<bool> RoleExists(Role role)
     {
-        throw new NotImplementedException();
+        return _roles.ContainsKey(role.Id);
     }
 
-    public Task<AddRoleResult> CreateRole(Role role)
+    public async Task<CreateRoleResult> CreateRole(Role role)
     {
-        throw new NotImplementedException();
+        _roles[role.Id] = new RoleModel()
+        {
+            Id = role.Id
+        };
+
+        return new CreateRoleResult(true, string.Empty);
     }
 }

@@ -19,17 +19,4 @@ public class DevController : ControllerBase
     {
         _authService = authService;
     }
-
-    [HttpPost("users/remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> RemoveDev(string email, string devKey)
-    {
-        var key = await Crypto.DecryptAsync(devKey, "cyber");
-        if (key != "cyber-cat")
-        {
-            return Ok();
-        }
-
-        return await _authService.RemoveDev(new RemoveDevArgs(email));
-    }
 }

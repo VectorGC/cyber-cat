@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AuthService.Repositories;
+using AuthService.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Shared.Models.Domain.Users;
 
-namespace AuthService.Services;
+namespace AuthService.Infrastructure;
 
 public class AddAdminUserIfNeeded : IHostedService
 {
@@ -45,11 +46,19 @@ public class AddAdminUserIfNeeded : IHostedService
         var admin = await repository.FindByEmailAsync("admin");
         if (admin == null)
         {
-            admin = await repository.CreateUser("admin", "admin", "Admin");
-            _logger.LogInformation("Admin user created");
+            var createAdminResult = await repository.CreateUser("admin", "admin", "Admin");
+            if (createAdminResult.Success)
+            {
+                _logger.LogInformation("Admin user created");
+                admin = createAdminResult.CreatedUser;
+            }
+            else
+            {
+                throw new ApplicationException(createAdminResult.Error);
+            }
         }
 
-        admin.Role = Roles.Admin;
+        admin.Roles = new List<string>() {Roles.Admin.Id};
         var saveUserResult = await repository.SaveUser(admin);
         if (!saveUserResult.Success)
             throw new ApplicationException(saveUserResult.Error);

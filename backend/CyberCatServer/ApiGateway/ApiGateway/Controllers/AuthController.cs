@@ -42,6 +42,6 @@ public class AuthController : Controller
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> Remove(string password)
     {
-        return await _authService.Remove(new RemoveArgs(User.Id(), password));
+        return await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
     }
 }
