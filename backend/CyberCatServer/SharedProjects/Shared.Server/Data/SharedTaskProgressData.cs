@@ -2,7 +2,6 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
 using ProtoBuf;
-using TaskService.Repositories;
 
 namespace Shared.Server.Data;
 

@@ -1,8 +1,6 @@
 using System.Security.Claims;
-using ApiGateway.Extensions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shared.Models.Domain.Users;
-using Shared.Server.Ids;
 
 namespace ApiGateway.Attributes
 {

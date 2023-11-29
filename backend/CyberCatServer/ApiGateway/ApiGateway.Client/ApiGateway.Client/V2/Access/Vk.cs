@@ -12,12 +12,12 @@ namespace ApiGateway.Client.V2.Access
         public bool IsSignedIn => _credentials.AuthorizationTokenHolder.Token is VkToken;
 
         private readonly Credentials _credentials;
-        private readonly WebClient _webClient;
+        private readonly WebClientV1 _webClientV1;
 
-        internal Vk(Credentials credentials, WebClient webClient)
+        internal Vk(Credentials credentials, WebClientV1 webClientV1)
         {
             _credentials = credentials;
-            _webClient = webClient;
+            _webClientV1 = webClientV1;
         }
 
         public async Task SignIn(string email, string userName)
@@ -28,7 +28,7 @@ namespace ApiGateway.Client.V2.Access
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentNullException(nameof(userName));
 
-            var token = await _webClient.PostAsync<VkToken>("vk/signin", new Dictionary<string, string>()
+            var token = await _webClientV1.PostAsync<VkToken>("vk/signin", new Dictionary<string, string>()
             {
                 ["email"] = email,
                 ["name"] = userName

@@ -7,17 +7,17 @@ namespace ApiGateway.Client.V2.Access.Dev
 {
     public class UsersDev
     {
-        private readonly WebClient _webClient;
+        private readonly WebClientV1 _webClientV1;
 
-        internal UsersDev(WebClient webClient)
+        internal UsersDev(WebClientV1 webClientV1)
         {
-            _webClient = webClient;
+            _webClientV1 = webClientV1;
         }
 
         public async Task RemoveByEmail(string email)
         {
             var devKeyEncrypted = await Crypto.EncryptAsync("cyber-cat", "cyber");
-            await _webClient.PostAsync("dev/users/remove", new Dictionary<string, string>()
+            await _webClientV1.PostAsync("dev/users/remove", new Dictionary<string, string>()
             {
                 ["email"] = email,
                 ["devKey"] = devKeyEncrypted

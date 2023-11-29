@@ -1,4 +1,4 @@
-namespace TaskService.Repositories;
+namespace Shared.Server.Data;
 
 public enum SharedTaskStatus
 {

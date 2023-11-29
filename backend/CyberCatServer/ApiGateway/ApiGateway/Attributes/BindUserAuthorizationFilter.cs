@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using ApiGateway.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shared.Server.Services;

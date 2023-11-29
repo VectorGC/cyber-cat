@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Models.Descriptions;
+using Shared.Models.Domain.Players;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;
 using Shared.Server.ExternalData;
-using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;

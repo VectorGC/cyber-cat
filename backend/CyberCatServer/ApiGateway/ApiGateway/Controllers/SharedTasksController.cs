@@ -1,13 +1,9 @@
 using System.Net;
 using Faker;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Server.Data;
 using Shared.Server.ExternalData;
 using Shared.Server.Services;
-using Boolean = Faker.Boolean;
-using Name = Faker.Name;
 
 namespace ApiGateway.Controllers;
 

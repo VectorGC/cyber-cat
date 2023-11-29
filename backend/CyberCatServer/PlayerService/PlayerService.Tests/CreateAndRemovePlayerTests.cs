@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
+using Shared.Models.Domain.Players;
 using Shared.Models.Domain.Users;
-using Shared.Server.Ids;
 using Shared.Server.Services;
 using Shared.Tests;
 
@@ -23,7 +23,7 @@ public class CreateAndRemovePlayerTests
     public async Task CreateAndDeleteNewPlayer_WhenPassValidUserId()
     {
         using var channel = _factory.CreateGrpcChannel();
-        var service = channel.CreateGrpcService<IPlayerGrpcService>();
+        var service = channel.CreateGrpcService<IPlayerService>();
         var userId = new UserId(1234567);
         var expectedPlayerId = new PlayerId(1234567);
 

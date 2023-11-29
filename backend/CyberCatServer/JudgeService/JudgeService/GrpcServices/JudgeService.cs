@@ -1,5 +1,5 @@
+using Shared.Models.Domain.Verdicts;
 using Shared.Models.Enums;
-using Shared.Models.Models.Verdicts;
 using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;

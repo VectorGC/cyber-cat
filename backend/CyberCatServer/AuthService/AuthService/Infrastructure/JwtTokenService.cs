@@ -15,7 +15,7 @@ public class JwtTokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
 
-    public AuthorizationToken CreateToken(UserModel user)
+    public AuthorizationToken CreateToken(UserEntity user)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
         var claims = CreateClaims(user);
@@ -40,7 +40,7 @@ public class JwtTokenService : ITokenService
         );
     }
 
-    private List<Claim> CreateClaims(UserModel user)
+    private List<Claim> CreateClaims(UserEntity user)
     {
         var claims = new List<Claim>
         {

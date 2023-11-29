@@ -2,13 +2,12 @@
 using MongoDbGenericRepository;
 using PlayerService.Repositories.InternalModels;
 using Shared.Models.Data;
+using Shared.Models.Domain.Players;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Enums;
 using Shared.Models.Ids;
-using Shared.Server;
-using Shared.Server.Configurations;
 using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Ids;
 
 namespace PlayerService.Repositories;
 
@@ -16,8 +15,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
 {
     private readonly ILogger<PlayerMongoRepository> _logger;
 
-    public PlayerMongoRepository(IConfiguration configuration, ILogger<PlayerMongoRepository> logger)
-        : base(configuration.GetDatabaseConnectionString(), configuration.GetDatabaseName())
+    public PlayerMongoRepository(IMongoDbContext mongoDbContext, ILogger<PlayerMongoRepository> logger) : base(mongoDbContext)
     {
         _logger = logger;
     }
@@ -85,7 +83,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         await UpdateOneAsync(playerModel, player => player.Tasks[taskId.Value].Status, status);
     }
 
-    public async Task<TaskData> GetTaskData(PlayerId playerId, TaskId taskId)
+    public async Task<TaskProgressData> GetTaskData(PlayerId playerId, TaskId taskId)
     {
         var player = await GetByIdAsync<PlayerDbModel>(playerId.Value);
         var task = player.Tasks.GetValueOrDefault(taskId.Value) ?? new TaskProgressDbModel();

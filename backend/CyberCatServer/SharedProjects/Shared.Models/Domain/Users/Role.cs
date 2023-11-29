@@ -1,8 +1,11 @@
+using ProtoBuf;
+
 namespace Shared.Models.Domain.Users
 {
-    public readonly struct Role
+    [ProtoContract(SkipConstructor = true)]
+    public class Role
     {
-        public string Id { get; }
+        [ProtoMember(1)] public string Id { get; }
 
         public Role(string id)
         {

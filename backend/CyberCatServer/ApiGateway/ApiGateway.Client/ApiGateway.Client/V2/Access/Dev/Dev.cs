@@ -8,9 +8,9 @@ namespace ApiGateway.Client.V2.Access.Dev
         public bool IsAvailable { get; private set; }
         public UsersDev Users { get; }
 
-        internal Dev(WebClient webClient)
+        internal Dev(WebClientV1 webClientV1)
         {
-            Users = new UsersDev(webClient);
+            Users = new UsersDev(webClientV1);
             SetDebug();
         }
 

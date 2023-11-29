@@ -5,5 +5,5 @@ namespace AuthService.Domain;
 
 public interface ITokenService
 {
-    AuthorizationToken CreateToken(UserModel user);
+    AuthorizationToken CreateToken(UserEntity user);
 }

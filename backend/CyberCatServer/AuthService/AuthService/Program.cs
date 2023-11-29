@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
 using Shared.Server.Configurations;
+using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 builder.Services
-    .AddIdentity<UserModel, RoleModel>()
-    .AddMongoDbStores<UserModel, RoleModel, string>(builder.Configuration.GetDatabaseConnectionString(), builder.Configuration.GetDatabaseName());
+    .AddIdentity<UserEntity, RoleEntity>()
+    .AddMongoDbStores<UserEntity, RoleEntity, string>(builder.Configuration.GetMongoDatabaseContext());
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services

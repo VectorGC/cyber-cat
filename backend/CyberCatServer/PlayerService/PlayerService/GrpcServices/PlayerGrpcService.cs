@@ -1,16 +1,17 @@
 ﻿using PlayerService.Repositories;
 using Shared.Models.Data;
+using Shared.Models.Domain.Players;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
+using Shared.Models.Domain.Verdicts;
 using Shared.Models.Enums;
-using Shared.Models.Models.Verdicts;
 using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace PlayerService.GrpcServices;
 
-public class PlayerGrpcService : IPlayerGrpcService
+public class PlayerGrpcService : IPlayerService
 {
     private readonly IPlayerRepository _playerRepository;
     private readonly IJudgeService _judgeService;
@@ -85,7 +86,7 @@ public class PlayerGrpcService : IPlayerGrpcService
         return verdict;
     }
 
-    public async Task<Response<TaskData>> GetTaskData(GetTaskDataArgs args)
+    public async Task<Response<TaskProgressData>> GetTaskData(GetTaskDataArgs args)
     {
         return await _playerRepository.GetTaskData(args.PlayerId, args.TaskId);
     }

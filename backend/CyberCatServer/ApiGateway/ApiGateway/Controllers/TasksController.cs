@@ -1,13 +1,11 @@
 using System.Net;
 using ApiGateway.Attributes;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Descriptions;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
-using Shared.Server.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;

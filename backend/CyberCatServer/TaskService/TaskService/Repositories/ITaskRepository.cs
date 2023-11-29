@@ -1,4 +1,4 @@
-﻿using Shared.Models.Descriptions;
+﻿using Shared.Models.Domain.Tasks;
 using Shared.Models.Ids;
 
 namespace TaskService.Repositories

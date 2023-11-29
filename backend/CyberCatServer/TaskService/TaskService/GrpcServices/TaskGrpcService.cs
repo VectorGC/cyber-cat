@@ -1,4 +1,4 @@
-using Shared.Models.Descriptions;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;

@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using ApiGateway.Attributes;
 using fastJSON;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Data;
+using Shared.Models.Domain.Players;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Ids;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -17,18 +17,18 @@ namespace ApiGateway.Controllers;
 [Authorize]
 public class PlayerController : ControllerBase
 {
-    private readonly IPlayerGrpcService _playerGrpcService;
+    private readonly IPlayerService _playerService;
 
-    public PlayerController(IPlayerGrpcService playerGrpcService)
+    public PlayerController(IPlayerService playerService)
     {
-        _playerGrpcService = playerGrpcService;
+        _playerService = playerService;
     }
 
     [HttpPost("remove")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
     {
-        return await _playerGrpcService.RemovePlayer(playerId);
+        return await _playerService.RemovePlayer(playerId);
     }
 
     [HttpGet]
@@ -36,17 +36,17 @@ public class PlayerController : ControllerBase
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
     public async Task<ActionResult<PlayerData>> GetPlayerById([FromPlayer] PlayerId playerId)
     {
-        return await _playerGrpcService.GetPlayerById(playerId);
+        return await _playerService.GetPlayerById(playerId);
     }
 
     [HttpPost("signIn")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> SignIn([FromUser] UserId userId)
     {
-        var response = await _playerGrpcService.GetPlayerByUserId(userId);
+        var response = await _playerService.GetPlayerByUserId(userId);
         if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
         {
-            response = await _playerGrpcService.CreatePlayer(userId);
+            response = await _playerService.CreatePlayer(userId);
             return response.ToActionResult();
         }
 
@@ -62,57 +62,17 @@ public class PlayerController : ControllerBase
             throw new ArgumentNullException(nameof(sourceCode));
         }
 
-        var response = await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
+        var response = await _playerService.GetVerdict(new(playerId, taskId, sourceCode));
         var json = JSON.ToJSON(response.Value);
 
         return json;
     }
 
     [HttpGet("tasks/{taskId}")]
-    [ProducesResponseType(typeof(TaskData), (int) HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(TaskProgressData), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
+    public async Task<ActionResult<TaskProgressData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
     {
-        return await _playerGrpcService.GetTaskData(new(playerId, taskId));
+        return await _playerService.GetTaskData(new(playerId, taskId));
     }
-
-    /*
-    [HttpPut("bitcoins/add")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> AddBitcoinsToPlayer([FromForm] string bitcoins)
-    {
-        var playerId = User.Identity.GetUserId();
-        var args = new PlayerBtcArgs {PlayerId = playerId, BitcoinsAmount = Convert.ToInt32(bitcoins)};
-        try
-        {
-            await _playerGrpcService.AddBitcoinsToPlayer(args);
-            return Ok();
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-
-    [HttpPut("bitcoins/remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> TakeBitcoinsFromPlayer([FromForm] string bitcoins)
-    {
-        var playerId = User.Identity.GetUserId();
-        var args = new PlayerBtcArgs {PlayerId = playerId, BitcoinsAmount = Convert.ToInt32(bitcoins)};
-        try
-        {
-            await _playerGrpcService.TakeBitcoinsFromPlayer(args);
-            return Ok();
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
-    }
-    */
 }

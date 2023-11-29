@@ -2,20 +2,20 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shared.Server.Ids;
+using Shared.Models.Domain.Players;
 using Shared.Server.Services;
 
 namespace ApiGateway.Attributes;
 
 public class BindPlayerAuthorizationFilter : IAsyncAuthorizationFilter
 {
-    private readonly IPlayerGrpcService _playerGrpcService;
+    private readonly IPlayerService _playerService;
     private readonly ILogger<BindPlayerAuthorizationFilter> _logger;
 
-    public BindPlayerAuthorizationFilter(IPlayerGrpcService playerGrpcService, ILogger<BindPlayerAuthorizationFilter> logger)
+    public BindPlayerAuthorizationFilter(IPlayerService playerService, ILogger<BindPlayerAuthorizationFilter> logger)
     {
         _logger = logger;
-        _playerGrpcService = playerGrpcService;
+        _playerService = playerService;
     }
 
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
@@ -35,7 +35,7 @@ public class BindPlayerAuthorizationFilter : IAsyncAuthorizationFilter
             return;
         }
 
-        var response = await _playerGrpcService.GetPlayerByUserId(userId);
+        var response = await _playerService.GetPlayerByUserId(userId);
         if (!response.HasValue)
         {
             context.Result = new NotFoundResult();

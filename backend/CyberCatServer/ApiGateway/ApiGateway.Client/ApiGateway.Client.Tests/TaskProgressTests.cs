@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Tests.Abstracts;
 using NUnit.Framework;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Tests
 {

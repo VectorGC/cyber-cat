@@ -1,10 +1,7 @@
-using MongoDB.Driver;
 using MongoDbGenericRepository;
+using Shared.Models.Domain.Players;
 using Shared.Models.Ids;
-using Shared.Server;
-using Shared.Server.Configurations;
 using Shared.Server.Data;
-using Shared.Server.Ids;
 
 namespace TaskService.Repositories.InternalModels;
 
@@ -12,8 +9,7 @@ internal class SharedTaskProgressMongoRepository : BaseMongoRepository<string>, 
 {
     private readonly ILogger<SharedTaskProgressMongoRepository> _logger;
 
-    public SharedTaskProgressMongoRepository(IConfiguration configuration, ILogger<SharedTaskProgressMongoRepository> logger)
-        : base(configuration.GetDatabaseConnectionString(), configuration.GetDatabaseName())
+    public SharedTaskProgressMongoRepository(IMongoDbContext dbContext, ILogger<SharedTaskProgressMongoRepository> logger) : base(dbContext)
     {
         _logger = logger;
     }

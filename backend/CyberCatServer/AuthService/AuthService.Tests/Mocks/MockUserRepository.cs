@@ -7,27 +7,27 @@ namespace AuthService.Tests.Mocks;
 
 internal class MockUserRepository : IUserRepository
 {
-    private readonly Dictionary<string, UserModel> _users = new();
-    private readonly Dictionary<string, RoleModel> _roles = new();
+    private readonly Dictionary<string, UserEntity> _users = new();
+    private readonly Dictionary<string, RoleEntity> _roles = new();
 
-    public async Task<UserModel> FindByEmailAsync(string email)
+    public async Task<UserEntity> FindByEmailAsync(string email)
     {
         return _users.Values.FirstOrDefault(user => user.Email == email);
     }
 
-    public async Task<bool> CheckPasswordAsync(UserModel user, string password)
+    public async Task<bool> CheckPasswordAsync(UserEntity user, string password)
     {
         return user.PasswordHash == password.GetHashCode().ToString();
     }
 
-    public async Task SetAuthenticationTokenAsync(UserModel user, AuthorizationToken token)
+    public async Task SetAuthenticationTokenAsync(UserEntity user, AuthorizationToken token)
     {
         Console.WriteLine($"Set access token '{token.Value}' for user '{user.Id}'");
     }
 
     public async Task<CreateUserResult> CreateUser(string email, string password, string name)
     {
-        var user = new UserModel()
+        var user = new UserEntity()
         {
             Id = (_users.Count + 1).ToString(),
             UserName = name,
@@ -51,12 +51,12 @@ internal class MockUserRepository : IUserRepository
         return 1;
     }
 
-    public async Task<UserModel> GetUser(UserId userId)
+    public async Task<UserEntity> GetUser(UserId userId)
     {
         return _users[userId.Value.ToString()];
     }
 
-    public async Task<SaveUserResult> SaveUser(UserModel user)
+    public async Task<SaveUserResult> SaveUser(UserEntity user)
     {
         var success = _users.Remove(user.Id);
         _users[user.Id] = user;
@@ -76,7 +76,7 @@ internal class MockUserRepository : IUserRepository
 
     public async Task<CreateRoleResult> CreateRole(Role role)
     {
-        _roles[role.Id] = new RoleModel()
+        _roles[role.Id] = new RoleEntity()
         {
             Id = role.Id
         };

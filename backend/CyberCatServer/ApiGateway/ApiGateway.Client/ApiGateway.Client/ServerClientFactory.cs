@@ -17,7 +17,7 @@ namespace ApiGateway.Client
             var webClient = new ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest.UnityWebClient();
 #endif
 #if WEB_CLIENT
-            var webClient = new ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter.WebClientAdapter();
+            var webClient = new ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter.WebClientAdapter(true);
 #endif
             return new AnonymousClientProxy(uri, webClient);
         }

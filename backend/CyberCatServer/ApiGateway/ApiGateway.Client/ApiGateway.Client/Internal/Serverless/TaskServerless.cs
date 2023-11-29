@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Models;
+using Shared.Models.Domain.Verdicts;
 using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
-using Shared.Models.Models.Verdicts;
 
 namespace ApiGateway.Client.Internal.Serverless
 {

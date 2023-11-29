@@ -21,8 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Exceptions\AuthService" />
-      <Folder Include="Infrastructure\Authorization" />
+      <Folder Include="Ids" />
     </ItemGroup>
 
 </Project>

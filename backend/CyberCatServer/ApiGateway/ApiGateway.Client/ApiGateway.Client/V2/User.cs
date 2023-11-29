@@ -1,6 +1,6 @@
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.V2.Access;
-using TinyIoC;
+using ApiGateway.Client.V3.Application;
 
 namespace ApiGateway.Client.V2
 {
@@ -14,7 +14,7 @@ namespace ApiGateway.Client.V2
         public User(ServerEnvironment serverEnvironment)
         {
             var credentials = new Credentials();
-            var webClient = new WebClient(serverEnvironment, credentials.AuthorizationTokenHolder);
+            var webClient = new WebClientV1(serverEnvironment, credentials.AuthorizationTokenHolder);
 
             _container.Register(credentials);
             _container.Register(webClient);

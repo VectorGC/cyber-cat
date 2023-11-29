@@ -11,10 +11,10 @@ namespace AuthService.Infrastructure;
 
 internal class UserManagerRepository : IUserRepository
 {
-    private readonly UserManager<UserModel> _userManager;
-    private readonly RoleManager<RoleModel> _roleManager;
+    private readonly UserManager<UserEntity> _userManager;
+    private readonly RoleManager<RoleEntity> _roleManager;
 
-    public UserManagerRepository(UserManager<UserModel> userManager, RoleManager<RoleModel> roleManager)
+    public UserManagerRepository(UserManager<UserEntity> userManager, RoleManager<RoleEntity> roleManager)
     {
         _roleManager = roleManager;
         _userManager = userManager;
@@ -23,7 +23,7 @@ internal class UserManagerRepository : IUserRepository
     public async Task<CreateUserResult> CreateUser(string email, string password, string name)
     {
         var nextId = _userManager.Users.Count() + 1;
-        var userModel = new UserModel
+        var userModel = new UserEntity
         {
             Id = nextId.ToString(),
             Email = email,
@@ -54,29 +54,29 @@ internal class UserManagerRepository : IUserRepository
         return new RemoveUserResult(true, string.Empty, user);
     }
 
-    public async Task<UserModel> FindByEmailAsync(string email)
+    public async Task<UserEntity> FindByEmailAsync(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
         return user;
     }
 
-    public async Task<bool> CheckPasswordAsync(UserModel user, string password)
+    public async Task<bool> CheckPasswordAsync(UserEntity user, string password)
     {
         return await _userManager.CheckPasswordAsync(user, password);
     }
 
-    public async Task SetAuthenticationTokenAsync(UserModel user, AuthorizationToken token)
+    public async Task SetAuthenticationTokenAsync(UserEntity user, AuthorizationToken token)
     {
         await _userManager.SetAuthenticationTokenAsync(user, token.Type, token.TokenName, token.Value);
     }
 
-    public async Task<UserModel> GetUser(UserId userId)
+    public async Task<UserEntity> GetUser(UserId userId)
     {
         var userModel = await _userManager.FindByIdAsync(userId.Value.ToString());
         return userModel;
     }
 
-    public async Task<SaveUserResult> SaveUser(UserModel userModel)
+    public async Task<SaveUserResult> SaveUser(UserEntity userModel)
     {
         if (userModel == null)
         {
@@ -120,7 +120,7 @@ internal class UserManagerRepository : IUserRepository
 
     public async Task<CreateRoleResult> CreateRole(Role role)
     {
-        var roleModel = new RoleModel(role)
+        var roleModel = new RoleEntity(role)
         {
             Id = role.Id
         };

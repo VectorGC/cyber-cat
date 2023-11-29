@@ -1,5 +1,5 @@
 ﻿using System;
-using Shared.Server.Ids;
+using Shared.Models.Domain.Players;
 
 namespace Shared.Server.Exceptions.PlayerService;
 

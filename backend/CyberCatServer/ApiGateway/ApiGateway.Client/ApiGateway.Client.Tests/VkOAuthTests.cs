@@ -23,7 +23,7 @@ namespace ApiGateway.Client.Tests
             var email = "test_vk_oauth";
             var userName = "TestVkOauth";
 
-            var client = new V2.ApiGateway.Client(_serverEnvironment);
+            var client = new Client.V2.ApiGateway.Client(_serverEnvironment);
 
             var user = client.User;
             Assert.IsNotNull(user.Access<Vk>());

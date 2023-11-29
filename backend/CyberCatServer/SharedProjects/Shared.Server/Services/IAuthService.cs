@@ -5,7 +5,6 @@ using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Data;
-using Shared.Server.Ids;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;

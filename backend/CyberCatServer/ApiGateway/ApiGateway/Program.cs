@@ -2,8 +2,7 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using ApiGateway.Attributes;
-using ApiGateway.Configurations;
-using ApiGateway.Extensions;
+using ApiGateway.Infrastructure;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -13,9 +12,7 @@ using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// We utilize a strongly-typed class to read and conveniently work with the appsettings.json.
-builder.Services.Configure<ApiGatewayAppSettings>(builder.Configuration);
-var appArgs = Parser.Default.ParseArguments<Args>(args).Value;
+var appArgs = Parser.Default.ParseArguments<ApiGatewayArgs>(args).Value;
 var host = appArgs.UseHttps ? new Uri("https://0.0.0.0:443") : new Uri("http://0.0.0.0:80");
 
 builder.Services.AddAuthentication(options =>
@@ -34,10 +31,9 @@ builder.Services.AddControllers(options =>
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(); });
 
-var appSettings = builder.Configuration.Get<ApiGatewayAppSettings>();
-builder.Services.AddCodeFirstGrpcClient<IAuthService>(options => { options.Address = appSettings.ConnectionStrings.AuthServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<ITaskService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<IPlayerGrpcService>(options => { options.Address = appSettings.ConnectionStrings.PlayerServiceGrpcAddress; });
+builder.AddAuthServiceGrpcClient();
+builder.AddTaskServiceGrpcClient();
+builder.AddPlayerServiceGrpcClient();
 
 builder.WebHost.UseKestrel(options =>
 {

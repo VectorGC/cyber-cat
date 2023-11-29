@@ -1,15 +1,14 @@
 using System.Net;
-using ApiGateway.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Server.Ids;
+using Shared.Models.Infrastructure;
 using Shared.Server.Infrastructure;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Route("[controller]")]
+//[Route("[controller]")]
 [Authorize]
 public class AuthController : Controller
 {
@@ -21,24 +20,25 @@ public class AuthController : Controller
     }
 
     [AllowAnonymous]
-    [HttpPost("signUp")]
+    [HttpPost("auth/register")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SignUp(string email, string password, string name)
+    public async Task<ActionResult> Register(string email, string password, string name)
     {
+        return Conflict(new {message = "asdqwe"});
         var response = await _authService.CreateUser(new CreateUserArgs(email, password, name));
         return response.ToActionResult();
     }
 
     [AllowAnonymous]
-    [HttpPost("signIn")]
+    [HttpPost(WebApi.Login)]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public async Task<JsonResult> SignIn(string username, string password)
+    public async Task<JsonResult> Login(string username, string password)
     {
         var response = await _authService.GetAccessToken(new GetAccessTokenArgs(username, password));
         return Json(response.Value);
     }
 
-    [HttpPost("remove")]
+    [HttpPost("auth/remove")]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     public async Task<ActionResult> Remove(string password)
     {
