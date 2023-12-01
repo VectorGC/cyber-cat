@@ -1,12 +1,11 @@
-using PlayerService.GrpcServices;
-using PlayerService.Repositories;
+using PlayerService.Application;
+using PlayerService.Infrastructure;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Configurations;
 using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMongoDatabaseContext();
+builder.AddMongoDatabaseContext();
 builder.Services.AddScoped<IPlayerRepository, PlayerMongoRepository>();
 
 builder.AddJudgeServiceGrpcClient();

@@ -1,57 +1,50 @@
-using System;
-using System.Diagnostics;
+using System.Threading.Tasks;
+using ApiGateway.Client.V3.Application.API;
+using ApiGateway.Client.V3.Application.Services;
+using ApiGateway.Client.V3.Application.UseCases;
+using ApiGateway.Client.V3.Application.UseCases.Player;
 using ApiGateway.Client.V3.Domain;
 using ApiGateway.Client.V3.Infrastructure;
+using ApiGateway.Client.V3.Infrastructure.WebServices;
 
 namespace ApiGateway.Client.V3.Application
 {
-    public class ApiGatewayClient : IDisposable
+    public class ApiGatewayClient : IApiGatewayClient
     {
-        public PlayerModel Player
+        public PlayerAPI Player
         {
             get
             {
-                var playerContext = _container.Resolve<PlayerContext>();
-                return playerContext.IsLogined ? playerContext.Player : null;
+                var context = _container.Resolve<PlayerContext>();
+                return context.IsLogined ? _container.Resolve<PlayerAPI>() : null;
             }
         }
 
-        public PlayerService PlayerService => _container.Resolve<PlayerService>();
-        public TaskService TaskService => _container.Resolve<TaskService>();
-
         private readonly TinyIoCContainer _container;
-        private bool _debug;
 
         public ApiGatewayClient(ServerEnvironment serverEnvironment)
         {
             _container = new TinyIoCContainer();
 
             // --- Application ---
-            _container.Register<PlayerService>().AsSingleton();
-            _container.Register<TaskService>().AsSingleton();
+            _container.AutoRegister(type => type.BaseType == typeof(API.API)); // API
+            _container.AutoRegister(type => type.GetInterface(nameof(IUseCase)) != null); // UseCases
             _container.Register<PlayerContext>().AsSingleton();
 
-            // --- Domain ---
-            _container.Register<ITaskRepository, TaskWebRepository>().AsSingleton();
-
             // --- Infrastructure ---
-            SetDebugMode();
-            var webClientFactory = new WebClientFactory(serverEnvironment, _debug);
-            _container.Register(webClientFactory);
-            _container.Register<AuthService>().AsSingleton();
-            _container.Register<TaskDescriptionWebProvider>().AsSingleton();
-            _container.Register<TaskPlayerProgressWebProvider>().AsSingleton();
-        }
-
-        [Conditional("DEBUG")]
-        private void SetDebugMode()
-        {
-            _debug = true;
+            _container.Register(new WebClientFactory(serverEnvironment));
+            _container.Register<IUserService, UserWebService>().AsSingleton();
+            _container.Register<ITaskDescriptionService, TaskDescriptionWebService>().AsSingleton();
+            _container.Register<ITaskPlayerProgressService, TaskPlayerProgressWebService>().AsSingleton();
+            _container.Register<ISubmitSolutionTaskService, SubmitSolutionTaskWebService>().AsSingleton();
         }
 
         public void Dispose()
         {
             _container?.Dispose();
         }
+
+        public Task<Result> RegisterPlayer(string email, string password, string userName) => _container.Resolve<RegisterPlayer>().Execute(email, password, userName);
+        public Task<Result<PlayerModel>> LoginPlayer(string email, string password) => _container.Resolve<LoginPlayer>().Execute(email, password);
     }
 }

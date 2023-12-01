@@ -62,8 +62,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlayerService", "PlayerServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerService", "PlayerService\PlayerService\PlayerService.csproj", "{57856F93-F413-4972-A6A2-7CD74B74721E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerService.Tests", "PlayerService\PlayerService.Tests\PlayerService.Tests.csproj", "{BD5C4250-6520-4139-9B35-27516E05D1DA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -130,11 +128,6 @@ Global
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57856F93-F413-4972-A6A2-7CD74B74721E}.Release|Unity WebGL.ActiveCfg = Release|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD5C4250-6520-4139-9B35-27516E05D1DA}.Release|Unity WebGL.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,7 +147,6 @@ Global
 		{92233391-7656-4F93-A73B-BE0797EF5B74} = {2C859AAA-6580-4039-82A2-A05EAFC79E57}
 		{9A39A6F2-FD40-450E-B558-16039FB74973} = {2C859AAA-6580-4039-82A2-A05EAFC79E57}
 		{57856F93-F413-4972-A6A2-7CD74B74721E} = {89078013-8DCA-4332-8CDC-5EBC81319499}
-		{BD5C4250-6520-4139-9B35-27516E05D1DA} = {89078013-8DCA-4332-8CDC-5EBC81319499}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96D7A6BD-63EB-4D5D-B854-E2888AF5B7B8}

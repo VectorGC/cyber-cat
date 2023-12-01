@@ -1,12 +1,7 @@
-using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using ApiGateway.Attributes;
 using ApiGateway.Infrastructure;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using ProtoBuf.Grpc.ClientFactory;
 using Shared.Server.Configurations;
 using Shared.Server.Services;
 
@@ -22,11 +17,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.TokenValidationParameters; });
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<BindUserAuthorizationFilter>();
-    options.Filters.Add<BindPlayerAuthorizationFilter>();
-});
+builder.Services.AddControllers();
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(); });

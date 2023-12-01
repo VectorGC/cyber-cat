@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ProtoBuf;
 
 namespace Shared.Models.Infrastructure.Authorization
@@ -10,12 +11,8 @@ namespace Shared.Models.Infrastructure.Authorization
         public override string TokenName => "access_token";
 
         [ProtoMember(1)] public string access_token { get; set; }
-        [ProtoMember(2)] public string username { get; set; }
-
-        public JwtAccessToken(string accessToken, string userName)
-        {
-            access_token = accessToken;
-            username = userName;
-        }
+        [ProtoMember(2)] public string email { get; set; }
+        [ProtoMember(3)] public string username { get; set; }
+        [ProtoMember(4)] public List<string> roles { get; set; }
     }
 }

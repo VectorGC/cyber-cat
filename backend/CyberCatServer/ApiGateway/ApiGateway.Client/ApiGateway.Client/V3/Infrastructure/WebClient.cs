@@ -13,14 +13,14 @@ namespace ApiGateway.Client.V3.Infrastructure
         private readonly IWebClientAdapter _webClient;
         private readonly AuthorizationToken _token;
 
-        public WebClient(ServerEnvironment serverEnvironment, bool debug, AuthorizationToken token = null)
+        public WebClient(ServerEnvironment serverEnvironment, AuthorizationToken token = null)
         {
             _webClient =
 #if UNITY_WEBGL
             new UnityWebRequest.UnityWebClient();
 #endif
 #if WEB_CLIENT
-                new ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter.WebClientAdapter(debug);
+                new ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter.WebClientAdapter();
 #endif
 
             _token = token;
@@ -41,9 +41,14 @@ namespace ApiGateway.Client.V3.Infrastructure
             return _webClient.GetStringAsync(ServerEnvironment.ToUri(path));
         }
 
-        public Task<TResponse> GetAsync<TResponse>(string path)
+        public Task<TResponse> GetFastJsonAsync<TResponse>(string path)
         {
             return _webClient.GetFromFastJsonPolymorphicAsync<TResponse>(ServerEnvironment.ToUri(path));
+        }
+
+        public Task<TResponse> GetAsync<TResponse>(string path)
+        {
+            return _webClient.GetFromJsonAsync<TResponse>(ServerEnvironment.ToUri(path));
         }
 
         public Task<string> PostAsync(string path, Dictionary<string, string> form)
@@ -56,6 +61,11 @@ namespace ApiGateway.Client.V3.Infrastructure
             return _webClient.PostAsync(ServerEnvironment.ToUri(path));
         }
 
+        public async Task<TResponse> PostFastJsonAsync<TResponse>(string path, Dictionary<string, string> form)
+        {
+            return await _webClient.PostAsFastJsonPolymorphicAsync<TResponse>(ServerEnvironment.ToUri(path), form);
+        }
+        
         public async Task<TResponse> PostAsync<TResponse>(string path, Dictionary<string, string> form)
         {
             return await _webClient.PostAsFastJsonPolymorphicAsync<TResponse>(ServerEnvironment.ToUri(path), form);

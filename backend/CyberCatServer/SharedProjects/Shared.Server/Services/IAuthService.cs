@@ -2,9 +2,7 @@ using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Users;
-using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
@@ -22,7 +20,8 @@ public interface IAuthService
 public record CreateUserArgs(
     [property: ProtoMember(1)] string Email,
     [property: ProtoMember(2)] string Password,
-    [property: ProtoMember(3)] string UserName);
+    [property: ProtoMember(3)] string UserName,
+    [property: ProtoMember(4)] Roles Roles);
 
 [ProtoContract(SkipConstructor = true)]
 public record GetAccessTokenArgs(

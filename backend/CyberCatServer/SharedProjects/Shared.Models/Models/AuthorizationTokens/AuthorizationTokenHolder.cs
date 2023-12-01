@@ -1,5 +1,4 @@
 using System;
-using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
 
 namespace Shared.Models.Models.AuthorizationTokens

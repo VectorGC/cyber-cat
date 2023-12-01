@@ -8,5 +8,5 @@ namespace Shared.Server.Services;
 [Service]
 public interface IJudgeService
 {
-    Task<Response<Verdict>> GetVerdict(GetVerdictArgs args);
+    Task<Response<Verdict>> GetVerdict(SubmitSolutionArgs args);
 }

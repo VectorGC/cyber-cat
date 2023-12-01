@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AuthService.Domain;
+using AuthService.Application;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -58,7 +58,7 @@ public class AddAdminUserIfNeeded : IHostedService
             }
         }
 
-        admin.Roles = new List<string>() {Roles.Admin.Id};
+        admin.Roles = new List<string>() {Roles.Admin};
         var saveUserResult = await repository.SaveUser(admin);
         if (!saveUserResult.Success)
             throw new ApplicationException(saveUserResult.Error);

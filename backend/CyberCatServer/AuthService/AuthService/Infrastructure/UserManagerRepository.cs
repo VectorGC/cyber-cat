@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
+using AuthService.Application;
 using AuthService.Domain;
-using AuthService.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
@@ -93,38 +93,34 @@ internal class UserManagerRepository : IUserRepository
         return new SaveUserResult(true, string.Empty);
     }
 
-    public async Task<int> GetUsersCountWithRole(Role role)
+    public async Task<int> GetUsersCountWithRole(string roleId)
     {
-        var roleModel = await _roleManager.FindByNameAsync(role.Id);
+        var roleModel = await _roleManager.FindByNameAsync(roleId);
         if (roleModel == null)
-            throw new RoleNotFoundException(role);
+            throw new RoleNotFoundException(roleId);
 
         var users = await _userManager.GetUsersInRoleAsync(roleModel.Name);
 
         return users.Count;
     }
 
-    public async Task<string> GetRoleId(Role role)
+    public async Task<string> GetRoleId(string roleId)
     {
-        var roleModel = await _roleManager.FindByIdAsync(role.Id);
+        var roleModel = await _roleManager.FindByIdAsync(roleId);
         if (roleModel == null)
-            throw new RoleNotFoundException(role);
+            throw new RoleNotFoundException(roleId);
 
         return roleModel.Id;
     }
 
-    public async Task<bool> RoleExists(Role role)
+    public async Task<bool> RoleExists(string roleId)
     {
-        return await _roleManager.FindByIdAsync(role.Id) != null;
+        return await _roleManager.FindByIdAsync(roleId) != null;
     }
 
-    public async Task<CreateRoleResult> CreateRole(Role role)
+    public async Task<CreateRoleResult> CreateRole(string roleId)
     {
-        var roleModel = new RoleEntity(role)
-        {
-            Id = role.Id
-        };
-
+        var roleModel = new RoleEntity(roleId);
         var result = await _roleManager.CreateAsync(roleModel);
         if (!result.Succeeded)
         {

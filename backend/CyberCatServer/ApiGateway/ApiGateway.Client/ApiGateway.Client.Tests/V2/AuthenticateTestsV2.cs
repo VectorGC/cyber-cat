@@ -24,14 +24,20 @@ namespace ApiGateway.Client.Tests.V2
         {
             using (var client = new ApiGatewayClient(_serverEnvironment))
             {
-                var registerResult = await client.PlayerService.RegisterPlayer(Email, Password, UserName);
+                var registerResult = await client.RegisterPlayer(Email, Password, UserName);
                 Assert.IsTrue(registerResult.IsSuccess);
 
-                var doubleRegisterResult = await client.PlayerService.RegisterPlayer(Email, Password, UserName);
+                var doubleRegisterResult = await client.RegisterPlayer(Email, Password, UserName);
                 Assert.IsFalse(doubleRegisterResult.IsSuccess);
                 Assert.AreEqual("User is already registered", doubleRegisterResult.Error);
 
-                var removeResult = client.PlayerService.Remove();
+                var loginResult = await client.LoginPlayer(Email, Password);
+                Assert.IsTrue(loginResult.IsSuccess);
+                Assert.IsNotNull(client.Player);
+                Assert.AreEqual(Email, client.Player.User.Email);
+                Assert.AreEqual(UserName, client.Player.User.Name);
+
+                var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -43,23 +49,23 @@ namespace ApiGateway.Client.Tests.V2
             {
                 Assert.IsNull(client.Player);
 
-                var loginWithoutRegisterResult = await client.PlayerService.LoginPlayer(Email, Password);
+                var loginWithoutRegisterResult = await client.LoginPlayer(Email, Password);
                 Assert.IsFalse(loginWithoutRegisterResult.IsSuccess);
-                Assert.AreEqual($"Not found user '{UserName}'", loginWithoutRegisterResult.Error);
+                Assert.AreEqual($"Not found user '{Email}'", loginWithoutRegisterResult.Error);
 
-                await client.PlayerService.RegisterPlayer(Email, Password, UserName);
+                await client.RegisterPlayer(Email, Password, UserName);
 
-                var wrongLoginAfterRegisterResult = await client.PlayerService.LoginPlayer(Email, WrongPassword);
+                var wrongLoginAfterRegisterResult = await client.LoginPlayer(Email, WrongPassword);
                 Assert.IsFalse(wrongLoginAfterRegisterResult.IsSuccess);
                 Assert.AreEqual("Wrong password", wrongLoginAfterRegisterResult.Error);
 
-                var loginResult = await client.PlayerService.LoginPlayer(Email, Password);
+                var loginResult = await client.LoginPlayer(Email, Password);
                 Assert.IsTrue(loginResult.IsSuccess);
                 Assert.IsNotNull(client.Player);
                 Assert.AreEqual(Email, client.Player.User.Email);
                 Assert.AreEqual(UserName, client.Player.User.Name);
 
-                var removeResult = client.PlayerService.Remove();
+                var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -69,16 +75,17 @@ namespace ApiGateway.Client.Tests.V2
         {
             using (var client = new ApiGatewayClient(_serverEnvironment))
             {
-                await client.PlayerService.RegisterPlayer(Email, Password, UserName);
+                await client.RegisterPlayer(Email, Password, UserName);
+                await client.LoginPlayer(Email, Password);
 
-                var logoutWithoutLoginResult = client.PlayerService.Logout();
-                Assert.IsFalse(logoutWithoutLoginResult.IsSuccess);
-                Assert.AreEqual("First, you need to log in to the account", logoutWithoutLoginResult.Error);
-
-                var logoutResult = client.PlayerService.Logout();
+                var logoutResult = client.Player.Logout();
                 Assert.IsTrue(logoutResult.IsSuccess);
 
-                var removeResult = client.PlayerService.Remove();
+                Assert.IsNull(client.Player);
+
+                await client.LoginPlayer(Email, Password);
+
+                var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -88,14 +95,12 @@ namespace ApiGateway.Client.Tests.V2
         {
             using (var client = new ApiGatewayClient(_serverEnvironment))
             {
-                var removeWithoutRegister = client.PlayerService.Remove();
-                Assert.IsFalse(removeWithoutRegister.IsSuccess);
-                Assert.AreEqual($"First, you need to log in to the account", removeWithoutRegister.Error);
+                Assert.IsNull(client.Player);
 
-                await client.PlayerService.RegisterPlayer(Email, Password, UserName);
-                await client.PlayerService.LoginPlayer(Email, Password);
+                await client.RegisterPlayer(Email, Password, UserName);
+                await client.LoginPlayer(Email, Password);
 
-                var removeResult = client.PlayerService.Remove();
+                var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }

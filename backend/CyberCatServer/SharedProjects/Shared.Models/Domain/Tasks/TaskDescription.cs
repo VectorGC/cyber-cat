@@ -8,7 +8,7 @@ namespace Shared.Models.Domain.Tasks
         [ProtoMember(1)]
         public string Id
         {
-            get => id = Id;
+            get => id;
             set => id = value;
         }
 

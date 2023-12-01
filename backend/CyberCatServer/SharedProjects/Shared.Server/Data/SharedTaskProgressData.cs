@@ -10,7 +10,7 @@ namespace Shared.Server.Data;
 public class SharedTaskProgressData : IDocument<string>
 {
     [ProtoMember(1)] [BsonId] public string Id { get; set; }
-    [ProtoMember(2)] public long PlayerIdData { get; set; }
+    [ProtoMember(2)] public long UserId { get; set; }
     [ProtoMember(3)] public SharedTaskStatus Status { get; set; }
     public int Version { get; set; }
 }

@@ -1,6 +1,5 @@
 using System;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Ids;
 
 namespace ApiGateway.Client.V3.Domain
 {
@@ -10,17 +9,17 @@ namespace ApiGateway.Client.V3.Domain
 
         public TaskId Id => Description.Id;
         public TaskDescription Description { get; }
-        public TaskStatus Status { get; private set; }
+        public TaskProgressStatus ProgressStatus { get; private set; }
 
-        public TaskModel(TaskDescription description, TaskProgressData progressData)
+        public TaskModel(TaskDescription description, TaskProgress progress)
         {
             Description = description;
-            Status = new TaskStatus(progressData);
+            ProgressStatus = new TaskProgressStatus(progress);
         }
 
-        public void SetProgress(TaskProgressData progressData)
+        public void SetProgress(TaskProgress progress)
         {
-            Status = new TaskStatus(progressData);
+            ProgressStatus = new TaskProgressStatus(progress);
             OnChanged?.Invoke(this);
         }
     }

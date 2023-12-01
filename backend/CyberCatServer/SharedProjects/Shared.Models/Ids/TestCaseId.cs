@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ProtoBuf;
+using Shared.Models.Domain.Tasks;
 
 namespace Shared.Models.Ids
 {

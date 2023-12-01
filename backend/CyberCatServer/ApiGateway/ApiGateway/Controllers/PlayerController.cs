@@ -1,19 +1,15 @@
 ﻿using System.Net;
-using ApiGateway.Attributes;
 using fastJSON;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Data;
-using Shared.Models.Domain.Players;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Domain.Users;
-using Shared.Server.Exceptions.PlayerService;
+using Shared.Models.Infrastructure;
+using Shared.Server.Infrastructure;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Route("[controller]")]
 [Authorize]
 public class PlayerController : ControllerBase
 {
@@ -24,55 +20,39 @@ public class PlayerController : ControllerBase
         _playerService = playerService;
     }
 
-    [HttpPost("remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
+    [HttpGet(WebApi.GetTasksProgress)]
+    [ProducesResponseType(typeof(List<TaskProgress>), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<List<TaskProgress>>> GetTasksProgress()
     {
-        return await _playerService.RemovePlayer(playerId);
+        var userId = HttpContext.User.Id();
+        var response = await _playerService.GetTasksProgress(new GetTasksProgressArgs(userId));
+        return response.Value ?? new List<TaskProgress>();
     }
 
-    [HttpGet]
-    [ProducesResponseType(typeof(PlayerData), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult<PlayerData>> GetPlayerById([FromPlayer] PlayerId playerId)
+    [HttpGet(WebApi.GetTaskProgressTemplate)]
+    [ProducesResponseType(typeof(TaskProgress), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<TaskProgress>> GetTaskProgress(string taskId)
     {
-        return await _playerService.GetPlayerById(playerId);
+        var userId = HttpContext.User.Id();
+        var response = await _playerService.GetTaskProgress(new GetTaskProgressArgs(userId, taskId));
+        return response;
     }
 
-    [HttpPost("signIn")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SignIn([FromUser] UserId userId)
-    {
-        var response = await _playerService.GetPlayerByUserId(userId);
-        if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
-        {
-            response = await _playerService.CreatePlayer(userId);
-            return response.ToActionResult();
-        }
-
-        return response.ToActionResult();
-    }
-
-    [HttpPost("verify/{taskId}")]
+    [HttpPost(WebApi.SubmitSolutionTemplate)]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<string>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
+    public async Task<ActionResult<string>> SubmitSolution(string taskId, [FromForm] string solution)
     {
-        if (string.IsNullOrEmpty(sourceCode))
+        if (string.IsNullOrEmpty(solution))
         {
-            throw new ArgumentNullException(nameof(sourceCode));
+            throw new ArgumentNullException(nameof(solution));
         }
 
-        var response = await _playerService.GetVerdict(new(playerId, taskId, sourceCode));
+        var userId = HttpContext.User.Id();
+        var response = await _playerService.SubmitSolution(new SubmitSolutionArgs(userId, taskId, solution));
         var json = JSON.ToJSON(response.Value);
 
         return json;
-    }
-
-    [HttpGet("tasks/{taskId}")]
-    [ProducesResponseType(typeof(TaskProgressData), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskProgressData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
-    {
-        return await _playerService.GetTaskData(new(playerId, taskId));
     }
 }

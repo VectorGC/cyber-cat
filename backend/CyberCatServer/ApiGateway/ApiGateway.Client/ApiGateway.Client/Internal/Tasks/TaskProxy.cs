@@ -4,11 +4,8 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Data;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
-using Shared.Models.Enums;
-using Shared.Models.Ids;
 using Shared.Models.Models.TestCases;
 
 namespace ApiGateway.Client.Internal.Tasks
@@ -60,7 +57,7 @@ namespace ApiGateway.Client.Internal.Tasks
 
         public async Task<ITaskProgressStatus> GetStatus()
         {
-            var data = await _webClient.GetFromJsonAsync<TaskProgressData>(_uri + $"player/tasks/{_taskId}");
+            var data = await _webClient.GetFromJsonAsync<TaskProgress>(_uri + $"player/tasks/{_taskId}");
             return GetStatus(data);
         }
 
@@ -70,16 +67,16 @@ namespace ApiGateway.Client.Internal.Tasks
             return testCases;
         }
 
-        private ITaskProgressStatus GetStatus(TaskProgressData progressData)
+        private ITaskProgressStatus GetStatus(TaskProgress progress)
         {
-            switch (progressData.Status)
+            switch (progress.StatusType)
             {
-                case TaskProgressStatus.NotStarted:
+                case TaskProgressStatusType.NotStarted:
                     return new NotStarted();
-                case TaskProgressStatus.HaveSolution:
-                    return new HaveSolution(progressData.Solution);
-                case TaskProgressStatus.Complete:
-                    return new Complete(progressData.Solution);
+                case TaskProgressStatusType.HaveSolution:
+                    return new HaveSolution(progress.Solution);
+                case TaskProgressStatusType.Complete:
+                    return new Complete(progress.Solution);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

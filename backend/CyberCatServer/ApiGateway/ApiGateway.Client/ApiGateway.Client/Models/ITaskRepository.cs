@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Shared.Models.Ids;
+using Shared.Models.Domain.Tasks;
 
 namespace ApiGateway.Client.Models
 {

@@ -22,7 +22,7 @@ public class VkController : ControllerBase
         var password = $"{userVkId}_vk";
         if (!userId.HasValue)
         {
-            await _authService.CreateUser(new CreateUserArgs(email, password, name));
+            await _authService.CreateUser(new CreateUserArgs(email, password, name, null));
         }
 
         var token = await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));

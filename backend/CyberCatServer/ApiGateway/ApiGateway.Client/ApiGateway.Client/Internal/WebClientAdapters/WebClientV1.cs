@@ -13,7 +13,7 @@ namespace ApiGateway.Client.Internal.WebClientAdapters
             new UnityWebRequest.UnityWebClient();
 #endif
 #if WEB_CLIENT
-            new WebClientAdapter.WebClientAdapter(true);
+            new WebClientAdapter.WebClientAdapter();
 #endif
 
         private readonly AuthorizationTokenHolder _tokenHolder;

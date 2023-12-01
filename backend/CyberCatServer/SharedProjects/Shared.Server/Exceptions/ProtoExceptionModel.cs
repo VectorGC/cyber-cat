@@ -10,8 +10,7 @@ namespace Shared.Server.Exceptions
     [ProtoInclude(100, typeof(UserNotFoundException))]
     [ProtoInclude(101, typeof(UnauthorizedException))]
     [ProtoInclude(102, typeof(IdentityException))]
-    [ProtoInclude(103, typeof(PlayerNotFoundException))]
-    [ProtoInclude(104, typeof(IdentityPlayerException))]
+    [ProtoInclude(103, typeof(IdentityPlayerException))]
     public abstract class ProtoExceptionModel : Exception
     {
         [ProtoMember(1)] public string ProtoMessage { get; set; }

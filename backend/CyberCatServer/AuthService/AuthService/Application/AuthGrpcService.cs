@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using AuthService.Domain;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Infrastructure.Exceptions;
@@ -21,12 +20,23 @@ public class AuthGrpcService : IAuthService
 
     public async Task<Response<UserId>> CreateUser(CreateUserArgs args)
     {
-        var (email, password, userName) = args;
+        var (email, password, userName, roles) = args;
         var result = await _userRepository.CreateUser(email, password, userName);
         if (!result.Success)
         {
             return new IdentityException(result.Error);
         }
+
+        if (roles != null)
+        {
+            result.CreatedUser.Roles = roles.Values;
+            var saveResult = await _userRepository.SaveUser(result.CreatedUser);
+            if (!saveResult.Success)
+            {
+                return new IdentityException(saveResult.Error);
+            }
+        }
+
 
         return new UserId(result.CreatedUser.Id);
     }

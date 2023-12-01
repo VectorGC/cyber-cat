@@ -1,5 +1,5 @@
 using ProtoBuf;
-using Shared.Models.Ids;
+using Shared.Models.Domain.Tasks;
 
 namespace Shared.Models.Domain.Verdicts
 {

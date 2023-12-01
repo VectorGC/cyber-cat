@@ -45,7 +45,6 @@ namespace ApiGateway.Client.V3.Infrastructure
 
         public static implicit operator Result<TValue>(TValue value) => Success(value);
         public static implicit operator TValue(Result<TValue> result) => result.Value;
-        public static implicit operator Result<TValue>(string error) => Failure(error);
         public static implicit operator Result<TValue>(Exception exception) => Failure(exception);
     }
 }

@@ -9,7 +9,7 @@ namespace ApiGateway.Client.Tests.V2.Extensions
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
     public abstract class ApiGatewayClientTestFixture
     {
-        protected ServerEnvironment ServerEnvironment;
+        protected readonly ServerEnvironment ServerEnvironment;
 
         public ApiGatewayClientTestFixture(ServerEnvironment serverEnvironment)
         {
@@ -20,15 +20,15 @@ namespace ApiGateway.Client.Tests.V2.Extensions
         {
             var client = new ApiGatewayClient(ServerEnvironment);
 
-            var result = await client.PlayerService.RegisterPlayer(email, password, userName);
+            var result = await client.RegisterPlayer(email, password, userName);
             if (!result.IsSuccess)
                 throw new InvalidOperationException(result.Error);
 
-            var loginResult = await client.PlayerService.LoginPlayer(email, password);
+            var loginResult = await client.LoginPlayer(email, password);
             if (!loginResult.IsSuccess)
                 throw new InvalidOperationException(loginResult.Error);
 
-            return new TestPlayerClient(client);
+            return new TestPlayerClient(client, password);
         }
     }
 }

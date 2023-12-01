@@ -10,9 +10,9 @@ namespace Shared.Server.Services;
 
 public static class Microservices
 {
-    public static IServiceCollection AddMongoDatabaseContext(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddMongoDatabaseContext(this WebApplicationBuilder builder)
     {
-        return serviceCollection.AddScoped(provider => provider.GetRequiredService<IConfiguration>().GetMongoDatabaseContext());
+        return builder.Services.AddScoped(provider => provider.GetRequiredService<IConfiguration>().GetMongoDatabaseContext());
     }
 
     public static IMongoDbContext GetMongoDatabaseContext(this IConfiguration configuration)

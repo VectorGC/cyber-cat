@@ -5,22 +5,20 @@ namespace ApiGateway.Client.V3.Infrastructure
     public class WebClientFactory
     {
         private readonly ServerEnvironment _serverEnvironment;
-        private readonly bool _debug;
 
-        public WebClientFactory(ServerEnvironment serverEnvironment, bool debug)
+        public WebClientFactory(ServerEnvironment serverEnvironment)
         {
-            _debug = debug;
             _serverEnvironment = serverEnvironment;
         }
 
         internal WebClient Create()
         {
-            return new WebClient(_serverEnvironment, _debug);
+            return new WebClient(_serverEnvironment);
         }
 
         internal WebClient Create(AuthorizationToken token)
         {
-            return new WebClient(_serverEnvironment, _debug, token);
+            return new WebClient(_serverEnvironment, token);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.V2;
 using ApiGateway.Client.V2.Access;
 using ApiGateway.Client.V2.Access.Dev;
 using NUnit.Framework;

@@ -26,7 +26,7 @@ public class SharedTaskExternalDto
     public SharedTaskExternalDto(SharedTaskProgressData data)
     {
         TaskId = data.Id;
-        PlayerName = data.PlayerIdData.ToString();
+        PlayerName = data.UserId.ToString();
         IsSolved = data.Status == SharedTaskStatus.Solved;
     }
 

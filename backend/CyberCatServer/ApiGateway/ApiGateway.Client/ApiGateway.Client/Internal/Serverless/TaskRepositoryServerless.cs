@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using ApiGateway.Client.Models;
-using Shared.Models.Ids;
+using Shared.Models.Domain.Tasks;
 
 namespace ApiGateway.Client.Internal.Serverless
 {

@@ -1,12 +1,10 @@
 using AuthService.Application;
 using AuthService.Domain;
-using AuthService.Domain.Models;
 using AuthService.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Configurations;
 using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);

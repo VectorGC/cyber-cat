@@ -1,5 +1,5 @@
+using AuthService.Application;
 using AuthService.Domain;
-using AuthService.Domain.Models;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 
@@ -46,7 +46,7 @@ internal class MockUserRepository : IUserRepository
         return new RemoveUserResult(success, string.Empty, user);
     }
 
-    public async Task<int> GetUsersCountWithRole(Role role)
+    public async Task<int> GetUsersCountWithRole(string roleId)
     {
         return 1;
     }
@@ -64,21 +64,21 @@ internal class MockUserRepository : IUserRepository
         return new SaveUserResult(success, string.Empty);
     }
 
-    public async Task<string> GetRoleId(Role role)
+    public async Task<string> GetRoleId(string roleId)
     {
-        return _roles[role.Id].Id;
+        return _roles[roleId].Id;
     }
 
-    public async Task<bool> RoleExists(Role role)
+    public async Task<bool> RoleExists(string roleId)
     {
-        return _roles.ContainsKey(role.Id);
+        return _roles.ContainsKey(roleId);
     }
 
-    public async Task<CreateRoleResult> CreateRole(Role role)
+    public async Task<CreateRoleResult> CreateRole(string roleId)
     {
-        _roles[role.Id] = new RoleEntity()
+        _roles[roleId] = new RoleEntity()
         {
-            Id = role.Id
+            Id = roleId
         };
 
         return new CreateRoleResult(true, string.Empty);

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using AuthService.Application;
 using AuthService.Domain;
-using AuthService.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Configurations;
@@ -26,7 +26,13 @@ public class JwtTokenService : ITokenService
 
         var token = tokenHandler.WriteToken(jwtSecurityToken);
 
-        return new JwtAccessToken(token, user.UserName);
+        return new JwtAccessToken()
+        {
+            access_token = token,
+            email = user.Email,
+            username = user.UserName,
+            roles = user.Roles,
+        };
     }
 
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration)

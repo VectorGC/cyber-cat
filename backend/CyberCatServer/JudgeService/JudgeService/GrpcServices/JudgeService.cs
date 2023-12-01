@@ -1,5 +1,4 @@
 using Shared.Models.Domain.Verdicts;
-using Shared.Models.Enums;
 using Shared.Server.Data;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
@@ -17,7 +16,7 @@ public class JudgeService : IJudgeService
         _taskService = taskService;
     }
 
-    public async Task<Response<Verdict>> GetVerdict(GetVerdictArgs args)
+    public async Task<Response<Verdict>> GetVerdict(SubmitSolutionArgs args)
     {
         var (_, taskId, solution) = args;
         var tests = await _taskService.GetTestCases(taskId);

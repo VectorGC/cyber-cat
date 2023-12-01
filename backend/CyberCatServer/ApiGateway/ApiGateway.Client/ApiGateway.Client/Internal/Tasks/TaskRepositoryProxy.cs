@@ -1,12 +1,11 @@
-
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
-using Shared.Models.Ids;
+using Shared.Models.Domain.Tasks;
+using Shared.Models.Infrastructure;
 
 namespace ApiGateway.Client.Internal.Tasks
 {
@@ -24,11 +23,11 @@ namespace ApiGateway.Client.Internal.Tasks
 
         public async Task Init()
         {
-            var tasks = await _webClient.GetFromJsonAsync<TaskIdsDto>(_uri + "tasks");
-            foreach (var taskId in tasks.TaskIds)
+            var tasks = await _webClient.GetFromJsonAsync<List<TaskDescription>>(_uri + "tasks");
+            foreach (var description in tasks)
             {
-                var taskProxy = new TaskProxy(taskId, _uri, _webClient);
-                _tasks[taskId] = taskProxy;
+                var taskProxy = new TaskProxy(description.Id, _uri, _webClient);
+                _tasks[description.Id] = taskProxy;
             }
         }
 
