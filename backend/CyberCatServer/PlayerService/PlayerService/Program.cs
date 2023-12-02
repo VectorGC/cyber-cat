@@ -11,7 +11,7 @@ builder.Services.AddScoped<IPlayerRepository, PlayerMongoRepository>();
 builder.AddJudgeServiceGrpcClient();
 builder.AddTaskServiceGrpcClient();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 

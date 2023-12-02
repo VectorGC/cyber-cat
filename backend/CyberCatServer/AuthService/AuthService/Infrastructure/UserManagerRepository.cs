@@ -1,11 +1,13 @@
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AuthService.Application;
 using AuthService.Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Server.Infrastructure.Exceptions;
+using Shared.Server.Exceptions;
 
 namespace AuthService.Infrastructure;
 
@@ -13,9 +15,11 @@ internal class UserManagerRepository : IUserRepository
 {
     private readonly UserManager<UserEntity> _userManager;
     private readonly RoleManager<RoleEntity> _roleManager;
+    private readonly ILogger<UserManagerRepository> _logger;
 
-    public UserManagerRepository(UserManager<UserEntity> userManager, RoleManager<RoleEntity> roleManager)
+    public UserManagerRepository(UserManager<UserEntity> userManager, RoleManager<RoleEntity> roleManager, ILogger<UserManagerRepository> logger)
     {
+        _logger = logger;
         _roleManager = roleManager;
         _userManager = userManager;
     }
@@ -27,20 +31,30 @@ internal class UserManagerRepository : IUserRepository
         {
             Id = nextId.ToString(),
             Email = email,
-            UserName = name,
+            UserName = $"{name}#{nextId}", // Identity requires that UserName be unique for everyone. ¯\_(ツ)_/¯
+            FirstName = name,
         };
 
         var result = await _userManager.CreateAsync(userModel, password);
         if (!result.Succeeded)
         {
-            var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            return new CreateUserResult(false, errors, userModel);
+            var error = result.Errors.First();
+            switch (error.Code)
+            {
+                case nameof(IdentityErrorDescriber.DuplicateEmail):
+                    return new CreateUserResult(false, UserRepositoryError.DuplicateEmail, userModel);
+                case nameof(IdentityErrorDescriber.InvalidUserName):
+                    return new CreateUserResult(false, UserRepositoryError.InvalidUserNameCharacters, userModel);
+                default:
+                    _logger.LogError("Identity error '{Code}' {Description}", error.Code, error.Description);
+                    return new CreateUserResult(false, UserRepositoryError.Unknown, userModel);
+            }
         }
 
-        return new CreateUserResult(true, string.Empty, userModel);
+        return new CreateUserResult(true, UserRepositoryError.None, userModel);
     }
 
-    public async Task<RemoveUserResult> RemoveUser(UserId userId)
+    public async Task<DeleteUserResult> DeleteUser(UserId userId)
     {
         var user = await _userManager.FindByIdAsync(userId.Value.ToString());
 
@@ -48,10 +62,10 @@ internal class UserManagerRepository : IUserRepository
         if (!result.Succeeded)
         {
             var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            return new RemoveUserResult(false, errors, user);
+            return new DeleteUserResult(false, errors, user);
         }
 
-        return new RemoveUserResult(true, string.Empty, user);
+        return new DeleteUserResult(true, string.Empty, user);
     }
 
     public async Task<UserEntity> FindByEmailAsync(string email)
@@ -76,28 +90,27 @@ internal class UserManagerRepository : IUserRepository
         return userModel;
     }
 
-    public async Task<SaveUserResult> SaveUser(UserEntity userModel)
+    public async Task<UpdateUserResult> UpdateUser(UserEntity userModel)
     {
-        if (userModel == null)
-        {
-            return new SaveUserResult(false, "User can't be null");
-        }
-
         var result = await _userManager.UpdateAsync(userModel);
         if (!result.Succeeded)
         {
-            var errors = string.Join(';', result.Errors.Select(e => e.Description));
-            return new SaveUserResult(false, errors);
+            var error = result.Errors.First();
+            switch (error.Code)
+            {
+                default:
+                    return new UpdateUserResult(false, UserRepositoryError.Unknown);
+            }
         }
 
-        return new SaveUserResult(true, string.Empty);
+        return new UpdateUserResult(true, UserRepositoryError.None);
     }
 
     public async Task<int> GetUsersCountWithRole(string roleId)
     {
         var roleModel = await _roleManager.FindByNameAsync(roleId);
         if (roleModel == null)
-            throw new RoleNotFoundException(roleId);
+            throw new ServiceException($"Роль '{roleId}' не найдена", HttpStatusCode.NotFound);
 
         var users = await _userManager.GetUsersInRoleAsync(roleModel.Name);
 
@@ -108,7 +121,7 @@ internal class UserManagerRepository : IUserRepository
     {
         var roleModel = await _roleManager.FindByIdAsync(roleId);
         if (roleModel == null)
-            throw new RoleNotFoundException(roleId);
+            throw new ServiceException($"Роль '{roleId}' не найдена", HttpStatusCode.NotFound);
 
         return roleModel.Id;
     }

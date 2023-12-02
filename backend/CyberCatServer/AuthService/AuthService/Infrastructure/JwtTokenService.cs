@@ -30,7 +30,7 @@ public class JwtTokenService : ITokenService
         {
             access_token = token,
             email = user.Email,
-            username = user.UserName,
+            firstname = user.FirstName,
             roles = user.Roles,
         };
     }
@@ -51,7 +51,6 @@ public class JwtTokenService : ITokenService
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.Email, user.Email)
         };
 

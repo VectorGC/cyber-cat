@@ -1,4 +1,5 @@
 using AuthService.Application;
+using AuthService.Infrastructure;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,7 @@ public class AuthUserRepositoryTests
         var createdUser = await userRepository.FindByEmailAsync(email);
         Assert.NotNull(createdUser);
 
-        var resultRemovable = await userRepository.RemoveUser(new UserId(user.Id));
+        var resultRemovable = await userRepository.DeleteUser(new UserId(user.Id));
         Assert.IsTrue(resultRemovable.Success);
         var removedUser = await userRepository.FindByEmailAsync(email);
         Assert.Null(removedUser);

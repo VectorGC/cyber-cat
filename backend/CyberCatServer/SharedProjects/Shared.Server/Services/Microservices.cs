@@ -1,10 +1,12 @@
 using System;
+using Grpc.Net.ClientFactory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using MongoDbGenericRepository;
 using ProtoBuf.Grpc.ClientFactory;
+using Shared.Server.Exceptions;
 
 namespace Shared.Server.Services;
 
@@ -33,7 +35,10 @@ public static class Microservices
     public static IHttpClientBuilder AddTaskServiceGrpcClient(this WebApplicationBuilder builder)
     {
         var connectionString = builder.Configuration.GetConnectionString("TaskServiceGrpcEndpoint");
-        return builder.Services.AddCodeFirstGrpcClient<ITaskService>(options => { options.Address = new Uri(connectionString); });
+        return builder.Services.AddCodeFirstGrpcClient<ITaskService>(options =>
+        {
+            options.Address = new Uri(connectionString);
+        });
     }
 
     public static IHttpClientBuilder AddJudgeServiceGrpcClient(this WebApplicationBuilder builder)
@@ -45,6 +50,9 @@ public static class Microservices
     public static IHttpClientBuilder AddPlayerServiceGrpcClient(this WebApplicationBuilder builder)
     {
         var connectionString = builder.Configuration.GetConnectionString("PlayerServiceGrpcEndpoint");
-        return builder.Services.AddCodeFirstGrpcClient<IPlayerService>(options => { options.Address = new Uri(connectionString); });
+        return builder.Services.AddCodeFirstGrpcClient<IPlayerService>(options =>
+        {
+            options.Address = new Uri(connectionString);
+        });
     }
 }

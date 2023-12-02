@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.V3.Infrastructure
@@ -5,20 +6,34 @@ namespace ApiGateway.Client.V3.Infrastructure
     public class WebClientFactory
     {
         private readonly ServerEnvironment _serverEnvironment;
+        private bool _debug;
 
         public WebClientFactory(ServerEnvironment serverEnvironment)
         {
             _serverEnvironment = serverEnvironment;
+            SetDebug();
         }
 
-        internal WebClient Create()
+        [Conditional("DEBUG")]
+        private void SetDebug()
         {
-            return new WebClient(_serverEnvironment);
+            _debug = true;
         }
 
-        internal WebClient Create(AuthorizationToken token)
+        internal IWebClient Create()
         {
-            return new WebClient(_serverEnvironment, token);
+            if (_debug)
+                return new WebClientDebugProxy(_serverEnvironment);
+            else
+                return new WebClient(_serverEnvironment);
+        }
+
+        internal IWebClient Create(AuthorizationToken token)
+        {
+            if (_debug)
+                return new WebClientDebugProxy(_serverEnvironment, token);
+            else
+                return new WebClient(_serverEnvironment, token);
         }
     }
 }

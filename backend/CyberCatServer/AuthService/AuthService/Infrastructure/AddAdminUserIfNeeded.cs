@@ -46,7 +46,7 @@ public class AddAdminUserIfNeeded : IHostedService
         var admin = await repository.FindByEmailAsync("admin");
         if (admin == null)
         {
-            var createAdminResult = await repository.CreateUser("admin", "admin", "Admin");
+            var createAdminResult = await repository.CreateUser("admin@admin.com", "admin", "Admin");
             if (createAdminResult.Success)
             {
                 _logger.LogInformation("Admin user created");
@@ -54,14 +54,14 @@ public class AddAdminUserIfNeeded : IHostedService
             }
             else
             {
-                throw new ApplicationException(createAdminResult.Error);
+                throw new ApplicationException(createAdminResult.Error.ToString());
             }
         }
 
         admin.Roles = new List<string>() {Roles.Admin};
-        var saveUserResult = await repository.SaveUser(admin);
+        var saveUserResult = await repository.UpdateUser(admin);
         if (!saveUserResult.Success)
-            throw new ApplicationException(saveUserResult.Error);
+            throw new ApplicationException(saveUserResult.Error.ToString());
 
         _logger.LogInformation("Admin user has been added");
     }

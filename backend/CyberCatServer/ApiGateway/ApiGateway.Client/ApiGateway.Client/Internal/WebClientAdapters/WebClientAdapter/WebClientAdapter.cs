@@ -10,7 +10,6 @@ using fastJSON;
 
 #if WEB_CLIENT
 
-
 namespace ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter
 {
     internal class WebClientAdapter : IWebClientAdapter

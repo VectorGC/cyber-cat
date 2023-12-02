@@ -11,7 +11,7 @@ namespace ApiGateway.Client.Tests.V2
         private readonly ServerEnvironment _serverEnvironment;
         private const string Email = "test@test.com";
         private const string Password = "test_password";
-        private const string UserName = "Test_User";
+        private const string UserName = "Дмитрий";
         private const string WrongPassword = "wrong_test_password";
 
         public AuthenticateTestsV2(ServerEnvironment serverEnvironment)
@@ -25,17 +25,17 @@ namespace ApiGateway.Client.Tests.V2
             using (var client = new ApiGatewayClient(_serverEnvironment))
             {
                 var registerResult = await client.RegisterPlayer(Email, Password, UserName);
-                Assert.IsTrue(registerResult.IsSuccess);
+                Assert.IsNull(registerResult.Error);
 
                 var doubleRegisterResult = await client.RegisterPlayer(Email, Password, UserName);
                 Assert.IsFalse(doubleRegisterResult.IsSuccess);
-                Assert.AreEqual("User is already registered", doubleRegisterResult.Error);
+                Assert.AreEqual($"Email '{Email}' уже зарегистрирован", doubleRegisterResult.Error);
 
                 var loginResult = await client.LoginPlayer(Email, Password);
                 Assert.IsTrue(loginResult.IsSuccess);
                 Assert.IsNotNull(client.Player);
                 Assert.AreEqual(Email, client.Player.User.Email);
-                Assert.AreEqual(UserName, client.Player.User.Name);
+                Assert.AreEqual(UserName, client.Player.User.FirstName);
 
                 var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
@@ -51,19 +51,19 @@ namespace ApiGateway.Client.Tests.V2
 
                 var loginWithoutRegisterResult = await client.LoginPlayer(Email, Password);
                 Assert.IsFalse(loginWithoutRegisterResult.IsSuccess);
-                Assert.AreEqual($"Not found user '{Email}'", loginWithoutRegisterResult.Error);
+                Assert.AreEqual("Пользователь не найден", loginWithoutRegisterResult.Error);
 
                 await client.RegisterPlayer(Email, Password, UserName);
 
                 var wrongLoginAfterRegisterResult = await client.LoginPlayer(Email, WrongPassword);
                 Assert.IsFalse(wrongLoginAfterRegisterResult.IsSuccess);
-                Assert.AreEqual("Wrong password", wrongLoginAfterRegisterResult.Error);
+                Assert.AreEqual("Неверный пароль", wrongLoginAfterRegisterResult.Error);
 
                 var loginResult = await client.LoginPlayer(Email, Password);
                 Assert.IsTrue(loginResult.IsSuccess);
                 Assert.IsNotNull(client.Player);
                 Assert.AreEqual(Email, client.Player.User.Email);
-                Assert.AreEqual(UserName, client.Player.User.Name);
+                Assert.AreEqual(UserName, client.Player.User.FirstName);
 
                 var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);

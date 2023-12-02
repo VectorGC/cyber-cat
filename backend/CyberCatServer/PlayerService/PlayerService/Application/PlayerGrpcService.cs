@@ -1,8 +1,8 @@
-﻿using PlayerService.Domain;
+﻿using System.Net;
+using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
-using Shared.Server.Exceptions.PlayerService;
+using Shared.Server.Exceptions;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -37,10 +37,12 @@ public class PlayerGrpcService : IPlayerService
     {
         var player = await _playerRepository.GetPlayer(args.UserId);
         if (player == null)
+        {
             return new TaskProgress()
             {
                 TaskId = args.TaskId
             };
+        }
 
         return player.Tasks.GetValueOrDefault(args.TaskId)?.ToDomain();
     }
@@ -59,7 +61,19 @@ public class PlayerGrpcService : IPlayerService
 
         var player = await _playerRepository.GetPlayer(userId);
         if (player == null)
-            player = new PlayerEntity(userId);
+        {
+            var createResult = await _playerRepository.Create(userId);
+            if (!createResult.IsSuccess)
+            {
+                switch (createResult.Error)
+                {
+                    default:
+                        throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
+                }
+            }
+
+            player = createResult.Player;
+        }
 
         if (!player.Tasks.ContainsKey(taskId))
             player.Tasks[taskId] = new TaskProgressEntity();
@@ -77,7 +91,34 @@ public class PlayerGrpcService : IPlayerService
                 break;
         }
 
-        await _playerRepository.Save(player);
+        var updateResult = await _playerRepository.Update(player);
+        if (!updateResult.IsSuccess)
+        {
+            switch (updateResult.Error)
+            {
+                default:
+                    throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
+            }
+        }
+
         return verdict;
+    }
+
+    public async Task<Response> RemovePlayer(RemovePlayerArgs args)
+    {
+        var result = await _playerRepository.Delete(args.UserId);
+        if (!result.IsSuccess)
+        {
+            switch (result.Error)
+            {
+                case UserRepositoryError.NotFound:
+                    // Already deleted. ¯\_(ツ)_/¯
+                    break;
+                default:
+                    throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
+            }
+        }
+
+        return new Response();
     }
 }

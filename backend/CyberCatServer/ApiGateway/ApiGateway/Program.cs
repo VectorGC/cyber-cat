@@ -2,6 +2,7 @@ using System.Security.Cryptography.X509Certificates;
 using ApiGateway.Infrastructure;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ProtoBuf.Grpc.Configuration;
 using Shared.Server.Configurations;
 using Shared.Server.Services;
 
@@ -83,7 +84,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpLogging();
-
 if (appArgs.UseHttps)
 {
     app.UseHttpsRedirection();
@@ -91,6 +91,8 @@ if (appArgs.UseHttps)
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ServiceExceptionInterceptorMiddleware>();
 
 // So that the Unity client can access this from a browser (ideally, specific domains need to be configured from which requests can be accepted).
 // https://gitlab.com/karim.kimsanbaev/cyber-cat/-/issues/80

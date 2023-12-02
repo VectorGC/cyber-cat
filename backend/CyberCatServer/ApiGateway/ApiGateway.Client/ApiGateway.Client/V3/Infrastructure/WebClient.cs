@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
@@ -6,7 +5,7 @@ using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.V3.Infrastructure
 {
-    internal class WebClient : IDisposable
+    internal class WebClient : IWebClient
     {
         public ServerEnvironment ServerEnvironment { get; }
 

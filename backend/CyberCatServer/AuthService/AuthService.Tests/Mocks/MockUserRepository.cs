@@ -35,15 +35,15 @@ internal class MockUserRepository : IUserRepository
             PasswordHash = password.GetHashCode().ToString()
         };
         _users[user.Id] = user;
-        return new CreateUserResult(true, string.Empty, user);
+        return new CreateUserResult(true, UserRepositoryError.None, user);
     }
 
-    public async Task<RemoveUserResult> RemoveUser(UserId userId)
+    public async Task<DeleteUserResult> DeleteUser(UserId userId)
     {
         var user = _users[userId.Value.ToString()];
         var success = _users.Remove(userId.ToString());
 
-        return new RemoveUserResult(success, string.Empty, user);
+        return new DeleteUserResult(success, string.Empty, user);
     }
 
     public async Task<int> GetUsersCountWithRole(string roleId)
@@ -56,12 +56,12 @@ internal class MockUserRepository : IUserRepository
         return _users[userId.Value.ToString()];
     }
 
-    public async Task<SaveUserResult> SaveUser(UserEntity user)
+    public async Task<UpdateUserResult> UpdateUser(UserEntity user)
     {
         var success = _users.Remove(user.Id);
         _users[user.Id] = user;
 
-        return new SaveUserResult(success, string.Empty);
+        return new UpdateUserResult(success, UserRepositoryError.None);
     }
 
     public async Task<string> GetRoleId(string roleId)

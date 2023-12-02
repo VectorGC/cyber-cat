@@ -34,14 +34,9 @@ namespace ApiGateway.Client.V3.Infrastructure.WebServices
                     return Result.Success;
                 }
             }
-            catch (WebException e) when (e.Response is HttpWebResponse httpResponse)
+            catch (WebException e)
             {
-                switch (httpResponse.StatusCode)
-                {
-                    case HttpStatusCode.Conflict:
-                        return Result.Failure("User is already registered");
-                    default: throw;
-                }
+                return e;
             }
         }
 
@@ -63,14 +58,7 @@ namespace ApiGateway.Client.V3.Infrastructure.WebServices
             }
             catch (WebException e) when (e.Response is HttpWebResponse httpResponse)
             {
-                switch (httpResponse.StatusCode)
-                {
-                    case HttpStatusCode.NotFound:
-                        return Result<AuthorizationToken>.Failure($"Not found user '{email}'");
-                    case HttpStatusCode.Forbidden:
-                        return Result<AuthorizationToken>.Failure("Wrong password");
-                    default: throw;
-                }
+                return e;
             }
         }
 
@@ -81,7 +69,7 @@ namespace ApiGateway.Client.V3.Infrastructure.WebServices
                 return new UserModel()
                 {
                     Email = jwtAccessToken.email,
-                    Name = jwtAccessToken.username,
+                    FirstName = jwtAccessToken.firstname,
                     Roles = new Roles(jwtAccessToken.roles)
                 };
             }

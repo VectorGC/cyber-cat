@@ -13,9 +13,11 @@ namespace ApiGateway.Controllers;
 public class AuthController : Controller
 {
     private readonly IAuthService _authService;
+    private readonly IPlayerService _playerService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IPlayerService playerService)
     {
+        _playerService = playerService;
         _authService = authService;
     }
 
@@ -32,6 +34,18 @@ public class AuthController : Controller
         return response.ToActionResult();
     }
 
+    [HttpPost(WebApi.RemoveUser)]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.NotFound)]
+    public async Task<ActionResult> RemoveUser(string password)
+    {
+        var response = await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
+        if (!response.IsSucceeded)
+            return response;
+
+        return await _playerService.RemovePlayer(new RemovePlayerArgs(User.Id()));
+    }
+
     [AllowAnonymous]
     [HttpPost(WebApi.Login)]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
@@ -43,13 +57,5 @@ public class AuthController : Controller
             return response.ToActionResult();
 
         return Json(response.Value);
-    }
-
-    [HttpPost(WebApi.RemoveUser)]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> RemoveUser(string password)
-    {
-        return await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
     }
 }

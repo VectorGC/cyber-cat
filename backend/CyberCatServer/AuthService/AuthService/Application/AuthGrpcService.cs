@@ -1,7 +1,8 @@
+using System.Net;
 using System.Threading.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Server.Infrastructure.Exceptions;
+using Shared.Server.Exceptions;
 using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
@@ -24,16 +25,24 @@ public class AuthGrpcService : IAuthService
         var result = await _userRepository.CreateUser(email, password, userName);
         if (!result.Success)
         {
-            return new IdentityException(result.Error);
+            switch (result.Error)
+            {
+                case UserRepositoryError.DuplicateEmail:
+                    throw new ServiceException($"Email '{email}' уже зарегистрирован", HttpStatusCode.Ambiguous);
+                case UserRepositoryError.InvalidUserNameCharacters:
+                    throw new ServiceException($"Имя пользователя содержит недопустимые символы", HttpStatusCode.Ambiguous);
+                default:
+                    throw new ServiceException("Неизвестная ошибка при регистрации. Обратитесь к администратору", HttpStatusCode.Conflict);
+            }
         }
 
         if (roles != null)
         {
             result.CreatedUser.Roles = roles.Values;
-            var saveResult = await _userRepository.SaveUser(result.CreatedUser);
+            var saveResult = await _userRepository.UpdateUser(result.CreatedUser);
             if (!saveResult.Success)
             {
-                return new IdentityException(saveResult.Error);
+                throw new ServiceException("Неизвестная ошибка при регистрации. Обратитесь к администратору", HttpStatusCode.UnprocessableEntity);
             }
         }
 
@@ -46,18 +55,20 @@ public class AuthGrpcService : IAuthService
         var (userId, password) = args;
         var user = await _userRepository.GetUser(userId);
         if (user == null)
-            return new UserNotFoundException($"User '{userId}' not found");
+        {
+            throw new ServiceException("Пользователь не найден", HttpStatusCode.NotFound);
+        }
 
         var isPasswordValid = await _userRepository.CheckPasswordAsync(user, password);
         if (!isPasswordValid)
         {
-            return new UnauthorizedException("Invalid password");
+            throw new ServiceException("Неверный пароль", HttpStatusCode.Forbidden);
         }
 
-        var result = await _userRepository.RemoveUser(userId);
+        var result = await _userRepository.DeleteUser(userId);
         if (!result.Success)
         {
-            return new IdentityException(result.Error);
+            throw new ServiceException("Неизвестная ошибка при регистрации. Обратитесь к администратору", HttpStatusCode.UnprocessableEntity);
         }
 
         return new Response();
@@ -79,13 +90,13 @@ public class AuthGrpcService : IAuthService
         var user = await _userRepository.FindByEmailAsync(email);
         if (user == null)
         {
-            return new UserNotFoundException(email);
+            throw new ServiceException("Пользователь не найден", HttpStatusCode.NotFound);
         }
 
         var isPasswordValid = await _userRepository.CheckPasswordAsync(user, password);
         if (!isPasswordValid)
         {
-            return new UnauthorizedException("Invalid password");
+            throw new ServiceException("Неверный пароль", HttpStatusCode.Forbidden);
         }
 
         var token = _tokenService.CreateToken(user);

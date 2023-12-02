@@ -12,7 +12,7 @@ namespace Shared.Models.Infrastructure.Authorization
 
         [ProtoMember(1)] public string access_token { get; set; }
         [ProtoMember(2)] public string email { get; set; }
-        [ProtoMember(3)] public string username { get; set; }
+        [ProtoMember(3)] public string firstname { get; set; }
         [ProtoMember(4)] public List<string> roles { get; set; }
     }
 }

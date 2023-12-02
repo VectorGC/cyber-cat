@@ -15,6 +15,7 @@ public interface IPlayerService
     Task<Response<List<TaskProgress>>> GetTasksProgress(GetTasksProgressArgs args);
     Task<Response<TaskProgress>> GetTaskProgress(GetTaskProgressArgs args);
     Task<Response<Verdict>> SubmitSolution(SubmitSolutionArgs args);
+    Task<Response> RemovePlayer(RemovePlayerArgs args);
 }
 
 [ProtoContract(SkipConstructor = true)]
@@ -31,3 +32,7 @@ public record SubmitSolutionArgs(
     [property: ProtoMember(1)] UserId UserId,
     [property: ProtoMember(2)] TaskId TaskId,
     [property: ProtoMember(3)] string Solution);
+
+[ProtoContract(SkipConstructor = true)]
+public record RemovePlayerArgs(
+    [property: ProtoMember(1)] UserId UserId);

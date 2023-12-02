@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.OpenApi.Models;
+using Shared.Models.Infrastructure;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ApiGateway.Infrastructure;
@@ -21,7 +22,7 @@ public static class SwaggerGetOptionsAuthExtensions
             {
                 Password = new OpenApiOAuthFlow
                 {
-                    TokenUrl = new Uri("/auth/login", UriKind.Relative)
+                    TokenUrl = new Uri(WebApi.Login, UriKind.Relative)
                 }
             }
         });

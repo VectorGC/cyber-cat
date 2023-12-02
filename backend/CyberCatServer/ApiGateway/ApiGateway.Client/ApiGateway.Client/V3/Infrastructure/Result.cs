@@ -16,7 +16,7 @@ namespace ApiGateway.Client.V3.Infrastructure
 
         public static Result Failure(Exception exception) => new Result()
         {
-            Error = exception.InnerException != null ? exception.InnerException.Message : exception.Message
+            Error = exception.Message
         };
 
         public static implicit operator Result(Exception exception) => Failure(exception);
@@ -40,7 +40,7 @@ namespace ApiGateway.Client.V3.Infrastructure
 
         public static Result<TValue> Failure(Exception exception) => new Result<TValue>()
         {
-            Error = exception.InnerException != null ? exception.InnerException.Message : exception.Message
+            Error = exception.Message
         };
 
         public static implicit operator Result<TValue>(TValue value) => Success(value);
