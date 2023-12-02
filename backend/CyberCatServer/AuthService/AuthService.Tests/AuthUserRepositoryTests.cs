@@ -1,5 +1,4 @@
 using AuthService.Application;
-using AuthService.Infrastructure;
 using AuthService.Tests.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;

@@ -7,18 +7,17 @@ using Shared.Models.Domain.Users;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;
 using Shared.Server.ExternalData;
-using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
 
 [Service]
 public interface ITaskService
 {
-    Task<Response<List<TaskDescription>>> GetTasks();
-    Task<Response<TestCases>> GetTestCases(TaskId taskId);
+    Task<List<TaskDescription>> GetTasks();
+    Task<TestCases> GetTestCases(TaskId taskId);
     Task OnTaskSolved(OnTaskSolvedArgs args);
-    Task<Response<List<SharedTaskProgressData>>> GetSharedTasks();
-    Task<Response<WebHookResultStatus>> ProcessWebHookTest();
+    Task<List<SharedTaskProgressData>> GetSharedTasks();
+    Task<WebHookResultStatus> ProcessWebHookTest();
 }
 
 [ProtoContract(SkipConstructor = true)]

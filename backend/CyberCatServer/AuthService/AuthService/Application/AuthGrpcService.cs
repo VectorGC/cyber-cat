@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Exceptions;
-using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace AuthService.Application;
@@ -19,7 +18,7 @@ public class AuthGrpcService : IAuthService
         _tokenService = tokenService;
     }
 
-    public async Task<Response<UserId>> CreateUser(CreateUserArgs args)
+    public async Task<UserId> CreateUser(CreateUserArgs args)
     {
         var (email, password, userName, roles) = args;
         var result = await _userRepository.CreateUser(email, password, userName);
@@ -50,7 +49,7 @@ public class AuthGrpcService : IAuthService
         return new UserId(result.CreatedUser.Id);
     }
 
-    public async Task<Response> RemoveUser(RemoveUserArgs args)
+    public async Task RemoveUser(RemoveUserArgs args)
     {
         var (userId, password) = args;
         var user = await _userRepository.GetUser(userId);
@@ -70,19 +69,17 @@ public class AuthGrpcService : IAuthService
         {
             throw new ServiceException("Неизвестная ошибка при регистрации. Обратитесь к администратору", HttpStatusCode.UnprocessableEntity);
         }
-
-        return new Response();
     }
 
-    public async Task<Response<UserId>> FindByEmail(Args<string> email)
+    public async Task<UserId> FindByEmail(FindByEmailArgs args)
     {
-        var user = await _userRepository.FindByEmailAsync(email);
+        var user = await _userRepository.FindByEmailAsync(args.Email);
         if (user == null)
             return null;
         return new UserId(user.Id);
     }
 
-    public async Task<Response<AuthorizationToken>> GetAccessToken(GetAccessTokenArgs args)
+    public async Task<AuthorizationToken> GetAccessToken(GetAccessTokenArgs args)
     {
         var email = args.Email;
         var password = args.Password;

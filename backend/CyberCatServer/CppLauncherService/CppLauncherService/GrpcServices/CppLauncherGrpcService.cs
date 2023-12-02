@@ -1,7 +1,6 @@
 using CppLauncherService.InternalModels;
 using CppLauncherService.Services;
 using Shared.Server.Data;
-using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace CppLauncherService.GrpcServices;
@@ -22,7 +21,7 @@ internal class CppLauncherGrpcService : ICodeLauncherGrpcService
         _logger = logger;
     }
 
-    public async Task<Response<OutputDto>> Launch(LaunchCodeArgs args)
+    public async Task<OutputDto> Launch(LaunchCodeArgs args)
     {
         _logger.LogInformation("Launch solution '{ArgsSolution}'", args.Solution);
         var (solution, inputs) = args;

@@ -2,14 +2,13 @@ using System.Threading.Tasks;
 using ProtoBuf;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Server.Data;
-using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
 
 [Service]
 public interface ICodeLauncherGrpcService
 {
-    Task<Response<OutputDto>> Launch(LaunchCodeArgs args);
+    Task<OutputDto> Launch(LaunchCodeArgs args);
 }
 
 [ProtoContract(SkipConstructor = true)]

@@ -18,14 +18,14 @@ public class VkController : ControllerBase
     [HttpPost("signIn")]
     public async Task<ActionResult<VkToken>> SignIn(string email, string name, string userVkId)
     {
-        var userId = await _authService.FindByEmail(email);
+        var userId = await _authService.FindByEmail(new FindByEmailArgs(email));
         var password = $"{userVkId}_vk";
-        if (!userId.HasValue)
+        if (userId != null)
         {
             await _authService.CreateUser(new CreateUserArgs(email, password, name, null));
         }
 
         var token = await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));
-        return new VkToken(token.Value.Value);
+        return new VkToken(token.Value);
     }
 }

@@ -22,13 +22,11 @@ public class SharedTasksController : ControllerBase
     [ProducesResponseType(typeof(List<SharedTaskExternalDto>), (int) HttpStatusCode.OK)]
     public async Task<ActionResult<List<SharedTaskExternalDto>>> GetSharedTasks()
     {
-        var response = await _taskService.GetSharedTasks();
-        response.EnsureSuccess();
-
-        if (!response.HasValue)
+        var progresses = await _taskService.GetSharedTasks();
+        if (progresses == null || progresses.Count == 0)
             return new List<SharedTaskExternalDto>();
 
-        var tasksDto = response.Value.Select(task => new SharedTaskExternalDto(task)).ToList();
+        var tasksDto = progresses.Select(task => new SharedTaskExternalDto(task)).ToList();
         return tasksDto;
     }
 

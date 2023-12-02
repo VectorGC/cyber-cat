@@ -2,7 +2,6 @@ using System.Security.Cryptography.X509Certificates;
 using ApiGateway.Infrastructure;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ProtoBuf.Grpc.Configuration;
 using Shared.Server.Configurations;
 using Shared.Server.Services;
 

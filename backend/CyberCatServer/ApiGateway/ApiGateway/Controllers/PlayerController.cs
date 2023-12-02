@@ -26,8 +26,8 @@ public class PlayerController : ControllerBase
     public async Task<ActionResult<List<TaskProgress>>> GetTasksProgress()
     {
         var userId = HttpContext.User.Id();
-        var response = await _playerService.GetTasksProgress(new GetTasksProgressArgs(userId));
-        return response.Value ?? new List<TaskProgress>();
+        var progresses = await _playerService.GetTasksProgress(new GetTasksProgressArgs(userId));
+        return progresses ?? new List<TaskProgress>();
     }
 
     [HttpGet(WebApi.GetTaskProgressTemplate)]
@@ -50,8 +50,8 @@ public class PlayerController : ControllerBase
         }
 
         var userId = HttpContext.User.Id();
-        var response = await _playerService.SubmitSolution(new SubmitSolutionArgs(userId, taskId, solution));
-        var json = JSON.ToJSON(response.Value);
+        var verdict = await _playerService.SubmitSolution(new SubmitSolutionArgs(userId, taskId, solution));
+        var json = JSON.ToJSON(verdict);
 
         return json;
     }

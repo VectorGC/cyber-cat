@@ -1,12 +1,10 @@
 using System;
-using Grpc.Net.ClientFactory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using MongoDbGenericRepository;
 using ProtoBuf.Grpc.ClientFactory;
-using Shared.Server.Exceptions;
 
 namespace Shared.Server.Services;
 

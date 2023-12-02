@@ -2,7 +2,6 @@ using Shared.Models.Domain.Tasks;
 using Shared.Models.Models.TestCases;
 using Shared.Server.Data;
 using Shared.Server.ExternalData;
-using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 using TaskService.Infrastructure;
 
@@ -27,7 +26,7 @@ public class TaskGrpcService : ITaskService
         _sharedTaskProgressRepository = sharedTaskProgressRepository;
     }
 
-    public async Task<Response<List<TaskDescription>>> GetTasks()
+    public async Task<List<TaskDescription>> GetTasks()
     {
         var result = new List<TaskDescription>();
         var tasks = await _taskRepository.GetTasks();
@@ -41,7 +40,7 @@ public class TaskGrpcService : ITaskService
         return result;
     }
 
-    public async Task<Response<TestCases>> GetTestCases(TaskId taskId)
+    public async Task<TestCases> GetTestCases(TaskId taskId)
     {
         return await _testRepository.GetTestCases(taskId);
     }
@@ -56,13 +55,13 @@ public class TaskGrpcService : ITaskService
         }
     }
 
-    public async Task<Response<List<SharedTaskProgressData>>> GetSharedTasks()
+    public async Task<List<SharedTaskProgressData>> GetSharedTasks()
     {
         var tasks = await _sharedTaskProgressRepository.GetTasks();
         return tasks;
     }
 
-    public async Task<Response<WebHookResultStatus>> ProcessWebHookTest()
+    public async Task<WebHookResultStatus> ProcessWebHookTest()
     {
         return await _taskWebHookProcessor.ProcessWebHook(SharedTaskExternalDto.Mock(true));
     }

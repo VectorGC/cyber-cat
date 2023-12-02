@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Infrastructure;
 
 namespace ApiGateway.Client.Internal.Tasks
 {

@@ -3,7 +3,6 @@ using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
 using Shared.Server.Exceptions;
-using Shared.Server.ProtoHelpers;
 using Shared.Server.Services;
 
 namespace PlayerService.Application;
@@ -23,7 +22,7 @@ public class PlayerGrpcService : IPlayerService
         _playerRepository = playerRepository;
     }
 
-    public async Task<Response<List<TaskProgress>>> GetTasksProgress(GetTasksProgressArgs args)
+    public async Task<List<TaskProgress>> GetTasksProgress(GetTasksProgressArgs args)
     {
         var player = await _playerRepository.GetPlayer(args.UserId);
         if (player == null)
@@ -33,7 +32,7 @@ public class PlayerGrpcService : IPlayerService
         return progress;
     }
 
-    public async Task<Response<TaskProgress>> GetTaskProgress(GetTaskProgressArgs args)
+    public async Task<TaskProgress> GetTaskProgress(GetTaskProgressArgs args)
     {
         var player = await _playerRepository.GetPlayer(args.UserId);
         if (player == null)
@@ -47,16 +46,11 @@ public class PlayerGrpcService : IPlayerService
         return player.Tasks.GetValueOrDefault(args.TaskId)?.ToDomain();
     }
 
-    public async Task<Response<Verdict>> SubmitSolution(SubmitSolutionArgs args)
+    public async Task<Verdict> SubmitSolution(SubmitSolutionArgs args)
     {
         var (userId, taskId, solution) = args;
-        var result = await _judgeService.GetVerdict(args);
-        if (!result.IsSucceeded)
-        {
-            return result;
-        }
+        var verdict = await _judgeService.GetVerdict(args);
 
-        var verdict = result.Value;
         _logger.LogInformation("{Task} verdict: {Verdict}. Player '{UserId}'", args.TaskId, verdict.ToString(), userId);
 
         var player = await _playerRepository.GetPlayer(userId);
@@ -104,7 +98,7 @@ public class PlayerGrpcService : IPlayerService
         return verdict;
     }
 
-    public async Task<Response> RemovePlayer(RemovePlayerArgs args)
+    public async Task RemovePlayer(RemovePlayerArgs args)
     {
         var result = await _playerRepository.Delete(args.UserId);
         if (!result.IsSuccess)
@@ -118,7 +112,5 @@ public class PlayerGrpcService : IPlayerService
                     throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
             }
         }
-
-        return new Response();
     }
 }

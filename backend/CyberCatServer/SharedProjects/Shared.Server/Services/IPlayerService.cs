@@ -5,17 +5,16 @@ using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
-using Shared.Server.ProtoHelpers;
 
 namespace Shared.Server.Services;
 
 [Service]
 public interface IPlayerService
 {
-    Task<Response<List<TaskProgress>>> GetTasksProgress(GetTasksProgressArgs args);
-    Task<Response<TaskProgress>> GetTaskProgress(GetTaskProgressArgs args);
-    Task<Response<Verdict>> SubmitSolution(SubmitSolutionArgs args);
-    Task<Response> RemovePlayer(RemovePlayerArgs args);
+    Task<List<TaskProgress>> GetTasksProgress(GetTasksProgressArgs args);
+    Task<TaskProgress> GetTaskProgress(GetTaskProgressArgs args);
+    Task<Verdict> SubmitSolution(SubmitSolutionArgs args);
+    Task RemovePlayer(RemovePlayerArgs args);
 }
 
 [ProtoContract(SkipConstructor = true)]
