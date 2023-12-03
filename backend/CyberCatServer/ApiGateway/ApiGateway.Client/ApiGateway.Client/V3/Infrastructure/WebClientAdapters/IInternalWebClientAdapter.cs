@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client.Internal.WebClientAdapters
+namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters
 {
-    internal interface IWebClientAdapter : IDisposable
+    internal interface IInternalWebClientAdapter : IDisposable
     {
         void AddAuthorizationHeader(string type, string value);
         void RemoveAuthorizationHeader();

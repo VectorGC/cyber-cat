@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using fastJSON;
 using UnityEngine;
 
-namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
+namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 {
-    internal class UnityWebClient : IWebClientAdapter
+    internal class UnityWebClient : IInternalWebClientAdapter
     {
         private string _authorizationHeaderValue;
 

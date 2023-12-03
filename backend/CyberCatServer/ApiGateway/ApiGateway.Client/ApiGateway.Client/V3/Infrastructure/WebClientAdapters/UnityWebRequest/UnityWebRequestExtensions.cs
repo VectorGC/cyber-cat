@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
+namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 {
     internal static class UnityWebRequestExtensions
     {

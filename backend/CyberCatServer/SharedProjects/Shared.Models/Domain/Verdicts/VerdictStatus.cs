@@ -1,4 +1,4 @@
-namespace Shared.Models.Enums
+namespace Shared.Models.Domain.Verdicts
 {
     public enum VerdictStatus
     {

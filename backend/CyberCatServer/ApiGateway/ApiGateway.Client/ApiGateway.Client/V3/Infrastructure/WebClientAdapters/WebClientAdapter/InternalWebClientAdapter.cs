@@ -10,14 +10,14 @@ using fastJSON;
 
 #if WEB_CLIENT
 
-namespace ApiGateway.Client.Internal.WebClientAdapters.WebClientAdapter
+namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.WebClientAdapter
 {
-    internal class WebClientAdapter : IWebClientAdapter
+    internal class InternalWebClientAdapter : IInternalWebClientAdapter
     {
         private readonly System.Net.WebClient _client = new System.Net.WebClient();
         private bool _debug;
 
-        public WebClientAdapter()
+        public InternalWebClientAdapter()
         {
             _client.Encoding = System.Text.Encoding.UTF8;
             SetDebugMode();

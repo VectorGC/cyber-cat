@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.TO_REMOVE.Models.AuthorizationTokens;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
@@ -15,6 +14,7 @@ public class VkController : ControllerBase
         _authService = authService;
     }
 
+    /*
     [HttpPost("signIn")]
     public async Task<ActionResult<VkToken>> SignIn(string email, string name, string userVkId)
     {
@@ -28,4 +28,5 @@ public class VkController : ControllerBase
         var token = await _authService.GetAccessToken(new GetAccessTokenArgs(email, password));
         return new VkToken(token.Value);
     }
+    */
 }

@@ -1,7 +1,7 @@
 #if UNITY_WEBGL
 using Debug = UnityEngine.Debug;
 
-namespace ApiGateway.Client.Internal.WebClientAdapters.UnityWebRequest
+namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 {
     public static class DebugOnly
     {

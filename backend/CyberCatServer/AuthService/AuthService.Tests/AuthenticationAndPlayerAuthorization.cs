@@ -39,7 +39,7 @@ public class AuthenticationAndPlayerAuthorization
 
         var args = new GetAccessTokenArgs(Email, UserPassword);
         var response = await authenticationService.GetAccessToken(args);
-        var token = ((AuthorizationToken) response).Value;
+        var token = response.Value;
 
         Assert.IsNotEmpty(token);
 
@@ -47,6 +47,6 @@ public class AuthenticationAndPlayerAuthorization
         var claims = tokenHandler.ValidateToken(token, JwtTokenValidation.TokenValidationParameters, out _);
 
         Assert.AreEqual(Email, claims.FindFirst(ClaimTypes.Email)!.Value);
-        Assert.AreEqual(UserName, claims.FindFirst(ClaimTypes.Name)!.Value);
+        Assert.IsNull(claims.FindFirst(ClaimTypes.Role));
     }
 }
