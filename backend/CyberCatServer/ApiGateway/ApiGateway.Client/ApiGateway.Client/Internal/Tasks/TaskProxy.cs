@@ -6,7 +6,7 @@ using ApiGateway.Client.Internal.WebClientAdapters;
 using ApiGateway.Client.Models;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
-using Shared.Models.Models.TestCases;
+using Shared.Models.TO_REMOVE;
 
 namespace ApiGateway.Client.Internal.Tasks
 {

@@ -6,10 +6,10 @@ namespace JudgeService.GrpcServices;
 
 public class JudgeService : IJudgeService
 {
-    private readonly ICodeLauncherGrpcService _codeLauncherService;
+    private readonly ICodeLauncherService _codeLauncherService;
     private readonly ITaskService _taskService;
 
-    public JudgeService(ICodeLauncherGrpcService codeLauncherService, ITaskService taskService)
+    public JudgeService(ICodeLauncherService codeLauncherService, ITaskService taskService)
     {
         _codeLauncherService = codeLauncherService;
         _taskService = taskService;
@@ -21,7 +21,7 @@ public class JudgeService : IJudgeService
         var tests = await _taskService.GetTestCases(taskId);
         var testsVerdict = new TestCasesVerdict();
 
-        foreach (var (_, test) in tests.Values)
+        foreach (var test in tests)
         {
             var output = await _codeLauncherService.Launch(new LaunchCodeArgs(solution, test.Inputs));
             if (!output.Success)

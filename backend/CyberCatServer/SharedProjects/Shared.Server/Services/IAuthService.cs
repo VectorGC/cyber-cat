@@ -1,5 +1,10 @@
+using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf;
+using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
@@ -35,3 +40,12 @@ public record RemoveUserArgs(
 [ProtoContract(SkipConstructor = true)]
 public record FindByEmailArgs(
     [property: ProtoMember(1)] string Email);
+
+public static class AuthServiceExtensions
+{
+    public static IHttpClientBuilder AddAuthServiceGrpcClient(this WebApplicationBuilder builder)
+    {
+        var connectionString = builder.Configuration.GetConnectionString("AuthServiceGrpcEndpoint");
+        return builder.Services.AddCodeFirstGrpcClient<IAuthService>(options => { options.Address = new Uri(connectionString); });
+    }
+}

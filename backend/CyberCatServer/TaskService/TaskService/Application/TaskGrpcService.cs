@@ -1,5 +1,5 @@
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Models.TestCases;
+using Shared.Models.Domain.TestCase;
 using Shared.Server.Data;
 using Shared.Server.ExternalData;
 using Shared.Server.Services;
@@ -10,19 +10,16 @@ namespace TaskService.Application;
 public class TaskGrpcService : ITaskService
 {
     private readonly ITaskRepository _taskRepository;
-    private readonly ITestRepository _testRepository;
     private readonly ISharedTaskProgressRepository _sharedTaskProgressRepository;
     private readonly SharedTaskWebHookProcessor _taskWebHookProcessor;
     private readonly TaskEntityMapper _taskEntityMapper;
 
-    public TaskGrpcService(ITaskRepository taskRepository, ITestRepository testRepository,
-        ISharedTaskProgressRepository sharedTaskProgressRepository, SharedTaskWebHookProcessor taskWebHookProcessor,
-        TaskEntityMapper taskEntityMapper)
+    public TaskGrpcService(ITaskRepository taskRepository, ISharedTaskProgressRepository sharedTaskProgressRepository,
+        SharedTaskWebHookProcessor taskWebHookProcessor, TaskEntityMapper taskEntityMapper)
     {
         _taskEntityMapper = taskEntityMapper;
         _taskWebHookProcessor = taskWebHookProcessor;
         _taskRepository = taskRepository;
-        _testRepository = testRepository;
         _sharedTaskProgressRepository = sharedTaskProgressRepository;
     }
 
@@ -40,9 +37,11 @@ public class TaskGrpcService : ITaskService
         return result;
     }
 
-    public async Task<TestCases> GetTestCases(TaskId taskId)
+    public async Task<List<TestCaseDescription>> GetTestCases(TaskId taskId)
     {
-        return await _testRepository.GetTestCases(taskId);
+        var task = await _taskRepository.GetTask(taskId);
+        var descriptions = _taskEntityMapper.ToTestCaseDescriptions(task);
+        return descriptions;
     }
 
     public async Task OnTaskSolved(OnTaskSolvedArgs args)

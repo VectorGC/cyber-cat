@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.V3.Application;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests.V2.Extensions
+namespace ApiGateway.Client.Tests.Extensions
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
@@ -16,7 +16,7 @@ namespace ApiGateway.Client.Tests.V2.Extensions
             ServerEnvironment = serverEnvironment;
         }
 
-        public async Task<TestPlayerClient> GetTestPlayerClient(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
+        public async Task<TestPlayerClient> GetTestPlayerClientAsync(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
         {
             var client = new ApiGatewayClient(ServerEnvironment);
 
@@ -29,6 +29,11 @@ namespace ApiGateway.Client.Tests.V2.Extensions
                 throw new InvalidOperationException(loginResult.Error);
 
             return new TestPlayerClient(client, password);
+        }
+
+        public TestPlayerClient GetTestPlayerClient(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
+        {
+            return GetTestPlayerClientAsync(email, password, userName).Result;
         }
     }
 }

@@ -4,7 +4,7 @@ using ApiGateway.Client.V3.Application.API;
 using ApiGateway.Client.V3.Domain;
 using ApiGateway.Client.V3.Infrastructure;
 
-namespace ApiGateway.Client.Tests.V2.Extensions
+namespace ApiGateway.Client.Tests.Extensions
 {
     public class TestPlayerClient : IApiGatewayClient
     {

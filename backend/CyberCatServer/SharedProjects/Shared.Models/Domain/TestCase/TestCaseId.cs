@@ -3,7 +3,7 @@ using System.Linq;
 using ProtoBuf;
 using Shared.Models.Domain.Tasks;
 
-namespace Shared.Models.Ids
+namespace Shared.Models.Domain.TestCase
 {
     [ProtoContract]
     public class TestCaseId : IEquatable<TestCaseId>

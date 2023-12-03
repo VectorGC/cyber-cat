@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
 using Shared.Server.Exceptions;
 using Shared.Server.Services;
@@ -53,49 +54,49 @@ public class PlayerGrpcService : IPlayerService
 
         _logger.LogInformation("{Task} verdict: {Verdict}. Player '{UserId}'", args.TaskId, verdict.ToString(), userId);
 
-        var player = await _playerRepository.GetPlayer(userId);
-        if (player == null)
-        {
-            var createResult = await _playerRepository.Create(userId);
-            if (!createResult.IsSuccess)
-            {
-                switch (createResult.Error)
-                {
-                    default:
-                        throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
-                }
-            }
-
-            player = createResult.Player;
-        }
-
+        var player = await GetOrCreatePlayer(args.UserId);
         if (!player.Tasks.ContainsKey(taskId))
             player.Tasks[taskId] = new TaskProgressEntity();
 
-        player.Tasks[taskId].Solution = solution;
-
-        switch (verdict)
+        player.Tasks[taskId].StatusType = verdict switch
         {
-            case Success success:
-                player.Tasks[taskId].StatusType = TaskProgressStatusType.Complete;
-                await _taskService.OnTaskSolved(new OnTaskSolvedArgs(userId, taskId));
-                break;
-            default:
-                player.Tasks[taskId].StatusType = TaskProgressStatusType.HaveSolution;
-                break;
-        }
+            Success success => TaskProgressStatusType.Complete,
+            _ => TaskProgressStatusType.HaveSolution
+        };
+
+        player.Tasks[taskId].Solution = solution;
 
         var updateResult = await _playerRepository.Update(player);
         if (!updateResult.IsSuccess)
         {
-            switch (updateResult.Error)
+            throw updateResult.Error switch
             {
-                default:
-                    throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
-            }
+                _ => new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
+            };
         }
 
+        await _taskService.OnTaskSolved(new OnTaskSolvedArgs(userId, taskId));
         return verdict;
+    }
+
+    private async Task<PlayerEntity> GetOrCreatePlayer(UserId userId)
+    {
+        var player = await _playerRepository.GetPlayer(userId);
+        if (player != null)
+        {
+            return player;
+        }
+
+        var createResult = await _playerRepository.Create(userId);
+        if (!createResult.IsSuccess)
+        {
+            throw createResult.Error switch
+            {
+                _ => new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
+            };
+        }
+
+        return createResult.Player;
     }
 
     public async Task RemovePlayer(RemovePlayerArgs args)

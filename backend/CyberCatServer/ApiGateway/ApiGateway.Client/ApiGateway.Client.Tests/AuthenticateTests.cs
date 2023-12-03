@@ -1,45 +1,108 @@
-using System.Net;
 using System.Threading.Tasks;
-using ApiGateway.Client.Tests.Abstracts;
-using ApiGateway.Client.Tests.Extensions;
+using ApiGateway.Client.V3.Application;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class AuthenticateTests : AnonymousClientTestFixture
+    [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
+    [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
+    public class AuthenticateTests
     {
-        public AuthenticateTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        private readonly ServerEnvironment _serverEnvironment;
+        private const string Email = "test@test.com";
+        private const string Password = "test_password";
+        private const string UserName = "Дмитрий";
+        private const string WrongPassword = "wrong_test_password";
+
+        public AuthenticateTests(ServerEnvironment serverEnvironment)
         {
+            _serverEnvironment = serverEnvironment;
         }
 
         [Test]
-        public async Task AuthenticateDefaultUser_WhenPassValidCredentials()
+        public async Task RegistrationPlayer()
         {
-            const string email = "test@test.com";
-            const string password = "test_password";
-            const string userName = "Test_User";
-            const string wrongPassword = "wrong_test_password";
+            using (var client = new ApiGatewayClient(_serverEnvironment))
+            {
+                var registerResult = await client.RegisterPlayer(Email, Password, UserName);
+                Assert.IsNull(registerResult.Error);
 
-            var anonymous = GetAnonymousClient();
-            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, password), HttpStatusCode.NotFound);
+                var doubleRegisterResult = await client.RegisterPlayer(Email, Password, UserName);
+                Assert.IsFalse(doubleRegisterResult.IsSuccess);
+                Assert.AreEqual($"Email '{Email}' уже зарегистрирован", doubleRegisterResult.Error);
 
-            await anonymous.SignUp(email, password, userName);
+                var loginResult = await client.LoginPlayer(Email, Password);
+                Assert.IsTrue(loginResult.IsSuccess);
+                Assert.IsNotNull(client.Player);
+                Assert.AreEqual(Email, client.Player.User.Email);
+                Assert.AreEqual(UserName, client.Player.User.FirstName);
 
-            // User is already registered.
-            await AssertAsync.ThrowsWebException(async () => await anonymous.SignUp(email, password, userName), HttpStatusCode.Conflict);
+                var removeResult = client.Player.Remove(Password);
+                Assert.IsTrue(removeResult.IsSuccess);
+            }
+        }
 
-            // Wrong password.
-            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, wrongPassword), HttpStatusCode.Forbidden);
+        [Test]
+        public async Task LoginPlayer()
+        {
+            using (var client = new ApiGatewayClient(_serverEnvironment))
+            {
+                Assert.IsNull(client.Player);
 
-            var client = await anonymous.SignIn(email, password);
-            Assert.IsNotNull(client);
+                var loginWithoutRegisterResult = await client.LoginPlayer(Email, Password);
+                Assert.IsFalse(loginWithoutRegisterResult.IsSuccess);
+                Assert.AreEqual("Пользователь не найден", loginWithoutRegisterResult.Error);
 
-            // Wrong password when removing.
-            await AssertAsync.ThrowsWebException(async () => await client.Remove(wrongPassword), HttpStatusCode.Forbidden);
+                await client.RegisterPlayer(Email, Password, UserName);
 
-            await client.Remove(password);
+                var wrongLoginAfterRegisterResult = await client.LoginPlayer(Email, WrongPassword);
+                Assert.IsFalse(wrongLoginAfterRegisterResult.IsSuccess);
+                Assert.AreEqual("Неверный пароль", wrongLoginAfterRegisterResult.Error);
 
-            await AssertAsync.ThrowsWebException(async () => await anonymous.SignIn(email, password), HttpStatusCode.NotFound);
+                var loginResult = await client.LoginPlayer(Email, Password);
+                Assert.IsTrue(loginResult.IsSuccess);
+                Assert.IsNotNull(client.Player);
+                Assert.AreEqual(Email, client.Player.User.Email);
+                Assert.AreEqual(UserName, client.Player.User.FirstName);
+
+                var removeResult = client.Player.Remove(Password);
+                Assert.IsTrue(removeResult.IsSuccess);
+            }
+        }
+
+        [Test]
+        public async Task LogoutPlayer()
+        {
+            using (var client = new ApiGatewayClient(_serverEnvironment))
+            {
+                await client.RegisterPlayer(Email, Password, UserName);
+                await client.LoginPlayer(Email, Password);
+
+                var logoutResult = client.Player.Logout();
+                Assert.IsTrue(logoutResult.IsSuccess);
+
+                Assert.IsNull(client.Player);
+
+                await client.LoginPlayer(Email, Password);
+
+                var removeResult = client.Player.Remove(Password);
+                Assert.IsTrue(removeResult.IsSuccess);
+            }
+        }
+
+        [Test]
+        public async Task RemovePlayer()
+        {
+            using (var client = new ApiGatewayClient(_serverEnvironment))
+            {
+                Assert.IsNull(client.Player);
+
+                await client.RegisterPlayer(Email, Password, UserName);
+                await client.LoginPlayer(Email, Password);
+
+                var removeResult = client.Player.Remove(Password);
+                Assert.IsTrue(removeResult.IsSuccess);
+            }
         }
     }
 }

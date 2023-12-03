@@ -15,5 +15,8 @@ namespace Shared.Models.Infrastructure
         public const string GetTasksProgress = "player/tasks";
         public static string SubmitSolution(TaskId taskId) => $"player/tasks/{taskId.Value}";
         public const string SubmitSolutionTemplate = "player/tasks/{taskId}";
+
+        public const string GetTestCasesTemplate = "{taskId}/tests";
+        public static string GetTestCases(TaskId taskId) => $"{taskId.Value}/tests";
     }
 }

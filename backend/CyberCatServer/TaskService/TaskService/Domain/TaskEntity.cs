@@ -12,6 +12,6 @@ namespace TaskService.Domain
         public int Version { get; set; }
         public string Name { get; set; }
         public bool IsShared { get; set; }
-        public TestsDbModel Tests { get; set; } = new TestsDbModel();
+        public List<TestCaseEntity> Tests { get; set; } = new List<TestCaseEntity>();
     }
 }

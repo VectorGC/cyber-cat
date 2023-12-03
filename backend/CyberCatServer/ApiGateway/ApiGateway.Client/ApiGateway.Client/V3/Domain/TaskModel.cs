@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.TestCase;
 
 namespace ApiGateway.Client.V3.Domain
 {
@@ -9,17 +11,19 @@ namespace ApiGateway.Client.V3.Domain
 
         public TaskId Id => Description.Id;
         public TaskDescription Description { get; }
-        public TaskProgressStatus ProgressStatus { get; private set; }
+        public List<TestCaseDescription> TestCases { get; }
+        public TaskProgressStatus Status { get; private set; }
 
-        public TaskModel(TaskDescription description, TaskProgress progress)
+        public TaskModel(TaskDescription description, TaskProgress progress, List<TestCaseDescription> testCases)
         {
             Description = description;
-            ProgressStatus = new TaskProgressStatus(progress);
+            TestCases = testCases;
+            Status = new TaskProgressStatus(progress);
         }
 
         public void SetProgress(TaskProgress progress)
         {
-            ProgressStatus = new TaskProgressStatus(progress);
+            Status = new TaskProgressStatus(progress);
             OnChanged?.Invoke(this);
         }
     }

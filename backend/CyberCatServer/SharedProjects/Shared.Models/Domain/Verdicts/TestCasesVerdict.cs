@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProtoBuf;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Ids;
-using Shared.Models.Models.TestCases;
+using Shared.Models.Domain.TestCase;
 
 namespace Shared.Models.Domain.Verdicts
 {
@@ -16,7 +15,7 @@ namespace Shared.Models.Domain.Verdicts
         public TestCaseVerdict this[TaskId taskId, int index] => this[new TestCaseId(taskId, index)];
         public int PassedCount => Values.Values.Count(verdict => verdict is SuccessTestCaseVerdict);
 
-        public void AddSuccess(TestCase testCase, string output)
+        public void AddSuccess(TestCaseDescription testCase, string output)
         {
             Values[testCase.Id] = new SuccessTestCaseVerdict()
             {
@@ -25,7 +24,7 @@ namespace Shared.Models.Domain.Verdicts
             };
         }
 
-        public void AddFailure(TestCase testCase, string output)
+        public void AddFailure(TestCaseDescription testCase, string output)
         {
             Values[testCase.Id] = new FailureTestCaseVerdict()
             {

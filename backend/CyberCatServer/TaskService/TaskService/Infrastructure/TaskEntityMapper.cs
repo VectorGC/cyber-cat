@@ -1,4 +1,5 @@
 using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.TestCase;
 using TaskService.Domain;
 
 namespace TaskService.Infrastructure;
@@ -23,6 +24,18 @@ public class TaskEntityMapper
             Description = await GetDescription(task.Id),
             DefaultCode = await GetDefaultCode(task.Id)
         };
+    }
+
+    public List<TestCaseDescription> ToTestCaseDescriptions(TaskEntity task)
+    {
+        var testCases = new List<TestCaseDescription>();
+        for (var i = 0; i < task.Tests.Count; i++)
+        {
+            var test = task.Tests[i].ToDescription(task.Id, i);
+            testCases.Add(test);
+        }
+
+        return testCases;
     }
 
     private async Task<string> GetDescription(TaskId taskId)

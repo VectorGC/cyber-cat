@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using ApiGateway.Client.V2.Access;
-using ApiGateway.Client.V2.Access.Dev;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
@@ -16,6 +13,7 @@ namespace ApiGateway.Client.Tests
             _serverEnvironment = serverEnvironment;
         }
 
+        /*
         [Test]
         public async Task SignUpViaOAuth()
         {
@@ -52,5 +50,6 @@ namespace ApiGateway.Client.Tests
             // Support web sockets.
             // Assert.IsFalse(user.Access<VK>().IsSignedIn);
         }
+        */
     }
 }

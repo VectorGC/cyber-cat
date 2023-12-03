@@ -5,7 +5,7 @@ using Shared.Server.Services;
 
 namespace CppLauncherService.GrpcServices;
 
-internal class CppLauncherGrpcService : ICodeLauncherGrpcService
+internal class CppLauncherGrpcService : ICodeLauncherService
 {
     private readonly IProcessExecutorProxy _processExecutorProxy;
     private readonly ICppFileCreator _cppFileCreator;

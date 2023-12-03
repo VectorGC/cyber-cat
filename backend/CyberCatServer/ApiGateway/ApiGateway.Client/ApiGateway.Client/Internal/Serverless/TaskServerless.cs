@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using ApiGateway.Client.Models;
+using Shared.Models.Domain.TestCase;
 using Shared.Models.Domain.Verdicts;
-using Shared.Models.Ids;
-using Shared.Models.Models.TestCases;
+using Shared.Models.TO_REMOVE;
 
 namespace ApiGateway.Client.Internal.Serverless
 {
@@ -45,19 +45,19 @@ namespace ApiGateway.Client.Internal.Serverless
         {
             var testCases = new TestCases()
             {
-                Values = new Dictionary<string, TestCase>()
+                Values = new Dictionary<string, TestCaseDescription>()
                 {
-                    [new TestCaseId("tutorial", 0)] = new TestCase()
+                    [new TestCaseId("tutorial", 0)] = new TestCaseDescription()
                     {
                         Id = new TestCaseId("tutorial", 0),
                         Expected = "Hello cat!"
                     },
-                    [new TestCaseId("tutorial", 1)] = new TestCase()
+                    [new TestCaseId("tutorial", 1)] = new TestCaseDescription()
                     {
                         Id = new TestCaseId("tutorial", 1),
                         Expected = "Hello mat!"
                     },
-                    [new TestCaseId("tutorial", 2)] = new TestCase()
+                    [new TestCaseId("tutorial", 2)] = new TestCaseDescription()
                     {
                         Id = new TestCaseId("tutorial", 2),
                         Inputs = new[] {"1", "2"},
@@ -79,7 +79,7 @@ namespace ApiGateway.Client.Internal.Serverless
                     {
                         [new TestCaseId("tutorial", 0)] = new SuccessTestCaseVerdict()
                         {
-                            TestCase = new TestCase()
+                            TestCase = new TestCaseDescription()
                             {
                                 Id = new TestCaseId("tutorial", 0),
                                 Expected = "Hello cat!"
@@ -88,7 +88,7 @@ namespace ApiGateway.Client.Internal.Serverless
                         },
                         [new TestCaseId("tutorial", 1)] = new FailureTestCaseVerdict()
                         {
-                            TestCase = new TestCase()
+                            TestCase = new TestCaseDescription()
                             {
                                 Id = new TestCaseId("tutorial", 1),
                                 Expected = "Hello mat!"
@@ -97,7 +97,7 @@ namespace ApiGateway.Client.Internal.Serverless
                         },
                         [new TestCaseId("tutorial", 2)] = new FailureTestCaseVerdict()
                         {
-                            TestCase = new TestCase()
+                            TestCase = new TestCaseDescription()
                             {
                                 Id = new TestCaseId("tutorial", 2),
                                 Inputs = new[] {"1", "2"},

@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddMongoDatabaseContext();
 
-builder.Services.AddScoped<ITaskRepository, TaskModelConstRepository>();
-builder.Services.AddScoped<ITestRepository, TaskModelConstRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskModelConstCaseRepository>();
 builder.Services.AddScoped<TaskEntityMapper>();
 builder.Services.AddScoped<ISharedTaskProgressRepository, SharedTaskProgressMongoRepository>();
 builder.Services.AddScoped<SharedTaskWebHookProcessor>();

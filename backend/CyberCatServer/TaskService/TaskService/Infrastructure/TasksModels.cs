@@ -10,7 +10,7 @@ internal static class TasksModels
         {
             Id = "tutorial",
             Name = "Hello cat!",
-            Tests = new TestsDbModel()
+            Tests = new List<TestCaseEntity>()
             {
                 new()
                 {
@@ -22,7 +22,7 @@ internal static class TasksModels
         {
             Id = "task-1",
             Name = "A + B",
-            Tests = new TestsDbModel()
+            Tests = new List<TestCaseEntity>()
             {
                 new()
                 {
@@ -46,7 +46,7 @@ internal static class TasksModels
             Id = "task-2",
             Name = "A + B * C",
             IsShared = true,
-            Tests = new TestsDbModel()
+            Tests = new List<TestCaseEntity>()
             {
                 new()
                 {
@@ -69,7 +69,7 @@ internal static class TasksModels
         {
             Id = "task-3",
             Name = "Шкафчик с паролем",
-            Tests = new TestsDbModel()
+            Tests = new List<TestCaseEntity>()
             {
                 new()
                 {

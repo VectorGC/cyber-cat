@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Models.AuthorizationTokens;
+using Shared.Models.TO_REMOVE.Models.AuthorizationTokens;
 using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;

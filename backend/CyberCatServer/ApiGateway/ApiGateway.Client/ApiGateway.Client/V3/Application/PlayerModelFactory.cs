@@ -40,8 +40,9 @@ namespace ApiGateway.Client.V3.Application
             var progressDataCollection = await _taskProgressService.GetTasksProgress(token);
             foreach (var description in descriptions)
             {
+                var testCases = await _taskDescriptionService.GetTestCaseDescriptions(description.Id, token);
                 var taskProgress = progressDataCollection.FirstOrDefault(data => data.TaskId == description.Id) ?? new TaskProgress();
-                tasks[description.Id] = new TaskModel(description, taskProgress);
+                tasks[description.Id] = new TaskModel(description, taskProgress, testCases);
             }
 
             return tasks;

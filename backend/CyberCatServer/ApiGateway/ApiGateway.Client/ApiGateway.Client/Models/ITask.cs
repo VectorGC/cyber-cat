@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Internal.Tasks.Statuses;
 using Shared.Models.Domain.Verdicts;
-using Shared.Models.Models.TestCases;
+using Shared.Models.TO_REMOVE;
 
 namespace ApiGateway.Client.Models
 {

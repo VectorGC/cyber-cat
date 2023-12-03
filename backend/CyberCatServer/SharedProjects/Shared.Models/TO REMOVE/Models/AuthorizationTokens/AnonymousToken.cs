@@ -1,6 +1,6 @@
 using Shared.Models.Infrastructure.Authorization;
 
-namespace Shared.Models.Models.AuthorizationTokens
+namespace Shared.Models.TO_REMOVE.Models.AuthorizationTokens
 {
     public class AnonymousToken : AuthorizationToken
     {

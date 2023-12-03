@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
-        <Reference Include="..\..\SharedProjects\Shared.Models\JsonSerializer\fastJSON.dll" />
+        <Reference Include="..\..\SharedProjects\Shared.Models\FastJsonSerializer\fastJSON.dll" />
     </ItemGroup>
 
     <ItemGroup>

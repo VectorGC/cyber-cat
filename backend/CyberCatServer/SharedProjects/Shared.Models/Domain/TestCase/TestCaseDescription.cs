@@ -1,10 +1,9 @@
 using ProtoBuf;
-using Shared.Models.Ids;
 
-namespace Shared.Models.Models.TestCases
+namespace Shared.Models.Domain.TestCase
 {
     [ProtoContract]
-    public class TestCase
+    public class TestCaseDescription
     {
         [ProtoMember(1)] public TestCaseId Id { get; set; }
         [ProtoMember(2)] public string[] Inputs { get; set; }

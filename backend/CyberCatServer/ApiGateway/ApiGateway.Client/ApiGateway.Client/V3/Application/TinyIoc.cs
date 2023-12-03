@@ -3579,7 +3579,6 @@ namespace ApiGateway.Client.V3.Application
       }
     }
     
-    // TODO - find a better way to remove "system" assemblies from the auto registration
         private static readonly IReadOnlyList<Func<Assembly, bool>> ignoredAssemlies = new List<Func<Assembly, bool>>()
         {
             asm => asm.FullName.StartsWith("Microsoft.", StringComparison.Ordinal),
@@ -3603,7 +3602,6 @@ namespace ApiGateway.Client.V3.Application
             return false;
         }
 
-        // TODO - find a better way to remove "system" types from the auto registration
         private static readonly IReadOnlyList<Func<Type, bool>> ignoreChecks = new List<Func<Type, bool>>()
         {
             t => t.FullName.StartsWith("System.", StringComparison.Ordinal),

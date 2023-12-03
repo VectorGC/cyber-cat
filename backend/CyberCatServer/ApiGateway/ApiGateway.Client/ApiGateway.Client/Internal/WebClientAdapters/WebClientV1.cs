@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Models.Models.AuthorizationTokens;
+using Shared.Models.TO_REMOVE.Models.AuthorizationTokens;
 
 namespace ApiGateway.Client.Internal.WebClientAdapters
 {

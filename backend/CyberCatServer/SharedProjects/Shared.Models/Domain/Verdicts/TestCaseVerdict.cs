@@ -1,5 +1,5 @@
 using ProtoBuf;
-using Shared.Models.Models.TestCases;
+using Shared.Models.Domain.TestCase;
 
 namespace Shared.Models.Domain.Verdicts
 {
@@ -8,7 +8,7 @@ namespace Shared.Models.Domain.Verdicts
     [ProtoContract]
     public abstract class TestCaseVerdict
     {
-        [ProtoMember(1)] public TestCase TestCase { get; set; }
+        [ProtoMember(1)] public TestCaseDescription TestCase { get; set; }
         [ProtoMember(2)] public string Output { get; set; }
     }
 }

@@ -1,27 +1,26 @@
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Ids;
-using Shared.Models.Models.TestCases;
+using Shared.Models.Domain.TestCase;
 
 namespace TaskService.Domain;
 
-public class TestDbModel
+public class TestCaseEntity
 {
     public string[] Inputs { get; set; }
     public string Expected { get; set; }
 
-    public TestDbModel(TestCase test)
+    public TestCaseEntity(TestCaseDescription test)
     {
         Inputs = test.Inputs;
         Expected = test.Expected;
     }
 
-    public TestDbModel()
+    public TestCaseEntity()
     {
     }
 
-    public TestCase ToDescription(TaskId taskId, int index)
+    public TestCaseDescription ToDescription(TaskId taskId, int index)
     {
-        return new TestCase()
+        return new TestCaseDescription()
         {
             Id = new TestCaseId(taskId, index),
             Inputs = Inputs,
