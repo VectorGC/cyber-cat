@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.Infrastructure;
+using ApiGateway.Client.Application.UseCases;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 

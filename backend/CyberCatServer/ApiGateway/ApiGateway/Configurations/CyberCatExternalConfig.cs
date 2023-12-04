@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Shared.Server.Configurations;
+namespace ApiGateway.Configurations;
 
 public class CyberCatExternalConfig
 {

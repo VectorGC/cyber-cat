@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ApiGateway.Client.Infrastructure.WebClientAdapters
+namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters
 {
     internal interface IInternalWebClientAdapter : IDisposable
     {

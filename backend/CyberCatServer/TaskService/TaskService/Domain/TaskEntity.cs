@@ -11,7 +11,7 @@ namespace TaskService.Domain
 
         public int Version { get; set; }
         public string Name { get; set; }
-        public bool IsShared { get; set; }
+        public bool NeedSendWebHook { get; set; } = false;
         public List<TestCaseEntity> Tests { get; set; } = new List<TestCaseEntity>();
     }
 }

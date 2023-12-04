@@ -1,5 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 using ApiGateway.Infrastructure;
+using ApiGateway.Infrastructure.CompleteTaskWebHookService;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Shared.Server.Application.Services;
@@ -21,6 +22,8 @@ builder.Services.AddControllers();
 
 // We create a user-friendly widget in Swagger for logging in with a username and password, rather than a JWT token.
 builder.Services.AddSwaggerGen(options => { options.AddJwtSecurityDefinition(); });
+
+builder.Services.AddScoped<CompleteTaskWebHookService>();
 
 builder.AddAuthServiceGrpcClient();
 builder.AddTaskServiceGrpcClient();

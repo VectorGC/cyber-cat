@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.Services;
+using ApiGateway.Client.Infrastructure.WebClient;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
 using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace ApiGateway.Client.Infrastructure.WebServices
+namespace ApiGateway.Client.Infrastructure
 {
     public class TaskDescriptionWebService : ITaskDescriptionService
     {

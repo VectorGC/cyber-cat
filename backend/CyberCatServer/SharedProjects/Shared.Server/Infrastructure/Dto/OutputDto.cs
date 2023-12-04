@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Server.Infrastructure
+namespace Shared.Server.Infrastructure.Dto
 {
     [ProtoContract]
     public class OutputDto

@@ -1,6 +1,6 @@
 using System;
 
-namespace ApiGateway.Client.Infrastructure
+namespace ApiGateway.Client.Application.UseCases
 {
     public struct Result
     {

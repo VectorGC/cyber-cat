@@ -19,7 +19,7 @@ namespace ApiGateway.Client.Tests
         [SetUp]
         public void SetUp()
         {
-            _client = GetTestPlayerClient();
+            _client = TestPlayerClient();
         }
 
         [TearDown]

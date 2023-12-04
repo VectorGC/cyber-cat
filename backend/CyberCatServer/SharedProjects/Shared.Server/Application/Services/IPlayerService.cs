@@ -20,6 +20,7 @@ public interface IPlayerService
     Task<TaskProgress> GetTaskProgress(GetTaskProgressArgs args);
     Task<Verdict> SubmitSolution(SubmitSolutionArgs args);
     Task RemovePlayer(RemovePlayerArgs args);
+    Task<List<UserId>> GetUsersWhoSolvedTask(TaskId taskId);
 }
 
 [ProtoContract(SkipConstructor = true)]

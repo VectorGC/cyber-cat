@@ -9,7 +9,6 @@ builder.AddMongoDatabaseContext();
 builder.Services.AddScoped<IPlayerRepository, PlayerMongoRepository>();
 
 builder.AddJudgeServiceGrpcClient();
-builder.AddTaskServiceGrpcClient();
 
 builder.Services.AddCodeFirstGrpc();
 

@@ -12,5 +12,10 @@ namespace ApiGateway.Client.Domain
         }
 
         private readonly Dictionary<TaskId, TaskModel> _tasks = new Dictionary<TaskId, TaskModel>();
+
+        public Dictionary<TaskId, TaskModel>.Enumerator GetEnumerator()
+        {
+            return _tasks.GetEnumerator();
+        }
     }
 }

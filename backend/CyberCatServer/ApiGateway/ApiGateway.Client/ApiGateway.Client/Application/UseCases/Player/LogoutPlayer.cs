@@ -1,5 +1,3 @@
-using ApiGateway.Client.Infrastructure;
-
 namespace ApiGateway.Client.Application.UseCases.Player
 {
     public class LogoutPlayer : IUseCase

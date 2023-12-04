@@ -12,13 +12,11 @@ public class PlayerGrpcService : IPlayerService
 {
     private readonly IPlayerRepository _playerRepository;
     private readonly IJudgeService _judgeService;
-    private readonly ITaskService _taskService;
     private readonly ILogger<PlayerGrpcService> _logger;
 
-    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeService judgeService, ITaskService taskService, ILogger<PlayerGrpcService> logger)
+    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeService judgeService, ILogger<PlayerGrpcService> logger)
     {
         _logger = logger;
-        _taskService = taskService;
         _judgeService = judgeService;
         _playerRepository = playerRepository;
     }
@@ -66,7 +64,6 @@ public class PlayerGrpcService : IPlayerService
             };
         }
 
-        await _taskService.OnTaskSolved(new OnTaskSolvedArgs(userId, taskId));
         return verdict;
     }
 
@@ -104,5 +101,18 @@ public class PlayerGrpcService : IPlayerService
                     throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest);
             }
         }
+    }
+
+    public async Task<List<UserId>> GetUsersWhoSolvedTask(TaskId taskId)
+    {
+        var userIds = new List<UserId>();
+
+        var players = _playerRepository.GetPlayerWhoSolvedTask(taskId);
+        await foreach (var player in players)
+        {
+            userIds.Add(player.Id);
+        }
+
+        return userIds;
     }
 }

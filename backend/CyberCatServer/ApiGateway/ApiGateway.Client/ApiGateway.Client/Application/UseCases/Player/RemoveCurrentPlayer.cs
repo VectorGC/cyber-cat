@@ -1,5 +1,4 @@
 using ApiGateway.Client.Application.Services;
-using ApiGateway.Client.Infrastructure;
 
 namespace ApiGateway.Client.Application.UseCases.Player
 {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ public interface IAuthService
     Task<AuthorizationToken> GetAccessToken(GetAccessTokenArgs args);
     Task RemoveUser(RemoveUserArgs args);
     Task<UserId> FindByEmail(FindByEmailArgs args);
+    Task<List<UserModel>> GetUsersByIds(List<UserId> userIds);
 }
 
 [ProtoContract(SkipConstructor = true)]

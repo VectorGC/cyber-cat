@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
 using Shared.Server.Application.Services;
-using Shared.Server.Infrastructure;
+using Shared.Server.Infrastructure.Dto;
 using Shared.Tests;
 
 namespace CppLauncherService.Tests;

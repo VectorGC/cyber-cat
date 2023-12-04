@@ -5,7 +5,7 @@ using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Application.UseCases.Player;
 using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
-using ApiGateway.Client.Infrastructure.WebServices;
+using ApiGateway.Client.Infrastructure.WebClient;
 
 namespace ApiGateway.Client.Application
 {
@@ -36,6 +36,7 @@ namespace ApiGateway.Client.Application
             _container.Register<IUserService, UserWebService>().AsSingleton();
             _container.Register<ITaskDescriptionService, TaskDescriptionWebService>().AsSingleton();
             _container.Register<ITaskPlayerProgressService, TaskPlayerProgressWebService>().AsSingleton();
+            _container.Register<ITaskDataService, TaskDataWebService>().AsSingleton();
             _container.Register<ISubmitSolutionTaskService, SubmitSolutionTaskWebService>().AsSingleton();
         }
 

@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.API;
+using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Domain;
-using ApiGateway.Client.Infrastructure;
 
 namespace ApiGateway.Client.Application
 {

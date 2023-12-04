@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Threading.Tasks;
 using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
@@ -15,7 +17,7 @@ namespace ApiGateway.Client.Tests
         [SetUp]
         public void SetUp()
         {
-            _client = GetTestPlayerClient();
+            _client = TestPlayerClient();
         }
 
         [TearDown]
@@ -33,7 +35,26 @@ namespace ApiGateway.Client.Tests
 
             Assert.AreEqual("Hello cat!", task.Description.Name);
             StringAssert.StartsWith("# Hello cat!", task.Description.Description);
-            Assert.AreEqual("#include <iostream>\r\n#include <stdio.h>\r\n\r\nint main()\r\n{\r\n    printf(\"Hello world!\");\r\n}\r\n", task.Description.DefaultCode);
+            Assert.AreEqual(TestCodeSolution.PrintMessage("Hello world!"), task.Description.DefaultCode);
+        }
+
+        [Test]
+        public async Task SaveUser_WhenUserCompleteTask()
+        {
+            var taskId = "tutorial";
+
+            var task = _client.Player.Tasks[taskId];
+
+            var users = task.UsersWhoSolvedTask;
+            Assert.IsEmpty(users);
+
+            var verdict = await task.SubmitSolution(TestCodeSolution.SolveTutorial());
+            Assert.IsTrue(verdict.Value.IsSuccess);
+
+            Assert.AreEqual(1, users.Count);
+
+            var user = users.First();
+            Assert.AreEqual(_client.Player.User.FirstName, user.FirstName);
         }
     }
 }

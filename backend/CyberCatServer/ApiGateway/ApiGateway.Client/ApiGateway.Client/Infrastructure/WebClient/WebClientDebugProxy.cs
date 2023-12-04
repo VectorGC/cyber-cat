@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace ApiGateway.Client.Infrastructure
+namespace ApiGateway.Client.Infrastructure.WebClient
 {
     internal class WebClientDebugProxy : IWebClient
     {

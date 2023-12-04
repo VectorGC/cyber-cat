@@ -1,30 +1,19 @@
-using Shared.Server.Configurations;
-using Shared.Server.Domain;
-using Shared.Server.Infrastructure;
+using ApiGateway.Configurations;
 
-namespace TaskService.Infrastructure;
+namespace ApiGateway.Infrastructure.CompleteTaskWebHookService;
 
-public class SharedTaskWebHookProcessor
+public class CompleteTaskWebHookService
 {
     private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ILogger<SharedTaskWebHookProcessor> _logger;
+    private readonly ILogger<CompleteTaskWebHookService> _logger;
 
-    public SharedTaskWebHookProcessor(IHttpClientFactory httpClientFactory, ILogger<SharedTaskWebHookProcessor> logger)
+    public CompleteTaskWebHookService(IHttpClientFactory httpClientFactory, ILogger<CompleteTaskWebHookService> logger)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<WebHookResultStatus> ProcessWebHook(SharedTaskProgress sharedTaskProgress)
-    {
-        if (sharedTaskProgress == null)
-            return null;
-
-        var dto = new SharedTaskExternalDto(sharedTaskProgress);
-        return await ProcessWebHook(dto);
-    }
-
-    public async Task<WebHookResultStatus> ProcessWebHook(SharedTaskExternalDto dto)
+    public async Task<WebHookResultStatus> SendWebHook(WhoSolvedTaskExternalDto dto)
     {
         if (dto == null)
             return null;

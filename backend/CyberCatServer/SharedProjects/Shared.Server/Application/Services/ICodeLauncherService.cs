@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Server.Infrastructure;
+using Shared.Server.Infrastructure.Dto;
 
 namespace Shared.Server.Application.Services;
 

@@ -23,11 +23,6 @@ public class PlayerEntity : IDocument<long>
     {
     }
 
-    public void SetTaskStatusByVerdict()
-    {
-        throw new NotImplementedException();
-    }
-
     public void SetTaskStatusByVerdict(TaskId taskId, Verdict verdict, string solution)
     {
         if (!Tasks.ContainsKey(taskId))

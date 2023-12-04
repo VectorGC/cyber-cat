@@ -10,13 +10,14 @@ namespace ApiGateway.Client.Tests.Extensions
     public abstract class ApiGatewayClientTestFixture
     {
         protected readonly ServerEnvironment ServerEnvironment;
+        protected readonly TestCodeSolution TestCodeSolution = new TestCodeSolution();
 
         public ApiGatewayClientTestFixture(ServerEnvironment serverEnvironment)
         {
             ServerEnvironment = serverEnvironment;
         }
 
-        public async Task<TestPlayerClient> GetTestPlayerClientAsync(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
+        public async Task<TestPlayerClient> TestPlayerClientAsync(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
         {
             var client = new ApiGatewayClient(ServerEnvironment);
 
@@ -31,9 +32,14 @@ namespace ApiGateway.Client.Tests.Extensions
             return new TestPlayerClient(client, password);
         }
 
-        public TestPlayerClient GetTestPlayerClient(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
+        public TestPlayerClient TestPlayerClient(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
         {
-            return GetTestPlayerClientAsync(email, password, userName).Result;
+            return TestPlayerClientAsync(email, password, userName).Result;
+        }
+
+        public TestEnvironmentSetuper TestSetupClient()
+        {
+            return new TestEnvironmentSetuper();
         }
     }
 }

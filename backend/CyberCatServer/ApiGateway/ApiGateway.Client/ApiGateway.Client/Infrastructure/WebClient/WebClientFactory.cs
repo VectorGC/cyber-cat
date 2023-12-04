@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace ApiGateway.Client.Infrastructure
+namespace ApiGateway.Client.Infrastructure.WebClient
 {
     public class WebClientFactory
     {

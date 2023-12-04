@@ -9,9 +9,6 @@ using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
-using Shared.Models.Domain.Users;
-using Shared.Server.Domain;
-using Shared.Server.Infrastructure;
 
 namespace Shared.Server.Application.Services;
 
@@ -20,15 +17,11 @@ public interface ITaskService
 {
     Task<List<TaskDescription>> GetTasks();
     Task<List<TestCaseDescription>> GetTestCases(TaskId taskId);
-    Task OnTaskSolved(OnTaskSolvedArgs args);
-    Task<List<SharedTaskProgress>> GetSharedTasks();
-    Task<WebHookResultStatus> ProcessWebHookTest();
+    Task<NeedSendWebHookResponse> NeedSendWebHook(TaskId taskId);
 }
 
 [ProtoContract(SkipConstructor = true)]
-public record OnTaskSolvedArgs(
-    [property: ProtoMember(1)] UserId UserId,
-    [property: ProtoMember(2)] TaskId TaskId);
+public record NeedSendWebHookResponse([property: ProtoMember(1)] bool NeedSendWebHook);
 
 public static class TaskServiceExtensions
 {

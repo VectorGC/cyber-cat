@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Application.UseCases.Player;
 using ApiGateway.Client.Domain;
-using ApiGateway.Client.Infrastructure;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Application.API
 {
-    public struct TaskAPI
+    public class TaskAPI
     {
         public TaskId Id => _task.Id;
         public TaskDescription Description => _task.Description;
@@ -18,6 +19,7 @@ namespace ApiGateway.Client.Application.API
         public bool IsComplete => _task.Status.IsComplete;
         public bool IsStarted => _task.Status.IsStarted;
         public string LastSolution => _task.Status.LastSolution;
+        public IReadOnlyList<UserModel> UsersWhoSolvedTask => _task.UsersWhoSolvedTask;
 
         private readonly TaskModel _task;
         private readonly TasksAPI _tasksApi;

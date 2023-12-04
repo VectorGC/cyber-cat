@@ -1,6 +1,5 @@
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
-using Shared.Server.Domain;
 using TaskService.Domain;
 
 namespace TaskService.Infrastructure;
@@ -37,16 +36,6 @@ public class TaskEntityMapper
         }
 
         return testCases;
-    }
-
-    public SharedTaskProgress ToSharedTaskProgressDomain(SharedTaskProgressEntity entity)
-    {
-        return new SharedTaskProgress()
-        {
-            TaskId = entity.Id,
-            Status = entity.Status,
-            UserId = entity.UserId
-        };
     }
 
     private async Task<string> GetDescription(TaskId taskId)

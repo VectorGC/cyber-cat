@@ -13,7 +13,7 @@ namespace ApiGateway.Client.Tests
         [Test]
         public async Task CreatePlayerAndRemovePlayer_WhenPassValidCredentials()
         {
-            using (var client = await GetTestPlayerClientAsync())
+            using (var client = await TestPlayerClientAsync())
             {
                 var task = client.Player.Tasks["tutorial"];
                 Assert.IsFalse(task.IsStarted);
@@ -23,7 +23,7 @@ namespace ApiGateway.Client.Tests
             }
 
             // Create player again.
-            using (var anotherClient = await GetTestPlayerClientAsync())
+            using (var anotherClient = await TestPlayerClientAsync())
             {
                 // Progress has been lost.
                 var task = anotherClient.Player.Tasks["tutorial"];

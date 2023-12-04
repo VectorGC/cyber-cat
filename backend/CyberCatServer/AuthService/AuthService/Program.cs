@@ -30,6 +30,7 @@ builder.Services
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services
     .AddScoped<IUserRepository, UserManagerRepository>()
+    .AddScoped<UserEntityMapper>()
     .AddHostedService<AddAdminUserIfNeeded>();
 
 builder.Services.AddCodeFirstGrpc();

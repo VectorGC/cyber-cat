@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AuthService.Infrastructure;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 using Shared.Server.Application.Services;
@@ -11,9 +13,11 @@ public class AuthGrpcService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
+    private readonly UserEntityMapper _userEntityMapper;
 
-    public AuthGrpcService(IUserRepository userRepository, ITokenService tokenService)
+    public AuthGrpcService(IUserRepository userRepository, ITokenService tokenService, UserEntityMapper userEntityMapper)
     {
+        _userEntityMapper = userEntityMapper;
         _userRepository = userRepository;
         _tokenService = tokenService;
     }
@@ -100,5 +104,17 @@ public class AuthGrpcService : IAuthService
         await _userRepository.SetAuthenticationTokenAsync(user, token);
 
         return token;
+    }
+
+    public async Task<List<UserModel>> GetUsersByIds(List<UserId> userIds)
+    {
+        var users = new List<UserModel>();
+        foreach (var id in userIds)
+        {
+            var userEntity = await _userRepository.GetUser(id);
+            users.Add(_userEntityMapper.ToDomain(userEntity));
+        }
+
+        return users;
     }
 }

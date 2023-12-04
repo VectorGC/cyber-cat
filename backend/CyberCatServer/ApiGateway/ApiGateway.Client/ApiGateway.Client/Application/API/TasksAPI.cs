@@ -1,16 +1,20 @@
+using System.Collections.Generic;
 using Shared.Models.Domain.Tasks;
 
 namespace ApiGateway.Client.Application.API
 {
     public class TasksAPI : API
     {
-        public TaskAPI this[TaskId taskId] => new TaskAPI(_playerContext.Player.Tasks[taskId], this);
+        public TaskAPI this[TaskId taskId] => _tasks[taskId];
 
-        private readonly PlayerContext _playerContext;
+        private readonly Dictionary<TaskId, TaskAPI> _tasks = new Dictionary<TaskId, TaskAPI>();
 
         public TasksAPI(TinyIoCContainer container, PlayerContext playerContext) : base(container)
         {
-            _playerContext = playerContext;
+            foreach (var kvp in playerContext.Player.Tasks)
+            {
+                _tasks[kvp.Key] = new TaskAPI(kvp.Value, this);
+            }
         }
     }
 }

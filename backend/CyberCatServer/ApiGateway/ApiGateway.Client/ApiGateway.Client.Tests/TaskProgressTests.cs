@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
-using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Tests
 {
@@ -17,7 +16,7 @@ namespace ApiGateway.Client.Tests
         [SetUp]
         public void SetUp()
         {
-            _client = GetTestPlayerClient();
+            _client = TestPlayerClient();
         }
 
         [TearDown]

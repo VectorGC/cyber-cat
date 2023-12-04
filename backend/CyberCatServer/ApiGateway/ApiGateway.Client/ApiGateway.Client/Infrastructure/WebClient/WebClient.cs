@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ApiGateway.Client.Infrastructure.WebClientAdapters;
-using ApiGateway.Client.Infrastructure.WebClientAdapters.WebClientAdapter;
+using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters;
+using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClientAdapter;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace ApiGateway.Client.Infrastructure
+namespace ApiGateway.Client.Infrastructure.WebClient
 {
     internal class WebClient : IWebClient
     {

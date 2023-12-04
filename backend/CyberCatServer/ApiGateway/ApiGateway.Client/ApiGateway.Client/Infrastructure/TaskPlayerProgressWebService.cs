@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.Services;
+using ApiGateway.Client.Infrastructure.WebClient;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace ApiGateway.Client.Infrastructure.WebServices
+namespace ApiGateway.Client.Infrastructure
 {
     public class TaskPlayerProgressWebService : ITaskPlayerProgressService
     {
@@ -20,7 +21,7 @@ namespace ApiGateway.Client.Infrastructure.WebServices
         {
             using (var client = _webClientFactory.Create(token))
             {
-                var progress = await client.GetAsync<TaskProgress>(WebApi.GetTaskProgress(taskId.Value));
+                var progress = await client.GetAsync<TaskProgress>(WebApi.GetTaskProgress(taskId));
                 return progress;
             }
         }

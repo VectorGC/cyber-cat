@@ -45,7 +45,6 @@ internal static class TasksModels
         {
             Id = "task-2",
             Name = "A + B * C",
-            IsShared = true,
             Tests = new List<TestCaseEntity>()
             {
                 new()

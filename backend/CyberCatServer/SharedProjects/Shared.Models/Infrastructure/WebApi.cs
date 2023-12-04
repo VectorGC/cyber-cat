@@ -18,5 +18,8 @@ namespace Shared.Models.Infrastructure
 
         public const string GetTestCasesTemplate = "{taskId}/tests";
         public static string GetTestCases(TaskId taskId) => $"{taskId.Value}/tests";
+
+        public const string GetUsersWhoSolvedTaskTemplate = "player/tasks/{taskId}/usersWhoSolvedTask";
+        public static string GetUsersWhoSolvedTask(TaskId taskId) => $"player/tasks/{taskId}/usersWhoSolvedTask";
     }
 }

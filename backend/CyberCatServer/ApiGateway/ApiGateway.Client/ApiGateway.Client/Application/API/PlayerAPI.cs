@@ -1,5 +1,5 @@
+using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Application.UseCases.Player;
-using ApiGateway.Client.Infrastructure;
 using Shared.Models.Domain.Users;
 
 namespace ApiGateway.Client.Application.API
