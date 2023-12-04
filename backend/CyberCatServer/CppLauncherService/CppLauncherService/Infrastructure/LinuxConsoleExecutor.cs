@@ -1,23 +1,23 @@
 ﻿using System.Diagnostics;
 using System.Text;
-using CppLauncherService.Configurations;
-using CppLauncherService.InternalModels;
+using CppLauncherService.Application;
+using CppLauncherService.Domain;
 using Microsoft.Extensions.Options;
 
-namespace CppLauncherService.Services
+namespace CppLauncherService.Infrastructure
 {
-    internal class ConsoleExecutorProxy : IProcessExecutorProxy
+    public class LinuxConsoleExecutor : IConsoleExecutor
     {
         private readonly TimeSpan _timeOut;
-        private readonly ILogger<ConsoleExecutorProxy> _logger;
+        private readonly ILogger<WindowsConsoleExecutor> _logger;
 
-        public ConsoleExecutorProxy(IOptions<CppLauncherAppSettings> appSettings, ILogger<ConsoleExecutorProxy> logger)
+        public LinuxConsoleExecutor(IOptions<CppLauncherAppSettings> appSettings, ILogger<WindowsConsoleExecutor> logger)
         {
             _logger = logger;
             _timeOut = appSettings.Value.ProcessTimeout;
         }
 
-        public async Task<Output> Run(RunCommand command)
+        public async Task<Output> Run(ConsoleCommand command)
         {
             _logger.LogInformation("Run '{Command}'", command.ToString());
             var startInfo = new ProcessStartInfo()
@@ -40,9 +40,25 @@ namespace CppLauncherService.Services
             }
 
             var output = await WaitForExit(process, _timeOut);
-            if (output.HasError)
+            return output;
+        }
+
+        private async Task<Output> WaitForExit(Process process, TimeSpan timeOut)
+        {
+            Output output;
+            var ct = new CancellationTokenSource(timeOut).Token;
+            try
             {
-                return output;
+                await process.WaitForExitAsync(ct);
+                if (process.ExitCode != 0)
+                    output = await ReadError(process);
+                else
+                    output = await ReadOk(process);
+            }
+            catch (TaskCanceledException)
+            {
+                Kill(process, timeOut);
+                output = ReadError(process, $"The process took more than {timeOut.Seconds} seconds");
             }
 
             while (!process.HasExited)
@@ -50,27 +66,7 @@ namespace CppLauncherService.Services
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 
-            if (process.ExitCode != 0)
-            {
-                return await process.ReadError();
-            }
-
-            return await process.ReadOk();
-        }
-
-        private async Task<Output> WaitForExit(Process process, TimeSpan timeOut)
-        {
-            var ct = new CancellationTokenSource(timeOut).Token;
-            try
-            {
-                await process.WaitForExitAsync(ct);
-                return Output.Empty;
-            }
-            catch (TaskCanceledException)
-            {
-                Kill(process, timeOut);
-                return process.ReadError($"The process took more than {timeOut.Seconds} seconds");
-            }
+            return output;
         }
 
         private void Kill(Process process, TimeSpan timeOut)
@@ -87,6 +83,21 @@ namespace CppLauncherService.Services
             {
                 throw new InvalidOperationException("Process not killed");
             }
+        }
+
+        private static async Task<Output> ReadError(Process process)
+        {
+            return ReadError(process, await process.StandardError.ReadToEndAsync());
+        }
+
+        private static Output ReadError(Process process, string message)
+        {
+            return Output.Error(process.ExitCode, message);
+        }
+
+        private static async Task<Output> ReadOk(Process process)
+        {
+            return Output.Ok(await process.StandardOutput.ReadToEndAsync());
         }
     }
 }

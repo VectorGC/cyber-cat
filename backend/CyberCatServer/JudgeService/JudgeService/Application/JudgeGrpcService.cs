@@ -1,15 +1,14 @@
 using Shared.Models.Domain.Verdicts;
-using Shared.Server.Data;
 using Shared.Server.Services;
 
-namespace JudgeService.GrpcServices;
+namespace JudgeService.Application;
 
-public class JudgeService : IJudgeService
+public class JudgeGrpcService : IJudgeService
 {
     private readonly ICodeLauncherService _codeLauncherService;
     private readonly ITaskService _taskService;
 
-    public JudgeService(ICodeLauncherService codeLauncherService, ITaskService taskService)
+    public JudgeGrpcService(ICodeLauncherService codeLauncherService, ITaskService taskService)
     {
         _codeLauncherService = codeLauncherService;
         _taskService = taskService;

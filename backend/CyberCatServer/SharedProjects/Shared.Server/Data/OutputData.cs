@@ -8,5 +8,13 @@ namespace Shared.Server.Data
         [ProtoMember(1)] public string StandardOutput { get; set; }
         [ProtoMember(2)] public string StandardError { get; set; }
         public bool Success => string.IsNullOrEmpty(StandardError);
+
+        public static OutputDto Error(string error)
+        {
+            return new OutputDto()
+            {
+                StandardError = error
+            };
+        }
     }
 }

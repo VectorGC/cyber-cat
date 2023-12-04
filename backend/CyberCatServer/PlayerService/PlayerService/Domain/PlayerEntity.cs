@@ -1,6 +1,8 @@
 ﻿using MongoDbGenericRepository.Attributes;
 using MongoDbGenericRepository.Models;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
+using Shared.Models.Domain.Verdicts;
 
 namespace PlayerService.Domain;
 
@@ -19,5 +21,24 @@ public class PlayerEntity : IDocument<long>
 
     public PlayerEntity()
     {
+    }
+
+    public void SetTaskStatusByVerdict()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetTaskStatusByVerdict(TaskId taskId, Verdict verdict, string solution)
+    {
+        if (!Tasks.ContainsKey(taskId))
+            Tasks[taskId] = new TaskProgressEntity();
+
+        Tasks[taskId].StatusType = verdict switch
+        {
+            Success success => TaskProgressStatusType.Complete,
+            _ => TaskProgressStatusType.HaveSolution
+        };
+
+        Tasks[taskId].Solution = solution;
     }
 }

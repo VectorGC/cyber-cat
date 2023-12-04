@@ -1,6 +1,6 @@
-namespace CppLauncherService.InternalModels;
+namespace CppLauncherService.Domain;
 
-internal class Output
+public class Output
 {
     public string StandardOutput { get; private init; }
     public string StandardError { get; private init; }
@@ -8,10 +8,14 @@ internal class Output
 
     public bool HasError => !string.IsNullOrEmpty(StandardError);
 
-    public static readonly Output Empty = new();
-
     public static Output Error(int exitCode, string message)
     {
+        message = exitCode switch
+        {
+            11 => "(SIGSEGV signal) Segmentation fault",
+            _ => message
+        };
+
         return new Output
         {
             ExitCode = exitCode,

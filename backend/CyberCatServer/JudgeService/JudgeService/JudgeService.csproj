@@ -22,4 +22,9 @@
     <ProjectReference Include="..\..\SharedProjects\Shared.Server\Shared.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain" />
+    <Folder Include="Infrastructure" />
+  </ItemGroup>
+
 </Project>

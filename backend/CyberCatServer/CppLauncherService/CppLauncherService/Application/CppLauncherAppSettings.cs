@@ -1,4 +1,4 @@
-namespace CppLauncherService.Configurations;
+namespace CppLauncherService.Application;
 
 public class CppLauncherAppSettings
 {

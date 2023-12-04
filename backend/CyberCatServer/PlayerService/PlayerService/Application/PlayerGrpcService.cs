@@ -55,16 +55,7 @@ public class PlayerGrpcService : IPlayerService
         _logger.LogInformation("{Task} verdict: {Verdict}. Player '{UserId}'", args.TaskId, verdict.ToString(), userId);
 
         var player = await GetOrCreatePlayer(args.UserId);
-        if (!player.Tasks.ContainsKey(taskId))
-            player.Tasks[taskId] = new TaskProgressEntity();
-
-        player.Tasks[taskId].StatusType = verdict switch
-        {
-            Success success => TaskProgressStatusType.Complete,
-            _ => TaskProgressStatusType.HaveSolution
-        };
-
-        player.Tasks[taskId].Solution = solution;
+        player.SetTaskStatusByVerdict(taskId, verdict, solution);
 
         var updateResult = await _playerRepository.Update(player);
         if (!updateResult.IsSuccess)

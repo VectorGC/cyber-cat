@@ -1,17 +1,24 @@
-using CppLauncherService.Configurations;
-using CppLauncherService.GrpcServices;
-using CppLauncherService.Services;
+using CppLauncherService.Application;
+using CppLauncherService.Infrastructure;
 using ProtoBuf.Grpc.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<CppLauncherAppSettings>(builder.Configuration);
 
-builder.Services.AddScoped<IProcessExecutorProxy, ConsoleExecutorProxy>();
-builder.Services.AddScoped<ICppFileCreator, TempCppFileCreator>();
-builder.Services.AddScoped<ICppErrorFormatService, CppErrorFormatService>();
+switch (Environment.OSVersion.Platform)
+{
+    case PlatformID.Win32NT:
+        builder.Services.AddScoped<IConsoleExecutor, WindowsConsoleExecutor>();
+        break;
+    default:
+        builder.Services.AddScoped<IConsoleExecutor, LinuxConsoleExecutor>();
+        break;
+}
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddScoped<ICppCompileService, GppCompileService>();
+
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 
