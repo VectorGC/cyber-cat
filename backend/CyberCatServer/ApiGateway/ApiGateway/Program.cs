@@ -67,16 +67,25 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+var swaggerProtectPart = "security/yF3bE|TH7~";
+
+app.UseSwagger(options => options.RouteTemplate = "swagger/{documentName}/" + swaggerProtectPart + "/swagger.{json|yaml}");
+app.UseSwaggerUI(options =>
+{
+    options.RoutePrefix = "swagger/" + swaggerProtectPart;
+    options.SwaggerEndpoint("/swagger/v1/" + swaggerProtectPart + "/swagger.json", "API");
+});
+
 // If we are in development mode (ASPNETCORE_ENVIRONMENT = Development).
 if (app.Environment.IsDevelopment())
 {
     // We showcase the API specification using Swagger.
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwagger();
+    // app.UseSwaggerUI();
 
     app.MapGet("/", context =>
         {
-            context.Response.Redirect("/swagger");
+            context.Response.Redirect("/swagger" + "/" + swaggerProtectPart);
             return Task.CompletedTask;
         }
     );

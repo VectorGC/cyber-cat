@@ -5,7 +5,6 @@
     build:
       dockerfile: ApiGateway/ApiGateway/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
       - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
       - ConnectionStrings__PlayerServiceGrpcEndpoint=$PLAYER_SERVICE_GRPC_URL
