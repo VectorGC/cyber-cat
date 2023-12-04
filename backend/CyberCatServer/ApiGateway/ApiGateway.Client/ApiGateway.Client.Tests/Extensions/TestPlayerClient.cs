@@ -10,11 +10,11 @@ namespace ApiGateway.Client.Tests.Extensions
     {
         public PlayerAPI Player => Client.Player;
         public ApiGatewayClient Client { get; }
-        public string Password { get; }
+        public string Password { get; set; }
+        public string VkId { get; set; }
 
-        public TestPlayerClient(ApiGatewayClient client, string password)
+        public TestPlayerClient(ApiGatewayClient client)
         {
-            Password = password;
             Client = client;
         }
 
@@ -31,7 +31,14 @@ namespace ApiGateway.Client.Tests.Extensions
 
         public Task<Result<PlayerModel>> LoginPlayer(string email, string password)
         {
+            Password = password;
             return Client.LoginPlayer(email, password);
+        }
+
+        public Task<Result<PlayerModel>> LoginPlayerWithVk(string email, string userName, string vkId)
+        {
+            VkId = vkId;
+            return Client.LoginPlayerWithVk(email, userName, vkId);
         }
     }
 }

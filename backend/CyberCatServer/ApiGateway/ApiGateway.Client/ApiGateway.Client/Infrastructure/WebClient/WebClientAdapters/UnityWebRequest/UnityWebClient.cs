@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest;
 using fastJSON;
 using UnityEngine;
 
-namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
+namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebRequest
 {
     internal class UnityWebClient : IInternalWebClientAdapter
     {

@@ -65,6 +65,10 @@ namespace ApiGateway.Client.Tests
                 Assert.AreEqual(Email, client.Player.User.Email);
                 Assert.AreEqual(UserName, client.Player.User.FirstName);
 
+                var doubleLoginResult = await client.LoginPlayer(Email, Password);
+                Assert.IsFalse(doubleLoginResult.IsSuccess);
+                Assert.AreEqual("Сперва нужно выйти из текущий учетный записи", doubleLoginResult.Error);
+
                 var removeResult = client.Player.Remove(Password);
                 Assert.IsTrue(removeResult.IsSuccess);
             }

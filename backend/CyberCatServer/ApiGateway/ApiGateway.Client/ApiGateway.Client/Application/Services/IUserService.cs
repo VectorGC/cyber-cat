@@ -9,7 +9,9 @@ namespace ApiGateway.Client.Application.Services
     {
         Task<Result> RegisterPlayer(string email, string password, string userName);
         Task<Result<AuthorizationToken>> LoginUser(string email, string password);
+        Task<Result<AuthorizationToken>> LoginWithVk(string email, string userName, string vkId);
         UserModel GetUserByToken(AuthorizationToken token);
         Result RemoveUserByToken(AuthorizationToken token, string password);
+        Result RemoveUserWithVk(AuthorizationToken token, string vkId);
     }
 }

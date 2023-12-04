@@ -29,17 +29,12 @@ namespace ApiGateway.Client.Tests.Extensions
             if (!loginResult.IsSuccess)
                 throw new InvalidOperationException(loginResult.Error);
 
-            return new TestPlayerClient(client, password);
+            return new TestPlayerClient(client);
         }
 
         public TestPlayerClient TestPlayerClient(string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
         {
             return TestPlayerClientAsync(email, password, userName).Result;
-        }
-
-        public TestEnvironmentSetuper TestSetupClient()
-        {
-            return new TestEnvironmentSetuper();
         }
     }
 }

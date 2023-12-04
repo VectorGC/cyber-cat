@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters;
-using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClientAdapter;
 using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Infrastructure.WebClient
@@ -17,10 +16,10 @@ namespace ApiGateway.Client.Infrastructure.WebClient
         {
             _internalWebClient =
 #if UNITY_WEBGL
-                new ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest.UnityWebClient();
+                new ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebRequest.UnityWebClient();
 #endif
 #if WEB_CLIENT
-                new InternalWebClientAdapter();
+                new ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClientAdapter.InternalWebClientAdapter();
 #endif
 
             _token = token;

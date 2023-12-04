@@ -17,7 +17,9 @@ public interface IAuthService
 {
     Task<UserId> CreateUser(CreateUserArgs args);
     Task<AuthorizationToken> GetAccessToken(GetAccessTokenArgs args);
+    Task<AuthorizationToken> GetAccessTokenWithVk(GetAccessTokenWithVkArgs args);
     Task RemoveUser(RemoveUserArgs args);
+    Task RemoveUserWithVk(RemoveUserWithVkArgs args);
     Task<UserId> FindByEmail(FindByEmailArgs args);
     Task<List<UserModel>> GetUsersByIds(List<UserId> userIds);
 }
@@ -42,6 +44,18 @@ public record RemoveUserArgs(
 [ProtoContract(SkipConstructor = true)]
 public record FindByEmailArgs(
     [property: ProtoMember(1)] string Email);
+
+[ProtoContract(SkipConstructor = true)]
+public record GetAccessTokenWithVkArgs(
+    [property: ProtoMember(1)] string Email,
+    [property: ProtoMember(2)] string UserName,
+    [property: ProtoMember(3)] string VkId,
+    [property: ProtoMember(4)] Roles Roles);
+
+[ProtoContract(SkipConstructor = true)]
+public record RemoveUserWithVkArgs(
+    [property: ProtoMember(1)] UserId Email,
+    [property: ProtoMember(2)] string VkId);
 
 public static class AuthServiceExtensions
 {

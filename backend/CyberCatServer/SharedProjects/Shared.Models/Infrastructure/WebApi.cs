@@ -7,6 +7,9 @@ namespace Shared.Models.Infrastructure
         public const string Login = "auth/login";
         public const string RegisterPlayer = "auth/registerPlayer";
         public const string RemoveUser = "auth/remove";
+            
+        public const string LoginWithVk = "auth/vk/login";
+        public const string RemoveUserWithVk = "auth/vk/remove";
 
         public const string GetTaskDescriptions = "tasks";
 

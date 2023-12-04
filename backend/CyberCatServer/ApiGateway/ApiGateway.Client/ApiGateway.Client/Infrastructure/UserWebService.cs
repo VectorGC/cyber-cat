@@ -66,14 +66,22 @@ namespace ApiGateway.Client.Infrastructure
 
         public UserModel GetUserByToken(AuthorizationToken token)
         {
-            if (token is JwtAccessToken jwtAccessToken)
+            switch (token)
             {
-                return new UserModel()
-                {
-                    Email = jwtAccessToken.email,
-                    FirstName = jwtAccessToken.firstname,
-                    Roles = new Roles(jwtAccessToken.roles)
-                };
+                case JwtAccessToken jwtAccessToken:
+                    return new UserModel()
+                    {
+                        Email = jwtAccessToken.email,
+                        FirstName = jwtAccessToken.firstname,
+                        Roles = new Roles(jwtAccessToken.roles)
+                    };
+                case VkAccessToken vkAccessToken:
+                    return new UserModel()
+                    {
+                        Email = vkAccessToken.JwtAccessToken.email,
+                        FirstName = vkAccessToken.JwtAccessToken.firstname,
+                        Roles = new Roles(vkAccessToken.JwtAccessToken.roles)
+                    };
             }
 
             return null;
@@ -87,6 +95,42 @@ namespace ApiGateway.Client.Infrastructure
                 {
                     ["password"] = password
                 }).Result;
+                return Result.Success;
+            }
+        }
+
+        public async Task<Result<AuthorizationToken>> LoginWithVk(string email, string userName, string vkId)
+        {
+            var form = new Dictionary<string, string>
+            {
+                ["email"] = email,
+                ["userName"] = userName,
+                ["vkId"] = vkId
+            };
+
+            try
+            {
+                using (var client = _webClientFactory.Create())
+                {
+                    var accessToken = await client.PostFastJsonAsync<VkAccessToken>(WebApi.LoginWithVk, form);
+                    return accessToken;
+                }
+            }
+            catch (WebException e) when (e.Response is HttpWebResponse httpResponse)
+            {
+                return e;
+            }
+        }
+
+        public Result RemoveUserWithVk(AuthorizationToken token, string vkId)
+        {
+            using (var client = _webClientFactory.Create(token))
+            {
+                var result = client.PostAsync(WebApi.RemoveUserWithVk, new Dictionary<string, string>()
+                {
+                    ["vkId"] = vkId
+                }).Result;
+
                 return Result.Success;
             }
         }

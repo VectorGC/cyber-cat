@@ -1,55 +1,48 @@
+using System.Threading.Tasks;
+using ApiGateway.Client.Application;
+using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public class VkOAuthTests
+    public class VkOAuthTests : ApiGatewayClientTestFixture
     {
-        private readonly ServerEnvironment _serverEnvironment;
-
-        public VkOAuthTests(ServerEnvironment serverEnvironment)
+        public VkOAuthTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
-            _serverEnvironment = serverEnvironment;
         }
 
-        /*
         [Test]
         public async Task SignUpViaOAuth()
         {
-            var email = "test_vk_oauth";
+            var email = "test_vk_oauth@test.com";
             var userName = "TestVkOauth";
+            var vkId = "123456789";
 
-            var client = new Client.V2.ApiGateway.Client(_serverEnvironment);
+            using (var client = new ApiGatewayClient(ServerEnvironment))
+            {
+                Assert.IsNull(client.Player);
 
-            var user = client.User;
-            Assert.IsNotNull(user.Access<Vk>());
-            Assert.IsFalse(user.Access<Vk>().IsSignedIn);
-            await user.Access<Vk>().SignIn(email, userName);
-            Assert.IsTrue(user.Access<Vk>().IsSignedIn);
-            Assert.AreEqual(email, user.Email);
-            Assert.AreEqual(userName, user.Name);
+                var loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
+                Assert.IsTrue(loginResult.IsSuccess);
+                Assert.AreEqual(email, loginResult.Value.User.Email);
+                Assert.AreEqual(userName, loginResult.Value.User.FirstName);
 
-            user.Access<Vk>().SignOut();
-            Assert.IsFalse(user.Access<Vk>().IsSignedIn);
-            Assert.AreEqual(string.Empty, user.Email);
-            Assert.AreEqual(string.Empty, user.Name);
+                var doubleLoginResult = await client.LoginPlayerWithVk(email, userName, vkId);
+                Assert.IsFalse(doubleLoginResult.IsSuccess);
+                Assert.AreEqual("Сперва нужно выйти из текущий учетный записи", doubleLoginResult.Error);
 
-            user = client.User;
-            Assert.IsNotNull(user.Access<Vk>());
-            Assert.IsFalse(user.Access<Vk>().IsSignedIn);
-            await user.Access<Vk>().SignIn(email, userName);
-            Assert.IsTrue(user.Access<Vk>().IsSignedIn);
-            Assert.IsNotNull(user.Access<Vk>());
-            Assert.AreEqual(email, user.Email);
-            Assert.AreEqual(userName, user.Name);
+                var logoutResult = client.Player.Logout();
+                Assert.IsTrue(logoutResult.IsSuccess);
 
-            // Clean up.
-            await user.Access<Dev>().Users.RemoveByEmail(email);
+                Assert.IsNull(client.Player);
 
-            // Support web sockets.
-            // Assert.IsFalse(user.Access<VK>().IsSignedIn);
+                loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
+                client.Player.RemoveWithVk(vkId);
+
+                Assert.IsNull(client.Player);
+            }
         }
-        */
     }
 }

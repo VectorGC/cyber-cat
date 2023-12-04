@@ -11,5 +11,6 @@ namespace ApiGateway.Client.Application
         PlayerAPI Player { get; }
         Task<Result> RegisterPlayer(string email, string password, string userName);
         Task<Result<PlayerModel>> LoginPlayer(string email, string password);
+        Task<Result<PlayerModel>> LoginPlayerWithVk(string email, string userName, string vkId);
     }
 }

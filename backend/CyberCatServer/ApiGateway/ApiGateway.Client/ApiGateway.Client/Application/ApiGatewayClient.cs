@@ -3,6 +3,7 @@ using ApiGateway.Client.Application.API;
 using ApiGateway.Client.Application.Services;
 using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Application.UseCases.Player;
+using ApiGateway.Client.Application.UseCases.Vk;
 using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
@@ -47,5 +48,6 @@ namespace ApiGateway.Client.Application
 
         public Task<Result> RegisterPlayer(string email, string password, string userName) => _container.Resolve<RegisterPlayer>().Execute(email, password, userName);
         public Task<Result<PlayerModel>> LoginPlayer(string email, string password) => _container.Resolve<LoginPlayer>().Execute(email, password);
+        public Task<Result<PlayerModel>> LoginPlayerWithVk(string email, string userName, string vkId) => _container.Resolve<LoginWithVk>().Execute(email, userName, vkId);
     }
 }
