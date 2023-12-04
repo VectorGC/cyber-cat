@@ -1,5 +1,6 @@
 using CppLauncherService.Domain;
 using Shared.Server.Data;
+using Shared.Server.Infrastructure;
 using Shared.Server.Services;
 
 namespace CppLauncherService.Application;

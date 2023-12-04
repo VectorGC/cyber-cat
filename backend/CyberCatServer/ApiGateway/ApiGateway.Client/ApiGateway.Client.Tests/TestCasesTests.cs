@@ -1,5 +1,5 @@
+using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
-using ApiGateway.Client.V3.Application;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
 using Shared.Server.Data;
+using Shared.Server.Infrastructure;
 using Shared.Server.Services;
 using Shared.Tests;
 

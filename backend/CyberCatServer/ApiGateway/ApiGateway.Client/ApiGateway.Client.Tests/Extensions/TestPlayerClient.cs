@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.V3.Application;
-using ApiGateway.Client.V3.Application.API;
-using ApiGateway.Client.V3.Domain;
-using ApiGateway.Client.V3.Infrastructure;
+using ApiGateway.Client.Application;
+using ApiGateway.Client.Application.API;
+using ApiGateway.Client.Domain;
+using ApiGateway.Client.Infrastructure;
 
 namespace ApiGateway.Client.Tests.Extensions
 {

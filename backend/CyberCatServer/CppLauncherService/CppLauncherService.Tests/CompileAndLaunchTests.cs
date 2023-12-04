@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
 using Shared.Server.Data;
+using Shared.Server.Infrastructure;
 using Shared.Server.Services;
 using Shared.Tests;
 

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
+using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
-using ApiGateway.Client.V3.Application;
 using NUnit.Framework;
 using Shared.Models.Domain.Verdicts;
 
@@ -64,13 +64,13 @@ namespace ApiGateway.Client.Tests
             Assert.IsFalse(task.IsStarted);
 
             var result = await task.SubmitSolution(errorCode);
-            Assert.IsAssignableFrom<Failure>(result.Value);
+            Assert.IsTrue(result.Value.IsFailure);
 
             Assert.IsTrue(task.IsStarted);
             Assert.AreEqual(errorCode, task.LastSolution);
 
             result = await task.SubmitSolution(completeCode);
-            Assert.IsAssignableFrom<Success>(result.Value);
+            Assert.IsTrue(result.Value.IsSuccess);
             Assert.IsTrue(task.IsStarted);
             Assert.IsTrue(task.IsComplete);
             Assert.AreEqual(completeCode, task.LastSolution);
@@ -87,7 +87,7 @@ namespace ApiGateway.Client.Tests
             Assert.IsFalse(task.IsStarted);
 
             var result = await task.SubmitSolution(completeCode);
-            Assert.IsAssignableFrom<Success>(result.Value);
+            Assert.IsTrue(result.Value.IsSuccess);
             Assert.IsTrue(task.IsStarted);
             Assert.IsTrue(task.IsComplete);
             Assert.AreEqual(completeCode, task.LastSolution);

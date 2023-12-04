@@ -7,6 +7,7 @@ using ProtoBuf;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Server.Data;
+using Shared.Server.Infrastructure;
 
 namespace Shared.Server.Services;
 

@@ -33,12 +33,7 @@ public class PlayerEntity : IDocument<long>
         if (!Tasks.ContainsKey(taskId))
             Tasks[taskId] = new TaskProgressEntity();
 
-        Tasks[taskId].StatusType = verdict switch
-        {
-            Success success => TaskProgressStatusType.Complete,
-            _ => TaskProgressStatusType.HaveSolution
-        };
-
+        Tasks[taskId].StatusType = verdict.IsSuccess ? TaskProgressStatusType.Complete : TaskProgressStatusType.HaveSolution;
         Tasks[taskId].Solution = solution;
     }
 }

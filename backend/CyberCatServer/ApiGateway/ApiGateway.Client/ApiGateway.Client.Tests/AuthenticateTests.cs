@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using ApiGateway.Client.V3.Application;
+using ApiGateway.Client.Application;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests

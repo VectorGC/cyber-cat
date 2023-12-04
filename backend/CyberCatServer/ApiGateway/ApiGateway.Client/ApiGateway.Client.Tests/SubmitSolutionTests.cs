@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
-using ApiGateway.Client.V3.Application;
 using NUnit.Framework;
 using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 
 namespace ApiGateway.Client.Tests
 {
@@ -35,8 +36,7 @@ namespace ApiGateway.Client.Tests
 
             var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
 
-            var success = result.Value as Success;
-            Assert.AreEqual(1, success.TestCases.PassedCount);
+            Assert.AreEqual(1, result.Value.TestCases.PassedCount);
         }
 
         [Test]
@@ -98,13 +98,12 @@ namespace ApiGateway.Client.Tests
             var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
             var verdict = result.Value;
 
-            Assert.IsAssignableFrom<Failure>(verdict);
-            var failure = verdict as Failure;
-            Assert.AreEqual(1, failure.TestCases.PassedCount);
+            Assert.IsTrue(verdict.IsFailure);
+            Assert.AreEqual(1, verdict.TestCases.PassedCount);
 
-            var testCase1 = failure.TestCases[taskId, 0] as SuccessTestCaseVerdict;
-            var testCase2 = failure.TestCases[taskId, 1] as FailureTestCaseVerdict;
-            var testCase3 = failure.TestCases[taskId, 2] as FailureTestCaseVerdict;
+            var testCase1 = verdict.TestCases[taskId, 0] as SuccessTestCaseVerdict;
+            var testCase2 = verdict.TestCases[taskId, 1] as FailureTestCaseVerdict;
+            var testCase3 = verdict.TestCases[taskId, 2] as FailureTestCaseVerdict;
 
             Assert.AreEqual("2", testCase1.Output);
             Assert.AreEqual("Expected result '15', but was '2'", testCase2.Error);
