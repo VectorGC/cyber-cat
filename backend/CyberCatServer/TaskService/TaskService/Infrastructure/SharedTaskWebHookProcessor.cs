@@ -1,5 +1,6 @@
-using Shared.Server.Data;
-using Shared.Server.ExternalData;
+using Shared.Server.Configurations;
+using Shared.Server.Domain;
+using Shared.Server.Infrastructure;
 
 namespace TaskService.Infrastructure;
 
@@ -14,7 +15,7 @@ public class SharedTaskWebHookProcessor
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<WebHookResultStatus> ProcessWebHook(SharedTaskProgressData sharedTaskProgress)
+    public async Task<WebHookResultStatus> ProcessWebHook(SharedTaskProgress sharedTaskProgress)
     {
         if (sharedTaskProgress == null)
             return null;

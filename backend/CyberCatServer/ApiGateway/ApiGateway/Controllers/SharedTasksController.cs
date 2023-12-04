@@ -2,8 +2,8 @@ using System.Net;
 using Faker;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Server.ExternalData;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure;
 
 namespace ApiGateway.Controllers;
 

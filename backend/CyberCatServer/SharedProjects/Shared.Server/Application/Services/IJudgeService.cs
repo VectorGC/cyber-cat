@@ -7,7 +7,7 @@ using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Verdicts;
 
-namespace Shared.Server.Services;
+namespace Shared.Server.Application.Services;
 
 [Service]
 public interface IJudgeService

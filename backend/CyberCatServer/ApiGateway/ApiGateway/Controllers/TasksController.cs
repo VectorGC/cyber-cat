@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
 using Shared.Models.Infrastructure;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 namespace ApiGateway.Controllers;
 

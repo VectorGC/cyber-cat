@@ -1,12 +1,11 @@
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Domain.Users;
-using Shared.Server.Data;
+using TaskService.Domain;
 
 namespace TaskService.Application;
 
 public interface ISharedTaskProgressRepository
 {
-    Task<SharedTaskProgressData> GetTask(TaskId id);
-    Task<List<SharedTaskProgressData>> GetTasks();
-    Task<SharedTaskProgressData> SetSolved(TaskId id, UserId userId);
+    Task<SharedTaskProgressEntity> GetTaskProgress(TaskId id);
+    Task<List<SharedTaskProgressEntity>> GetTasksProgresses();
+    Task Update(SharedTaskProgressEntity progress);
 }

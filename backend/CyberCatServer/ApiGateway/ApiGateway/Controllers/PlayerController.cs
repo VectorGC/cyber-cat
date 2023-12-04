@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Infrastructure;
+using Shared.Server.Application.Services;
 using Shared.Server.Infrastructure;
-using Shared.Server.Services;
 
 namespace ApiGateway.Controllers;
 

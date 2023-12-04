@@ -3,8 +3,8 @@ using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
-using Shared.Server.Exceptions;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure.Exceptions;
 
 namespace PlayerService.Application;
 

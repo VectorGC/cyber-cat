@@ -1,5 +1,5 @@
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 using TaskService.Application;
 using TaskService.Infrastructure;
 

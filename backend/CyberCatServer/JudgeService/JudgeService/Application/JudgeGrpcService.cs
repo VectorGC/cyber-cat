@@ -1,7 +1,7 @@
 using JudgeService.Domain;
 using Shared.Models.Domain.Verdicts;
 using Shared.Models.Domain.Verdicts.TestCases;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 namespace JudgeService.Application;
 

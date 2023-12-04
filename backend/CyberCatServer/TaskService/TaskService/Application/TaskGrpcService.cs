@@ -1,8 +1,9 @@
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
-using Shared.Server.Data;
-using Shared.Server.ExternalData;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Domain;
+using Shared.Server.Infrastructure;
+using TaskService.Domain;
 using TaskService.Infrastructure;
 
 namespace TaskService.Application;
@@ -46,18 +47,27 @@ public class TaskGrpcService : ITaskService
 
     public async Task OnTaskSolved(OnTaskSolvedArgs args)
     {
-        var sharedTask = await _sharedTaskProgressRepository.GetTask(args.TaskId);
+        var sharedTask = await _sharedTaskProgressRepository.GetTaskProgress(args.TaskId);
         if (sharedTask == null || sharedTask.Status == SharedTaskStatus.NotSolved)
         {
-            sharedTask = await _sharedTaskProgressRepository.SetSolved(args.TaskId, args.UserId);
-            await _taskWebHookProcessor.ProcessWebHook(sharedTask);
+            var progress = new SharedTaskProgressEntity()
+            {
+                Id = args.TaskId,
+                Status = SharedTaskStatus.Solved,
+                UserId = args.UserId
+            };
+
+            await _sharedTaskProgressRepository.Update(progress);
+
+            var progressDomain = _taskEntityMapper.ToSharedTaskProgressDomain(progress);
+            await _taskWebHookProcessor.ProcessWebHook(progressDomain);
         }
     }
 
-    public async Task<List<SharedTaskProgressData>> GetSharedTasks()
+    public async Task<List<SharedTaskProgress>> GetSharedTasks()
     {
-        var tasks = await _sharedTaskProgressRepository.GetTasks();
-        return tasks;
+        var tasks = await _sharedTaskProgressRepository.GetTasksProgresses();
+        return tasks.Select(progress => _taskEntityMapper.ToSharedTaskProgressDomain(progress)).ToList();
     }
 
     public async Task<WebHookResultStatus> ProcessWebHookTest()

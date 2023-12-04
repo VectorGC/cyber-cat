@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 namespace ApiGateway.Controllers;
 

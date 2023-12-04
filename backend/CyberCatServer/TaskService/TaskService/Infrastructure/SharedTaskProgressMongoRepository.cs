@@ -1,8 +1,7 @@
 using MongoDbGenericRepository;
 using Shared.Models.Domain.Tasks;
-using Shared.Models.Domain.Users;
-using Shared.Server.Data;
 using TaskService.Application;
+using TaskService.Domain;
 
 namespace TaskService.Infrastructure;
 
@@ -12,39 +11,20 @@ internal class SharedTaskProgressMongoRepository : BaseMongoRepository<string>, 
     {
     }
 
-    public async Task<SharedTaskProgressData> GetTask(TaskId id)
+    public async Task<SharedTaskProgressEntity> GetTaskProgress(TaskId id)
     {
-        return await GetOneAsync<SharedTaskProgressData>(task => task.Id == id.Value);
+        return await GetOneAsync<SharedTaskProgressEntity>(task => task.Id == id.Value);
     }
 
-    public async Task<SharedTaskProgressData> SetSolved(TaskId id, UserId userId)
+    public async Task<List<SharedTaskProgressEntity>> GetTasksProgresses()
     {
-        var model = new SharedTaskProgressData()
-        {
-            Id = id.Value,
-            UserId = userId.Value,
-            Status = SharedTaskStatus.Solved
-        };
-
-        var task = await GetTask(id);
-        if (task == null)
-        {
-            await AddOneAsync(model);
-            return model;
-        }
-
-        if (task.Status == SharedTaskStatus.NotSolved)
-        {
-            await UpdateOneAsync(model);
-            return model;
-        }
-
-        return null;
-    }
-
-    public async Task<List<SharedTaskProgressData>> GetTasks()
-    {
-        var tasks = await GetAllAsync<SharedTaskProgressData>(task => true);
+        var tasks = await GetAllAsync<SharedTaskProgressEntity>(task => true);
         return tasks;
+    }
+
+    public async Task Update(SharedTaskProgressEntity progress)
+    {
+        if (await UpdateOneAsync(progress))
+            await AddOneAsync(progress);
     }
 }

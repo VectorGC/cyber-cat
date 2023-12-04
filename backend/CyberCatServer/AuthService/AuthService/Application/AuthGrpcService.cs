@@ -2,8 +2,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Server.Exceptions;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure.Exceptions;
 
 namespace AuthService.Application;
 

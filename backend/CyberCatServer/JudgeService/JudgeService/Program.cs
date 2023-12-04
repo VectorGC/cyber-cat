@@ -1,6 +1,6 @@
 using JudgeService.Application;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

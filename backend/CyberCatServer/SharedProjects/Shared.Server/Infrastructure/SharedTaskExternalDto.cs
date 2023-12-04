@@ -1,9 +1,9 @@
 using System.Linq;
 using Faker;
 using ProtoBuf;
-using Shared.Server.Data;
+using Shared.Server.Domain;
 
-namespace Shared.Server.ExternalData;
+namespace Shared.Server.Infrastructure;
 
 [ProtoContract]
 public class SharedTaskExternalDto
@@ -23,9 +23,9 @@ public class SharedTaskExternalDto
         };
     }
 
-    public SharedTaskExternalDto(SharedTaskProgressData data)
+    public SharedTaskExternalDto(SharedTaskProgress data)
     {
-        TaskId = data.Id;
+        TaskId = data.TaskId;
         PlayerName = data.UserId.ToString();
         IsSolved = data.Status == SharedTaskStatus.Solved;
     }

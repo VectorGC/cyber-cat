@@ -1,6 +1,6 @@
 using ProtoBuf;
 
-namespace Shared.Server.ExternalData;
+namespace Shared.Server.Infrastructure;
 
 [ProtoContract]
 public class WebHookResultStatus

@@ -11,7 +11,7 @@ using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
 using Shared.Models.Domain.Verdicts;
 
-namespace Shared.Server.Services;
+namespace Shared.Server.Application.Services;
 
 [Service]
 public interface IPlayerService

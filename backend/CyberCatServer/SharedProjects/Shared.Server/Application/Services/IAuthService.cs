@@ -9,7 +9,7 @@ using ProtoBuf.Grpc.Configuration;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 
-namespace Shared.Server.Services;
+namespace Shared.Server.Application.Services;
 
 [Service]
 public interface IAuthService

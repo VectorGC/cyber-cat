@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
-using Shared.Server.Exceptions;
+using Shared.Server.Infrastructure.Exceptions;
 
 namespace AuthService.Infrastructure;
 

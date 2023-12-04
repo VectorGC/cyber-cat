@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using MongoDbGenericRepository;
 
-namespace Shared.Server.Services;
+namespace Shared.Server.Application.Services;
 
 public static class MongoServiceExtensions
 {

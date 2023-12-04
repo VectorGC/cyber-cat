@@ -20,4 +20,8 @@
       <ProjectReference Include="..\Shared.Models\Shared.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Application" />
+    </ItemGroup>
+
 </Project>

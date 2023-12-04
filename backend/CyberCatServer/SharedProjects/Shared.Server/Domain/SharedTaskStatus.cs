@@ -1,4 +1,4 @@
-namespace Shared.Server.Data;
+namespace Shared.Server.Domain;
 
 public enum SharedTaskStatus
 {

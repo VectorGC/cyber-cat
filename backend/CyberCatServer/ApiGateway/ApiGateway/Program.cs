@@ -2,8 +2,8 @@ using System.Security.Cryptography.X509Certificates;
 using ApiGateway.Infrastructure;
 using CommandLine;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Shared.Server.Application.Services;
 using Shared.Server.Configurations;
-using Shared.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 using System.Net;
 using Grpc.Core;
 
-namespace Shared.Server.Exceptions;
+namespace Shared.Server.Infrastructure.Exceptions;
 
 public sealed class ServiceException : RpcException
 {

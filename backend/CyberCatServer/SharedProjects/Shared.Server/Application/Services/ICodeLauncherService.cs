@@ -6,10 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf;
 using ProtoBuf.Grpc.ClientFactory;
 using ProtoBuf.Grpc.Configuration;
-using Shared.Server.Data;
 using Shared.Server.Infrastructure;
 
-namespace Shared.Server.Services;
+namespace Shared.Server.Application.Services;
 
 [Service]
 public interface ICodeLauncherService

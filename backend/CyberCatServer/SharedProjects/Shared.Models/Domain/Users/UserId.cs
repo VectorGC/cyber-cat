@@ -25,5 +25,8 @@ namespace Shared.Models.Domain.Users
         {
             return Value.ToString();
         }
+
+        public static implicit operator UserId(long value) => new UserId(value);
+        public static implicit operator long(UserId userId) => userId.Value;
     }
 }
