@@ -1,46 +1,60 @@
 using System.Net;
-using ApiGateway.Attributes;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Server.Ids;
-using Shared.Server.Services;
+using Shared.Models.Domain.Users;
+using Shared.Models.Infrastructure;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-public class AuthController : ControllerBase
+[Authorize]
+public class AuthController : Controller
 {
-    private readonly IAuthGrpcService _authGrpcService;
+    private readonly IAuthService _authService;
+    private readonly IPlayerService _playerService;
 
-    public AuthController(IAuthGrpcService authGrpcService)
+    public AuthController(IAuthService authService, IPlayerService playerService)
     {
-        _authGrpcService = authGrpcService;
+        _playerService = playerService;
+        _authService = authService;
     }
 
     [AllowAnonymous]
-    [HttpPost("signUp")]
+    [HttpPost(WebApi.RegisterPlayer)]
     [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SignUp(string email, string password, string name)
+    [ProducesResponseType((int) HttpStatusCode.Conflict)]
+    public async Task<ActionResult> RegisterPlayer(string email, string password, string name)
     {
-        var response = await _authGrpcService.CreateUser(new CreateUserArgs(email, password, name));
-        return response.ToActionResult();
+        await _authService.CreateUser(new CreateUserArgs(email, password, name, new Roles()
+        {
+            Roles.Player
+        }));
+
+        return Ok();
+    }
+
+    [HttpPost(WebApi.RemoveUser)]
+    [ProducesResponseType((int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.NotFound)]
+    public async Task<ActionResult> RemoveUser(string password)
+    {
+        await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
+        await _playerService.RemovePlayer(new RemovePlayerArgs(User.Id()));
+        return Ok();
     }
 
     [AllowAnonymous]
-    [HttpPost("signIn")]
+    [HttpPost(WebApi.Login)]
     [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<string>> SignIn(string email, string password)
+    [ProducesResponseType((int) HttpStatusCode.NotFound)]
+    public async Task<ActionResult> Login(string username, string password)
     {
-        return await _authGrpcService.GetAccessToken(new GetAccessTokenArgs(email, password));
-    }
+        var response = await _authService.GetAccessToken(new GetAccessTokenArgs(username, password));
+        if (response == null)
+            return Forbid();
 
-    [HttpPost("remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> Remove([FromUser] UserId userId, string password)
-    {
-        return await _authGrpcService.Remove(new RemoveArgs(userId, password));
+        return Json(response);
     }
 }

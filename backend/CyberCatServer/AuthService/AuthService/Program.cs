@@ -1,24 +1,39 @@
-using AuthService.Configurations;
-using AuthService.GrpcServices;
-using AuthService.Repositories;
-using AuthService.Repositories.InternalModels;
-using AuthService.Services;
+using AuthService.Application;
+using AuthService.Domain;
+using AuthService.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using ProtoBuf.Grpc.Server;
+using Shared.Server.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var appSettings = builder.Configuration.Get<AuthServiceAppSettings>();
-builder.Services.AddIdentity<UserDbModel, Role>(AuthIdentity.SetServiceOptions).AddMongoDbStores<UserDbModel, Role, long>(appSettings.MongoRepository.ConnectionString, appSettings.MongoRepository.DatabaseName);
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = true;
+    options.Password.RequiredLength = 3;
+    options.User.RequireUniqueEmail = true;
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+" +
+        "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧЩЪЫЬЭЮЯ" +
+        "#";
+});
+
+builder.Services
+    .AddIdentity<UserEntity, RoleEntity>()
+    .AddMongoDbStores<UserEntity, RoleEntity, string>(builder.Configuration.GetMongoDatabaseContext());
 
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services
-    .AddScoped<IAuthUserRepository, AuthUserManagerRepository>()
-    .AddHostedService<AddCyberCatUserToRepositoryOnStart>();
+    .AddScoped<IUserRepository, UserManagerRepository>()
+    .AddScoped<UserEntityMapper>()
+    .AddHostedService<AddAdminUserIfNeeded>();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 

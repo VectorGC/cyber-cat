@@ -1,28 +1,22 @@
-using PlayerService;
-using PlayerService.GrpcServices;
-using PlayerService.Repositories;
-using ProtoBuf.Grpc.ClientFactory;
+using PlayerService.Application;
+using PlayerService.Infrastructure;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<PlayerServiceAppSettings>(builder.Configuration);
-
+builder.AddMongoDatabaseContext();
 builder.Services.AddScoped<IPlayerRepository, PlayerMongoRepository>();
 
-var appSettings = builder.Configuration.Get<PlayerServiceAppSettings>();
-builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
+builder.AddJudgeServiceGrpcClient();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 
 app.MapGrpcService<PlayerGrpcService>();
 
 app.Run();
-
-// TODO: Add service to docker!
 
 namespace PlayerService
 {

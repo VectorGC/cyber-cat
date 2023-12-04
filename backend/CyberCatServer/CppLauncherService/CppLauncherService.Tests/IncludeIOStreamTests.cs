@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using ProtoBuf.Grpc.Client;
-using Shared.Server.Data;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure.Dto;
 using Shared.Tests;
 
 namespace CppLauncherService.Tests;
@@ -25,7 +25,7 @@ public class IncludeIOStreamTests
         var args = new LaunchCodeArgs(sourceCode, new[] {"10"});
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(args);
 
@@ -40,7 +40,7 @@ public class IncludeIOStreamTests
         var args = new LaunchCodeArgs(sourceCode, new[] {"1.1111115"});
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(args);
 
@@ -56,7 +56,7 @@ public class IncludeIOStreamTests
         var args = new LaunchCodeArgs(sourceCode, new[] {"1.1"});
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(args);
 
@@ -71,7 +71,7 @@ public class IncludeIOStreamTests
         var args = new LaunchCodeArgs(sourceCode, new[] {"Hello"});
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(args);
 
@@ -86,7 +86,7 @@ public class IncludeIOStreamTests
         var args = new LaunchCodeArgs(sourceCode, new[] {"Hello\nCat"});
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(args);
 

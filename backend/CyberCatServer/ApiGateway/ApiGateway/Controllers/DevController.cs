@@ -1,11 +1,5 @@
-using System.Net;
-using ApiGateway.Attributes;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models;
-using Shared.Server.Ids;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 namespace ApiGateway.Controllers;
 
@@ -13,23 +7,10 @@ namespace ApiGateway.Controllers;
 [Route("[controller]")]
 public class DevController : ControllerBase
 {
-    private readonly IAuthGrpcService _authGrpcService;
+    private readonly IAuthService _authService;
 
-    public DevController(IAuthGrpcService authGrpcService)
+    public DevController(IAuthService authService)
     {
-        _authGrpcService = authGrpcService;
-    }
-
-    [HttpPost("users/remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> RemoveDev(string email, string devKey)
-    {
-        var key = await Crypto.DecryptAsync(devKey, "cyber");
-        if (key != "cyber-cat")
-        {
-            return Ok();
-        }
-
-        return await _authGrpcService.RemoveDev(new RemoveDevArgs(email));
+        _authService = authService;
     }
 }

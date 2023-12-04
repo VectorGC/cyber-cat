@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Shared.Models.Ids;
+using Shared.Models.Domain.Tasks;
 using UnityEngine;
 
 namespace ApiGateway.Client.Tests

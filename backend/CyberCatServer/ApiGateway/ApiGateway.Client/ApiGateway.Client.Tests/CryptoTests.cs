@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Shared.Models;
+using Shared.Models.Infrastructure;
 
 namespace ApiGateway.Client.Tests
 {

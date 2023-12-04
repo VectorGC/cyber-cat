@@ -1,6 +1,6 @@
 using System;
+using ApiGateway.Client.Application;
 using NUnit.Framework;
-using TinyIoC;
 
 namespace ApiGateway.Client.Tests
 {

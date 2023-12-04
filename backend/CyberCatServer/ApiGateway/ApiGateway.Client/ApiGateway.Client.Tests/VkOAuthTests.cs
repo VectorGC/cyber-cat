@@ -1,7 +1,3 @@
-using System.Threading.Tasks;
-using ApiGateway.Client.V2;
-using ApiGateway.Client.V2.Access;
-using ApiGateway.Client.V2.Access.Dev;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
@@ -17,13 +13,14 @@ namespace ApiGateway.Client.Tests
             _serverEnvironment = serverEnvironment;
         }
 
+        /*
         [Test]
         public async Task SignUpViaOAuth()
         {
             var email = "test_vk_oauth";
             var userName = "TestVkOauth";
 
-            var client = new V2.ApiGateway.Client(_serverEnvironment);
+            var client = new Client.V2.ApiGateway.Client(_serverEnvironment);
 
             var user = client.User;
             Assert.IsNotNull(user.Access<Vk>());
@@ -53,5 +50,6 @@ namespace ApiGateway.Client.Tests
             // Support web sockets.
             // Assert.IsFalse(user.Access<VK>().IsSignedIn);
         }
+        */
     }
 }

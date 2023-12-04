@@ -1,28 +1,60 @@
+using System.Linq;
 using System.Threading.Tasks;
-using ApiGateway.Client.Tests.Abstracts;
+using ApiGateway.Client.Application;
+using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class TaskTests : PlayerClientTestFixture
+    public class TaskTests : ApiGatewayClientTestFixture
     {
+        private IApiGatewayClient _client;
+
         public TaskTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
         }
 
+        [SetUp]
+        public void SetUp()
+        {
+            _client = TestPlayerClient();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _client.Dispose();
+        }
+
         [Test]
-        public async Task GetTask()
+        public void GetTask()
         {
             var taskId = "tutorial";
-            var client = await GetPlayerClient();
 
-            var task = client.Tasks[taskId];
+            var task = _client.Player.Tasks[taskId];
 
-            Assert.AreEqual("Hello cat!", await task.GetName());
+            Assert.AreEqual("Hello cat!", task.Description.Name);
+            StringAssert.StartsWith("# Hello cat!", task.Description.Description);
+            Assert.AreEqual(TestCodeSolution.PrintMessage("Hello world!"), task.Description.DefaultCode);
+        }
 
-            var description = await task.GetDescription();
-            StringAssert.StartsWith("# Hello cat!", description);
-            Assert.AreEqual("#include <iostream>\r\n#include <stdio.h>\r\n\r\nint main()\r\n{\r\n    printf(\"Hello world!\");\r\n}\r\n", await task.GetDefaultCode());
+        [Test]
+        public async Task SaveUser_WhenUserCompleteTask()
+        {
+            var taskId = "tutorial";
+
+            var task = _client.Player.Tasks[taskId];
+
+            var users = task.UsersWhoSolvedTask;
+            Assert.IsEmpty(users);
+
+            var verdict = await task.SubmitSolution(TestCodeSolution.SolveTutorial());
+            Assert.IsTrue(verdict.Value.IsSuccess);
+
+            Assert.AreEqual(1, users.Count);
+
+            var user = users.First();
+            Assert.AreEqual(_client.Player.User.FirstName, user.FirstName);
         }
     }
 }

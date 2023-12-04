@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
@@ -12,5 +13,14 @@ public abstract class Interactable : MonoBehaviour
         {
             OnInteract();
         }
+    }
+}
+
+public abstract class InteractableAsync : Interactable
+{
+    protected abstract UniTaskVoid OnInteractAsync();
+    protected override void OnInteract()
+    {
+        OnInteractAsync().Forget();
     }
 }
