@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.API;
 using ApiGateway.Client.Application.Services;
@@ -10,7 +11,7 @@ using ApiGateway.Client.Infrastructure.WebClient;
 
 namespace ApiGateway.Client.Application
 {
-    public class ApiGatewayClient : IApiGatewayClient
+    public class ApiGatewayClient : IDisposable
     {
         public PlayerAPI Player
         {
@@ -21,6 +22,9 @@ namespace ApiGateway.Client.Application
             }
         }
 
+        public IJudgeService JudgeService => _container.Resolve<IJudgeService>();
+        public ITaskDescriptionService TaskService => _container.Resolve<ITaskDescriptionService>();
+
         private readonly TinyIoCContainer _container;
 
         public ApiGatewayClient(ServerEnvironment serverEnvironment)
@@ -28,7 +32,7 @@ namespace ApiGateway.Client.Application
             _container = new TinyIoCContainer();
 
             // --- Application ---
-            _container.AutoRegister(type => type.BaseType == typeof(API.API)); // API
+            _container.AutoRegister(type => type.BaseType == typeof(UseCaseAPI)); // API
             _container.AutoRegister(type => type.GetInterface(nameof(IUseCase)) != null); // UseCases
             _container.Register<PlayerContext>().AsSingleton();
 
@@ -38,7 +42,8 @@ namespace ApiGateway.Client.Application
             _container.Register<ITaskDescriptionService, TaskDescriptionWebService>().AsSingleton();
             _container.Register<ITaskPlayerProgressService, TaskPlayerProgressWebService>().AsSingleton();
             _container.Register<ITaskDataService, TaskDataWebService>().AsSingleton();
-            _container.Register<ISubmitSolutionTaskService, SubmitSolutionTaskWebService>().AsSingleton();
+            _container.Register<IPlayerSubmitSolutionTaskService, PlayerSubmitSolutionTaskWebService>().AsSingleton();
+            _container.Register<IJudgeService, JudgeWebService>().AsSingleton();
         }
 
         public void Dispose()

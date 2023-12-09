@@ -3,7 +3,7 @@ using ProtoBuf;
 
 namespace Shared.Models.Infrastructure.Authorization
 {
-    [ProtoContract(SkipConstructor = true)]
+    [ProtoContract]
     public class JwtAccessToken : AuthorizationToken
     {
         public const string AuthenticationScheme = "Bearer";

@@ -12,9 +12,18 @@ namespace ApiGateway.Client.Application.UseCases.Player
             _userService = userService;
         }
 
-        public Task<Result> Execute(string email, string password, string userName)
+        public async Task<Result> Execute(string email, string password, string userName)
         {
-            return _userService.RegisterPlayer(email, password, userName);
+            if (string.IsNullOrEmpty(email))
+                return Result.Failure(ErrorCode.EmailEmpty);
+
+            if (string.IsNullOrEmpty(password))
+                return Result.Failure(ErrorCode.PasswordEmpty);
+
+            if (string.IsNullOrEmpty(userName))
+                return Result.Failure(ErrorCode.UserNameEmpty);
+
+            return await _userService.RegisterPlayer(email, password, userName);
         }
     }
 }

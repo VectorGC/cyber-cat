@@ -1,27 +1,12 @@
-using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class TestCasesTests : ApiGatewayClientTestFixture
+    public class TestCasesTests : PlayerClientTestFixture
     {
-        private IApiGatewayClient _client;
-
         public TestCasesTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _client = TestPlayerClient();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _client.Dispose();
         }
 
         [Test]
@@ -29,7 +14,7 @@ namespace ApiGateway.Client.Tests
         {
             var taskId = "tutorial";
 
-            var task = _client.Player.Tasks[taskId];
+            var task = Client.Player.Tasks[taskId];
             var testCases = task.Tests;
 
             Assert.AreEqual(1, testCases.Count);
@@ -42,7 +27,7 @@ namespace ApiGateway.Client.Tests
         {
             var taskId = "task-1";
 
-            var task = _client.Player.Tasks[taskId];
+            var task = Client.Player.Tasks[taskId];
             var testCases = task.Tests;
 
             Assert.AreEqual(3, testCases.Count);

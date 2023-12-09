@@ -7,7 +7,7 @@ namespace ApiGateway.Client.Tests
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public class VkOAuthTests : ApiGatewayClientTestFixture
+    public class VkOAuthTests : PlayerClientTestFixture
     {
         public VkOAuthTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
@@ -31,7 +31,7 @@ namespace ApiGateway.Client.Tests
 
                 var doubleLoginResult = await client.LoginPlayerWithVk(email, userName, vkId);
                 Assert.IsFalse(doubleLoginResult.IsSuccess);
-                Assert.AreEqual("Сперва нужно выйти из текущий учетный записи", doubleLoginResult.Error);
+                Assert.AreEqual("Сперва нужно выйти из текущей учетной записи", doubleLoginResult.Error);
 
                 var logoutResult = client.Player.Logout();
                 Assert.IsTrue(logoutResult.IsSuccess);
@@ -39,7 +39,7 @@ namespace ApiGateway.Client.Tests
                 Assert.IsNull(client.Player);
 
                 loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
-                client.Player.RemoveWithVk(vkId);
+                client.Player.Remove();
 
                 Assert.IsNull(client.Player);
             }

@@ -1,12 +1,11 @@
 using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Application.UseCases.Player;
-using ApiGateway.Client.Application.UseCases.Vk;
 using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Application.API
 {
-    public class PlayerAPI : API
+    public class PlayerAPI : UseCaseAPI
     {
         public TasksAPI Tasks { get; }
         public UserModel User => _playerContext.Player.User;
@@ -20,8 +19,7 @@ namespace ApiGateway.Client.Application.API
             Tasks = tasksApi;
         }
 
-        public Result Remove(string password) => GetUseCase<RemoveCurrentPlayer>().Execute(password);
         public Result Logout() => GetUseCase<LogoutPlayer>().Execute();
-        public Result RemoveWithVk(string vkId) => GetUseCase<RemoveCurrentPlayerWithVk>().Execute(vkId);
+        public Result Remove() => GetUseCase<RemoveCurrentPlayer>().Execute();
     }
 }

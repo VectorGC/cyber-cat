@@ -55,17 +55,11 @@ public class AuthGrpcService : IAuthService
 
     public async Task RemoveUser(RemoveUserArgs args)
     {
-        var (userId, password) = args;
+        var userId = args.UserId;
         var user = await _userRepository.GetUser(userId);
         if (user == null)
         {
             throw new ServiceException("Пользователь не найден", HttpStatusCode.NotFound);
-        }
-
-        var isPasswordValid = await _userRepository.CheckPasswordAsync(user, password);
-        if (!isPasswordValid)
-        {
-            throw new ServiceException("Неверный пароль", HttpStatusCode.Forbidden);
         }
 
         var result = await _userRepository.DeleteUser(userId);
@@ -75,12 +69,9 @@ public class AuthGrpcService : IAuthService
         }
     }
 
-    public async Task<UserId> FindByEmail(FindByEmailArgs args)
+    public Task RemoveUserWithVk(RemoveUserWithVkArgs args)
     {
-        var user = await _userRepository.FindByEmailAsync(args.Email);
-        if (user == null)
-            return null;
-        return new UserId(user.Id);
+        throw new System.NotImplementedException();
     }
 
     public async Task<AuthorizationToken> GetAccessToken(GetAccessTokenArgs args)
@@ -139,28 +130,5 @@ public class AuthGrpcService : IAuthService
         }
 
         throw new ServiceException("Неизвестный тип токена", HttpStatusCode.Forbidden);
-    }
-
-    public async Task RemoveUserWithVk(RemoveUserWithVkArgs args)
-    {
-        var (userId, vkId) = args;
-        var user = await _userRepository.GetUser(userId);
-        if (user == null)
-        {
-            throw new ServiceException("Пользователь не найден", HttpStatusCode.NotFound);
-        }
-
-        var isPasswordValid = await _userRepository.CheckPasswordAsync(user, vkId);
-        if (!isPasswordValid)
-        {
-            // Confusing hackers :)
-            throw new ServiceException("Ошибка аутентификации", HttpStatusCode.Forbidden);
-        }
-
-        var result = await _userRepository.DeleteUser(userId);
-        if (!result.Success)
-        {
-            throw new ServiceException("Неизвестная ошибка при удалении. Обратитесь к администратору", HttpStatusCode.UnprocessableEntity);
-        }
     }
 }

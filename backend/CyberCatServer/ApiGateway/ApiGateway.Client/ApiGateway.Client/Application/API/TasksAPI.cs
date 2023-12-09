@@ -3,7 +3,7 @@ using Shared.Models.Domain.Tasks;
 
 namespace ApiGateway.Client.Application.API
 {
-    public class TasksAPI : API
+    public class TasksAPI : UseCaseAPI
     {
         public TaskAPI this[TaskId taskId] => _tasks[taskId];
 
@@ -11,6 +11,7 @@ namespace ApiGateway.Client.Application.API
 
         public TasksAPI(TinyIoCContainer container, PlayerContext playerContext) : base(container)
         {
+            // TODO:
             foreach (var kvp in playerContext.Player.Tasks)
             {
                 _tasks[kvp.Key] = new TaskAPI(kvp.Value, this);

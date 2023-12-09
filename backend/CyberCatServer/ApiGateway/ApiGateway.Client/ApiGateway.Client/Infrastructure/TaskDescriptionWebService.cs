@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.Services;
+using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Infrastructure.WebClient;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
 using Shared.Models.Infrastructure;
-using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Infrastructure
 {
@@ -18,18 +20,26 @@ namespace ApiGateway.Client.Infrastructure
             _webClientFactory = webClientFactory;
         }
 
-        public async Task<List<TaskDescription>> GetTaskDescriptions(AuthorizationToken token)
+        public async Task<Result<Dictionary<TaskId, TaskDescription>>> GetTaskDescriptions()
         {
-            using (var client = _webClientFactory.Create(token))
+            try
             {
-                var descriptions = await client.GetAsync<List<TaskDescription>>(WebApi.GetTaskDescriptions);
-                return descriptions;
+                using (var client = _webClientFactory.Create())
+                {
+                    var descriptions = await client.GetAsync<List<TaskDescription>>(WebApi.GetTaskDescriptions);
+                    var dict = descriptions.ToDictionary(kvp => new TaskId(kvp.Id), kvp => kvp);
+                    return dict;
+                }
+            }
+            catch (WebException webException) when (webException.Response is HttpWebResponse httpWebResponse)
+            {
+                throw;
             }
         }
 
-        public async Task<List<TestCaseDescription>> GetTestCaseDescriptions(TaskId taskId, AuthorizationToken token)
+        public async Task<List<TestCaseDescription>> GetTestCaseDescriptions(TaskId taskId)
         {
-            using (var client = _webClientFactory.Create(token))
+            using (var client = _webClientFactory.Create())
             {
                 var descriptions = await client.GetFastJsonAsync<List<TestCaseDescription>>(WebApi.GetTestCases(taskId));
                 return descriptions;

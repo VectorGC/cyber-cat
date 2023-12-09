@@ -6,20 +6,24 @@ using NUnit.Framework;
 using Shared.Models.Domain.Verdicts;
 using Shared.Models.Domain.Verdicts.TestCases;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Judge
 {
-    public class SubmitSolutionTests : ApiGatewayClientTestFixture
+    [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
+    [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
+    public class JudgeTests
     {
-        private IApiGatewayClient _client;
+        private readonly ServerEnvironment _serverEnvironment;
+        private ApiGatewayClient _client;
 
-        public SubmitSolutionTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        public JudgeTests(ServerEnvironment serverEnvironment)
         {
+            _serverEnvironment = serverEnvironment;
         }
-
+        
         [SetUp]
         public void SetUp()
         {
-            _client = TestPlayerClient();
+            _client = new ApiGatewayClient(_serverEnvironment);
         }
 
         [TearDown]
@@ -27,26 +31,26 @@ namespace ApiGateway.Client.Tests
         {
             _client.Dispose();
         }
-
+        
         [Test]
         public async Task SuccessVerifyHelloCatTaskWithoutOutput_WhenPassCorrectCode()
         {
             var taskId = "tutorial";
-            var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
+            var sourceCode = CodeSolution.Tutorial();
 
-            var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
+            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
 
             Assert.AreEqual(1, result.Value.TestCases.PassedCount);
         }
-
-        [Test]
+        
+         [Test]
         public async Task FailureVerifyHelloCatTaskWithError_WhenPassNonCompileCode()
         {
             var taskId = "tutorial";
             var sourceCode = "#include <stdio.h> \nint main()";
             var expectedErrorRegex = "Exit Code 1:.*: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
-            var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
+            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
@@ -59,7 +63,7 @@ namespace ApiGateway.Client.Tests
             var sourceCode = "int main() { while(true){} }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
 
-            var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
+            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
@@ -95,7 +99,7 @@ namespace ApiGateway.Client.Tests
             // We simply output the result of the first test. So that the first test passes, while the rest fail.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
 
-            var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
+            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
             var verdict = result.Value;
 
             Assert.IsTrue(verdict.IsFailure);
@@ -118,7 +122,7 @@ namespace ApiGateway.Client.Tests
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
 
-            var result = await _client.Player.Tasks[taskId].SubmitSolution(sourceCode);
+            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));

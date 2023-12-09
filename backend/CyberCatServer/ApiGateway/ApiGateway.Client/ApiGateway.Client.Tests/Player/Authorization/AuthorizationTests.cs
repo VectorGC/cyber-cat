@@ -6,7 +6,7 @@ namespace ApiGateway.Client.Tests
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public class AuthenticateTests
+    public class AuthorizationTests
     {
         private readonly ServerEnvironment _serverEnvironment;
         private const string Email = "test@test.com";
@@ -14,7 +14,7 @@ namespace ApiGateway.Client.Tests
         private const string UserName = "Дмитрий";
         private const string WrongPassword = "wrong_test_password";
 
-        public AuthenticateTests(ServerEnvironment serverEnvironment)
+        public AuthorizationTests(ServerEnvironment serverEnvironment)
         {
             _serverEnvironment = serverEnvironment;
         }
@@ -37,7 +37,7 @@ namespace ApiGateway.Client.Tests
                 Assert.AreEqual(Email, client.Player.User.Email);
                 Assert.AreEqual(UserName, client.Player.User.FirstName);
 
-                var removeResult = client.Player.Remove(Password);
+                var removeResult = client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -67,9 +67,9 @@ namespace ApiGateway.Client.Tests
 
                 var doubleLoginResult = await client.LoginPlayer(Email, Password);
                 Assert.IsFalse(doubleLoginResult.IsSuccess);
-                Assert.AreEqual("Сперва нужно выйти из текущий учетный записи", doubleLoginResult.Error);
+                Assert.AreEqual("Сперва нужно выйти из текущей учетной записи", doubleLoginResult.Error);
 
-                var removeResult = client.Player.Remove(Password);
+                var removeResult = client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -89,7 +89,7 @@ namespace ApiGateway.Client.Tests
 
                 await client.LoginPlayer(Email, Password);
 
-                var removeResult = client.Player.Remove(Password);
+                var removeResult = client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -104,7 +104,7 @@ namespace ApiGateway.Client.Tests
                 await client.RegisterPlayer(Email, Password, UserName);
                 await client.LoginPlayer(Email, Password);
 
-                var removeResult = client.Player.Remove(Password);
+                var removeResult = client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }

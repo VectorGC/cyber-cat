@@ -2,7 +2,7 @@ using ProtoBuf;
 
 namespace Shared.Models.Infrastructure.Authorization
 {
-    [ProtoContract(SkipConstructor = true)]
+    [ProtoContract]
     public class VkAccessToken : AuthorizationToken
     {
         public override string Type => JwtAccessToken.Type;

@@ -2,11 +2,11 @@ using ApiGateway.Client.Application.UseCases;
 
 namespace ApiGateway.Client.Application.API
 {
-    public abstract class API
+    public abstract class UseCaseAPI
     {
         private readonly TinyIoCContainer _container;
 
-        public API(TinyIoCContainer container)
+        public UseCaseAPI(TinyIoCContainer container)
         {
             _container = container;
         }

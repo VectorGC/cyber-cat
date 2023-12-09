@@ -21,13 +21,13 @@ namespace ApiGateway.Client.Application.UseCases.Vk
         {
             if (_playerContext.IsLogined)
             {
-                return Result<PlayerModel>.Failure("Сперва нужно выйти из текущий учетный записи");
+                return Result<PlayerModel>.Failure(ErrorCode.AlreadyLoggined);
             }
 
             var result = await _userService.LoginWithVk(email, userName, vkId);
             if (!result.IsSuccess)
             {
-                return Result<PlayerModel>.Failure(result.Error);
+                return Result<PlayerModel>.Failure(result);
             }
 
             var player = await _playerModelFactory.Create(result.Value);

@@ -20,7 +20,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         try
         {
             await AddOneAsync(player);
-            return new CreateResult(true, UserRepositoryError.None, player);
+            return new CreateResult(true, PlayerRepositoryError.None, player);
         }
         catch (Exception)
         {
@@ -40,10 +40,10 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
             var success = await UpdateOneAsync(player);
             if (!success)
             {
-                return new UpdateResult(false, UserRepositoryError.Unknown);
+                return new UpdateResult(false, PlayerRepositoryError.Unknown);
             }
 
-            return new UpdateResult(true, UserRepositoryError.None);
+            return new UpdateResult(true, PlayerRepositoryError.None);
         }
         catch (Exception)
         {
@@ -58,10 +58,10 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
             var countDeleted = await DeleteOneAsync<PlayerEntity>(player => player.Id == userId.Value);
             if (countDeleted == 0)
             {
-                return new DeleteResult(false, UserRepositoryError.NotFound);
+                return new DeleteResult(false, PlayerRepositoryError.NotFound);
             }
 
-            return new DeleteResult(true, UserRepositoryError.None);
+            return new DeleteResult(true, PlayerRepositoryError.None);
         }
         catch (Exception)
         {

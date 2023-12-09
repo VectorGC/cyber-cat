@@ -12,9 +12,7 @@ namespace ApiGateway.Client.Application.UseCases.Player
         public Result Execute()
         {
             if (!_playerContext.IsLogined)
-            {
-                return Result.Failure("User forbidden");
-            }
+                return Result.Failure(ErrorCode.NotLoggined);
 
             _playerContext.Clear();
             return Result.Success;

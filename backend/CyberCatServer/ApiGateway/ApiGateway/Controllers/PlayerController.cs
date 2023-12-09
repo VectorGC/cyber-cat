@@ -35,7 +35,7 @@ public class PlayerController : ControllerBase
     public async Task<ActionResult<List<TaskProgress>>> GetTasksProgress()
     {
         var userId = HttpContext.User.Id();
-        var progresses = await _playerService.GetTasksProgress(new GetTasksProgressArgs(userId));
+        var progresses = await _playerService.GetTasksProgress(userId);
         return progresses ?? new List<TaskProgress>();
     }
 
@@ -45,8 +45,8 @@ public class PlayerController : ControllerBase
     public async Task<ActionResult<TaskProgress>> GetTaskProgress(string taskId)
     {
         var userId = HttpContext.User.Id();
-        var response = await _playerService.GetTaskProgress(new GetTaskProgressArgs(userId, taskId));
-        return response;
+        var progresses = await _playerService.GetTasksProgress(userId);
+        return progresses.FirstOrDefault();
     }
 
     [HttpPost(WebApi.SubmitSolutionTemplate)]

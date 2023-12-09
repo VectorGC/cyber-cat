@@ -9,11 +9,11 @@ using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Infrastructure
 {
-    public class SubmitSolutionTaskWebService : ISubmitSolutionTaskService
+    public class PlayerSubmitSolutionTaskWebService : IPlayerSubmitSolutionTaskService
     {
         private readonly WebClientFactory _webClientFactory;
 
-        public SubmitSolutionTaskWebService(WebClientFactory webClientFactory)
+        public PlayerSubmitSolutionTaskWebService(WebClientFactory webClientFactory)
         {
             _webClientFactory = webClientFactory;
         }

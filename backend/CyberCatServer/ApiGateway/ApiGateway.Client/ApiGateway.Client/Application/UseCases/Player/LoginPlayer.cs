@@ -20,20 +20,18 @@ namespace ApiGateway.Client.Application.UseCases.Player
         public async Task<Result<PlayerModel>> Execute(string email, string password)
         {
             if (_playerContext.IsLogined)
-            {
-                return Result<PlayerModel>.Failure("Сперва нужно выйти из текущий учетный записи");
-            }
-            
+                return Result<PlayerModel>.Failure(ErrorCode.AlreadyLoggined);
+
             var result = await _userService.LoginUser(email, password);
             if (!result.IsSuccess)
             {
-                return Result<PlayerModel>.Failure(result.Error);
+                return Result<PlayerModel>.Failure(result);
             }
 
             var player = await _playerModelFactory.Create(result.Value);
             _playerContext.SetContext(player, result.Value);
 
-            return _playerContext.Player;
+            return player;
         }
     }
 }

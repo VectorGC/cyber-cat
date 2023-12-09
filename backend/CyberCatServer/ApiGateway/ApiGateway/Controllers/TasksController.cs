@@ -10,7 +10,6 @@ using Shared.Server.Application.Services;
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Authorize]
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _taskService;

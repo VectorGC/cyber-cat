@@ -5,7 +5,7 @@ using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Application.Services
 {
-    public interface ISubmitSolutionTaskService
+    public interface IPlayerSubmitSolutionTaskService
     {
         Task<Verdict> SubmitSolution(TaskId taskId, string solution, AuthorizationToken token);
     }

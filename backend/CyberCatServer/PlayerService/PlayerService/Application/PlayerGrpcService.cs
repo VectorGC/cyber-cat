@@ -21,9 +21,9 @@ public class PlayerGrpcService : IPlayerService
         _playerRepository = playerRepository;
     }
 
-    public async Task<List<TaskProgress>> GetTasksProgress(GetTasksProgressArgs args)
+    public async Task<List<TaskProgress>> GetTasksProgress(UserId userId)
     {
-        var player = await _playerRepository.GetPlayer(args.UserId);
+        var player = await _playerRepository.GetPlayer(userId);
         if (player == null)
             return new List<TaskProgress>();
 
@@ -31,24 +31,10 @@ public class PlayerGrpcService : IPlayerService
         return progress;
     }
 
-    public async Task<TaskProgress> GetTaskProgress(GetTaskProgressArgs args)
-    {
-        var player = await _playerRepository.GetPlayer(args.UserId);
-        if (player == null)
-        {
-            return new TaskProgress()
-            {
-                TaskId = args.TaskId
-            };
-        }
-
-        return player.Tasks.GetValueOrDefault(args.TaskId)?.ToDomain();
-    }
-
     public async Task<Verdict> SubmitSolution(SubmitSolutionArgs args)
     {
         var (userId, taskId, solution) = args;
-        var verdict = await _judgeService.GetVerdict(args);
+        var verdict = await _judgeService.GetVerdict(new GetVerdictArgs(taskId, solution));
 
         _logger.LogInformation("{Task} verdict: {Verdict}. Player '{UserId}'", args.TaskId, verdict.ToString(), userId);
 
@@ -94,7 +80,7 @@ public class PlayerGrpcService : IPlayerService
         {
             switch (result.Error)
             {
-                case UserRepositoryError.NotFound:
+                case PlayerRepositoryError.NotFound:
                     // Already deleted. ¯\_(ツ)_/¯
                     break;
                 default:

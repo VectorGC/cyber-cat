@@ -1,28 +1,14 @@
+using System.Linq;
 using System.Threading.Tasks;
-using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests
 {
-    public class TaskProgressTests : ApiGatewayClientTestFixture
+    public class TaskProgressTests : PlayerClientTestFixture
     {
-        private IApiGatewayClient _client;
-
         public TaskProgressTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
         {
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _client = TestPlayerClient();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            _client.Dispose();
         }
 
         [Test]
@@ -32,7 +18,7 @@ namespace ApiGateway.Client.Tests
             var sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello world!\"); }";
             var sourceCodeToChange = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var task = _client.Player.Tasks[taskId];
+            var task = Client.Player.Tasks[taskId];
 
             // We are checking that there is no code initially.
             Assert.IsFalse(task.IsStarted);
@@ -58,7 +44,7 @@ namespace ApiGateway.Client.Tests
             var errorCode = "#include <stdio.h>\nint main() { printf(\"Unexpected output!\"); }";
             var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var task = _client.Player.Tasks[taskId];
+            var task = Client.Player.Tasks[taskId];
 
             Assert.IsFalse(task.IsStarted);
 
@@ -81,7 +67,7 @@ namespace ApiGateway.Client.Tests
             var taskId = "tutorial";
             var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
-            var task = _client.Player.Tasks[taskId];
+            var task = Client.Player.Tasks[taskId];
 
             Assert.IsFalse(task.IsStarted);
 
@@ -90,6 +76,25 @@ namespace ApiGateway.Client.Tests
             Assert.IsTrue(task.IsStarted);
             Assert.IsTrue(task.IsComplete);
             Assert.AreEqual(completeCode, task.LastSolution);
+        }
+
+        [Test]
+        public async Task SaveUser_WhenUserCompleteTask()
+        {
+            var taskId = "tutorial";
+
+            var task = Client.Player.Tasks[taskId];
+
+            var users = task.UsersWhoSolvedTask;
+            Assert.IsEmpty(users);
+
+            var verdict = await task.SubmitSolution(CodeSolution.Tutorial());
+            Assert.IsTrue(verdict.Value.IsSuccess);
+
+            Assert.AreEqual(1, users.Count);
+
+            var user = users.First();
+            Assert.AreEqual(Client.Player.User.FirstName, user.FirstName);
         }
     }
 }

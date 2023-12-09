@@ -21,7 +21,7 @@ public record LaunchCodeArgs(
     [property: ProtoMember(1)] string Solution,
     [property: ProtoMember(2)] string[] Inputs = null);
 
-public static class CodeLauncherServiceExtensions
+public static partial class ServiceExtensions
 {
     public static IHttpClientBuilder AddCppLauncherGrpcClient(this WebApplicationBuilder builder)
     {

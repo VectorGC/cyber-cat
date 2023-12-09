@@ -87,14 +87,11 @@ namespace ApiGateway.Client.Infrastructure
             return null;
         }
 
-        public Result RemoveUserByToken(AuthorizationToken token, string password)
+        public Result RemoveUserByToken(AuthorizationToken token)
         {
             using (var client = _webClientFactory.Create(token))
             {
-                var result = client.PostAsync(WebApi.RemoveUser, new Dictionary<string, string>()
-                {
-                    ["password"] = password
-                }).Result;
+                var result = client.PostAsync(WebApi.RemoveUser, new Dictionary<string, string>()).Result;
                 return Result.Success;
             }
         }
@@ -119,19 +116,6 @@ namespace ApiGateway.Client.Infrastructure
             catch (WebException e) when (e.Response is HttpWebResponse httpResponse)
             {
                 return e;
-            }
-        }
-
-        public Result RemoveUserWithVk(AuthorizationToken token, string vkId)
-        {
-            using (var client = _webClientFactory.Create(token))
-            {
-                var result = client.PostAsync(WebApi.RemoveUserWithVk, new Dictionary<string, string>()
-                {
-                    ["vkId"] = vkId
-                }).Result;
-
-                return Result.Success;
             }
         }
     }

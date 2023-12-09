@@ -38,9 +38,9 @@ public class AuthController : Controller
     [HttpPost(WebApi.RemoveUser)]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> RemoveUser(string password)
+    public async Task<ActionResult> RemoveUser()
     {
-        await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
+        await _authService.RemoveUser(new RemoveUserArgs(User.Id()));
         await _playerService.RemovePlayer(new RemovePlayerArgs(User.Id()));
         return Ok();
     }

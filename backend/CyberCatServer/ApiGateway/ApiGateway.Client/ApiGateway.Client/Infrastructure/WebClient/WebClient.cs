@@ -5,7 +5,7 @@ using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Infrastructure.WebClient
 {
-    internal class WebClient : IWebClient
+    public class WebClient : IWebClient
     {
         public ServerEnvironment ServerEnvironment { get; }
 

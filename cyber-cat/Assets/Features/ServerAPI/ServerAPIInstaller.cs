@@ -1,5 +1,3 @@
-using ApiGateway.Client.Models;
-using ApiGateway.Client.V2;
 using Features.ServerConfig;
 using Zenject;
 

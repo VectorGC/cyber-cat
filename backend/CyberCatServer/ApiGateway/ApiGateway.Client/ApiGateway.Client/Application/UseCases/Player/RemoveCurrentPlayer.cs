@@ -13,14 +13,12 @@ namespace ApiGateway.Client.Application.UseCases.Player
             _userService = userService;
         }
 
-        public Result Execute(string password)
+        public Result Execute()
         {
             if (!_playerContext.IsLogined)
-            {
-                return Result.Failure("User not loggined");
-            }
+                return Result.Failure(ErrorCode.NotLoggined);
 
-            var result = _userService.RemoveUserByToken(_playerContext.Token, password);
+            var result = _userService.RemoveUserByToken(_playerContext.Token);
             if (result.IsSuccess)
                 _playerContext.Clear();
 

@@ -38,11 +38,16 @@ namespace ApiGateway.Client.Application
         {
             var tasks = new TaskCollection();
 
-            var descriptions = await _taskDescriptionService.GetTaskDescriptions(token);
+            var result = await _taskDescriptionService.GetTaskDescriptions();
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(result.Error);
+            
             var progressDataCollection = await _taskProgressService.GetTasksProgress(token);
-            foreach (var description in descriptions)
+            
+            var descriptions = result.Value;
+            foreach (var description in descriptions.Values)
             {
-                var testCases = await _taskDescriptionService.GetTestCaseDescriptions(description.Id, token);
+                var testCases = await _taskDescriptionService.GetTestCaseDescriptions(description.Id);
                 var taskProgress = progressDataCollection.FirstOrDefault(data => data.TaskId == description.Id) ?? new TaskProgress();
                 var usersWhoSolvedTask = await _taskDataService.GetUsersWhoSolvedTask(description.Id, token);
 

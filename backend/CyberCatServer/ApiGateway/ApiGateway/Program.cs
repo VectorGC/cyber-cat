@@ -11,12 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var appArgs = Parser.Default.ParseArguments<ApiGatewayArgs>(args).Value;
 var host = appArgs.UseHttps ? new Uri("https://0.0.0.0:443") : new Uri("http://0.0.0.0:80");
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => { options.TokenValidationParameters = JwtTokenValidation.TokenValidationParameters; });
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => { options.TokenValidationParameters = JwtTokenValidation.TokenValidationParameters; });
 
 builder.Services.AddControllers();
 
@@ -28,6 +23,7 @@ builder.Services.AddScoped<CompleteTaskWebHookService>();
 builder.AddAuthServiceGrpcClient();
 builder.AddTaskServiceGrpcClient();
 builder.AddPlayerServiceGrpcClient();
+builder.AddJudgeServiceGrpcClient();
 
 builder.WebHost.UseKestrel(options =>
 {

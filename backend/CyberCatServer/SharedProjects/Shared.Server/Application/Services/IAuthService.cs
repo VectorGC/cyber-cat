@@ -19,8 +19,6 @@ public interface IAuthService
     Task<AuthorizationToken> GetAccessToken(GetAccessTokenArgs args);
     Task<AuthorizationToken> GetAccessTokenWithVk(GetAccessTokenWithVkArgs args);
     Task RemoveUser(RemoveUserArgs args);
-    Task RemoveUserWithVk(RemoveUserWithVkArgs args);
-    Task<UserId> FindByEmail(FindByEmailArgs args);
     Task<List<UserModel>> GetUsersByIds(List<UserId> userIds);
 }
 
@@ -38,12 +36,7 @@ public record GetAccessTokenArgs(
 
 [ProtoContract(SkipConstructor = true)]
 public record RemoveUserArgs(
-    [property: ProtoMember(1)] UserId Email,
-    [property: ProtoMember(2)] string Password);
-
-[ProtoContract(SkipConstructor = true)]
-public record FindByEmailArgs(
-    [property: ProtoMember(1)] string Email);
+    [property: ProtoMember(1)] UserId UserId);
 
 [ProtoContract(SkipConstructor = true)]
 public record GetAccessTokenWithVkArgs(
@@ -57,7 +50,7 @@ public record RemoveUserWithVkArgs(
     [property: ProtoMember(1)] UserId Email,
     [property: ProtoMember(2)] string VkId);
 
-public static class AuthServiceExtensions
+public static partial class ServiceExtensions
 {
     public static IHttpClientBuilder AddAuthServiceGrpcClient(this WebApplicationBuilder builder)
     {
