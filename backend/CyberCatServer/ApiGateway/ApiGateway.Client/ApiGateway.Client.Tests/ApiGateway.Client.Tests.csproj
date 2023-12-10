@@ -25,4 +25,8 @@
         <PackageReference Include=" Unity3D.SDK" Version="2020.3.2.1" PrivateAssets="all" Private="true" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Mediator" />
+    </ItemGroup>
+
 </Project>

@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\SharedProjects\Shared.Models\Shared.Models.csproj" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.0.0" />
         <Reference Include="..\..\..\SharedProjects\Shared.Models\FastJsonSerializer\fastJSON.dll" />
     </ItemGroup>
 

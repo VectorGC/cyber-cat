@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Player
 {
     public class TaskProgressTests : PlayerClientTestFixture
     {

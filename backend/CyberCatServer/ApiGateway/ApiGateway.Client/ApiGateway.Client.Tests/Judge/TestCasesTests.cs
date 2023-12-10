@@ -1,7 +1,7 @@
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Judge
 {
     public class TestCasesTests : PlayerClientTestFixture
     {

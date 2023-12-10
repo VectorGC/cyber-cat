@@ -2,7 +2,7 @@ using System;
 using ApiGateway.Client.Application;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Infrastructure
 {
     interface ITest1
     {

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Infrastructure
 {
     public class DummyTests
     {

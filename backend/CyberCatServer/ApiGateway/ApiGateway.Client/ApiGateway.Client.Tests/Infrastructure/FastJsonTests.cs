@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using fastJSON;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Infrastructure
 {
     [TestFixture]
     public class JsonNewtonsoftTests

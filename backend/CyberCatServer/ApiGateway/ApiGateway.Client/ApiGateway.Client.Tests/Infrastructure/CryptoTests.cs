@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Shared.Models.Infrastructure;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Infrastructure
 {
     [TestFixture]
     public class CryptoTests

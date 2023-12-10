@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using ApiGateway.Client.Application;
 using NUnit.Framework;
 
-namespace ApiGateway.Client.Tests
+namespace ApiGateway.Client.Tests.Player.Authorization
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
