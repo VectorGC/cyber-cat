@@ -19,7 +19,7 @@ public class AccountAccessStatusWidget : LifetimeUIBehaviourV2<AccountState>
 
         if (State.IsSignedIn)
         {
-            textWidget.Text = $"Доступ получен: {State.UserName}";
+            textWidget.Text = $"Доступ получен: {State.User.FirstName}";
             textWidget.Color = Color.green;
         }
         else

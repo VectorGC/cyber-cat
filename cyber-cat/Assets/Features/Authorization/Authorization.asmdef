@@ -15,7 +15,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "ApiGateway.Client.dll",
-        "Zenject-usage.dll"
+        "Zenject-usage.dll",
+        "Shared.Models.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

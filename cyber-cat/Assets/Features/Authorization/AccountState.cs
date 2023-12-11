@@ -1,25 +1,26 @@
 using System;
-using ApiGateway.Client.V2;
-using ApiGateway.Client.V2.Access;
+using ApiGateway.Client.Application;
 using Assets.SimpleVKSignIn.Scripts;
 using Cysharp.Threading.Tasks;
+using Shared.Models.Domain.Users;
 using UniMob;
 using UnityEngine;
 using Zenject;
 
 public class AccountState : ILifetimeScope, IInitializable, IDisposable
 {
-    [Atom] private User User { get; set; }
+    [Atom] public UserModel User { get; set; }
 
     public Lifetime Lifetime => _lifetimeController.Lifetime;
     private readonly LifetimeController _lifetimeController = new LifetimeController();
+    private readonly ApiGatewayClient _client;
 
-    public string UserName => User.Name;
-    public bool IsSignedIn => User.Access<Vk>().IsSignedIn;
+    public bool IsSignedIn => User != null;
 
-    public AccountState(User user)
+    public AccountState(ApiGatewayClient client)
     {
-        User = user;
+        _client = client;
+        User = client.Player?.User;
     }
 
     public void Initialize() => SignIn();
@@ -31,13 +32,13 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
 
     public void SignIn()
     {
-        if (User.Access<Vk>().IsSignedIn)
+        if (IsSignedIn)
             return;
 
         var savedAuth = VKAuth.SavedAuth;
         if (savedAuth != null)
         {
-            OnSignedIn(savedAuth.TokenResponse.email, savedAuth.UserInfo.first_name).Forget();
+            OnSignedIn(savedAuth.TokenResponse.email, savedAuth.UserInfo.first_name, savedAuth.UserInfo.id).Forget();
             return;
         }
 
@@ -49,36 +50,40 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
                 return;
             }
 
-            OnSignedIn(VKAuth.SavedAuth.TokenResponse.email, userInfo.first_name).Forget();
-
+            OnSignedIn(VKAuth.SavedAuth.TokenResponse.email, userInfo.first_name, userInfo.id).Forget();
             Debug.Log($"Vk Sign in: Welcome {userInfo.first_name}");
         });
     }
 
-    private async UniTaskVoid OnSignedIn(string email, string name)
+    private async UniTaskVoid OnSignedIn(string email, string name, long vkId)
     {
-        await User.Access<Vk>().SignIn(email, name);
+        var result = await _client.LoginPlayerWithVk(email, name, vkId.ToString());
+        if (!result.IsSuccess)
+        {
+            Debug.LogError(result.Error);
+            return;
+        }
 
-        // Update ui.
-        var user = User;
-        User = null;
-        User = user;
-
-        Debug.Log($"Vk Sign in: Auth success. Welcome {User.Name}!");
+        User = result.Value.User;
+        Debug.Log($"Vk Sign in: Auth success. Welcome {name}!");
     }
 
     public void SignOut()
     {
-        var name = UserName;
+        var name = User.FirstName;
 
         VKAuth.SignOut();
-        User.Access<Vk>().SignOut();
+        if (_client.Player != null)
+        {
+            var result = _client.Player.Logout();
+            if (!result.IsSuccess)
+            {
+                Debug.LogError(result.Error);
+                return;
+            }
+        }
 
-        // Update ui.
-        var user = User;
         User = null;
-        User = user;
-
         Debug.Log($"Vk Sign out: Goodbye! See you soon '{name}'");
     }
 }

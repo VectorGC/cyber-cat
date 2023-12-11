@@ -1,29 +1,30 @@
 using System.Text;
-using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Models;
+using ApiGateway.Client.Application;
 using Bonsai;
-using Cysharp.Threading.Tasks;
+using Bonsai.Core;
 using UnityEngine;
 using Zenject;
 
 [BonsaiNode("ServerAPI/Tasks/", "Condition")]
-public class IsTaskSolved : ConditionalAbortAsync
+public class IsTaskSolved : ConditionalAbort
 {
     [SerializeField] private TaskType _taskType;
 
-    private ITask _task;
+    private ApiGatewayClient _apiGatewayClient;
 
     [Inject]
-    private async void Construct(AsyncInject<IPlayer> playerAsync)
+    private void Construct(ApiGatewayClient apiGatewayClient)
     {
-        var player = await playerAsync;
-        _task = player.Tasks[_taskType.GetId()];
+        _apiGatewayClient = apiGatewayClient;
     }
 
-    protected override async UniTask<bool> ConditionAsync()
+    public override bool Condition()
     {
-        var status = await _task.GetStatus();
-        return status is Complete;
+        if (_apiGatewayClient.Player == null)
+            return false;
+
+        var task = _apiGatewayClient.Player.Tasks[_taskType.Id()];
+        return task.IsComplete;
     }
 
     public override void Description(StringBuilder builder)

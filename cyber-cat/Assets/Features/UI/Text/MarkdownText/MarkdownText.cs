@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using LogicUI.FancyTextRendering;
 using TMPro;
 using UnityEngine;
@@ -28,13 +26,8 @@ public class MarkdownText : UIBehaviour, IText
         TryGetComponent(out _markdownRenderer);
     }
 
-    public void SetTextAsync(Task<string> handler)
+    public void SetText(string text)
     {
-        SetTextAsync(handler.AsUniTask()).Forget();
-    }
-
-    private async UniTaskVoid SetTextAsync(UniTask<string> handler)
-    {
-        Text = await handler;
+        Text = text;
     }
 }

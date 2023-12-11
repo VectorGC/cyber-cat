@@ -1,8 +1,9 @@
 using System;
-using System.Diagnostics;
-using ApiGateway.Client.Models;
+using ApiGateway.Client;
+using ApiGateway.Client.Application;
 using Cysharp.Threading.Tasks;
 using Features.ServerConfig;
+using Shared.Models.Domain.Tasks;
 using UnityEngine.SceneManagement;
 
 public class CodeEditor : ICodeEditor
@@ -26,11 +27,11 @@ public class CodeEditor : ICodeEditor
         }
     }
 
-    public ITask Task { get; private set; }
+    public TaskDescription Task { get; private set; }
 
-    public void Open(ITask task) => OpenAsync(task).Forget();
+    public void Open(TaskDescription task) => OpenAsync(task).Forget();
 
-    private async UniTaskVoid OpenAsync(ITask task)
+    private async UniTaskVoid OpenAsync(TaskDescription task)
     {
         if (task == null)
         {
@@ -52,8 +53,8 @@ public class CodeEditor : ICodeEditor
 #if UNITY_EDITOR
     public async UniTask LoadDebugTaskCheat(TaskType taskType)
     {
-        var player = await ServerAPI.CreatePlayerClient();
-        var task = player.Tasks[taskType.GetId()];
+        var client = new ApiGatewayClient(ServerAPI.ServerEnvironment);
+        var task = await client.TaskRepository.GetTaskDescription(taskType.Id());
         Task = task;
     }
 #endif

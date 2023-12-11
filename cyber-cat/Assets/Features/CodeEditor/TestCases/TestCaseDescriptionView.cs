@@ -1,6 +1,7 @@
 using System.Text;
-using Shared.Models.Models.TestCases;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ public class TestCaseDescriptionView : LifetimeUIBehaviour<CodeEditorState>
         }
     }
 
-    private string GetDescription(TestCase testCase)
+    private string GetDescription(TestCaseDescription testCase)
     {
         var sb = new StringBuilder();
         if (testCase.Inputs?.Length > 0)

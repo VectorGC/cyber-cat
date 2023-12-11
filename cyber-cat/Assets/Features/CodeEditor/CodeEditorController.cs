@@ -1,10 +1,10 @@
 using System;
-using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
+using System.Collections.Generic;
+using ApiGateway.Client.Application;
 using Cysharp.Threading.Tasks;
 using Models;
-using Shared.Models.Models.TestCases;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Verdicts;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,12 +26,14 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     [Atom] public override CodeEditorState State { get; set; }
 
     private ICodeEditor _codeEditor;
-    private TestCases _testCasesCache;
+    private List<TestCaseDescription> _testCasesCache;
     private Verdict _verdictCache;
+    private ApiGatewayClient _client;
 
     [Inject]
-    private async void Construct(ICodeEditor codeEditor)
+    private async void Construct(ICodeEditor codeEditor, ApiGatewayClient client)
     {
+        _client = client;
         _codeEditor = codeEditor;
 
 #if UNITY_EDITOR
@@ -42,8 +44,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         }
 #endif
 
-        var descriptionHandler = codeEditor.Task.GetDescription();
-        _taskDescription.Value.SetTextAsync(descriptionHandler);
+        _taskDescription.Value.SetText(codeEditor.Task.Description);
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
@@ -53,21 +54,16 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
 
-        var progress = await _codeEditor.Task.GetStatus();
-        switch (progress)
+        if (_client.Player != null)
         {
-            case NotStarted notStarted:
-                _codeEditorView.SourceCode = await _codeEditor.Task.GetDefaultCode();
-                break;
-            case Complete complete:
-                _codeEditorView.SourceCode = complete.Solution;
-                break;
-            case HaveSolution haveSolution:
-                _codeEditorView.SourceCode = haveSolution.Solution;
-                break;
+            var taskModel = _client.Player.Tasks[_codeEditor.Task.Id];
+            if (!taskModel.IsStarted)
+                _codeEditorView.SourceCode = taskModel.Description.DefaultCode;
+            else
+                _codeEditorView.SourceCode = taskModel.LastSolution;
         }
 
-        _testCasesCache = await _codeEditor.Task.GetTestCases();
+        _testCasesCache = await _client.TaskRepository.GetTestCases(_codeEditor.Task.Id);
         State = new CodeEditorState(Lifetime)
         {
             Section = new TestCasesSection(Lifetime)
@@ -91,7 +87,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
                     resultSection.Verdict = _verdictCache;
                 break;
             case TestCasesSection testCasesSection:
-                _testCasesCache ??= await _codeEditor.Task.GetTestCases();
+                _testCasesCache ??= await _client.TaskRepository.GetTestCases(_codeEditor.Task.Id);
                 testCasesSection.TestCases = _testCasesCache;
                 break;
             default:
@@ -130,7 +126,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
     protected override void OnUpdate()
     {
-        if (_verdictCache is Success)
+        if (_verdictCache.IsSuccess)
         {
             _exit.SetActiveHighlight(true);
         }
@@ -143,7 +139,22 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        _verdictCache = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(State, "Выполняется...");
+        if (_client.Player != null)
+        {
+            _verdictCache = await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...");
+        }
+        else
+        {
+            var result = await _client.JudgeService.GetVerdict(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
+            if (result.IsSuccess)
+            {
+                _verdictCache = result.Value;
+            }
+            else
+            {
+                Debug.LogError(result.Error);
+            }
+        }
 
         // Force select Result section.
         State.Section = new ResultSection(Lifetime)
@@ -152,15 +163,22 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         };
     }
 
-    private async void GetSavedCode()
+    private void GetSavedCode()
     {
-        var sourceCode = await _codeEditor.Task.GetLastSavedSolution();
-        _codeEditorView.SourceCode = sourceCode;
+        if (_client.Player != null)
+        {
+            var taskModel = _client.Player.Tasks[_codeEditor.Task.Id];
+            _codeEditorView.SourceCode = taskModel.LastSolution;
+        }
+        else
+        {
+            _codeEditorView.SourceCode = _codeEditor.Task.DefaultCode;
+        }
     }
 
-    private async void ResetCode()
+    private void ResetCode()
     {
-        var sourceCode = await _codeEditor.Task.GetDefaultCode();
+        var sourceCode = _codeEditor.Task.DefaultCode;
         _codeEditorView.SourceCode = sourceCode;
     }
 
