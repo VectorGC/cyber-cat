@@ -12,7 +12,6 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters
         Task<TResponse> GetFromJsonAsync<TResponse>(string uri);
         Task<TResponse> GetFromFastJsonPolymorphicAsync<TResponse>(string uri);
         Task<string> PostAsync(string uri, Dictionary<string, string> form);
-        Task<string> PostAsync(string path, object obj);
         Task<string> PostAsync(string uri);
         Task<TResponse> PostAsJsonAsync<TResponse>(string uri, Dictionary<string, string> form);
         Task<TResponse> PostAsFastJsonPolymorphicAsync<TResponse>(string uri, Dictionary<string, string> form);

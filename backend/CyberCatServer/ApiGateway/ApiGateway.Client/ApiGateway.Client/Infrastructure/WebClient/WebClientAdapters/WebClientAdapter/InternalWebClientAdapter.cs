@@ -69,14 +69,6 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClient
             return response;
         }
 
-        public async Task<string> PostAsync(string uri, object obj)
-        {
-            var json = JSON.ToJSON(obj);
-            //var json = SerializeToJson(obj);
-            var response = await _client.UploadStringTaskAsync(uri, json);
-            return response;
-        }
-
         public async Task<string> PostAsync(string uri)
         {
             return await _client.UploadStringTaskAsync(uri, "");
