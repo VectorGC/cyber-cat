@@ -117,7 +117,6 @@ public class AuthGrpcService : IAuthService
         if (user == null)
         {
             var userId = await CreateUser(new CreateUserArgs(email, vkId, firstName, roles));
-            user = await _userRepository.GetUser(userId);
         }
 
         var accessToken = await GetAccessToken(new GetAccessTokenArgs(email, vkId));

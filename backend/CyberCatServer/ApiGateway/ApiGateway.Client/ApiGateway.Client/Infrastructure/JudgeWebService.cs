@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using ApiGateway.Client.Application.CQRS;
 using ApiGateway.Client.Application.Services;
-using ApiGateway.Client.Application.UseCases;
 using ApiGateway.Client.Infrastructure.WebClient;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;

@@ -1,6 +1,7 @@
 using System;
 using ApiGateway.Client.Application;
 using NUnit.Framework;
+using Shared.Models;
 
 namespace ApiGateway.Client.Tests.Infrastructure
 {

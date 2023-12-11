@@ -26,7 +26,7 @@ namespace ApiGateway.Client.Tests.Player.Authorization
 
                 var loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
                 Assert.IsTrue(loginResult.IsSuccess);
-                Assert.AreEqual(email, loginResult.Value.User.Email);
+                Assert.AreEqual(email,  loginResult.Value.User.Email);
                 Assert.AreEqual(userName, loginResult.Value.User.FirstName);
 
                 var doubleLoginResult = await client.LoginPlayerWithVk(email, userName, vkId);

@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 
-namespace ApiGateway.Client.Application.UseCases
+namespace ApiGateway.Client.Application.CQRS
 {
     public enum ErrorCode
     {
@@ -15,8 +16,10 @@ namespace ApiGateway.Client.Application.UseCases
         UserNameEmpty
     }
 
-    public static class ErrorMessages
+    public class ErrorCodeException : Exception
     {
+        public ErrorCode Code { get; }
+
         private static readonly Dictionary<ErrorCode, string> _messages = new Dictionary<ErrorCode, string>()
         {
             [ErrorCode.None] = string.Empty,
@@ -29,9 +32,13 @@ namespace ApiGateway.Client.Application.UseCases
             [ErrorCode.UserNameEmpty] = "Имя пользователя не может быть пустым",
         };
 
-        public static string Message(this ErrorCode errorCode)
+        public ErrorCodeException(ErrorCode code) : this(code, _messages[code])
         {
-            return _messages[errorCode];
+        }
+
+        public ErrorCodeException(ErrorCode code, string message) : base(message)
+        {
+            Code = code;
         }
     }
 }

@@ -1,18 +1,19 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Application;
 using NUnit.Framework;
+using Shared.Models;
 
-namespace ApiGateway.Client.Tests.Mediator
+namespace ApiGateway.Client.Tests.Infrastructure
 {
     [TestFixture]
     public class MediatorTests
     {
-        public class PingCommand : ICommand<string>
+        public class PingCommand : IQuery<string>
         {
             public string Message { get; set; }
         }
 
-        public class PingCommandHandler : ICommandHandler<PingCommand, string>
+        public class PingCommandHandler : IQueryHandler<PingCommand, string>
         {
             public Task<string> Handle(PingCommand command)
             {
@@ -70,10 +71,10 @@ namespace ApiGateway.Client.Tests.Mediator
         {
             var container = new TinyIoCContainer();
 
-            container.Register<Application.Mediator>();
+            container.Register<Mediator>();
             container.RegisterCommand<PrintCommand, PrintCommandHandler>();
 
-            var mediator = container.Resolve<Application.Mediator>();
+            var mediator = container.Resolve<Mediator>();
             await mediator.Send(new PrintCommand()
             {
                 Message = "Hello"
@@ -87,10 +88,10 @@ namespace ApiGateway.Client.Tests.Mediator
         {
             var container = new TinyIoCContainer();
 
-            container.Register<Application.Mediator>();
-            container.RegisterCommand<PingCommand, string, PingCommandHandler>();
+            container.Register<Mediator>();
+            container.RegisterQuery<PingCommand, PingCommandHandler, string>();
 
-            var mediator = container.Resolve<Application.Mediator>();
+            var mediator = container.Resolve<Mediator>();
             var response = await mediator.Send(new PingCommand()
             {
                 Message = "Pong"
@@ -103,11 +104,11 @@ namespace ApiGateway.Client.Tests.Mediator
         public async Task MiddlewaresWithResponse()
         {
             var container = new TinyIoCContainer();
-            container.Register<Application.Mediator>();
-            container.RegisterCommand<PingCommand, string, PingCommandHandler>();
+            container.Register<Mediator>();
+            container.RegisterQuery<PingCommand, PingCommandHandler, string>();
             container.UseMiddleware<AddSymbolToResponseMiddleware>();
 
-            var mediator = container.Resolve<Application.Mediator>();
+            var mediator = container.Resolve<Mediator>();
             var response = await mediator.Send(new PingCommand()
             {
                 Message = "Pong"
@@ -120,11 +121,11 @@ namespace ApiGateway.Client.Tests.Mediator
         public async Task MiddlewaresWithoutResponse()
         {
             var container = new TinyIoCContainer();
-            container.Register<Application.Mediator>();
+            container.Register<Mediator>();
             container.RegisterCommand<PrintCommand, PrintCommandHandler>();
             container.UseMiddleware<AddSymbolToPrintCommandMiddleware>();
 
-            var mediator = container.Resolve<Application.Mediator>();
+            var mediator = container.Resolve<Mediator>();
             await mediator.Send(new PrintCommand()
             {
                 Message = "Hello"

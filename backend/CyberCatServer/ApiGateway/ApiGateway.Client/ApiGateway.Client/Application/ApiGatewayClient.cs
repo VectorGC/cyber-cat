@@ -1,13 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.API;
+using ApiGateway.Client.Application.CQRS;
+using ApiGateway.Client.Application.CQRS.Commands;
+using ApiGateway.Client.Application.CQRS.Queries;
+using ApiGateway.Client.Application.Middlewares;
 using ApiGateway.Client.Application.Services;
-using ApiGateway.Client.Application.UseCases;
-using ApiGateway.Client.Application.UseCases.Player;
-using ApiGateway.Client.Application.UseCases.Vk;
 using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
+using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Application
 {
@@ -23,7 +25,7 @@ namespace ApiGateway.Client.Application
         }
 
         public IJudgeService JudgeService => _container.Resolve<IJudgeService>();
-        public ITaskDescriptionService TaskService => _container.Resolve<ITaskDescriptionService>();
+        public ITaskDescriptionRepository TaskRepository => _container.Resolve<ITaskDescriptionRepository>();
 
         private readonly TinyIoCContainer _container;
 
@@ -32,18 +34,29 @@ namespace ApiGateway.Client.Application
             _container = new TinyIoCContainer();
 
             // --- Application ---
-            _container.AutoRegister(type => type.BaseType == typeof(UseCaseAPI)); // API
-            _container.AutoRegister(type => type.GetInterface(nameof(IUseCase)) != null); // UseCases
             _container.Register<PlayerContext>().AsSingleton();
+
+            _container.Register<Mediator>().AsSingleton();
+            _container.RegisterCommand<RegisterPlayer, RegisterPlayerHandler>();
+            _container.RegisterCommand<LoginPlayer, LoginPlayerHandler>();
+            _container.RegisterCommand<LoginPlayerWithVk, LoginPlayerWithVkHandler>();
+            _container.RegisterCommand<RemoveCurrentPlayer, RemoveCurrentPlayerHandler>();
+            _container.RegisterCommand<LogoutPlayer, LogoutPlayerHandler>();
+            _container.RegisterCommand<SubmitSolution, SubmitSolutionHandler>();
+
+            _container.RegisterQuery<GetLastVerdict, GetLastVerdictHandler, Verdict>();
+            _container.RegisterQuery<FetchTaskModel, FetchTaskModelHandler, TaskModel>();
+            _container.RegisterQuery<FetchTaskCollection, FetchTaskCollectionHandler, TaskCollection>();
+
+            _container.UseMiddleware<CatchExceptionMiddleware>();
+            _container.UseMiddleware<AnonymousGuardMiddleware>();
+            _container.UseMiddleware<AuthorizedGuardMiddleware>();
 
             // --- Infrastructure ---
             _container.Register(new WebClientFactory(serverEnvironment));
-            _container.Register<IUserService, UserWebService>().AsSingleton();
-            _container.Register<ITaskDescriptionService, TaskDescriptionWebService>().AsSingleton();
-            _container.Register<ITaskPlayerProgressService, TaskPlayerProgressWebService>().AsSingleton();
-            _container.Register<ITaskDataService, TaskDataWebService>().AsSingleton();
-            _container.Register<IPlayerSubmitSolutionTaskService, PlayerSubmitSolutionTaskWebService>().AsSingleton();
+            _container.Register<ITaskDescriptionRepository, TaskDescriptionWebRepository>().AsSingleton();
             _container.Register<IJudgeService, JudgeWebService>().AsSingleton();
+            _container.Register<IPlayerVerdictHistory, PlayerVerdictHistory>().AsSingleton();
         }
 
         public void Dispose()
@@ -51,8 +64,60 @@ namespace ApiGateway.Client.Application
             _container?.Dispose();
         }
 
-        public Task<Result> RegisterPlayer(string email, string password, string userName) => _container.Resolve<RegisterPlayer>().Execute(email, password, userName);
-        public Task<Result<PlayerModel>> LoginPlayer(string email, string password) => _container.Resolve<LoginPlayer>().Execute(email, password);
-        public Task<Result<PlayerModel>> LoginPlayerWithVk(string email, string userName, string vkId) => _container.Resolve<LoginWithVk>().Execute(email, userName, vkId);
+        public async Task<Result> RegisterPlayer(string email, string password, string userName)
+        {
+            var mediator = _container.Resolve<Mediator>();
+
+            var command = new RegisterPlayer()
+            {
+                Email = email,
+                Password = password,
+                UserName = userName
+            };
+
+            var result = await mediator.SendSafe(command);
+            return Result.FromObject(result);
+        }
+
+        public async Task<Result<PlayerModel>> LoginPlayer(string email, string password)
+        {
+            var mediator = _container.Resolve<Mediator>();
+
+            var command = new LoginPlayer()
+            {
+                Email = email,
+                Password = password
+            };
+
+            var result = await mediator.SendSafe(command);
+            if (result == null)
+            {
+                var playerContext = _container.Resolve<PlayerContext>();
+                return playerContext.Player;
+            }
+
+            return Result<PlayerModel>.FromObject(result);
+        }
+
+        public async Task<Result<PlayerModel>> LoginPlayerWithVk(string email, string userName, string vkId)
+        {
+            var mediator = _container.Resolve<Mediator>();
+
+            var command = new LoginPlayerWithVk()
+            {
+                Email = email,
+                UserName = userName,
+                VkId = vkId
+            };
+
+            var result = await mediator.SendSafe(command);
+            if (result == null)
+            {
+                var playerContext = _container.Resolve<PlayerContext>();
+                return playerContext.Player;
+            }
+
+            return Result<PlayerModel>.FromObject(result);
+        }
     }
 }

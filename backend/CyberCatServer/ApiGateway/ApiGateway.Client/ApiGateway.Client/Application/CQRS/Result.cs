@@ -1,6 +1,6 @@
 using System;
 
-namespace ApiGateway.Client.Application.UseCases
+namespace ApiGateway.Client.Application.CQRS
 {
     public struct Result
     {
@@ -8,13 +8,18 @@ namespace ApiGateway.Client.Application.UseCases
         public ErrorCode ErrorCode { get; private set; }
         public string Error { get; private set; }
 
-        public static Result Success => new Result();
-
-        public static Result Failure(ErrorCode errorCode) => new Result()
+        public static Result FromObject(object obj)
         {
-            ErrorCode = errorCode,
-            Error = errorCode.Message()
-        };
+            switch (obj)
+            {
+                case Exception exception:
+                    return Failure(exception);
+                default:
+                    return Success;
+            }
+        }
+
+        public static Result Success => new Result();
 
         public static Result Failure(Exception exception) => new Result()
         {
@@ -32,15 +37,20 @@ namespace ApiGateway.Client.Application.UseCases
         public string Error { get; private set; }
         public TValue Value { get; private set; }
 
+        public static Result<TValue> FromObject(object obj)
+        {
+            switch (obj)
+            {
+                case Exception exception:
+                    return Failure(exception);
+                default:
+                    return Success((TValue) obj);
+            }
+        }
+
         public static Result<TValue> Success(TValue value) => new Result<TValue>()
         {
             Value = value
-        };
-
-        public static Result<TValue> Failure(ErrorCode errorCode) => new Result<TValue>()
-        {
-            ErrorCode = errorCode,
-            Error = errorCode.Message()
         };
 
         public static Result<TValue> Failure<TSource>(Result<TSource> result)

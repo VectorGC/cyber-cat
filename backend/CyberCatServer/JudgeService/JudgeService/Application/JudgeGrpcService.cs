@@ -30,6 +30,8 @@ public class JudgeGrpcService : IJudgeService
             {
                 return new NativeFailure()
                 {
+                    TaskId = taskId,
+                    TestCases = testsVerdict,
                     Error = output.StandardError
                 };
             }

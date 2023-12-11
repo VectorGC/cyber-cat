@@ -1,9 +1,9 @@
 using System.Net;
 using fastJSON;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure;
 using Shared.Server.Application.Services;
 
@@ -13,9 +13,13 @@ namespace ApiGateway.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _taskService;
+    private readonly IPlayerService _playerService;
+    private readonly IAuthService _authService;
 
-    public TasksController(ITaskService taskService)
+    public TasksController(ITaskService taskService, IPlayerService playerService, IAuthService authService)
     {
+        _authService = authService;
+        _playerService = playerService;
         _taskService = taskService;
     }
 

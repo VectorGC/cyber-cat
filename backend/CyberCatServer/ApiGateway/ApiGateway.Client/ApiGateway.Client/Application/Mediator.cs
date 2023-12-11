@@ -16,14 +16,27 @@ namespace ApiGateway.Client.Application
 
         public async Task Send(ICommand command)
         {
+            await SendSafe(command);
+        }
+
+        public async Task<object> SendSafe(ICommand command)
+        {
             var chain = _container.Resolve<MiddlewareChain>();
-            await chain.Execute(new Context()
+            var response = await chain.Execute(new Context()
             {
                 Command = command
             });
+
+            return response;
         }
 
-        public async Task<TResult> Send<TResult>(ICommand<TResult> command)
+        public async Task<TResult> Send<TResult>(IQuery<TResult> command)
+        {
+            var response = await SendSafe(command);
+            return (TResult) response;
+        }
+
+        public async Task<object> SendSafe<TResult>(IQuery<TResult> command)
         {
             var chain = _container.Resolve<MiddlewareChain>();
             var response = await chain.Execute(new Context()
@@ -32,23 +45,14 @@ namespace ApiGateway.Client.Application
                 ResultType = typeof(TResult)
             });
 
-            return (TResult) response;
+            return response;
         }
     }
 
-    #region | Commands |
-
-    public interface ICommand<TResult>
-    {
-    }
+    #region | CQRS |
 
     public interface ICommand
     {
-    }
-
-    public interface ICommandHandler<in TCommand, TResult>
-    {
-        Task<TResult> Handle(TCommand command);
     }
 
     public interface ICommandHandler<in TCommand> where TCommand : ICommand
@@ -56,12 +60,21 @@ namespace ApiGateway.Client.Application
         Task Handle(TCommand command);
     }
 
+    public interface IQuery<TResult>
+    {
+    }
+
+    public interface IQueryHandler<in TCommand, TResult>
+    {
+        Task<TResult> Handle(TCommand command);
+    }
+
     internal static class HandleCommand
     {
         public static async Task<object> Handle(object command, Type resultType, TinyIoCContainer container)
         {
             var handlerType = resultType != null
-                ? typeof(ICommandHandler<,>).MakeGenericType(command.GetType(), resultType)
+                ? typeof(IQueryHandler<,>).MakeGenericType(command.GetType(), resultType)
                 : typeof(ICommandHandler<>).MakeGenericType(command.GetType());
 
             var handler = (dynamic) container.Resolve(handlerType);
@@ -88,11 +101,11 @@ namespace ApiGateway.Client.Application
             container.Register<ICommandHandler<TCommand>, TCommandHandler>().AsSingleton();
         }
 
-        public static void RegisterCommand<TCommand, TResult, TCommandHandler>(this TinyIoCContainer container)
-            where TCommand : ICommand<TResult>
-            where TCommandHandler : class, ICommandHandler<TCommand, TResult>
+        public static void RegisterQuery<TCommand, TCommandHandler, TResult>(this TinyIoCContainer container)
+            where TCommand : IQuery<TResult>
+            where TCommandHandler : class, IQueryHandler<TCommand, TResult>
         {
-            container.Register<ICommandHandler<TCommand, TResult>, TCommandHandler>().AsSingleton();
+            container.Register<IQueryHandler<TCommand, TResult>, TCommandHandler>().AsSingleton();
         }
     }
 
@@ -140,7 +153,7 @@ namespace ApiGateway.Client.Application
 
     internal class MiddlewareChain
     {
-        private readonly Queue<IMiddlewareNode> _queue = new Queue<IMiddlewareNode>();
+        private readonly LinkedList<IMiddlewareNode> _middlewares = new LinkedList<IMiddlewareNode>();
 
         public MiddlewareChain(TinyIoCContainer container)
         {
@@ -157,18 +170,18 @@ namespace ApiGateway.Client.Application
         {
             var node = new MiddlewareNode(middleware);
 
-            if (_queue.Count > 0)
+            if (_middlewares.Count > 0)
             {
-                var last = _queue.Peek();
+                var last = _middlewares.Last.Value;
                 last?.SetNext(node);
             }
 
-            _queue.Enqueue(node);
+            _middlewares.AddLast(node);
         }
 
         public async Task<object> Execute(Context context)
         {
-            var result = await _queue.Peek().Invoke(context);
+            var result = await _middlewares.First.Value.Invoke(context);
             return result;
         }
     }

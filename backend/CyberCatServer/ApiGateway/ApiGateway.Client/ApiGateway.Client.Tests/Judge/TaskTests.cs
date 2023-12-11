@@ -16,7 +16,7 @@ namespace ApiGateway.Client.Tests.Judge
         {
             _serverEnvironment = serverEnvironment;
         }
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -34,8 +34,7 @@ namespace ApiGateway.Client.Tests.Judge
         {
             var taskId = "tutorial";
 
-            var result = await _client.TaskService.GetTaskDescriptions();
-            var tasks = result.Value;
+            var tasks = await _client.TaskRepository.GetAllTaskDescriptions();
             var task = tasks[taskId];
 
             Assert.AreEqual("Hello cat!", task.Name);

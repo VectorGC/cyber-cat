@@ -76,9 +76,9 @@ public class PlayerController : ControllerBase
         return json;
     }
 
+    [AllowAnonymous]
     [HttpGet(WebApi.GetUsersWhoSolvedTaskTemplate)]
     [ProducesResponseType(typeof(List<UserModel>), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<string>> GetUsersWhoSolvedTask(string taskId)
     {
         var userIds = await _playerService.GetUsersWhoSolvedTask(taskId);
