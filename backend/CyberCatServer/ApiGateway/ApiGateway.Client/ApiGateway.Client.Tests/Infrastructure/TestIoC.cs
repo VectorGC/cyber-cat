@@ -41,7 +41,7 @@ namespace ApiGateway.Client.Tests.Infrastructure
     public class TestIoC
     {
         [Test]
-        public void Test1()
+        public void RegisterAndResolve()
         {
             var container = new TinyIoCContainer();
             container.Register<ITest1, ClassTest1>().AsSingleton();

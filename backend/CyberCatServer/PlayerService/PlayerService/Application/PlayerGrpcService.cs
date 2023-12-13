@@ -46,7 +46,7 @@ public class PlayerGrpcService : IPlayerService
         {
             throw updateResult.Error switch
             {
-                _ => new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
+                _ => throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
             };
         }
 
@@ -66,7 +66,7 @@ public class PlayerGrpcService : IPlayerService
         {
             throw createResult.Error switch
             {
-                _ => new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
+                _ => throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
             };
         }
 

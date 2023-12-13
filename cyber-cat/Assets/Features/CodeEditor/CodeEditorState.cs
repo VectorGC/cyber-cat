@@ -143,15 +143,15 @@ public class ResultSection : ISection
     [Atom]
     public TestCaseId SelectedTestCaseId
     {
-        get => TestCaseIds?[_selectedTestCaseIndex];
-        set => _selectedTestCaseIndex = TestCaseIds?.FindIndex(id => id == value) ?? 0;
+        get => TestCaseIds != null && TestCaseIds.Count > _selectedTestCaseIndex ? TestCaseIds[_selectedTestCaseIndex] : null;
+        set => _selectedTestCaseIndex = TestCaseIds?.FindIndex(id => id.Equals(value)) ?? 0;
     }
 
     [Atom] public TestCasesVerdict TestCasesVerdict => Verdict?.TestCases;
     [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Values.Values.Select(test => test.TestCase.Id).ToList();
     [Atom] public TestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
 
-    [Atom] private int _selectedTestCaseIndex { get; set; } = 0;
+    [Atom] private int _selectedTestCaseIndex { get; set; } = 0; // Force select first tab.
 
     public Lifetime Lifetime { get; }
 

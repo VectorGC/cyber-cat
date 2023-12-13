@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using Models;
 using Shared.Models.Domain.TestCase;
 using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
@@ -126,7 +127,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
     protected override void OnUpdate()
     {
-        if (_verdictCache.IsSuccess)
+        if (_verdictCache?.IsSuccess ?? false)
         {
             _exit.SetActiveHighlight(true);
         }
@@ -139,21 +140,23 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        if (_client.Player != null)
+        var result = _client.Player != null
+            ? await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...")
+            : await _client.JudgeService.GetVerdict(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
+        if (result.IsSuccess)
         {
-            _verdictCache = await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...");
+            _verdictCache = result.Value;
         }
         else
         {
-            var result = await _client.JudgeService.GetVerdict(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
-            if (result.IsSuccess)
+            Debug.LogError(result.Error);
+            _verdictCache = new NativeFailure()
             {
-                _verdictCache = result.Value;
-            }
-            else
-            {
-                Debug.LogError(result.Error);
-            }
+                Error = result.Error,
+                Solution = sourceCode,
+                TaskId = _codeEditor.Task.Id,
+                TestCases = new TestCasesVerdict()
+            };
         }
 
         // Force select Result section.

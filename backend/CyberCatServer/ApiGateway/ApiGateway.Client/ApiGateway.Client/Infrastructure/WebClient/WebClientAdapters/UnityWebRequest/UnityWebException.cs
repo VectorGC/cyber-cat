@@ -7,7 +7,7 @@ namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
     {
         public HttpStatusCode StatusCode { get; }
 
-        public UnityWebException(HttpStatusCode statusCode) : base($"Status '{statusCode.ToString()}'")
+        public UnityWebException(HttpStatusCode statusCode, string message) : base(message)
         {
             StatusCode = statusCode;
         }

@@ -37,17 +37,12 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
     {
         try
         {
-            var success = await UpdateOneAsync(player);
-            if (!success)
-            {
-                return new UpdateResult(false, PlayerRepositoryError.Unknown);
-            }
-
+            await UpdateOneAsync(player);
             return new UpdateResult(true, PlayerRepositoryError.None);
         }
         catch (Exception)
         {
-            throw;
+            return new UpdateResult(false, PlayerRepositoryError.Unknown);
         }
     }
 

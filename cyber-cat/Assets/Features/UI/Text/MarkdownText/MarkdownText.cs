@@ -21,10 +21,12 @@ public class MarkdownText : UIBehaviour, IText
         set => _markdownRenderer.TextMesh.color = value;
     }
 
-    protected override void Awake()
+#if UNITY_EDITOR
+    protected override void OnValidate()
     {
         TryGetComponent(out _markdownRenderer);
     }
+#endif
 
     public void SetText(string text)
     {

@@ -1,5 +1,7 @@
 #if UNITY_WEBGL
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest;
@@ -11,9 +13,21 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebR
     internal class UnityWebClient : IInternalWebClientAdapter
     {
         private string _authorizationHeaderValue;
+        private bool _debug;
+
+        public UnityWebClient()
+        {
+            SetDebugMode();
+        }
 
         public void Dispose()
         {
+        }
+
+        [Conditional("DEBUG")]
+        private void SetDebugMode()
+        {
+            _debug = true;
         }
 
         public void AddAuthorizationHeader(string type, string value)
@@ -66,9 +80,24 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebR
         {
             DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
             var response = await GetStringAsync(uri);
-            var obj = JSON.ToObject<TResponse>(response);
-            DebugOnly.Log($"Success deserialize object '{obj}'");
+            TResponse obj;
+            if (_debug)
+            {
+                try
+                {
+                    obj = JSON.ToObject<TResponse>(response);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Uri: {uri}, Json: {response}", e);
+                }
+            }
+            else
+            {
+                obj = JSON.ToObject<TResponse>(response);
+            }
 
+            DebugOnly.Log($"Success deserialize object '{obj}'");
             return obj;
         }
 

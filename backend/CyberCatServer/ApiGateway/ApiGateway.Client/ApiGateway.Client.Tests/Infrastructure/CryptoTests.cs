@@ -19,7 +19,15 @@ namespace ApiGateway.Client.Tests.Infrastructure
             var decryptedText = await Crypto.DecryptAsync(encrypted, passpharse);
 
             Assert.AreEqual(text, decryptedText);
-            Assert.CatchAsync<CryptographicException>(async () => await Crypto.DecryptAsync(encrypted, "wrong_passpharse"));
+            try
+            {
+                await Crypto.DecryptAsync(encrypted, "wrong_passpharse");
+                Assert.Fail();
+            }
+            catch (CryptographicException e)
+            {
+                Assert.Pass();
+            }
         }
     }
 }
