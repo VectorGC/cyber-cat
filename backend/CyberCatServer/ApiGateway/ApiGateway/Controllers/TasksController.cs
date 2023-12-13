@@ -13,23 +13,20 @@ namespace ApiGateway.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _taskService;
-    private readonly IPlayerService _playerService;
-    private readonly IAuthService _authService;
 
-    public TasksController(ITaskService taskService, IPlayerService playerService, IAuthService authService)
+    public TasksController(ITaskService taskService)
     {
-        _authService = authService;
-        _playerService = playerService;
         _taskService = taskService;
     }
 
     [HttpGet(WebApi.GetTaskDescriptions)]
     [ProducesResponseType(typeof(List<TaskDescription>), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<List<TaskDescription>>> GetTasks()
+    public async Task<ActionResult<string>> GetTasks()
     {
         var response = await _taskService.GetTasks();
-        return response;
+        var json = JSON.ToJSON(response);
+        return json;
     }
 
     [HttpGet(WebApi.GetTestCasesTemplate)]

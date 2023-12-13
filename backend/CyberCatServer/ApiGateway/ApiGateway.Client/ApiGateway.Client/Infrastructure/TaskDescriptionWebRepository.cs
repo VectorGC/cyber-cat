@@ -32,7 +32,7 @@ namespace ApiGateway.Client.Infrastructure
 
             using (var client = _webClientFactory.Create())
             {
-                var descriptions = await client.GetAsync<List<TaskDescription>>(WebApi.GetTaskDescriptions);
+                var descriptions = await client.GetFastJsonAsync<List<TaskDescription>>(WebApi.GetTaskDescriptions);
                 var dict = descriptions.ToDictionary(kvp => new TaskId(kvp.Id), kvp => kvp);
 
                 _tasks = dict;

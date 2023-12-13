@@ -5,7 +5,7 @@ using ProtoBuf;
 namespace Shared.Models.Domain.Users
 {
     [ProtoContract]
-    public class Roles : IEnumerable<string>
+    public class Roles
     {
         public const string Admin = "Admin";
         public const string Player = "Player";
@@ -15,6 +15,11 @@ namespace Shared.Models.Domain.Users
         public Roles(IEnumerable<string> roles)
         {
             Values.AddRange(roles);
+        }
+
+        public Roles(string role)
+        {
+            Values.Add(role);
         }
 
         public Roles()
@@ -29,16 +34,6 @@ namespace Shared.Models.Domain.Users
         public bool Has(string roleId)
         {
             return Values.Contains(roleId);
-        }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            return Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable) Values).GetEnumerator();
         }
     }
 }

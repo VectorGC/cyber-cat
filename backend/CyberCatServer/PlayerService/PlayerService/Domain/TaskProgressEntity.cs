@@ -5,6 +5,7 @@ namespace PlayerService.Domain;
 
 public class TaskProgressEntity
 {
+    public string TaskId { get; set; }
     public TaskProgressStatusType StatusType { get; set; }
     [BsonIgnoreIfDefault] public string Solution { get; set; }
 
@@ -12,6 +13,7 @@ public class TaskProgressEntity
     {
         return new TaskProgress()
         {
+            TaskId = TaskId,
             StatusType = StatusType,
             Solution = Solution
         };

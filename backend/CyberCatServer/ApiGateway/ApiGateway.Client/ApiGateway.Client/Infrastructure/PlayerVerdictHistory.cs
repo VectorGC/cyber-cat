@@ -9,7 +9,8 @@ namespace ApiGateway.Client.Infrastructure
 {
     public class PlayerVerdictHistory : IPlayerVerdictHistory
     {
-        private readonly SortedList<DateTime, Verdict> _history = new SortedList<DateTime, Verdict>();
+        // Sorted by descending.
+        private readonly SortedList<DateTime, Verdict> _history = new SortedList<DateTime, Verdict>(Comparer<DateTime>.Create((x, y) => x.CompareTo(y) * -1));
 
         public void Add(Verdict verdict, DateTime dateTime)
         {

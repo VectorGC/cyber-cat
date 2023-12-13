@@ -36,19 +36,22 @@ namespace ApiGateway.Client.Application.CQRS.Queries
             List<TaskProgress> progresses;
             using (var client = _webClientFactory.Create(command.Token))
             {
-                progresses = await client.GetAsync<List<TaskProgress>>(WebApi.GetTasksProgress);
+                progresses = await client.GetFastJsonAsync<List<TaskProgress>>(WebApi.GetTasksProgress);
             }
 
             var descriptions = await _taskDescriptionRepository.GetAllTaskDescriptions();
             foreach (var description in descriptions.Values)
             {
                 var testCases = await _taskDescriptionRepository.GetTestCases(description.Id);
-                var taskProgress = progresses.FirstOrDefault(data => data.TaskId == description.Id) ?? new TaskProgress();
+                var taskProgress = progresses.FirstOrDefault(data => data.TaskId == description.Id) ?? new TaskProgress()
+                {
+                    TaskId = description.Id
+                };
 
                 List<UserModel> usersWhoSolvedTask;
                 using (var client = _webClientFactory.Create(command.Token))
                 {
-                    usersWhoSolvedTask = await client.GetAsync<List<UserModel>>(WebApi.GetUsersWhoSolvedTask(description.Id));
+                    usersWhoSolvedTask = await client.GetFastJsonAsync<List<UserModel>>(WebApi.GetUsersWhoSolvedTask(description.Id));
                 }
 
 

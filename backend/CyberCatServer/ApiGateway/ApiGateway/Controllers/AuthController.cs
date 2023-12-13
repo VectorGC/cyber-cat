@@ -27,10 +27,7 @@ public class AuthController : Controller
     [ProducesResponseType((int) HttpStatusCode.Conflict)]
     public async Task<ActionResult> RegisterPlayer(string email, string password, string name)
     {
-        await _authService.CreateUser(new CreateUserArgs(email, password, name, new Roles()
-        {
-            Roles.Player
-        }));
+        await _authService.CreateUser(new CreateUserArgs(email, password, name, new Roles(Roles.Player)));
 
         return Ok();
     }

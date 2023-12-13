@@ -28,6 +28,6 @@ public class SignOutWithVK : LifetimeUIBehaviourV2<AccountState>
 
     private void OnClicked()
     {
-        State?.SignOut();
+        State?.SignOut().Forget();
     }
 }

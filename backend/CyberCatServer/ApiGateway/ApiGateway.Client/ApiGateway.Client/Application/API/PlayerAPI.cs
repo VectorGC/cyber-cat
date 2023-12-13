@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApiGateway.Client.Application.CQRS;
 using ApiGateway.Client.Application.CQRS.Commands;
 using Shared.Models.Domain.Users;
@@ -21,17 +22,17 @@ namespace ApiGateway.Client.Application.API
             Tasks = tasksApi;
         }
 
-        public Result Logout()
+        public async Task<Result> Logout()
         {
             var command = new LogoutPlayer();
-            var result = _mediator.SendSafe(command).Result;
+            var result = await _mediator.SendSafe(command);
             return Result.FromObject(result);
         }
 
-        public Result Remove()
+        public async Task<Result> Remove()
         {
             var command = new RemoveCurrentPlayer();
-            var result = _mediator.SendSafe(command).Result;
+            var result = await _mediator.SendSafe(command);
             return Result.FromObject(result);
         }
     }

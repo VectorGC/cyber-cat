@@ -42,11 +42,13 @@ public class PlayerController : ControllerBase
     [HttpGet(WebApi.GetTaskProgressTemplate)]
     [ProducesResponseType(typeof(TaskProgress), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskProgress>> GetTaskProgress(string taskId)
+    public async Task<ActionResult<string>> GetTaskProgress(string taskId)
     {
         var userId = HttpContext.User.Id();
         var progresses = await _playerService.GetTasksProgress(userId);
-        return progresses.FirstOrDefault();
+        var progress = progresses.FirstOrDefault(progress => progress.TaskId == taskId);
+        var json = JSON.ToJSON(progress);
+        return  json;
     }
 
     [HttpPost(WebApi.SubmitSolutionTemplate)]

@@ -12,11 +12,9 @@ namespace ApiGateway.Controllers;
 public class VkController : Controller
 {
     private readonly IAuthService _authService;
-    private readonly IPlayerService _playerService;
 
-    public VkController(IAuthService authService, IPlayerService playerService)
+    public VkController(IAuthService authService)
     {
-        _playerService = playerService;
         _authService = authService;
     }
 
@@ -26,10 +24,7 @@ public class VkController : Controller
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
     public async Task<ActionResult> Login(string email, string userName, string vkId)
     {
-        var token = await _authService.GetAccessTokenWithVk(new GetAccessTokenWithVkArgs(email, userName, vkId, new Roles()
-        {
-            Roles.Player
-        }));
+        var token = await _authService.GetAccessTokenWithVk(new GetAccessTokenWithVkArgs(email, userName, vkId, new Roles(Roles.Player)));
 
         if (token == null)
             return Forbid();

@@ -26,6 +26,11 @@ namespace ApiGateway.Client.Domain
             SetProgress(progress, usersWhoSolvedTask);
         }
 
+        public void UpdateData(TaskModel taskModel)
+        {
+            Status = taskModel.Status;
+        }
+
         public void SetProgress(TaskProgress progress, IReadOnlyList<UserModel> usersWhoSolvedTask)
         {
             Status = new TaskProgressStatus(progress);

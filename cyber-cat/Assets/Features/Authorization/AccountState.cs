@@ -68,14 +68,14 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
         Debug.Log($"Vk Sign in: Auth success. Welcome {name}!");
     }
 
-    public void SignOut()
+    public async UniTaskVoid SignOut()
     {
         var name = User.FirstName;
 
         VKAuth.SignOut();
         if (_client.Player != null)
         {
-            var result = _client.Player.Logout();
+            var result = await _client.Player.Logout();
             if (!result.IsSuccess)
             {
                 Debug.LogError(result.Error);

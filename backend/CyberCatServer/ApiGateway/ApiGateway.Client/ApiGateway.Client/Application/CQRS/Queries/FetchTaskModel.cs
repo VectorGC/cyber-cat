@@ -37,8 +37,8 @@ namespace ApiGateway.Client.Application.CQRS.Queries
 
             using (var client = _webClientFactory.Create(command.Token))
             {
-                progress = await client.GetAsync<TaskProgress>(WebApi.GetTaskProgress(taskId));
-                usersWhoSolvedTask = await client.GetAsync<List<UserModel>>(WebApi.GetUsersWhoSolvedTask(taskId));
+                progress = await client.GetFastJsonAsync<TaskProgress>(WebApi.GetTaskProgress(taskId));
+                usersWhoSolvedTask = await client.GetFastJsonAsync<List<UserModel>>(WebApi.GetUsersWhoSolvedTask(taskId));
             }
 
             if (_playerContext.Player.Tasks.TryGetValue(taskId, out var taskModel))

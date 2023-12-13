@@ -7,10 +7,13 @@ namespace ApiGateway.Client.Tests.Player.Authorization
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public class VkOAuthTests : PlayerClientTestFixture
+    public class VkOAuthTests
     {
-        public VkOAuthTests(ServerEnvironment serverEnvironment) : base(serverEnvironment)
+        private readonly ServerEnvironment _serverEnvironment;
+
+        public VkOAuthTests(ServerEnvironment serverEnvironment)
         {
+            _serverEnvironment = serverEnvironment;
         }
 
         [Test]
@@ -20,26 +23,24 @@ namespace ApiGateway.Client.Tests.Player.Authorization
             var userName = "TestVkOauth";
             var vkId = "123456789";
 
-            using (var client = new ApiGatewayClient(ServerEnvironment))
+            using (var client = new ApiGatewayClient(_serverEnvironment))
             {
-                Assert.IsNull(client.Player);
-
                 var loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
                 Assert.IsTrue(loginResult.IsSuccess);
-                Assert.AreEqual(email,  loginResult.Value.User.Email);
+                Assert.AreEqual(email, loginResult.Value.User.Email);
                 Assert.AreEqual(userName, loginResult.Value.User.FirstName);
 
                 var doubleLoginResult = await client.LoginPlayerWithVk(email, userName, vkId);
                 Assert.IsFalse(doubleLoginResult.IsSuccess);
                 Assert.AreEqual("Сперва нужно выйти из текущей учетной записи", doubleLoginResult.Error);
 
-                var logoutResult = client.Player.Logout();
+                var logoutResult = await client.Player.Logout();
                 Assert.IsTrue(logoutResult.IsSuccess);
 
                 Assert.IsNull(client.Player);
 
                 loginResult = await client.LoginPlayerWithVk(email, userName, vkId);
-                client.Player.Remove();
+                await client.Player.Remove();
 
                 Assert.IsNull(client.Player);
             }

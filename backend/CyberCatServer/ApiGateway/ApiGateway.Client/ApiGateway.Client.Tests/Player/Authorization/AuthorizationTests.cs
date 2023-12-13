@@ -37,7 +37,7 @@ namespace ApiGateway.Client.Tests.Player.Authorization
                 Assert.AreEqual(Email, client.Player.User.Email);
                 Assert.AreEqual(UserName, client.Player.User.FirstName);
 
-                var removeResult = client.Player.Remove();
+                var removeResult = await client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -69,7 +69,7 @@ namespace ApiGateway.Client.Tests.Player.Authorization
                 Assert.IsFalse(doubleLoginResult.IsSuccess);
                 Assert.AreEqual("Сперва нужно выйти из текущей учетной записи", doubleLoginResult.Error);
 
-                var removeResult = client.Player.Remove();
+                var removeResult = await client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -82,14 +82,14 @@ namespace ApiGateway.Client.Tests.Player.Authorization
                 await client.RegisterPlayer(Email, Password, UserName);
                 await client.LoginPlayer(Email, Password);
 
-                var logoutResult = client.Player.Logout();
+                var logoutResult = await client.Player.Logout();
                 Assert.IsTrue(logoutResult.IsSuccess);
 
                 Assert.IsNull(client.Player);
 
                 await client.LoginPlayer(Email, Password);
 
-                var removeResult = client.Player.Remove();
+                var removeResult = await client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }
@@ -104,7 +104,7 @@ namespace ApiGateway.Client.Tests.Player.Authorization
                 await client.RegisterPlayer(Email, Password, UserName);
                 await client.LoginPlayer(Email, Password);
 
-                var removeResult = client.Player.Remove();
+                var removeResult = await client.Player.Remove();
                 Assert.IsTrue(removeResult.IsSuccess);
             }
         }

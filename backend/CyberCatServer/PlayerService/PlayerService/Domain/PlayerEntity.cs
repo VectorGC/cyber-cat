@@ -26,9 +26,13 @@ public class PlayerEntity : IDocument<long>
     public void SetTaskStatusByVerdict(TaskId taskId, Verdict verdict, string solution)
     {
         if (!Tasks.ContainsKey(taskId))
-            Tasks[taskId] = new TaskProgressEntity();
+            Tasks[taskId] = new TaskProgressEntity()
+            {
+                TaskId = taskId
+            };
 
         Tasks[taskId].StatusType = verdict.IsSuccess ? TaskProgressStatusType.Complete : TaskProgressStatusType.HaveSolution;
         Tasks[taskId].Solution = solution;
+        Tasks[taskId].ToDomain();
     }
 }
