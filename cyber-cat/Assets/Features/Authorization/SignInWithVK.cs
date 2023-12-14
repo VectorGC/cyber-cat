@@ -9,17 +9,17 @@ public class SignInWithVK : LifetimeUIBehaviourV2<AccountState>
 
     protected override void OnInit()
     {
-        _button.Widget().Clicked += OnClicked;
+        _button.W().Clicked += OnClicked;
     }
 
     protected override void OnDispose()
     {
-        _button.Widget().Clicked -= OnClicked;
+        _button.W().Clicked -= OnClicked;
     }
 
     protected override void OnUpdate()
     {
-        var button = _button.Widget();
+        var button = _button.W();
         if (State == null)
             return;
 

@@ -10,7 +10,7 @@ public class AccountAccessStatusWidget : LifetimeUIBehaviourV2<AccountState>
 
     protected override void OnUpdate()
     {
-        var textWidget = _greetings.ToTextWidget();
+        var textWidget = _greetings.W();
         if (State == null)
         {
             textWidget.Text = "Получаем доступ...";

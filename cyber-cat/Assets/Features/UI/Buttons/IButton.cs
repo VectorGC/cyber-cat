@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public interface IButton
@@ -44,10 +45,30 @@ public readonly struct ButtonWidget
     }
 }
 
-public static class ButtonWidgetExtensions
+public readonly struct TextWidget
 {
-    public static ButtonWidget Widget(this Button button)
+    private readonly Text _text;
+
+    public TextWidget(Text text)
     {
-        return new ButtonWidget(button);
+        _text = text;
     }
+
+    public string Text
+    {
+        get => _text.text;
+        set => _text.text = value;
+    }
+
+    public Color Color
+    {
+        get => _text.color;
+        set => _text.color = value;
+    }
+}
+
+public static class WidgetExtensions
+{
+    public static ButtonWidget W(this Button button) => new ButtonWidget(button);
+    public static TextWidget W(this Text text) => new TextWidget(text);
 }

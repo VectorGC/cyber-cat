@@ -28,6 +28,8 @@ namespace ApiGateway.Client.Application.CQRS.Commands
 
         public async Task Handle(LoginPlayer command)
         {
+            if( string. command.Email)
+            
             var form = new Dictionary<string, string>
             {
                 ["username"] = command.Email,

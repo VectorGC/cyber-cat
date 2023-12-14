@@ -32,6 +32,8 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
 
     public void SignIn()
     {
+        return;
+
         if (IsSignedIn)
             return;
 
