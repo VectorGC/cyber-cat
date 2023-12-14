@@ -101,7 +101,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.AddListener(GetSavedCode);
         _resetCode.onClick.AddListener(ResetCode);
-        _exit.Clicked += ExitEditor;
+        _exit.Click += ExitEditor;
     }
 
     protected override void OnDisposeView()
@@ -109,7 +109,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.RemoveListener(GetSavedCode);
         _resetCode.onClick.RemoveListener(ResetCode);
-        _exit.Clicked -= ExitEditor;
+        _exit.Click -= ExitEditor;
     }
 
     protected override void OnInitState(CodeEditorState state)

@@ -8,10 +8,18 @@ using UnityEngine.UI;
 public class SimpleButton : UIBehaviour, IButton
 {
     [SerializeField] private Button _button;
+    [SerializeField] private Text _label;
     [SerializeField] private Image _highlight;
     [SerializeField] [Range(0, 5)] private int _highlightSpeed = 2;
 
-    public event Action Clicked;
+    public event Action Click;
+
+    public string Label
+    {
+        get => _label.text;
+        set => _label.text = value;
+    }
+
     private Coroutine _highlightCoroutine;
 
     protected override void Start()
@@ -28,7 +36,7 @@ public class SimpleButton : UIBehaviour, IButton
 
     private void OnClick()
     {
-        Clicked?.Invoke();
+        Click?.Invoke();
     }
 
 
@@ -83,5 +91,10 @@ public class SimpleButton : UIBehaviour, IButton
 
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    public void UnsubscribeAll()
+    {
+        Click = null;
     }
 }
