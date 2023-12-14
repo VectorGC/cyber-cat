@@ -13,13 +13,28 @@ namespace ApiGateway.Client.Application.CQRS
         NotAvailableTaskForAnonymous,
         EmailEmpty,
         PasswordEmpty,
-        UserNameEmpty
+        UserNameEmpty,
+        TaskIdEmpty,
+        SolutionEmpty,
     }
 
     public class ErrorCodeException : Exception
     {
         public ErrorCode Code { get; }
 
+
+        public ErrorCodeException(ErrorCode code) : this(code, code.Message())
+        {
+        }
+
+        public ErrorCodeException(ErrorCode code, string message) : base(message)
+        {
+            Code = code;
+        }
+    }
+
+    public static class ErrorCodeExtensions
+    {
         private static readonly Dictionary<ErrorCode, string> _messages = new Dictionary<ErrorCode, string>()
         {
             [ErrorCode.None] = string.Empty,
@@ -30,15 +45,9 @@ namespace ApiGateway.Client.Application.CQRS
             [ErrorCode.EmailEmpty] = "Email не может быть пустым",
             [ErrorCode.PasswordEmpty] = "Пароль не может быть пустым",
             [ErrorCode.UserNameEmpty] = "Имя пользователя не может быть пустым",
+            [ErrorCode.SolutionEmpty] = "Код решения не может быть пустым",
         };
 
-        public ErrorCodeException(ErrorCode code) : this(code, _messages[code])
-        {
-        }
-
-        public ErrorCodeException(ErrorCode code, string message) : base(message)
-        {
-            Code = code;
-        }
+        public static string Message(this ErrorCode errorCode) => _messages[errorCode];
     }
 }

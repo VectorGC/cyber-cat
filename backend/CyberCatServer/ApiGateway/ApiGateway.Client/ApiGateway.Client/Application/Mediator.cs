@@ -127,7 +127,7 @@ namespace ApiGateway.Client.Application
     public interface IMiddlewareNode
     {
         void SetNext(IMiddlewareNode next);
-        Task<object> Invoke(Context context);
+        Task<object> InvokeAsync(Context context);
     }
 
     public class MiddlewareNode : IMiddlewareNode
@@ -145,7 +145,7 @@ namespace ApiGateway.Client.Application
             _next = next;
         }
 
-        public async Task<object> Invoke(Context context)
+        public async Task<object> InvokeAsync(Context context)
         {
             return await _middleware.InvokeAsync(context, _next);
         }
@@ -181,7 +181,7 @@ namespace ApiGateway.Client.Application
 
         public async Task<object> Execute(Context context)
         {
-            var result = await _middlewares.First.Value.Invoke(context);
+            var result = await _middlewares.First.Value.InvokeAsync(context);
             return result;
         }
     }

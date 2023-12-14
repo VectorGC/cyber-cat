@@ -10,10 +10,6 @@ namespace Shared.Models.Domain.Tasks
 
         public TaskId(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                var t = 10;
-            }
             Value = id;
         }
 

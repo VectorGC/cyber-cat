@@ -20,7 +20,7 @@ namespace ApiGateway.Client.Application.Middlewares
                     throw new ErrorCodeException(ErrorCode.NotLoggined);
             }
 
-            return await next.Invoke(context);
+            return await next.InvokeAsync(context);
         }
     }
 }

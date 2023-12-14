@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace ApiGateway.Client.Tests.Infrastructure
 {
+    [TestFixture]
     public class DummyTests
     {
         [Test]

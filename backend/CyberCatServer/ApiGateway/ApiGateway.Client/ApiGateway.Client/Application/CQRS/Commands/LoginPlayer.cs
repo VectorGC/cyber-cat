@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
+using FluentValidation;
 using Shared.Models.Infrastructure;
 using Shared.Models.Infrastructure.Authorization;
 
@@ -11,6 +12,15 @@ namespace ApiGateway.Client.Application.CQRS.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
+    }
+
+    public class LoginPlayerValidator : AbstractValidator<LoginPlayer>
+    {
+        public LoginPlayerValidator()
+        {
+            RuleFor(x => x.Email).NotEmpty().WithErrorCode(ErrorCode.EmailEmpty.ToString());
+            RuleFor(x => x.Password).NotEmpty().WithErrorCode(ErrorCode.PasswordEmpty.ToString());
+        }
     }
 
     public class LoginPlayerHandler : ICommandHandler<LoginPlayer>
@@ -28,8 +38,6 @@ namespace ApiGateway.Client.Application.CQRS.Commands
 
         public async Task Handle(LoginPlayer command)
         {
-            if( string. command.Email)
-            
             var form = new Dictionary<string, string>
             {
                 ["username"] = command.Email,

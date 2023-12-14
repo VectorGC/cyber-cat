@@ -41,7 +41,7 @@ namespace ApiGateway.Client.Tests.Infrastructure
         {
             public async Task<object> InvokeAsync(Context context, IMiddlewareNode next)
             {
-                var response = await next.Invoke(context);
+                var response = await next.InvokeAsync(context);
                 if (response is string str)
                 {
                     str += "_middleware";
@@ -61,7 +61,7 @@ namespace ApiGateway.Client.Tests.Infrastructure
                     printCommand.Message += "_middleware";
                 }
 
-                var response = await next.Invoke(context);
+                var response = await next.InvokeAsync(context);
                 return response;
             }
         }

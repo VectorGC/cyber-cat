@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Infrastructure.WebClient;
+using FluentValidation;
 using Shared.Models.Infrastructure;
 
 namespace ApiGateway.Client.Application.CQRS.Commands
@@ -10,6 +11,16 @@ namespace ApiGateway.Client.Application.CQRS.Commands
         public string Email { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+    }
+
+    public class RegisterPlayerValidator : AbstractValidator<RegisterPlayer>
+    {
+        public RegisterPlayerValidator()
+        {
+            RuleFor(x => x.Email).NotEmpty().WithErrorCode(ErrorCode.EmailEmpty.ToString());
+            RuleFor(x => x.Password).NotEmpty().WithErrorCode(ErrorCode.PasswordEmpty.ToString());
+            RuleFor(x => x.UserName).NotEmpty().WithErrorCode(ErrorCode.UserNameEmpty.ToString());
+        }
     }
 
     public class RegisterPlayerHandler : ICommandHandler<RegisterPlayer>

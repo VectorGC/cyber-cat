@@ -10,7 +10,7 @@ namespace ApiGateway.Client.Application.Middlewares
         {
             try
             {
-                return await next.Invoke(context);
+                return await next.InvokeAsync(context);
             }
             catch (WebException e)
             {

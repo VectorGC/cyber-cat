@@ -9,6 +9,7 @@ using ApiGateway.Client.Application.Services;
 using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
+using FluentValidation;
 using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Application
@@ -37,12 +38,12 @@ namespace ApiGateway.Client.Application
             _container.Register<PlayerContext>().AsSingleton();
 
             _container.Register<Mediator>().AsSingleton();
-            _container.RegisterCommand<RegisterPlayer, RegisterPlayerHandler>();
-            _container.RegisterCommand<LoginPlayer, LoginPlayerHandler>();
+            _container.RegisterCommand<RegisterPlayer, RegisterPlayerHandler, RegisterPlayerValidator>();
+            _container.RegisterCommand<LoginPlayer, LoginPlayerHandler, LoginPlayerValidator>();
             _container.RegisterCommand<LoginPlayerWithVk, LoginPlayerWithVkHandler>();
             _container.RegisterCommand<RemoveCurrentPlayer, RemoveCurrentPlayerHandler>();
             _container.RegisterCommand<LogoutPlayer, LogoutPlayerHandler>();
-            _container.RegisterCommand<SubmitSolution, SubmitSolutionHandler>();
+            _container.RegisterCommand<SubmitSolution, SubmitSolutionHandler, SubmitSolutionValidator>();
 
             _container.RegisterQuery<GetLastVerdict, GetLastVerdictHandler, Verdict>();
             _container.RegisterQuery<FetchTaskModel, FetchTaskModelHandler, TaskModel>();
@@ -51,6 +52,7 @@ namespace ApiGateway.Client.Application
             _container.UseMiddleware<CatchExceptionMiddleware>();
             _container.UseMiddleware<AnonymousGuardMiddleware>();
             _container.UseMiddleware<AuthorizedGuardMiddleware>();
+            _container.UseMiddleware<FluentValidatorMiddleware>();
 
             // --- Infrastructure ---
             _container.Register(new WebClientFactory(serverEnvironment));
