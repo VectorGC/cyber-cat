@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 5531870042339334244}
+  _label: {fileID: 2460960034775803997}
   _highlight: {fileID: 1959700774486611735}
   _highlightSpeed: 3
 --- !u!114 &5531870042339334244

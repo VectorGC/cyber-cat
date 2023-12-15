@@ -2,10 +2,10 @@ using UniMob;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SignInWithVK : LifetimeUIBehaviourV2<AccountState>
+public class SignInWithVK : LifetimeUIBehaviourV2<VkAuthService>
 {
     [SerializeField] private Button _button;
-    [Atom] protected override AccountState State { get; set; }
+    [Atom] protected override VkAuthService State { get; set; }
 
     protected override void OnInit()
     {

@@ -7,7 +7,7 @@ using UniMob;
 using UnityEngine;
 using Zenject;
 
-public class AccountState : ILifetimeScope, IInitializable, IDisposable
+public class VkAuthService : ILifetimeScope, IInitializable, IDisposable
 {
     [Atom] public UserModel User { get; set; }
 
@@ -17,7 +17,7 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
 
     public bool IsSignedIn => User != null;
 
-    public AccountState(ApiGatewayClient client)
+    public VkAuthService(ApiGatewayClient client)
     {
         _client = client;
         User = client.Player?.User;
@@ -32,6 +32,7 @@ public class AccountState : ILifetimeScope, IInitializable, IDisposable
 
     public void SignIn()
     {
+        // Disable VK sign in.
         return;
 
         if (IsSignedIn)

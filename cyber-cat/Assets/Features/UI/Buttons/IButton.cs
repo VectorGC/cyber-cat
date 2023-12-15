@@ -4,17 +4,17 @@ using UnityEngine.UI;
 
 public interface IButton
 {
-    event Action Click;
+    event Action OnClick;
     void SetActiveHighlight(bool isHighlight);
 }
 
 [Serializable]
 public class IButtonInterface : SerializableInterface<IButton>, IButton
 {
-    public event Action Click
+    public event Action OnClick
     {
-        add => Value.Click += value;
-        remove => Value.Click -= value;
+        add => Value.OnClick += value;
+        remove => Value.OnClick -= value;
     }
 
     public void SetActiveHighlight(bool isHighlight)

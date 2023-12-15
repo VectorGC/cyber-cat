@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 855634361802626973}
+  _label: {fileID: 7295236050633451428}
   _highlight: {fileID: 6640757680351402222}
   _highlightSpeed: 3
 --- !u!114 &855634361802626973
@@ -282,8 +283,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u043D\u044B\u0439
-    \u043A\u043E\u0434"
+  m_Text: WWWWWWWW
 --- !u!1 &4178185937965188932
 GameObject:
   m_ObjectHideFlags: 0
