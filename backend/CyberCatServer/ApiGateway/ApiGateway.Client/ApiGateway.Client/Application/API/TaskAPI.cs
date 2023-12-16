@@ -39,7 +39,8 @@ namespace ApiGateway.Client.Application.API
             var command = new SubmitSolution()
             {
                 TaskId = _task.Id,
-                Solution = solution
+                Solution = solution,
+                Token = _playerContext.Token
             };
             var result = await _mediator.SendSafe(command);
             if (result != null)
@@ -51,23 +52,8 @@ namespace ApiGateway.Client.Application.API
             {
                 TaskId = _task.Id
             };
+
             var verdict = await _mediator.SendSafe(query);
-
-            // Fetch actual task progress data.
-            result = await _mediator.SendSafe(new FetchTaskModel()
-            {
-                TaskId = _task.Id,
-                Token = _playerContext.Token
-            });
-
-            var taskModelResult = Result<TaskModel>.FromObject(result);
-            /*
-            if (taskModelResult.IsSuccess)
-            {
-                _playerContext.Player.Tasks[taskModelResult.Value.Id].UpdateData(taskModelResult.Value);
-            }
-            */
-
             return Result<Verdict>.FromObject(verdict);
         }
     }

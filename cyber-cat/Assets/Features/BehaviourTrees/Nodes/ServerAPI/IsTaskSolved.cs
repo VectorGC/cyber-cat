@@ -10,20 +10,23 @@ public class IsTaskSolved : ConditionalAbort
 {
     [SerializeField] private TaskType _taskType;
 
-    private ApiGatewayClient _apiGatewayClient;
+    private ApiGatewayClient _client;
 
     [Inject]
-    private void Construct(ApiGatewayClient apiGatewayClient)
+    private void Construct(ApiGatewayClient client)
     {
-        _apiGatewayClient = apiGatewayClient;
+        _client = client;
     }
 
     public override bool Condition()
     {
-        if (_apiGatewayClient.Player == null)
-            return false;
+        if (_client.Player == null)
+        {
+            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(_taskType.Id());
+            return verdict?.IsSuccess ?? false;
+        }
 
-        var task = _apiGatewayClient.Player.Tasks[_taskType.Id()];
+        var task = _client.Player.Tasks[_taskType.Id()];
         return task.IsComplete;
     }
 

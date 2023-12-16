@@ -21,7 +21,10 @@ public class IsTaskActive : ConditionalAbort
     public override bool Condition()
     {
         if (_client.Player == null)
-            return false;
+        {
+            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(_taskType.Id());
+            return verdict == null || !verdict.IsSuccess;
+        }
 
         var task = _client.Player.Tasks[_taskType.Id()];
         return !task.IsComplete;

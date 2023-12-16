@@ -14,7 +14,7 @@ namespace Shared.Models.Domain.Verdicts.TestCases
         public TestCaseVerdict this[TestCaseId id] => Values[id];
         public TestCaseVerdict this[TaskId taskId, int index] => this[new TestCaseId(taskId, index)];
         public int PassedCount => Values.Values.Count(verdict => verdict is SuccessTestCaseVerdict);
-        public bool IsSuccess => Values.Count > 0 && Values.Values.All(verdict => verdict is SuccessTestCaseVerdict);
+        public bool IsSuccess => Values.Values.All(verdict => verdict is SuccessTestCaseVerdict);
 
         public void AddSuccess(TestCaseDescription testCase, string output)
         {

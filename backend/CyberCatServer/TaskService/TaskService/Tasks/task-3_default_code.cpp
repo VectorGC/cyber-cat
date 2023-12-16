@@ -1,11 +1,16 @@
-#include <iostream>
-#include <stdio.h>
+#include <iostream> 
+using namespace std; 
 
 int main()
 {
-    int a, b, c;
-    scanf("%d", &a);
-    scanf("%d", &b);
-    scanf("%d", &c);
-    printf("Пароль: %d", 0000);
+    int size = 6; 
+    int numbers[size];
+    
+    for (int i = 0; i < size; i++) { 
+        cin >> numbers[i]; 
+    }
+
+    for (int i = 0; i < size; i++) { 
+        cout << numbers[i]; 
+    } 
 }

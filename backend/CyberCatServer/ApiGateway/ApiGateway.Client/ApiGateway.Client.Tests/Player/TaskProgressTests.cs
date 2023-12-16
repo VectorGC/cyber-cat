@@ -73,7 +73,7 @@ namespace ApiGateway.Client.Tests.Player
         }
 
         [Test]
-        public async Task CompleteTaskStatus_WhenPassCompleteSolutionOnStart()
+        public async Task CompleteTaskStatus_WhenPassCompleteSolution()
         {
             var taskId = "tutorial";
             var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
@@ -111,6 +111,44 @@ namespace ApiGateway.Client.Tests.Player
 
                 var user = users.First();
                 Assert.AreEqual(client.Client.Player.User.FirstName, user.FirstName);
+            }
+        }
+
+        [Test]
+        public async Task FetchVerdictHistory_ForPlayer_OnLogin()
+        {
+            var taskId = "tutorial";
+            var completeCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
+            var email = "test@test.com";
+            var password = "test_password";
+            var userName = "Test_Name";
+
+            using (var client = await TestPlayerClient.Create(_serverEnvironment, email, password, userName))
+            {
+                var task = client.Client.Player.Tasks[taskId];
+
+                Assert.IsFalse(task.IsStarted);
+
+                var result = await task.SubmitSolution(completeCode);
+                Assert.IsTrue(result.Value.IsSuccess);
+                Assert.IsTrue(task.IsStarted);
+                Assert.IsTrue(task.IsComplete);
+                Assert.AreEqual(completeCode, task.LastSolution);
+
+                await client.Client.Player.Logout();
+                var verdict = client.Client.VerdictHistory.GetLastVerdict(taskId);
+                Assert.IsNull(verdict);
+
+                // TODO: Fetch verdicts on login
+                /*
+                await client.Client.LoginPlayer(email, password);
+                var verdictAfterLogin = client.Client.VerdictHistory.GetLastVerdict(taskId);
+                Assert.IsNotNull(verdictAfterLogin);
+                Assert.AreEqual(verdict.TaskId, verdictAfterLogin.TaskId);
+                Assert.AreEqual(verdict.Solution, verdictAfterLogin.Solution);
+                Assert.AreEqual(verdict.IsFailure, verdictAfterLogin.IsFailure);
+                Assert.AreEqual(verdict.IsSuccess, verdictAfterLogin.IsSuccess);
+                */
             }
         }
     }

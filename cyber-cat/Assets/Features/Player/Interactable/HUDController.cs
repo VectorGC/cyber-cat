@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 public interface IHud
 {
@@ -10,6 +13,7 @@ public interface IHud
 public class HUDController : UIBehaviour, IHud
 {
     [SerializeField] private Text _hintText;
+    [SerializeField] private List<Image> _inventoryItems;
 
     public string HintText
     {
@@ -23,6 +27,23 @@ public class HUDController : UIBehaviour, IHud
 
     private string _hintTextOnDelay;
     private float _delay;
+    private PlayerInventory _playerInventory;
+
+    [Inject]
+    public void Construct(PlayerInventory playerInventory)
+    {
+        _playerInventory = playerInventory;
+    }
+
+    private void Update()
+    {
+        for (var i = 0; i < _inventoryItems.Count; i++)
+        {
+            var color = _inventoryItems[i].color;
+            color.a = _playerInventory.Has((InventoryItem) i) ? 1 : 0;
+            _inventoryItems[i].color = color;
+        }
+    }
 
     private void LateUpdate()
     {

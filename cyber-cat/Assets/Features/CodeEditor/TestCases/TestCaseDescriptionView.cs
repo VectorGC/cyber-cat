@@ -84,6 +84,7 @@ public class TestCaseDescriptionView : LifetimeUIBehaviour<CodeEditorState>
 
         sb.AppendLine("Возникла ошибка во время выполнения:");
         sb.AppendLine($"`{nativeFailure.Error}`");
+        sb.AppendLine("Попробуйте ещё раз.");
 
         return sb.ToString();
     }

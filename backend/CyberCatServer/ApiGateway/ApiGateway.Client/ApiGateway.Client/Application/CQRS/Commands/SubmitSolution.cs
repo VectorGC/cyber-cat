@@ -1,19 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiGateway.Client.Application.CQRS.Queries;
 using ApiGateway.Client.Application.Services;
 using ApiGateway.Client.Infrastructure.WebClient;
 using FluentValidation;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
 using Shared.Models.Infrastructure;
+using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Application.CQRS.Commands
 {
-    public class SubmitSolution : ICommand, IAuthorizedOnly
+    public class SubmitSolution : ICommand
     {
         public TaskId TaskId { get; set; }
         public string Solution { get; set; }
+        public AuthorizationToken Token { get; set; }
     }
 
     public class SubmitSolutionValidator : AbstractValidator<SubmitSolution>
@@ -27,27 +30,45 @@ namespace ApiGateway.Client.Application.CQRS.Commands
 
     public class SubmitSolutionHandler : ICommandHandler<SubmitSolution>
     {
-        private readonly IPlayerVerdictHistory _playerVerdictHistory;
+        private readonly IVerdictHistory _verdictHistory;
         private readonly WebClientFactory _webClientFactory;
-        private readonly PlayerContext _playerContext;
+        private readonly IJudgeService _judgeService;
+        private readonly Mediator _mediator;
 
-        public SubmitSolutionHandler(IPlayerVerdictHistory playerVerdictHistory, WebClientFactory webClientFactory, PlayerContext playerContext)
+        public SubmitSolutionHandler(IVerdictHistory verdictHistory, WebClientFactory webClientFactory, IJudgeService judgeService, Mediator mediator)
         {
-            _playerContext = playerContext;
+            _mediator = mediator;
+            _judgeService = judgeService;
             _webClientFactory = webClientFactory;
-            _playerVerdictHistory = playerVerdictHistory;
+            _verdictHistory = verdictHistory;
         }
 
         public async Task Handle(SubmitSolution command)
         {
-            using (var client = _webClientFactory.Create(_playerContext.Token))
+            if (command.Token == null)
             {
-                var verdict = await client.PostFastJsonAsync<Verdict>(WebApi.SubmitSolution(command.TaskId), new Dictionary<string, string>()
+                // Anonymous check.
+                var verdict = await _judgeService.GetVerdict(command.TaskId, command.Solution);
+                _verdictHistory.Add(verdict, DateTime.Now);
+            }
+            else
+            {
+                using (var client = _webClientFactory.Create(command.Token))
                 {
-                    ["solution"] = command.Solution
-                });
+                    var verdict = await client.PostFastJsonAsync<Verdict>(WebApi.SubmitSolution(command.TaskId), new Dictionary<string, string>()
+                    {
+                        ["solution"] = command.Solution
+                    });
 
-                _playerVerdictHistory.Add(verdict, DateTime.Now);
+                    _verdictHistory.Add(verdict, DateTime.Now);
+                }
+
+                // Fetch actual task progress data.
+                await _mediator.SendSafe(new FetchTaskModel()
+                {
+                    TaskId = command.TaskId,
+                    Token = command.Token
+                });
             }
         }
     }

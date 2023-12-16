@@ -56,8 +56,8 @@ namespace ApiGateway.Client.Infrastructure
             {
                 Token = token
             };
-            var tasks = await _mediator.Send(query);
 
+            var tasks = await _mediator.Send(query);
             return tasks;
         }
     }

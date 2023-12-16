@@ -7,6 +7,6 @@ namespace ApiGateway.Client.Application.Services
 {
     public interface IJudgeService
     {
-        Task<Result<Verdict>> GetVerdict(TaskId taskId, string solution);
+        Task<Verdict> GetVerdict(TaskId taskId, string solution);
     }
 }

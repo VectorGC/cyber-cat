@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using ApiGateway.Client.Application;
+using ApiGateway.Client.Application.CQRS;
 using Cysharp.Threading.Tasks;
 using Models;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
 using Shared.Models.Domain.Verdicts;
 using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Debug = UnityEngine.Debug;
 
 public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 {
@@ -31,6 +36,12 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private Verdict _verdictCache;
     private ApiGatewayClient _client;
 
+    private static bool IsSuccessSubmitCheat
+    {
+        get => EditorPrefs.GetBool(nameof(IsSuccessSubmitCheat));
+        set => EditorPrefs.SetBool(nameof(IsSuccessSubmitCheat), value);
+    }
+
     [Inject]
     private async void Construct(ICodeEditor codeEditor, ApiGatewayClient client)
     {
@@ -49,13 +60,45 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
+    [MenuItem("Cheats/Always success submit")]
+    private static void SuccessSubmitCheat()
+    {
+        IsSuccessSubmitCheat = !IsSuccessSubmitCheat;
+    }
+
+    [MenuItem("Cheats/Always success submit", true)]
+    private static bool SuccessSubmitCheatValidate()
+    {
+        Menu.SetChecked("Cheats/Always success submit", IsSuccessSubmitCheat);
+        return true;
+    }
+
+    [MenuItem("Cheats/ClearPlayerPrefs")]
+    private static void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     protected override async void Start()
     {
         base.Start();
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
 
-        if (_client.Player != null)
+        if (_client.Player == null)
+        {
+            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(_codeEditor.Task.Id);
+            if (verdict != null)
+            {
+                _codeEditorView.SourceCode = verdict.Solution;
+            }
+            else
+            {
+                var description = await _client.TaskRepository.GetTaskDescription(_codeEditor.Task.Id);
+                _codeEditorView.SourceCode = description.DefaultCode;
+            }
+        }
+        else
         {
             var taskModel = _client.Player.Tasks[_codeEditor.Task.Id];
             if (!taskModel.IsStarted)
@@ -140,17 +183,44 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
+        _verdictCache = await SubmitSolution(_codeEditor.Task.Id, sourceCode);
+
+        // Force select Result section.
+        State.Section = new ResultSection(Lifetime)
+        {
+            Verdict = _verdictCache
+        };
+    }
+
+    private async UniTask<Verdict> SubmitSolution(TaskId taskId, string sourceCode)
+    {
+        if (IsSuccessSubmitCheat)
+        {
+            var verdict = new Verdict()
+            {
+                TaskId = taskId,
+                Solution = sourceCode,
+                TestCases = new TestCasesVerdict()
+                {
+                    Values = new Dictionary<string, TestCaseVerdict>()
+                }
+            };
+            _client.VerdictHistory.Add(verdict, DateTime.Now);
+            return verdict;
+        }
+
         var result = _client.Player != null
             ? await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...")
-            : await _client.JudgeService.GetVerdict(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
+            : await _client.SubmitAnonymousSolution(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
+
         if (result.IsSuccess)
         {
-            _verdictCache = result.Value;
+            return result.Value;
         }
         else
         {
             Debug.LogError(result.Error);
-            _verdictCache = new NativeFailure()
+            return new NativeFailure()
             {
                 Error = result.Error,
                 Solution = sourceCode,
@@ -158,12 +228,6 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
                 TestCases = new TestCasesVerdict()
             };
         }
-
-        // Force select Result section.
-        State.Section = new ResultSection(Lifetime)
-        {
-            Verdict = _verdictCache
-        };
     }
 
     private void GetSavedCode()

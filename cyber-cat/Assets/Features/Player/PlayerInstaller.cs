@@ -12,5 +12,6 @@ public class PlayerInstaller : MonoBehaviour
         container.BindInstance(_player).AsSingle();
         container.Bind<IHud>().FromInstance(_hud).AsSingle();
         container.Bind<PlayerInteractHandler>().AsSingle();
+        container.Bind<PlayerInventory>().AsSingle();
     }
 }

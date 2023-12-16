@@ -10,6 +10,7 @@ using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
 using FluentValidation;
+using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Application
@@ -25,7 +26,8 @@ namespace ApiGateway.Client.Application
             }
         }
 
-        public IJudgeService JudgeService => _container.Resolve<IJudgeService>();
+        public IVerdictHistory VerdictHistory => _container.Resolve<IVerdictHistory>();
+
         public ITaskDescriptionRepository TaskRepository => _container.Resolve<ITaskDescriptionRepository>();
 
         private readonly TinyIoCContainer _container;
@@ -58,7 +60,7 @@ namespace ApiGateway.Client.Application
             _container.Register(new WebClientFactory(serverEnvironment));
             _container.Register<ITaskDescriptionRepository, TaskDescriptionWebRepository>().AsSingleton();
             _container.Register<IJudgeService, JudgeWebService>().AsSingleton();
-            _container.Register<IPlayerVerdictHistory, PlayerVerdictHistory>().AsSingleton();
+            _container.Register<IVerdictHistory, VerdictHistory>().AsSingleton();
         }
 
         public void Dispose()
@@ -120,6 +122,29 @@ namespace ApiGateway.Client.Application
             }
 
             return Result<PlayerModel>.FromObject(result);
+        }
+
+        public async Task<Result<Verdict>> SubmitAnonymousSolution(TaskId taskId, string solution)
+        {
+            var mediator = _container.Resolve<Mediator>();
+            var command = new SubmitSolution()
+            {
+                TaskId = taskId,
+                Solution = solution,
+            };
+            var result = await mediator.SendSafe(command);
+            if (result != null)
+            {
+                return Result<Verdict>.FromObject(result);
+            }
+
+            var query = new GetLastVerdict()
+            {
+                TaskId = taskId
+            };
+
+            var verdict = await mediator.SendSafe(query);
+            return Result<Verdict>.FromObject(verdict);
         }
     }
 }

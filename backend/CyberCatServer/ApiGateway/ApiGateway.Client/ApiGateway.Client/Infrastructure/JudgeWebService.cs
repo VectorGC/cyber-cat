@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
-using ApiGateway.Client.Application.CQRS;
 using ApiGateway.Client.Application.Services;
 using ApiGateway.Client.Infrastructure.WebClient;
 using Shared.Models.Domain.Tasks;
@@ -19,24 +17,17 @@ namespace ApiGateway.Client.Infrastructure
             _webClientFactory = webClientFactory;
         }
 
-        public async Task<Result<Verdict>> GetVerdict(TaskId taskId, string solution)
+        public async Task<Verdict> GetVerdict(TaskId taskId, string solution)
         {
-            try
+            using (var webClient = _webClientFactory.Create())
             {
-                using (var webClient = _webClientFactory.Create())
+                var verdict = await webClient.PostFastJsonAsync<Verdict>(WebApi.JudgeGetVerdict, new Dictionary<string, string>()
                 {
-                    var verdict = await webClient.PostFastJsonAsync<Verdict>(WebApi.JudgeGetVerdict, new Dictionary<string, string>()
-                    {
-                        ["taskId"] = taskId.Value,
-                        ["solution"] = solution
-                    });
+                    ["taskId"] = taskId.Value,
+                    ["solution"] = solution
+                });
 
-                    return verdict;
-                }
-            }
-            catch (WebException webException) when (webException.Response is HttpWebResponse httpWebResponse)
-            {
-                throw;
+                return verdict;
             }
         }
     }

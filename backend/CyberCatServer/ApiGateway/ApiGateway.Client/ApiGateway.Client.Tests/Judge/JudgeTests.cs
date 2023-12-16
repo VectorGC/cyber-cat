@@ -19,7 +19,7 @@ namespace ApiGateway.Client.Tests.Judge
         {
             _serverEnvironment = serverEnvironment;
         }
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -31,29 +31,36 @@ namespace ApiGateway.Client.Tests.Judge
         {
             _client.Dispose();
         }
-        
+
         [Test]
         public async Task SuccessVerifyHelloCatTaskWithoutOutput_WhenPassCorrectCode()
         {
             var taskId = "tutorial";
             var sourceCode = CodeSolution.Tutorial();
 
-            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
+            var result = await _client.SubmitAnonymousSolution(taskId, sourceCode);
+            var resultVerdict = result.Value;
 
-            Assert.AreEqual(1, result.Value.TestCases.PassedCount);
+            Assert.AreEqual(1, resultVerdict.TestCases.PassedCount);
+
+            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            Assert.AreEqual(resultVerdict, verdict);
         }
-        
-         [Test]
+
+        [Test]
         public async Task FailureVerifyHelloCatTaskWithError_WhenPassNonCompileCode()
         {
             var taskId = "tutorial";
             var sourceCode = "#include <stdio.h> \nint main()";
             var expectedErrorRegex = "Exit Code 1:.*: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
-            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
+            var result = await _client.SubmitAnonymousSolution(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
+
+            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            Assert.AreEqual(result.Value, verdict);
         }
 
         [Test]
@@ -63,10 +70,13 @@ namespace ApiGateway.Client.Tests.Judge
             var sourceCode = "int main() { while(true){} }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
 
-            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
+            var result = await _client.SubmitAnonymousSolution(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
+
+            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            Assert.AreEqual(result.Value, verdict);
         }
 
         [Test]
@@ -99,7 +109,7 @@ namespace ApiGateway.Client.Tests.Judge
             // We simply output the result of the first test. So that the first test passes, while the rest fail.
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; scanf(\"%d%d\", &a, &b); printf(\"2\"); }";
 
-            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
+            var result = await _client.SubmitAnonymousSolution(taskId, sourceCode);
             var verdict = result.Value;
 
             Assert.IsTrue(verdict.IsFailure);
@@ -122,7 +132,7 @@ namespace ApiGateway.Client.Tests.Judge
             const string sourceCode = "#include <stdio.h>\nint main() { int a; int b; int c; scanf(\"%d%d\", &a, &b); scanf(\"%d\", &c); }";
             var expectedErrorRegex = "Exit Code .*: The process took more than 3 seconds";
 
-            var result = await _client.JudgeService.GetVerdict(taskId, sourceCode);
+            var result = await _client.SubmitAnonymousSolution(taskId, sourceCode);
 
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
