@@ -15,7 +15,7 @@ MonoBehaviour:
   preOrderIndex: 7
   title: 
   comment: 
-  bonsaiNodePosition: {x: -612.5, y: 400.5}
+  bonsaiNodePosition: {x: -684.5, y: 400.5}
   _header: "\u041A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"
   _body: "\u041D\u0430\u0439\u0434\u0435\u043D \u0443\u044F\u0437\u0432\u0438\u043C\u044B\u0439
     \u0443\u0437\u0435\u043B \u0441 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D\u043D\u044B\u043C
@@ -36,7 +36,7 @@ MonoBehaviour:
   preOrderIndex: 5
   title: 
   comment: 
-  bonsaiNodePosition: {x: -983, y: 400.5}
+  bonsaiNodePosition: {x: -1055, y: 400.5}
   _header: "\u041A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"
   _body: "\u0417\u0434\u0435\u0441\u044C \u0432\u044B\u0441\u043E\u043A\u0430\u044F
     \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0441\u0435\u0442\u0438. \u0422\u0443\u0442
@@ -58,7 +58,7 @@ MonoBehaviour:
   preOrderIndex: 2
   title: 
   comment: 
-  bonsaiNodePosition: {x: -1213, y: 232.5}
+  bonsaiNodePosition: {x: -1285, y: 232.5}
   _header: "\u041A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"
   _body: "\u041A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440 \u0441 \u0432\u044B\u0441\u043E\u043A\u043E\u0441\u043A\u043E\u0440\u043E\u0441\u0442\u043D\u044B\u043C
     \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435\u043C"
@@ -78,7 +78,7 @@ MonoBehaviour:
   preOrderIndex: 16
   title: 
   comment: 
-  bonsaiNodePosition: {x: 1064.5, y: 405}
+  bonsaiNodePosition: {x: 1004.5, y: 405}
   _header: README.txt
   _body: "\u041C\u044B - \u041A\u0438\u0431\u0435\u0440 \u0445\u0430\u043E\u0441.\n\u041D\u0430\u0448\u0430
     \u0446\u0435\u043B\u044C - \u0434\u043E\u043A\u0430\u0437\u0430\u0442\u044C,
@@ -105,7 +105,7 @@ MonoBehaviour:
   preOrderIndex: 15
   title: 
   comment: 
-  bonsaiNodePosition: {x: 822, y: 405}
+  bonsaiNodePosition: {x: 750, y: 405}
   _header: "\u0423\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0439 \u043A\u043E\u043C\u044C\u044E\u0442\u0435\u0440"
   _body: "\u0412\u044B \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u044B.\n\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435:
     \u041A\u0438\u0431\u0435\u0440 \u043A\u043E\u0442"
@@ -125,12 +125,13 @@ MonoBehaviour:
   preOrderIndex: 13
   title: 
   comment: 
-  bonsaiNodePosition: {x: 1039.5, y: 250.5}
+  bonsaiNodePosition: {x: 1111.5, y: 250.5}
   children:
   - {fileID: 3126327822402236091}
   - {fileID: -5970256149338686637}
   - {fileID: -6189326322926406129}
   - {fileID: 5362158045924037847}
+  - {fileID: -2828994632807134284}
 --- !u!114 &-4818271291035313049
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,7 +147,7 @@ MonoBehaviour:
   preOrderIndex: 1
   title: 
   comment: 
-  bonsaiNodePosition: {x: -1230.5, y: 99}
+  bonsaiNodePosition: {x: -1302.5, y: 99}
   child: {fileID: -7687729378595853790}
   abortType: 0
   _item: 0
@@ -185,7 +186,7 @@ MonoBehaviour:
   preOrderIndex: 9
   title: 
   comment: 
-  bonsaiNodePosition: {x: -184, y: 400.5}
+  bonsaiNodePosition: {x: -256, y: 400.5}
   _header: "\u041E\u0442\u043A\u0430\u0437\u0430\u043D\u043E \u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0435"
   _body: "\u0423\u0434\u0430\u043B\u0435\u043D\u043D\u043E\u0435 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435
     \u043D\u0435\u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E.\n\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F
@@ -193,6 +194,29 @@ MonoBehaviour:
   _button: "\u0423 \u043A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440\u0430 \u043E\u0442\u043A\u043B\u044E\u0447\u0435\u043D
     \u0444\u0430\u0435\u0440\u0432\u043E\u043B... \u041D\u0430\u0447\u0430\u0442\u044C
     \u0441\u0435\u0442\u0435\u0432\u0443\u044E \u0430\u0442\u0430\u043A\u0443!"
+--- !u!114 &-2828994632807134284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 153d5db8ca2be5f459b838373b59d7dd, type: 3}
+  m_Name: Modal
+  m_EditorClassIdentifier: 
+  preOrderIndex: 18
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 1649.5, y: 400.5}
+  _header: "\u041A\u043E\u043D\u0435\u0446 - \u0414\u0435\u043C\u043E \u0432\u0435\u0440\u0441\u0438\u0438"
+  _body: "\u0421\u043F\u0430\u0441\u0438\u0431\u043E, \u0447\u0442\u043E \u0438\u0433\u0440\u0430\u043B\u0438
+    \u0432 \u0438\u0433\u0440\u0443.\n\u0421\u043B\u0435\u0434\u0438\u0442\u0435
+    \u0437\u0430 \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F\u043C\u0438
+    \u0438\u0433\u0440\u044B, \u043E\u0441\u0442\u0430\u0432\u043B\u044F\u0439\u0442\u0435
+    \u043A\u043E\u043C\u043C\u0435\u043D\u0442\u0430\u0440\u0438\u0438 \u0438 \u043F\u043E\u0436\u0435\u043B\u0430\u043D\u0438\u044F!\n"
+  _button: OK
 --- !u!114 &-2538673347516257512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -208,7 +232,7 @@ MonoBehaviour:
   preOrderIndex: 11
   title: 
   comment: 
-  bonsaiNodePosition: {x: 463, y: 406.5}
+  bonsaiNodePosition: {x: 391, y: 406.5}
   child: {fileID: 0}
 --- !u!114 &-445226145742672356
 MonoBehaviour:
@@ -225,7 +249,7 @@ MonoBehaviour:
   preOrderIndex: 10
   title: 
   comment: 
-  bonsaiNodePosition: {x: 232, y: 399}
+  bonsaiNodePosition: {x: 160, y: 399}
   _taskType: 4
 --- !u!114 &11400000
 MonoBehaviour:
@@ -258,10 +282,11 @@ MonoBehaviour:
   - {fileID: -5970256149338686637}
   - {fileID: -6189326322926406129}
   - {fileID: 5362158045924037847}
+  - {fileID: -2828994632807134284}
   blackboard: {fileID: 221564939261668021}
   actor: {fileID: 0}
-  panPosition: {x: 187, y: -342}
-  zoomPosition: {x: 1.6543179, y: 1.6543179}
+  panPosition: {x: -1598, y: -436}
+  zoomPosition: {x: 1.1709079, y: 1.1709079}
   unusedNodes: []
 --- !u!114 &221564939261668021
 MonoBehaviour:
@@ -292,7 +317,7 @@ MonoBehaviour:
   preOrderIndex: 3
   title: 
   comment: 
-  bonsaiNodePosition: {x: -272, y: 103.5}
+  bonsaiNodePosition: {x: -344, y: 103.5}
   child: {fileID: 8240037787847215324}
   abortType: 0
   _taskType: 4
@@ -311,7 +336,7 @@ MonoBehaviour:
   preOrderIndex: 12
   title: 
   comment: 
-  bonsaiNodePosition: {x: 1023, y: 103.5}
+  bonsaiNodePosition: {x: 1095, y: 103.5}
   child: {fileID: -5085021830801253688}
   abortType: 0
   _taskType: 4
@@ -330,7 +355,7 @@ MonoBehaviour:
   preOrderIndex: 14
   title: 
   comment: 
-  bonsaiNodePosition: {x: 612.5, y: 400.5}
+  bonsaiNodePosition: {x: 540.5, y: 400.5}
   _header: "\u0423\u0434\u0430\u043B\u0435\u043D\u043D\u044B\u0439 \u043A\u043E\u043C\u044C\u044E\u0442\u0435\u0440"
   _body: "\u0421\u0435\u0442\u0435\u0432\u0430\u044F \u0430\u0442\u0430\u043A\u0430
     \u0443\u0441\u043F\u0435\u0448\u043D\u0430...\n\u0414\u043E\u0441\u0442\u0443\u043F
@@ -352,7 +377,7 @@ MonoBehaviour:
   preOrderIndex: 8
   title: 
   comment: 
-  bonsaiNodePosition: {x: -398.5, y: 400.5}
+  bonsaiNodePosition: {x: -470.5, y: 400.5}
   _header: "\u041E\u0442\u043A\u0430\u0437\u0430\u043D\u043E \u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u0435"
   _body: "\u0417\u0430\u043F\u0440\u0435\u0449\u0435\u043D\u043E \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u043C\u0438
     \u0441\u0438\u0441\u0442\u0435\u043C\u044B, \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u044B\u0439
@@ -374,7 +399,7 @@ MonoBehaviour:
   preOrderIndex: 17
   title: 
   comment: 
-  bonsaiNodePosition: {x: 1355, y: 400.5}
+  bonsaiNodePosition: {x: 1295, y: 400.5}
   _header: README.txt
   _body: "\u0424\u0430\u0439\u043B \u0441\u043E\u0437\u0434\u0430\u043D \u0443\u0434\u0430\u043B\u0435\u043D\u043D\u043E.\nIP
     \u0430\u0434\u0440\u0435\u0441 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0430:
@@ -397,7 +422,7 @@ MonoBehaviour:
   preOrderIndex: 6
   title: 
   comment: 
-  bonsaiNodePosition: {x: -767, y: 400.5}
+  bonsaiNodePosition: {x: -839, y: 400.5}
   _header: "\u041A\u043E\u043C\u043F\u044C\u044E\u0442\u0435\u0440"
   _body: "\u0421\u043A\u0430\u043D\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435..."
   _button: ...
@@ -416,7 +441,7 @@ MonoBehaviour:
   preOrderIndex: 4
   title: 
   comment: 
-  bonsaiNodePosition: {x: -256.5, y: 250.5}
+  bonsaiNodePosition: {x: -328.5, y: 250.5}
   children:
   - {fileID: -8990663687008566033}
   - {fileID: 5404889492902241161}
