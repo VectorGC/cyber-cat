@@ -96,6 +96,39 @@ internal static class TasksModels
                     Expected = "-"
                 }
             }
+        },
+        new()
+        {
+            Id = "task-4",
+            Name = "Перегрузка сети",
+            Tests = new List<TestCaseEntity>()
+            {
+                new()
+                {
+                    Inputs = new string[] {"serlionfizzqwerty11moon"},
+                    Expected = "serlionfizzqwerty11moon"
+                },
+                new()
+                {
+                    Inputs = new string[] {"godotfizz5requiem"},
+                    Expected = "godotfizzbuzzrequiem"
+                },
+                new()
+                {
+                    Inputs = new string[] {"alsoneedubuntu4.65"},
+                    Expected = "alsoneedubuntu4.6buzz"
+                },
+                new()
+                {
+                    Inputs = new string[] {"color93butany2and1"},
+                    Expected = "colorfizzbutany2and1"
+                },
+                new()
+                {
+                    Inputs = new string[] {"brutalattack1dot0"},
+                    Expected = "brutalattack1dot0"
+                }
+            }
         }
     };
 }
