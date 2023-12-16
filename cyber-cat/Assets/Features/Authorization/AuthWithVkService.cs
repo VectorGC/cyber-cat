@@ -1,41 +1,45 @@
-using System;
 using ApiGateway.Client.Application;
 using Assets.SimpleVKSignIn.Scripts;
 using Cysharp.Threading.Tasks;
-using Shared.Models.Domain.Users;
-using UniMob;
 using UnityEngine;
 using Zenject;
 
-public class VkAuthService : ILifetimeScope, IInitializable, IDisposable
+public class AuthWithVkService : IInitializable, ITickable
 {
-    [Atom] public UserModel User { get; set; }
+    public bool IsLogginedWithVk { get; private set; }
+    public string UserName { get; private set; }
+    public bool IsWaitResponse { get; private set; }
 
-    public Lifetime Lifetime => _lifetimeController.Lifetime;
-    private readonly LifetimeController _lifetimeController = new LifetimeController();
-    private readonly ApiGatewayClient _client;
-
-    public bool IsSignedIn => User != null;
-
-    public VkAuthService(ApiGatewayClient client)
+    private bool NeedAutoLoginWithVk
     {
-        _client = client;
-        User = client.Player?.User;
+        get => PlayerPrefs.GetInt(nameof(NeedAutoLoginWithVk)) == 1;
+        set => PlayerPrefs.SetInt(nameof(NeedAutoLoginWithVk), value ? 1 : 0);
     }
 
-    public void Initialize() => SignIn();
+    private readonly ApiGatewayClient _client;
 
-    public void Dispose()
+    public AuthWithVkService(ApiGatewayClient client)
     {
-        _lifetimeController.Dispose();
+        _client = client;
+    }
+
+    public void Initialize()
+    {
+        if (NeedAutoLoginWithVk)
+            SignIn();
+    }
+
+    public void Tick()
+    {
+        if (_client.Player == null && IsLogginedWithVk)
+        {
+            SignOut();
+        }
     }
 
     public void SignIn()
     {
-        // Disable VK sign in.
-        return;
-
-        if (IsSignedIn)
+        if (IsLogginedWithVk)
             return;
 
         var savedAuth = VKAuth.SavedAuth;
@@ -56,10 +60,23 @@ public class VkAuthService : ILifetimeScope, IInitializable, IDisposable
             OnSignedIn(VKAuth.SavedAuth.TokenResponse.email, userInfo.first_name, userInfo.id).Forget();
             Debug.Log($"Vk Sign in: Welcome {userInfo.first_name}");
         });
+
+        IsWaitResponse = true;
+    }
+
+    private void SignOut()
+    {
+        VKAuth.SignOut();
+        Debug.Log($"Vk Sign out: Goodbye! See you soon '{UserName}'");
+        IsLogginedWithVk = false;
+        UserName = string.Empty;
+        NeedAutoLoginWithVk = false;
     }
 
     private async UniTaskVoid OnSignedIn(string email, string name, long vkId)
     {
+        IsWaitResponse = false;
+
         var result = await _client.LoginPlayerWithVk(email, name, vkId.ToString());
         if (!result.IsSuccess)
         {
@@ -67,26 +84,9 @@ public class VkAuthService : ILifetimeScope, IInitializable, IDisposable
             return;
         }
 
-        User = result.Value.User;
         Debug.Log($"Vk Sign in: Auth success. Welcome {name}!");
-    }
-
-    public async UniTaskVoid SignOut()
-    {
-        var name = User.FirstName;
-
-        VKAuth.SignOut();
-        if (_client.Player != null)
-        {
-            var result = await _client.Player.Logout();
-            if (!result.IsSuccess)
-            {
-                Debug.LogError(result.Error);
-                return;
-            }
-        }
-
-        User = null;
-        Debug.Log($"Vk Sign out: Goodbye! See you soon '{name}'");
+        IsLogginedWithVk = true;
+        UserName = name;
+        NeedAutoLoginWithVk = true;
     }
 }

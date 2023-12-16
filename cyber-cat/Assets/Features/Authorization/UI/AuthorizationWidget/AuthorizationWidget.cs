@@ -21,18 +21,24 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
     [SerializeField] private SimpleButton _button1;
     [SerializeField] private SimpleButton _button2;
     [SerializeField] private Button _closeButton;
+    [SerializeField] private Button _backButton;
+
+    [Header("Authorization Services")] [SerializeField]
+    private SimpleButton _authWithVk;
 
     [Atom] public IAuthorizationState State { get; set; }
 
     public Lifetime Lifetime => _lifetimeController.Lifetime;
-
     private readonly LifetimeController _lifetimeController = new LifetimeController();
+
     private ApiGatewayClient _client;
     private AuthorizationPresenter _presenter;
+    private AuthWithVkService _authWithVkService;
 
     [Inject]
-    public async void Constructor(ApiGatewayClient client, AuthorizationPresenter presenter)
+    public async void Constructor(ApiGatewayClient client, AuthorizationPresenter presenter, AuthWithVkService authWithVkService)
     {
+        _authWithVkService = authWithVkService;
         _presenter = presenter;
         _client = client;
 
@@ -52,6 +58,9 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
         _button1.OnClick += () => State.OnButtonClicked();
         _button2.OnClick += () => (State as ISecondAuthorizationButton)?.OnSecondButtonClicked();
         _closeButton.onClick.AddListener(Hide);
+        _backButton.onClick.AddListener(BackState);
+
+        _authWithVk.OnClick += _authWithVkService.SignIn;
 
         SwitchToLoginState();
 
@@ -69,6 +78,9 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
         _button1.UnsubscribeAll();
         _button2.UnsubscribeAll();
         _closeButton.onClick.RemoveListener(Hide);
+        _backButton.onClick.RemoveListener(BackState);
+
+        _authWithVk.UnsubscribeAll();
 
         _lifetimeController.Dispose();
     }
@@ -96,9 +108,32 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
         Atom.Reaction(Lifetime, OnUpdate, debugName: $"{GetType().Name}.{nameof(OnUpdate)}");
     }
 
-    public void Hide()
+    private void Hide()
     {
         _presenter.Hide().Forget();
+    }
+
+    private void Update()
+    {
+        if (_client.Player != null)
+        {
+            // Player has been authorized.
+            Hide();
+        }
+
+        _authWithVk.Text = _authWithVkService.IsWaitResponse
+            ? "Ожидаем авторизации..."
+            : "Войти через ВК";
+    }
+
+    private void BackState()
+    {
+        switch (State)
+        {
+            case RegisterAccountState registerAccountState:
+                SwitchToLoginState();
+                break;
+        }
     }
 
     private void OnUpdate()
@@ -116,11 +151,14 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
 
         _confrimPasswordInputFieldGo.SetActive(State is IConfirmedPasswordInput);
         _userNameInputFieldGo.SetActive(State is IUserNameInput);
+
+        _authWithVk.gameObject.SetActive(State is LoginState);
+        _backButton.gameObject.SetActive(State is LoginState == false);
     }
 
     public void SwitchToLoginState()
     {
-        State = new LoginState(_client, this);
+        State = new LoginState(_client, this, _emailInputField.text, _passwordInputField.text);
     }
 
     public void SwitchToRegisterState()

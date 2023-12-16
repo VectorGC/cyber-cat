@@ -18,10 +18,12 @@ public class LoginState : IAuthorizationState, ISecondAuthorizationButton
     private readonly ApiGatewayClient _client;
     private readonly AuthorizationWidget _widget;
 
-    public LoginState(ApiGatewayClient client, AuthorizationWidget widget)
+    public LoginState(ApiGatewayClient client, AuthorizationWidget widget, string email, string password)
     {
         _widget = widget;
         _client = client;
+        Email = email;
+        Password = password;
     }
 
     public void OnButtonClicked()
@@ -39,7 +41,6 @@ public class LoginState : IAuthorizationState, ISecondAuthorizationButton
         }
 
         await AuthorizationWidget.SaveDataToPlayerPrefs(Email, Password);
-        _widget.Hide();
     }
 
     public void OnSecondButtonClicked()
