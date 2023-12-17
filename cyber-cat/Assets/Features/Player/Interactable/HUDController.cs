@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using ApiGateway.Client.Application;
 using UnityEngine;
@@ -15,8 +14,9 @@ public interface IHud
 public class HUDController : UIBehaviour, IHud
 {
     [SerializeField] private Text _hintText;
-    [SerializeField] private Button _settings;
+    [SerializeField] private SettingsController _settings;
     [SerializeField] private List<Image> _inventoryItems;
+    [SerializeField] private Image _uiBack;
 
     public string HintText
     {
@@ -31,44 +31,22 @@ public class HUDController : UIBehaviour, IHud
     private string _hintTextOnDelay;
     private float _delay;
     private PlayerInventory _playerInventory;
-    private AuthorizationPresenter _authorizationPresenter;
-    private ApiGatewayClient _client;
 
     [Inject]
     public void Construct(PlayerInventory playerInventory, AuthorizationPresenter authorizationPresenter, ApiGatewayClient client)
     {
-        _client = client;
-        _authorizationPresenter = authorizationPresenter;
         _playerInventory = playerInventory;
-        _settings.onClick.AddListener(OnSettingsClick);
+        SceneManager.activeSceneChanged += OnActiveSceneChanged;
     }
 
     protected override void OnDestroy()
     {
-        _settings.onClick.RemoveListener(OnSettingsClick);
+        SceneManager.activeSceneChanged -= OnActiveSceneChanged;
     }
 
-    private void OnSettingsClick()
+    private void OnActiveSceneChanged(Scene scene1, Scene scene2)
     {
-        if (_client.Player == null)
-        {
-            SimpleModalWindow.Create()
-                .SetHeader("Настройки")
-                .SetBody("Доступ ограничен. Ваш прогресс будет утерян. Авторизуйтесь в главном меню, чтобы сохранить.")
-                .AddButton("Продолжить")
-                // .AddButton("Авторизоваться", () => _authorizationPresenter.Show().Forget())
-                .AddButton("Выйти в главное меню", () => SceneManager.LoadSceneAsync("MainMenu"))
-                .Show();
-        }
-        else
-        {
-            SimpleModalWindow.Create()
-                .SetHeader("Настройки")
-                .SetBody($"Доступ получен: {_client.Player.User.FirstName}. Ваш прогресс будет сохранен.")
-                .AddButton("Продолжить")
-                .AddButton("Выйти в главное меню", () => SceneManager.LoadSceneAsync("MainMenu"))
-                .Show();
-        }
+        _uiBack.gameObject.SetActive(scene2.name == "AuthorizationScene");
     }
 
     private void Update()

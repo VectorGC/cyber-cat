@@ -121,8 +121,13 @@ public class AuthorizationWidget : UIBehaviour, ILifetimeScope
             Hide();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Hide();
+        }
+
         _authWithVk.Text = _authWithVkService.IsWaitResponse
-            ? "Ожидаем авторизации..."
+            ? "Ожидание авторизации, подождите..."
             : "Войти через ВК";
     }
 

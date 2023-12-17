@@ -39,7 +39,10 @@ public class CodeEditor : ICodeEditor
         }
 
         Task = task;
-        await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive).ToUniTask();
+
+        await SceneManager.LoadSceneAsync("CodeEditor", LoadSceneMode.Additive);
+        var scene = SceneManager.GetSceneByName("CodeEditor");
+        SceneManager.SetActiveScene(scene);
     }
 
     public void Close() => CloseAsync().Forget();
