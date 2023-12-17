@@ -20,6 +20,7 @@ public interface IPlayerService
     Task<Verdict> SubmitSolution(SubmitSolutionArgs args);
     Task RemovePlayer(RemovePlayerArgs args);
     Task<List<UserId>> GetUsersWhoSolvedTask(TaskId taskId);
+    Task SaveVerdictHistory(SaveVerdictHistoryArgs args);
 }
 
 [ProtoContract(SkipConstructor = true)]
@@ -31,6 +32,11 @@ public record SubmitSolutionArgs(
 [ProtoContract(SkipConstructor = true)]
 public record RemovePlayerArgs(
     [property: ProtoMember(1)] UserId UserId);
+
+[ProtoContract(SkipConstructor = true)]
+public record SaveVerdictHistoryArgs(
+    [property: ProtoMember(1)] UserId UserId,
+    [property: ProtoMember(2)] List<Verdict> Verdicts);
 
 public static partial class ServiceExtensions
 {

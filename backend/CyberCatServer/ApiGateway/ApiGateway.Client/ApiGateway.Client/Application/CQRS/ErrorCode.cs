@@ -16,6 +16,8 @@ namespace ApiGateway.Client.Application.CQRS
         UserNameEmpty,
         TaskIdEmpty,
         SolutionEmpty,
+        NullVerdictHistory,
+        VerdictHistoryNotSaved
     }
 
     public class ErrorCodeException : Exception
@@ -46,6 +48,8 @@ namespace ApiGateway.Client.Application.CQRS
             [ErrorCode.PasswordEmpty] = "Пароль не может быть пустым",
             [ErrorCode.UserNameEmpty] = "Имя пользователя не может быть пустым",
             [ErrorCode.SolutionEmpty] = "Код решения не может быть пустым",
+            [ErrorCode.NullVerdictHistory] = "При отправке вердиктов нужно указать список",
+            [ErrorCode.VerdictHistoryNotSaved] = "История вердиктов не была сохранена",
         };
 
         public static string Message(this ErrorCode errorCode) => _messages[errorCode];

@@ -30,17 +30,17 @@ namespace ApiGateway.Client.Application.CQRS.Commands
 
     public class SubmitSolutionHandler : ICommandHandler<SubmitSolution>
     {
-        private readonly IVerdictHistory _verdictHistory;
+        private readonly IVerdictHistoryService _verdictHistoryService;
         private readonly WebClientFactory _webClientFactory;
         private readonly IJudgeService _judgeService;
         private readonly Mediator _mediator;
 
-        public SubmitSolutionHandler(IVerdictHistory verdictHistory, WebClientFactory webClientFactory, IJudgeService judgeService, Mediator mediator)
+        public SubmitSolutionHandler(IVerdictHistoryService verdictHistoryService, WebClientFactory webClientFactory, IJudgeService judgeService, Mediator mediator)
         {
             _mediator = mediator;
             _judgeService = judgeService;
             _webClientFactory = webClientFactory;
-            _verdictHistory = verdictHistory;
+            _verdictHistoryService = verdictHistoryService;
         }
 
         public async Task Handle(SubmitSolution command)
@@ -49,7 +49,7 @@ namespace ApiGateway.Client.Application.CQRS.Commands
             {
                 // Anonymous check.
                 var verdict = await _judgeService.GetVerdict(command.TaskId, command.Solution);
-                _verdictHistory.Add(verdict, DateTime.Now);
+                _verdictHistoryService.Add(verdict, DateTime.Now);
             }
             else
             {
@@ -60,15 +60,8 @@ namespace ApiGateway.Client.Application.CQRS.Commands
                         ["solution"] = command.Solution
                     });
 
-                    _verdictHistory.Add(verdict, DateTime.Now);
+                    _verdictHistoryService.Add(verdict, DateTime.Now);
                 }
-
-                // Fetch actual task progress data.
-                await _mediator.SendSafe(new FetchTaskModel()
-                {
-                    TaskId = command.TaskId,
-                    Token = command.Token
-                });
             }
         }
     }

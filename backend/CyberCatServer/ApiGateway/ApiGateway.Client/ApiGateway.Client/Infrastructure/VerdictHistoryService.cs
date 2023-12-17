@@ -7,7 +7,7 @@ using Shared.Models.Domain.Verdicts;
 
 namespace ApiGateway.Client.Infrastructure
 {
-    public class VerdictHistory : IVerdictHistory
+    public class VerdictHistoryService : IVerdictHistoryService
     {
         // Sorted by descending.
         private readonly SortedList<DateTime, Verdict> _history = new SortedList<DateTime, Verdict>(Comparer<DateTime>.Create((x, y) => x.CompareTo(y) * -1));
@@ -39,6 +39,11 @@ namespace ApiGateway.Client.Infrastructure
         public void Clear()
         {
             _history.Clear();
+        }
+
+        public List<Verdict> GetAll()
+        {
+            return _history.Values.ToList();
         }
     }
 }

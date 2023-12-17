@@ -13,5 +13,7 @@ namespace ApiGateway.Client.Infrastructure.WebClient
         Task<string> PostAsync(string path);
         Task<TResponse> PostAsync<TResponse>(string path, Dictionary<string, string> form);
         Task<TResponse> PostFastJsonAsync<TResponse>(string path, Dictionary<string, string> form);
+        void AddHeader(string header, string value);
+        void RemoveHeader(string header);
     }
 }

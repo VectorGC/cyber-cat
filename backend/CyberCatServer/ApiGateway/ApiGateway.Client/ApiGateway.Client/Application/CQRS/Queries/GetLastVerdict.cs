@@ -12,16 +12,16 @@ namespace ApiGateway.Client.Application.CQRS.Queries
 
     public class GetLastVerdictHandler : IQueryHandler<GetLastVerdict, Verdict>
     {
-        private readonly IVerdictHistory _verdictHistory;
+        private readonly IVerdictHistoryService _verdictHistoryService;
 
-        public GetLastVerdictHandler(IVerdictHistory verdictHistory)
+        public GetLastVerdictHandler(IVerdictHistoryService verdictHistoryService)
         {
-            _verdictHistory = verdictHistory;
+            _verdictHistoryService = verdictHistoryService;
         }
 
         public Task<Verdict> Handle(GetLastVerdict command)
         {
-            var verdict = _verdictHistory.GetLastVerdict(command.TaskId);
+            var verdict = _verdictHistoryService.GetLastVerdict(command.TaskId);
             return Task.FromResult(verdict);
         }
     }

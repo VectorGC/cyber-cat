@@ -87,7 +87,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
         if (_client.Player == null)
         {
-            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(_codeEditor.Task.Id);
+            var verdict = _client.VerdictHistoryService.GetBestOrLastVerdict(_codeEditor.Task.Id);
             if (verdict != null)
             {
                 _codeEditorView.SourceCode = verdict.Solution;
@@ -205,7 +205,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
                     Values = new Dictionary<string, TestCaseVerdict>()
                 }
             };
-            _client.VerdictHistory.Add(verdict, DateTime.Now);
+            _client.VerdictHistoryService.Add(verdict, DateTime.Now);
             return verdict;
         }
 

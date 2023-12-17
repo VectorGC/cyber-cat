@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application;
+using ApiGateway.Client.Application.CQRS;
 using ApiGateway.Client.Application.CQRS.Queries;
 using ApiGateway.Client.Domain;
 using Shared.Models.Domain.Users;
@@ -11,9 +12,11 @@ namespace ApiGateway.Client.Infrastructure
     public class PlayerModelFactory
     {
         private readonly Mediator _mediator;
+        private readonly ApiGatewayClient _client;
 
-        public PlayerModelFactory(Mediator mediator)
+        public PlayerModelFactory(Mediator mediator, ApiGatewayClient client)
         {
+            _client = client;
             _mediator = mediator;
         }
 
@@ -22,6 +25,12 @@ namespace ApiGateway.Client.Infrastructure
             var user = GetUserByToken(token);
             if (!user.Roles.Has(Roles.Player))
                 throw new InvalidOperationException("Role player mismatch");
+
+            var saved = await _client.SaveVerdictHistory(token);
+            if (!saved.IsSuccess)
+            {
+                throw new ErrorCodeException(ErrorCode.Exception);
+            }
 
             var tasks = await CreateTaskCollection(token);
             return new PlayerModel(user, tasks);

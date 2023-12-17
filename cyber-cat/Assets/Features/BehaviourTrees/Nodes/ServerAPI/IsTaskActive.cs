@@ -22,7 +22,7 @@ public class IsTaskActive : ConditionalAbort
     {
         if (_client.Player == null)
         {
-            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(_taskType.Id());
+            var verdict = _client.VerdictHistoryService.GetBestOrLastVerdict(_taskType.Id());
             return verdict == null || !verdict.IsSuccess;
         }
 

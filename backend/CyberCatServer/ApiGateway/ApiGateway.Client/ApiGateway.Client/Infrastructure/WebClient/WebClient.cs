@@ -69,5 +69,15 @@ namespace ApiGateway.Client.Infrastructure.WebClient
         {
             return await _internalWebClient.PostAsFastJsonPolymorphicAsync<TResponse>(ServerEnvironment.ToUri(path), form);
         }
+
+        public void AddHeader(string header, string value)
+        {
+            _internalWebClient.AddHeader(header, value);
+        }
+
+        public void RemoveHeader(string header)
+        {
+            _internalWebClient.RemoveHeader(header);
+        }
     }
 }

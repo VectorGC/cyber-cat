@@ -10,18 +10,18 @@ namespace ApiGateway.Client.Application.CQRS.Commands
     public class LogoutPlayerHandler : ICommandHandler<LogoutPlayer>
     {
         private readonly PlayerContext _playerContext;
-        private readonly IVerdictHistory _verdictHistory;
+        private readonly IVerdictHistoryService _verdictHistoryService;
 
-        public LogoutPlayerHandler(PlayerContext playerContext, IVerdictHistory verdictHistory)
+        public LogoutPlayerHandler(PlayerContext playerContext, IVerdictHistoryService verdictHistoryService)
         {
-            _verdictHistory = verdictHistory;
+            _verdictHistoryService = verdictHistoryService;
             _playerContext = playerContext;
         }
 
         public Task Handle(LogoutPlayer command)
         {
             _playerContext.Clear();
-            _verdictHistory.Clear();
+            _verdictHistoryService.Clear();
             return Task.CompletedTask;
         }
     }

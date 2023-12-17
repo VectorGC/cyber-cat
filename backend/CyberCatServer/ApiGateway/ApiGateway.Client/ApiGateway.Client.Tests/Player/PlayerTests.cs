@@ -23,7 +23,9 @@ namespace ApiGateway.Client.Tests.Player
                 var task = client.Client.Player.Tasks["tutorial"];
                 Assert.IsFalse(task.IsStarted);
 
-                await client.Client.Player.Tasks[task.Id].SubmitSolution("Hello");
+                var result = await client.Client.Player.Tasks[task.Id].SubmitSolution("Hello");
+                Assert.IsTrue(result.IsSuccess);
+                Assert.IsTrue(result.Value.IsFailure);
                 Assert.IsTrue(task.IsStarted);
             }
 

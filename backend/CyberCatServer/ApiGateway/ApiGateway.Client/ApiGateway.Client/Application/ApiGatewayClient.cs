@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.API;
 using ApiGateway.Client.Application.CQRS;
@@ -12,6 +14,7 @@ using ApiGateway.Client.Infrastructure.WebClient;
 using FluentValidation;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
+using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Application
 {
@@ -26,7 +29,7 @@ namespace ApiGateway.Client.Application
             }
         }
 
-        public IVerdictHistory VerdictHistory => _container.Resolve<IVerdictHistory>();
+        public IVerdictHistoryService VerdictHistoryService => _container.Resolve<IVerdictHistoryService>();
 
         public ITaskDescriptionRepository TaskRepository => _container.Resolve<ITaskDescriptionRepository>();
 
@@ -37,6 +40,7 @@ namespace ApiGateway.Client.Application
             _container = new TinyIoCContainer();
 
             // --- Application ---
+            _container.Register(this);
             _container.Register<PlayerContext>().AsSingleton();
 
             _container.Register<Mediator>().AsSingleton();
@@ -46,6 +50,7 @@ namespace ApiGateway.Client.Application
             _container.RegisterCommand<RemoveCurrentPlayer, RemoveCurrentPlayerHandler>();
             _container.RegisterCommand<LogoutPlayer, LogoutPlayerHandler>();
             _container.RegisterCommand<SubmitSolution, SubmitSolutionHandler, SubmitSolutionValidator>();
+            _container.RegisterCommand<SaveVerdictHistory, SaveVerdictHistoryHandler, SaveVerdictHistoryValidator>();
 
             _container.RegisterQuery<GetLastVerdict, GetLastVerdictHandler, Verdict>();
             _container.RegisterQuery<FetchTaskModel, FetchTaskModelHandler, TaskModel>();
@@ -60,7 +65,7 @@ namespace ApiGateway.Client.Application
             _container.Register(new WebClientFactory(serverEnvironment));
             _container.Register<ITaskDescriptionRepository, TaskDescriptionWebRepository>().AsSingleton();
             _container.Register<IJudgeService, JudgeWebService>().AsSingleton();
-            _container.Register<IVerdictHistory, VerdictHistory>().AsSingleton();
+            _container.Register<IVerdictHistoryService, VerdictHistoryService>().AsSingleton();
         }
 
         public void Dispose()
@@ -145,6 +150,19 @@ namespace ApiGateway.Client.Application
 
             var verdict = await mediator.SendSafe(query);
             return Result<Verdict>.FromObject(verdict);
+        }
+
+        public async Task<Result> SaveVerdictHistory(AuthorizationToken token)
+        {
+            var mediator = _container.Resolve<Mediator>();
+            var verdicts = VerdictHistoryService.GetAll();
+            var command = new SaveVerdictHistory()
+            {
+                Verdicts = verdicts,
+                Token = token
+            };
+            var result = await mediator.SendSafe(command);
+            return Result.FromObject(result);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDbGenericRepository;
+﻿using MongoDB.Driver;
+using MongoDbGenericRepository;
 using PlayerService.Application;
 using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
@@ -64,15 +65,10 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         }
     }
 
-    public async IAsyncEnumerable<PlayerEntity> GetPlayerWhoSolvedTask(TaskId taskId)
+    public async Task<List<PlayerEntity>> GetPlayerWhoSolvedTask(TaskId taskId)
     {
-        var whoSolvingTask = await GetAllAsync<PlayerEntity>(player => player.Tasks.ContainsKey(taskId));
-
-        foreach (var player in whoSolvingTask)
-        {
-            var completeTask = player.Tasks[taskId].StatusType == TaskProgressStatusType.Complete;
-            if (completeTask)
-                yield return player;
-        }
+        var filterSuccessVerdict = Builders<PlayerEntity>.Filter.ElemMatch(p => p.Verdicts, v => v.IsSuccess && v.TaskId == taskId);
+        var whoSolvingTask = await GetCollection<PlayerEntity>().Find(filterSuccessVerdict).ToListAsync();
+        return whoSolvingTask;
     }
 }

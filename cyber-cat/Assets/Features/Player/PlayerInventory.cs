@@ -31,7 +31,7 @@ public class PlayerInventory
     {
         if (_client.Player == null)
         {
-            var verdict = _client.VerdictHistory.GetBestOrLastVerdict(taskType.Id());
+            var verdict = _client.VerdictHistoryService.GetBestOrLastVerdict(taskType.Id());
             return verdict?.IsSuccess ?? false;
         }
 

@@ -12,7 +12,7 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebR
 {
     internal class UnityWebClient : IInternalWebClientAdapter
     {
-        private string _authorizationHeaderValue;
+        private readonly Dictionary<string, string> _headers = new Dictionary<string, string>();
         private bool _debug;
 
         public UnityWebClient()
@@ -32,14 +32,24 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebR
 
         public void AddAuthorizationHeader(string type, string value)
         {
-            _authorizationHeaderValue = $"{type} {value}";
-            DebugOnly.Log($"Add authorization header '{_authorizationHeaderValue}'");
+            _headers["Authorization"] = $"{type} {value}";
         }
 
         public void RemoveAuthorizationHeader()
         {
-            _authorizationHeaderValue = string.Empty;
-            DebugOnly.Log("Remove authorization header");
+            RemoveHeader("Authorization");
+        }
+
+        public void AddHeader(string header, string value)
+        {
+            _headers[header] = value;
+            DebugOnly.Log($"Add header '{header}' - '{value}'");
+        }
+
+        public void RemoveHeader(string header)
+        {
+            _headers.Remove(header);
+            DebugOnly.Log($"Remove header '{header}'");
         }
 
         public async Task<string> GetStringAsync(string uri)
@@ -153,9 +163,9 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebR
 
         private void SetAuthorizationIfNeeded(UnityEngine.Networking.UnityWebRequest request)
         {
-            if (!string.IsNullOrEmpty(_authorizationHeaderValue))
+            foreach (var header in _headers)
             {
-                request.SetRequestHeader("Authorization", _authorizationHeaderValue);
+                request.SetRequestHeader(header.Key, header.Value);
             }
         }
 

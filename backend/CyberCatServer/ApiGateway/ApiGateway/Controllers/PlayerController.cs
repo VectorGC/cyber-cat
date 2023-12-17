@@ -3,8 +3,10 @@ using ApiGateway.Infrastructure.CompleteTaskWebHookService;
 using fastJSON;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
+using Shared.Models.Domain.Verdicts;
 using Shared.Models.Infrastructure;
 using Shared.Server.Application.Services;
 using Shared.Server.Infrastructure;
@@ -48,7 +50,7 @@ public class PlayerController : ControllerBase
         var progresses = await _playerService.GetTasksProgress(userId);
         var progress = progresses.FirstOrDefault(progress => progress.TaskId == taskId);
         var json = JSON.ToJSON(progress);
-        return  json;
+        return json;
     }
 
     [HttpPost(WebApi.SubmitSolutionTemplate)]
@@ -88,5 +90,15 @@ public class PlayerController : ControllerBase
 
         var json = JSON.ToJSON(users);
         return json;
+    }
+
+    [HttpPost(WebApi.SaveVerdictHistory)]
+    public async Task<ActionResult> SaveVerdictHistory(string verdictHistoryJson)
+    {
+        var unzip = GZIP.UnzipFromString(verdictHistoryJson);
+        var history = JSON.ToObject<List<Verdict>>(unzip);
+        await _playerService.SaveVerdictHistory(new SaveVerdictHistoryArgs(User.Id(), history));
+
+        return Ok();
     }
 }

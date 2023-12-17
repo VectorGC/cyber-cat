@@ -53,6 +53,13 @@ namespace ApiGateway.Client.Application.API
                 TaskId = _task.Id
             };
 
+            // Fetch actual task progress data.
+            result = await _mediator.SendSafe(new FetchTaskModel()
+            {
+                TaskId = _task.Id,
+                Token = _playerContext.Token
+            });
+
             var verdict = await _mediator.SendSafe(query);
             return Result<Verdict>.FromObject(verdict);
         }

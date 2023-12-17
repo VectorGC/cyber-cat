@@ -32,7 +32,9 @@ public class JudgeGrpcService : IJudgeService
                 {
                     TaskId = taskId,
                     TestCases = testsVerdict,
-                    Error = output.StandardError
+                    Solution = solution,
+                    Error = output.StandardError,
+                    DateTime = DateTime.UtcNow
                 };
             }
 
@@ -46,7 +48,8 @@ public class JudgeGrpcService : IJudgeService
         {
             TaskId = taskId,
             Solution = solution,
-            TestCases = testsVerdict
+            TestCases = testsVerdict,
+            DateTime = DateTime.UtcNow
         };
     }
 }

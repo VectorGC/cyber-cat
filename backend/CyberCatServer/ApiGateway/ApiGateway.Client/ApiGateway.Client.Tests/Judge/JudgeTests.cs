@@ -43,7 +43,7 @@ namespace ApiGateway.Client.Tests.Judge
 
             Assert.AreEqual(1, resultVerdict.TestCases.PassedCount);
 
-            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            var verdict = _client.VerdictHistoryService.GetLastVerdict(taskId);
             Assert.AreEqual(resultVerdict, verdict);
         }
 
@@ -59,7 +59,7 @@ namespace ApiGateway.Client.Tests.Judge
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
 
-            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            var verdict = _client.VerdictHistoryService.GetLastVerdict(taskId);
             Assert.AreEqual(result.Value, verdict);
         }
 
@@ -75,7 +75,7 @@ namespace ApiGateway.Client.Tests.Judge
             var failure = result.Value as NativeFailure;
             Assert.That(failure.Error, Does.Match(expectedErrorRegex));
 
-            var verdict = _client.VerdictHistory.GetLastVerdict(taskId);
+            var verdict = _client.VerdictHistoryService.GetLastVerdict(taskId);
             Assert.AreEqual(result.Value, verdict);
         }
 

@@ -86,6 +86,16 @@ namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClient
             return DeserializeFastJson<TResponse>(uri, response);
         }
 
+        public void AddHeader(string header, string value)
+        {
+            _client.Headers[header] = value;
+        }
+
+        public void RemoveHeader(string header)
+        {
+            _client.Headers.Remove(header);
+        }
+
         private static string SerializeToJson<TValue>(TValue value)
         {
             using (var stream = new MemoryStream())

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using ApiGateway.Client.Application;
 using ApiGateway.Client.Tests.Extensions;
 using NUnit.Framework;
 
@@ -7,11 +8,11 @@ namespace ApiGateway.Client.Tests.Player
 {
     [TestFixture(ServerEnvironment.Localhost, Category = "Localhost")]
     [TestFixture(ServerEnvironment.Production, Explicit = true, Category = "Production")]
-    public class TaskProgressTests
+    public class PlayerTaskProgressTests
     {
         private readonly ServerEnvironment _serverEnvironment;
 
-        public TaskProgressTests(ServerEnvironment serverEnvironment)
+        public PlayerTaskProgressTests(ServerEnvironment serverEnvironment)
         {
             _serverEnvironment = serverEnvironment;
         }
@@ -136,19 +137,69 @@ namespace ApiGateway.Client.Tests.Player
                 Assert.AreEqual(completeCode, task.LastSolution);
 
                 await client.Client.Player.Logout();
-                var verdict = client.Client.VerdictHistory.GetLastVerdict(taskId);
+                var verdict = client.Client.VerdictHistoryService.GetLastVerdict(taskId);
                 Assert.IsNull(verdict);
 
-                // TODO: Fetch verdicts on login
-                /*
                 await client.Client.LoginPlayer(email, password);
-                var verdictAfterLogin = client.Client.VerdictHistory.GetLastVerdict(taskId);
+                // TODO: Restore verdict history.
+                /*
+                var verdictAfterLogin = client.Client.VerdictHistoryService.GetLastVerdict(taskId);
                 Assert.IsNotNull(verdictAfterLogin);
                 Assert.AreEqual(verdict.TaskId, verdictAfterLogin.TaskId);
                 Assert.AreEqual(verdict.Solution, verdictAfterLogin.Solution);
                 Assert.AreEqual(verdict.IsFailure, verdictAfterLogin.IsFailure);
                 Assert.AreEqual(verdict.IsSuccess, verdictAfterLogin.IsSuccess);
                 */
+            }
+        }
+
+        [Test]
+        public async Task SaveVerdictHistory_FromAnonymous_AfterLogin()
+        {
+            var email = "test@test.com";
+            var password = "test_password";
+            var userName = "Test_Name";
+            var taskId = "tutorial";
+
+            using (var client = new ApiGatewayClient(_serverEnvironment))
+            {
+                var result = await client.SubmitAnonymousSolution(taskId, CodeSolution.Tutorial());
+                Assert.IsTrue(result.Value.IsSuccess);
+
+                var register = await client.RegisterPlayer(email, password, userName);
+                Assert.IsTrue(register.IsSuccess);
+
+                var login = await client.LoginPlayer(email, password);
+                Assert.IsTrue(login.IsSuccess);
+
+                Assert.IsTrue(client.Player.Tasks[taskId].IsComplete);
+                var verdict = client.VerdictHistoryService.GetBestOrLastVerdict(taskId);
+                Assert.AreEqual(result.Value.TaskId, verdict.TaskId);
+                Assert.AreEqual(result.Value.Solution, verdict.Solution);
+                Assert.AreEqual(result.Value.IsFailure, verdict.IsFailure);
+                Assert.AreEqual(result.Value.IsSuccess, verdict.IsSuccess);
+
+                var logout = await client.Player.Logout();
+                Assert.IsTrue(logout.IsSuccess);
+
+                verdict = client.VerdictHistoryService.GetLastVerdict(taskId);
+                Assert.IsNull(verdict);
+
+                await client.LoginPlayer(email, password);
+                // TODO: Restore verdict history.
+                /*
+                var verdictAfterLogin = client.VerdictHistoryService.GetLastVerdict(taskId);
+                Assert.IsNotNull(verdictAfterLogin);
+                Assert.AreEqual(result.Value.TaskId, verdictAfterLogin.TaskId);
+                Assert.AreEqual(result.Value.Solution, verdictAfterLogin.Solution);
+                Assert.AreEqual(result.Value.IsFailure, verdictAfterLogin.IsFailure);
+                Assert.AreEqual(result.Value.IsSuccess, verdictAfterLogin.IsSuccess);
+
+                var remove = await client.Player.Remove();
+                Assert.IsTrue(remove.IsSuccess);
+                */
+
+                await client.Player.Remove();
             }
         }
     }

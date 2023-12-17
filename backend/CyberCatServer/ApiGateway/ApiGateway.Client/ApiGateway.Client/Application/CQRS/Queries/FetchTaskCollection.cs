@@ -13,18 +13,16 @@ namespace ApiGateway.Client.Application.CQRS.Queries
 {
     public class FetchTaskCollection : IQuery<TaskCollection>
     {
-        public AuthorizationToken Token { get; set; }
+        public AuthorizationToken Token { get; set; } // AuthorizedOnly
     }
 
-    public class FetchTaskCollectionHandler : IQueryHandler<FetchTaskCollection, TaskCollection>, IAuthorizedOnly
+    public class FetchTaskCollectionHandler : IQueryHandler<FetchTaskCollection, TaskCollection>
     {
         private readonly ITaskDescriptionRepository _taskDescriptionRepository;
         private readonly WebClientFactory _webClientFactory;
-        private readonly PlayerContext _playerContext;
 
-        public FetchTaskCollectionHandler(WebClientFactory webClientFactory, PlayerContext playerContext, ITaskDescriptionRepository taskDescriptionRepository)
+        public FetchTaskCollectionHandler(WebClientFactory webClientFactory, ITaskDescriptionRepository taskDescriptionRepository)
         {
-            _playerContext = playerContext;
             _webClientFactory = webClientFactory;
             _taskDescriptionRepository = taskDescriptionRepository;
         }

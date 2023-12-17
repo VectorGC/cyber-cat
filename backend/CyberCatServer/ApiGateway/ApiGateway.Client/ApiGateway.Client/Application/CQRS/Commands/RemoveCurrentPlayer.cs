@@ -14,11 +14,11 @@ namespace ApiGateway.Client.Application.CQRS.Commands
     {
         private readonly WebClientFactory _webClientFactory;
         private readonly PlayerContext _playerContext;
-        private readonly IVerdictHistory _verdictHistory;
+        private readonly IVerdictHistoryService _verdictHistoryService;
 
-        public RemoveCurrentPlayerHandler(WebClientFactory webClientFactory, PlayerContext playerContext, IVerdictHistory verdictHistory)
+        public RemoveCurrentPlayerHandler(WebClientFactory webClientFactory, PlayerContext playerContext, IVerdictHistoryService verdictHistoryService)
         {
-            _verdictHistory = verdictHistory;
+            _verdictHistoryService = verdictHistoryService;
             _playerContext = playerContext;
             _webClientFactory = webClientFactory;
         }
@@ -29,7 +29,7 @@ namespace ApiGateway.Client.Application.CQRS.Commands
             {
                 await client.PostAsync(WebApi.RemoveUser, new Dictionary<string, string>());
                 _playerContext.Clear();
-                _verdictHistory.Clear();
+                _verdictHistoryService.Clear();
             }
         }
     }

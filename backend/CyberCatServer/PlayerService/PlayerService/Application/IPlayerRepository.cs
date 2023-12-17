@@ -17,7 +17,7 @@ public interface IPlayerRepository
     Task<PlayerEntity> GetPlayer(UserId userId);
     Task<UpdateResult> Update(PlayerEntity player);
     Task<DeleteResult> Delete(UserId userId);
-    IAsyncEnumerable<PlayerEntity> GetPlayerWhoSolvedTask(TaskId taskId);
+    Task<List<PlayerEntity>> GetPlayerWhoSolvedTask(TaskId taskId);
 }
 
 public record CreateResult(bool IsSuccess, PlayerRepositoryError Error, PlayerEntity Player);

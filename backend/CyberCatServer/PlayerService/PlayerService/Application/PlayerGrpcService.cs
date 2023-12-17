@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using AutoMapper;
 using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
+using Shared.Models.Domain.VerdictHistory;
 using Shared.Models.Domain.Verdicts;
 using Shared.Server.Application.Services;
 using Shared.Server.Infrastructure.Exceptions;
@@ -13,9 +15,11 @@ public class PlayerGrpcService : IPlayerService
     private readonly IPlayerRepository _playerRepository;
     private readonly IJudgeService _judgeService;
     private readonly ILogger<PlayerGrpcService> _logger;
+    private readonly IMapper _mapper;
 
-    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeService judgeService, ILogger<PlayerGrpcService> logger)
+    public PlayerGrpcService(IPlayerRepository playerRepository, IJudgeService judgeService, ILogger<PlayerGrpcService> logger, IMapper mapper)
     {
+        _mapper = mapper;
         _logger = logger;
         _judgeService = judgeService;
         _playerRepository = playerRepository;
@@ -27,9 +31,44 @@ public class PlayerGrpcService : IPlayerService
         if (player == null)
             return new List<TaskProgress>();
 
-        var progress = player.Tasks.Values.Select(progress => progress.ToDomain()).ToList();
+        var progress = GetTasksProgress(player);
         return progress;
     }
+
+    private List<TaskProgress> GetTasksProgress(PlayerEntity playerEntity)
+    {
+        var tasksProgress = new List<TaskProgress>();
+        foreach (var verdict in GetBestOrLastVerdictForAllTasks(playerEntity.Verdicts))
+        {
+            var progress = new TaskProgress()
+            {
+                Solution = verdict.Solution,
+                StatusType = verdict.IsSuccess ? TaskProgressStatusType.Complete : TaskProgressStatusType.HaveSolution,
+                TaskId = verdict.TaskId
+            };
+            tasksProgress.Add(progress);
+        }
+
+        return tasksProgress;
+    }
+
+    private IEnumerable<VerdictEntity> GetBestOrLastVerdictForAllTasks(List<VerdictEntity> verdictEntities)
+    {
+        var taskIds = new HashSet<TaskId>(verdictEntities.Select(v => new TaskId(v.TaskId)));
+        foreach (var id in taskIds)
+        {
+            var successVerdict = verdictEntities.Where(v => v.TaskId == id).FirstOrDefault(v => v.IsSuccess);
+            if (successVerdict != null)
+            {
+                yield return successVerdict;
+                continue;
+            }
+
+            var lastVerdict = verdictEntities.MaxBy(v => v.DateTime);
+            yield return lastVerdict;
+        }
+    }
+
 
     public async Task<Verdict> SubmitSolution(SubmitSolutionArgs args)
     {
@@ -39,7 +78,8 @@ public class PlayerGrpcService : IPlayerService
         _logger.LogInformation("{Task} verdict: {Verdict}. Player '{UserId}'", args.TaskId, verdict.ToString(), userId);
 
         var player = await GetOrCreatePlayer(args.UserId);
-        player.SetTaskStatusByVerdict(taskId, verdict, solution);
+        var verdictEntity = _mapper.Map<VerdictEntity>(verdict);
+        player.Verdicts.Add(verdictEntity);
 
         var updateResult = await _playerRepository.Update(player);
         if (!updateResult.IsSuccess)
@@ -91,14 +131,26 @@ public class PlayerGrpcService : IPlayerService
 
     public async Task<List<UserId>> GetUsersWhoSolvedTask(TaskId taskId)
     {
-        var userIds = new List<UserId>();
-
-        var players = _playerRepository.GetPlayerWhoSolvedTask(taskId);
-        await foreach (var player in players)
-        {
-            userIds.Add(player.Id);
-        }
-
+        var players = await _playerRepository.GetPlayerWhoSolvedTask(taskId);
+        var userIds = players.Select(p => new UserId(p.Id)).ToList();
         return userIds;
+    }
+
+    public async Task SaveVerdictHistory(SaveVerdictHistoryArgs args)
+    {
+        var (userId, verdicts) = args;
+
+        var verdictEntities = _mapper.Map<List<VerdictEntity>>(verdicts);
+        var player = await GetOrCreatePlayer(userId);
+        player.Verdicts.AddRange(verdictEntities);
+
+        var updateResult = await _playerRepository.Update(player);
+        if (!updateResult.IsSuccess)
+        {
+            throw updateResult.Error switch
+            {
+                _ => throw new ServiceException("Неизвестная ошибка. Обратитесь к администратору", HttpStatusCode.BadRequest)
+            };
+        }
     }
 }
