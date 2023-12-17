@@ -60,16 +60,16 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
-    [MenuItem("Cheats/Always success submit")]
+    [MenuItem("Cheats/Always success submit for anonymous")]
     private static void SuccessSubmitCheat()
     {
         IsSuccessSubmitCheat = !IsSuccessSubmitCheat;
     }
 
-    [MenuItem("Cheats/Always success submit", true)]
+    [MenuItem("Cheats/Always success submit for anonymous", true)]
     private static bool SuccessSubmitCheatValidate()
     {
-        Menu.SetChecked("Cheats/Always success submit", IsSuccessSubmitCheat);
+        Menu.SetChecked("Cheats/Always success submit for anonymous", IsSuccessSubmitCheat);
         return true;
     }
 
@@ -194,7 +194,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
     private async UniTask<Verdict> SubmitSolution(TaskId taskId, string sourceCode)
     {
-        if (IsSuccessSubmitCheat)
+        if (IsSuccessSubmitCheat && _client.Player == null)
         {
             var verdict = new Verdict()
             {
