@@ -5,12 +5,15 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
+    private static Scene GameScene;
+    private static Scene TutorialScene;
+
     public static bool CanInput
     {
         get
         {
             var scene = SceneManager.GetActiveScene();
-            return scene.name == "Game" || scene.name == "Tutorial";
+            return scene == GameScene || scene == TutorialScene;
         }
     }
 
@@ -24,6 +27,19 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out _navMeshAgent);
+        for (var i = 0; i < SceneManager.sceneCount; i++)
+        {
+            var scene = SceneManager.GetSceneAt(i);
+            switch (scene.name)
+            {
+                case "Game":
+                    GameScene = scene;
+                    break;
+                case "Tutorial":
+                    TutorialScene = scene;
+                    break;
+            }
+        }
     }
 
     [Inject]

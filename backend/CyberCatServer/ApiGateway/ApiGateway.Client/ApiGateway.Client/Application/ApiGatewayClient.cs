@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application.API;
 using ApiGateway.Client.Application.CQRS;
@@ -11,7 +9,6 @@ using ApiGateway.Client.Application.Services;
 using ApiGateway.Client.Domain;
 using ApiGateway.Client.Infrastructure;
 using ApiGateway.Client.Infrastructure.WebClient;
-using FluentValidation;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Verdicts;
 using Shared.Models.Infrastructure.Authorization;
@@ -20,20 +17,13 @@ namespace ApiGateway.Client.Application
 {
     public class ApiGatewayClient : IDisposable
     {
-        public PlayerAPI Player
-        {
-            get
-            {
-                var context = _container.Resolve<PlayerContext>();
-                return context.IsLogined ? _container.Resolve<PlayerAPI>() : null;
-            }
-        }
+        public PlayerAPI Player => _playerApi;
 
         public IVerdictHistoryService VerdictHistoryService => _container.Resolve<IVerdictHistoryService>();
-
         public ITaskDescriptionRepository TaskRepository => _container.Resolve<ITaskDescriptionRepository>();
 
         private readonly TinyIoCContainer _container;
+        private PlayerAPI _playerApi;
 
         public ApiGatewayClient(ServerEnvironment serverEnvironment)
         {
@@ -102,6 +92,7 @@ namespace ApiGateway.Client.Application
             if (result == null)
             {
                 var playerContext = _container.Resolve<PlayerContext>();
+                _playerApi = _container.Resolve<PlayerAPI>();
                 return playerContext.Player;
             }
 
@@ -123,10 +114,41 @@ namespace ApiGateway.Client.Application
             if (result == null)
             {
                 var playerContext = _container.Resolve<PlayerContext>();
+                _playerApi = _container.Resolve<PlayerAPI>();
                 return playerContext.Player;
             }
 
             return Result<PlayerModel>.FromObject(result);
+        }
+
+        public async Task<Result> Logout()
+        {
+            var mediator = _container.Resolve<Mediator>();
+
+            var command = new LogoutPlayer();
+            var result = await mediator.SendSafe(command);
+            var res = Result.FromObject(result);
+            if (res.IsSuccess)
+            {
+                _playerApi = null;
+            }
+
+            return res;
+        }
+
+        public async Task<Result> Remove()
+        {
+            var mediator = _container.Resolve<Mediator>();
+
+            var command = new RemoveCurrentPlayer();
+            var result = await mediator.SendSafe(command);
+            var res = Result.FromObject(result);
+            if (res.IsSuccess)
+            {
+                _playerApi = null;
+            }
+
+            return res;
         }
 
         public async Task<Result<Verdict>> SubmitAnonymousSolution(TaskId taskId, string solution)

@@ -7152,6 +7152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreeBlueprint: {fileID: 11400000, guid: aa8585a1ae85cbf40b31e80a608774eb, type: 2}
+  _mustSolvedTaskForInteract: 
 --- !u!1 &461446509
 GameObject:
   m_ObjectHideFlags: 0
@@ -10512,6 +10513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreeBlueprint: {fileID: 11400000, guid: a3bef92ce08995b41aa68f8a5a4e35fc, type: 2}
+  _mustSolvedTaskForInteract: 02000000
 --- !u!1001 &653838828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19918,6 +19920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreeBlueprint: {fileID: 11400000, guid: a89f3426f4fff0f448ef884fd25bb304, type: 2}
+  _mustSolvedTaskForInteract: 01000000
 --- !u!1001 &1319368800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33369,6 +33372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreeBlueprint: {fileID: 11400000, guid: 3167262630d41cc419b9004c0afca4eb, type: 2}
+  _mustSolvedTaskForInteract: 03000000
 --- !u!1001 &1836843693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34422,6 +34426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TreeBlueprint: {fileID: 11400000, guid: b5777534d1a85614fbd596f4bc02ff80, type: 2}
+  _mustSolvedTaskForInteract: 01000000
 --- !u!1001 &1940749081
 PrefabInstance:
   m_ObjectHideFlags: 0
