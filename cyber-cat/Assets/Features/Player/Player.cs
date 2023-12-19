@@ -5,15 +5,15 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
-    private static Scene GameScene;
-    private static Scene TutorialScene;
+    private static Scene AuthorizationScene;
+    private static Scene CodeEditorScene;
 
     public static bool CanInput
     {
         get
         {
             var scene = SceneManager.GetActiveScene();
-            return scene == GameScene || scene == TutorialScene;
+            return scene != AuthorizationScene && scene != CodeEditorScene;
         }
     }
 
@@ -32,11 +32,11 @@ public class Player : MonoBehaviour
             var scene = SceneManager.GetSceneAt(i);
             switch (scene.name)
             {
-                case "Game":
-                    GameScene = scene;
+                case "AuthorizationScene":
+                    AuthorizationScene = scene;
                     break;
-                case "Tutorial":
-                    TutorialScene = scene;
+                case "CodeEditor":
+                    CodeEditorScene = scene;
                     break;
             }
         }

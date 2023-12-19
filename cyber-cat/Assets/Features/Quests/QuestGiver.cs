@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using ApiGateway.Client.Application;
 using Bonsai.Core;
 using UnityEngine;
@@ -15,7 +13,7 @@ public class QuestGiver : Interactable, IViewInBonsaiTreeWindow
     private DiContainer _container;
     private ApiGatewayClient _client;
 
-    public override bool CanInteract => Tree != null && !Tree.IsRunning() && IsTaskSolved(_mustSolveTaskForInteract);
+    public override bool CanInteract => Tree != null && !Tree.IsRunning() && (_mustSolveTaskForInteract == TaskType.Tutorial || IsTaskSolved(_mustSolveTaskForInteract));
 
     [Inject]
     private void Construct(DiContainer container, ApiGatewayClient client)
