@@ -20,6 +20,9 @@ public class MusicAudioManager : MonoInstaller, IInitializable, IDisposable
 
     public void Initialize()
     {
+        var scene = SceneManager.GetActiveScene();
+        OnActiveSceneChanged(scene, scene);
+
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
     }
 
@@ -53,21 +56,24 @@ public class MusicAudioManager : MonoInstaller, IInitializable, IDisposable
 
     private IEnumerator SwitchSound(float time, AudioClip audioClip)
     {
-        // Wait before fade
-        if (time > 6f)
-            yield return new WaitForSeconds(time - 5);
-
-        // Fade sound
-        for (var i = 0.1f; i < time; i += 0.2f)
+        if (_audioSource.isPlaying)
         {
-            yield return new WaitForSeconds(0.2f);
-            var volume = Mathf.Lerp(1, 0, i / time);
-            _audioSource.volume = volume;
-        }
+            // Wait before fade
+            if (time > 6f)
+                yield return new WaitForSeconds(time - 5);
 
-        // Wait if needed
-        if (time > 10f)
-            yield return new WaitForSeconds(3f);
+            // Fade sound
+            for (var i = 0.1f; i < time; i += 0.2f)
+            {
+                yield return new WaitForSeconds(0.2f);
+                var volume = Mathf.Lerp(1, 0, i / time);
+                _audioSource.volume = volume;
+            }
+
+            // Wait if needed
+            if (time > 10f)
+                yield return new WaitForSeconds(3f);
+        }
 
         // Start new sound
         _audioSource.clip = audioClip;
