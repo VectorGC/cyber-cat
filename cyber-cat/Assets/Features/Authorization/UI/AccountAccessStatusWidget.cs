@@ -30,13 +30,13 @@ public class AccountAccessStatusWidget : UIBehaviour
         var textWidget = _greetings.W();
         if (_client.Player != null)
         {
-            textWidget.Text = $"Доступ получен: {_client.Player.User.FirstName}";
+            textWidget.Text = $"Доступ разрешен: {_client.Player.User.FirstName}";
             textWidget.Color = Color.green;
             _button.Text = "Выйти из учетной записи";
         }
         else
         {
-            textWidget.Text = "Доступ ограничен";
+            textWidget.Text = "Авторизуйстесь для сохранения прогресса";
             textWidget.Color = Color.red;
             _button.Text = "Авторизоваться";
         }
