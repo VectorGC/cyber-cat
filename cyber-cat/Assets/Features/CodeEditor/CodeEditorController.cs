@@ -36,11 +36,13 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private Verdict _verdictCache;
     private ApiGatewayClient _client;
 
+#if UNITY_EDITOR
     private static bool IsSuccessSubmitCheat
     {
         get => EditorPrefs.GetBool(nameof(IsSuccessSubmitCheat));
         set => EditorPrefs.SetBool(nameof(IsSuccessSubmitCheat), value);
     }
+#endif
 
     [Inject]
     private async void Construct(ICodeEditor codeEditor, ApiGatewayClient client)
@@ -60,6 +62,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _codeEditorView.Language = LanguageProg.Cpp;
     }
 
+#if UNITY_EDITOR
     [MenuItem("Cheats/Always success submit for anonymous")]
     private static void SuccessSubmitCheat()
     {
@@ -78,6 +81,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     {
         PlayerPrefs.DeleteAll();
     }
+#endif
 
     protected override async void Start()
     {
@@ -194,6 +198,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
     private async UniTask<Verdict> SubmitSolution(TaskId taskId, string sourceCode)
     {
+#if UNITY_EDITOR
         if (IsSuccessSubmitCheat && _client.Player == null)
         {
             var verdict = new Verdict()
@@ -208,6 +213,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
             _client.VerdictHistoryService.Add(verdict, DateTime.Now);
             return verdict;
         }
+#endif
 
         var result = _client.Player != null
             ? await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...")
