@@ -8,6 +8,7 @@
       - ConnectionStrings__AuthServiceGrpcEndpoint=$AUTH_SERVICE_GRPC_URL
       - ConnectionStrings__TaskServiceGrpcEndpoint=$TASK_SERVICE_GRPC_URL
       - ConnectionStrings__PlayerServiceGrpcEndpoint=$PLAYER_SERVICE_GRPC_URL
+      - ConnectionStrings__JudgeServiceGrpcEndpoint=$JUDGE_SERVICE_GRPC_URL
     ports:
       - "80:80"
     depends_on:
