@@ -64,5 +64,10 @@ namespace ApiGateway.Client.Application.CQRS.Commands
                 }
             }
         }
+
+        public async Task Handle(object command)
+        {
+            await Handle(command as SubmitSolution);
+        }
     }
 }

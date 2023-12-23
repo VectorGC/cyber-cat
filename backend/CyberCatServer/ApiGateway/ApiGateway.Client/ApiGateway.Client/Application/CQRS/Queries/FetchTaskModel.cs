@@ -54,5 +54,10 @@ namespace ApiGateway.Client.Application.CQRS.Queries
 
             return _playerContext.Player.Tasks[command.TaskId];
         }
+
+        public async Task<object> Handle(object command)
+        {
+            return await Handle(command as FetchTaskModel);
+        }
     }
 }

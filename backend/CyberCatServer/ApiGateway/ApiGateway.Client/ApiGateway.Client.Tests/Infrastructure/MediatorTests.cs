@@ -19,6 +19,11 @@ namespace ApiGateway.Client.Tests.Infrastructure
             {
                 return Task.FromResult(command.Message);
             }
+
+            public async Task<object> Handle(object command)
+            {
+                return await Handle(command as PingCommand);
+            }
         }
 
         public class PrintCommand : ICommand
@@ -34,6 +39,11 @@ namespace ApiGateway.Client.Tests.Infrastructure
             {
                 Output = command.Message;
                 return Task.CompletedTask;
+            }
+
+            public async Task Handle(object command)
+            {
+                await Handle(command as PrintCommand);
             }
         }
 

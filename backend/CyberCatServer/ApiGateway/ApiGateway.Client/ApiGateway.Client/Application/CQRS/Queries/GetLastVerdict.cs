@@ -24,5 +24,10 @@ namespace ApiGateway.Client.Application.CQRS.Queries
             var verdict = _verdictHistoryService.GetLastVerdict(command.TaskId);
             return Task.FromResult(verdict);
         }
+
+        public async Task<object> Handle(object command)
+        {
+            return await Handle(command as GetLastVerdict);
+        }
     }
 }

@@ -32,5 +32,10 @@ namespace ApiGateway.Client.Application.CQRS.Commands
                 _verdictHistoryService.Clear();
             }
         }
+        
+        public async Task Handle(object command)
+        {
+            await Handle(command as RemoveCurrentPlayer);
+        }
     }
 }

@@ -45,7 +45,7 @@ namespace ApiGateway.Client.Application.Middlewares
             where TCommandHandler : class, ICommandHandler<TCommand>
             where TValidator : class, IValidator<TCommand>
         {
-            container.Register<ICommandHandler<TCommand>, TCommandHandler>().AsSingleton();
+            container.RegisterCommand<TCommand, TCommandHandler>();
             container.Register<IValidator<TCommand>, TValidator>().AsSingleton();
         }
     }

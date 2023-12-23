@@ -58,5 +58,10 @@ namespace ApiGateway.Client.Application.CQRS.Queries
 
             return tasks;
         }
+        
+        public async Task<object> Handle(object command)
+        {
+            return await Handle(command as FetchTaskCollection);
+        }
     }
 }

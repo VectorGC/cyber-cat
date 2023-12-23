@@ -46,5 +46,10 @@ namespace ApiGateway.Client.Application.CQRS.Commands
                 await client.PostAsync(WebApi.RegisterPlayer, form);
             }
         }
+        
+        public async Task Handle(object command)
+        {
+            await Handle(command as RegisterPlayer);
+        }
     }
 }

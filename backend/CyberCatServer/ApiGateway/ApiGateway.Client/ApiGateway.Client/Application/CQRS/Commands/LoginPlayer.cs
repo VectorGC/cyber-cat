@@ -52,5 +52,10 @@ namespace ApiGateway.Client.Application.CQRS.Commands
                 _playerContext.SetContext(player, accessToken);
             }
         }
+        
+        public async Task Handle(object command)
+        {
+            await Handle(command as LoginPlayer);
+        }
     }
 }

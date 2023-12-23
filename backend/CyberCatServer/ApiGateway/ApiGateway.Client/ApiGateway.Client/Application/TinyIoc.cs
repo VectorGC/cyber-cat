@@ -61,7 +61,7 @@
 // CompactFramework / Windows Phone 7
 // By default does not support System.Linq.Expressions.
 // AppDomain object does not support enumerating all assemblies in the app domain.
-#if PocketPC || WINDOWS_PHONE
+#if PocketPC || WINDOWS_PHONE || UNITY_WEBGL
 #undef EXPRESSIONS
 #undef COMPILED_EXPRESSIONS
 #undef APPDOMAIN_GETASSEMBLIES
@@ -3758,8 +3758,10 @@ namespace ApiGateway.Client.Application
 
         private bool IsAutomaticLazyFactoryRequest(Type type)
         {
+#if EXPRESSIONS
             if (_LazyAutomaticFactories.ContainsKey(type))
               return true;
+#endif
 
             if (!type.IsGenericType())
                 return false;

@@ -24,5 +24,10 @@ namespace ApiGateway.Client.Application.CQRS.Commands
             _verdictHistoryService.Clear();
             return Task.CompletedTask;
         }
+        
+        public async Task Handle(object command)
+        {
+            await Handle(command as LogoutPlayer);
+        }
     }
 }

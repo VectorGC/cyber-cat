@@ -55,7 +55,12 @@ namespace ApiGateway.Client.Application
     {
     }
 
-    public interface ICommandHandler<in TCommand> where TCommand : ICommand
+    public interface ICommandHandler
+    {
+        Task Handle(object command);
+    }
+
+    public interface ICommandHandler<in TCommand> : ICommandHandler where TCommand : ICommand
     {
         Task Handle(TCommand command);
     }
@@ -64,9 +69,14 @@ namespace ApiGateway.Client.Application
     {
     }
 
-    public interface IQueryHandler<in TCommand, TResult>
+    public interface IQueryHandler
     {
-        Task<TResult> Handle(TCommand command);
+        Task<object> Handle(object query);
+    }
+
+    public interface IQueryHandler<in TCommand, TResult> : IQueryHandler
+    {
+        Task<TResult> Handle(TCommand query);
     }
 
     internal static class HandleCommand
@@ -74,38 +84,45 @@ namespace ApiGateway.Client.Application
         public static async Task<object> Handle(object command, Type resultType, TinyIoCContainer container)
         {
             var handlerType = resultType != null
-                ? typeof(IQueryHandler<,>).MakeGenericType(command.GetType(), resultType)
-                : typeof(ICommandHandler<>).MakeGenericType(command.GetType());
+                ? MediatorExtensions.QueryToHandler[command.GetType()]
+                : MediatorExtensions.CommandToHandler[command.GetType()];
 
-            var handler = (dynamic) container.Resolve(handlerType);
-
-            if (resultType != null)
+            var handler = container.Resolve(handlerType);
+            if (handler is ICommandHandler commandHandler)
             {
-                var response = await handler.Handle((dynamic) command);
-                return response;
-            }
-            else
-            {
-                await handler.Handle((dynamic) command);
+                await commandHandler.Handle(command);
                 return null;
             }
+
+            if (handler is IQueryHandler queryHandler)
+            {
+                var response = await queryHandler.Handle(command);
+                return response;
+            }
+
+            return null;
         }
     }
 
     public static partial class MediatorExtensions
     {
+        public static readonly Dictionary<Type, Type> CommandToHandler = new Dictionary<Type, Type>();
+        public static readonly Dictionary<Type, Type> QueryToHandler = new Dictionary<Type, Type>();
+
         public static void RegisterCommand<TCommand, TCommandHandler>(this TinyIoCContainer container)
             where TCommand : ICommand
             where TCommandHandler : class, ICommandHandler<TCommand>
         {
-            container.Register<ICommandHandler<TCommand>, TCommandHandler>().AsSingleton();
+            CommandToHandler[typeof(TCommand)] = typeof(TCommandHandler);
+            container.Register<TCommandHandler>().AsSingleton();
         }
 
-        public static void RegisterQuery<TCommand, TCommandHandler, TResult>(this TinyIoCContainer container)
-            where TCommand : IQuery<TResult>
-            where TCommandHandler : class, IQueryHandler<TCommand, TResult>
+        public static void RegisterQuery<TQuery, TQueryHandler, TResult>(this TinyIoCContainer container)
+            where TQuery : IQuery<TResult>
+            where TQueryHandler : class, IQueryHandler<TQuery, TResult>
         {
-            container.Register<IQueryHandler<TCommand, TResult>, TCommandHandler>().AsSingleton();
+            QueryToHandler[typeof(TQuery)] = typeof(TQueryHandler);
+            container.Register<TQueryHandler>().AsSingleton();
         }
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(MarkdownRenderer))]
 public class MarkdownText : UIBehaviour, IText
 {
-    private MarkdownRenderer _markdownRenderer;
+    [SerializeField] private MarkdownRenderer _markdownRenderer;
 
     public string Text
     {
