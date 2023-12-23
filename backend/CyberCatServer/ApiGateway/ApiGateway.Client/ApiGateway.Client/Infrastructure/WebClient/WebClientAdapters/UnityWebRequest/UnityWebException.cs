@@ -14,7 +14,7 @@ namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 
         public override string ToString()
         {
-            return $"{base.ToString()}";
+            return $"Status: '{StatusCode}'. {base.ToString()}";
         }
     }
 }
