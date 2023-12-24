@@ -6,7 +6,7 @@ namespace Shared.Models.Domain.Tasks
     [ProtoContract]
     public class TaskId : IEquatable<TaskId>
     {
-        [ProtoMember(1)] public string Value { get; set; }
+        [ProtoMember(1)] public string Value { get; set; } = string.Empty;
 
         public TaskId(string id)
         {

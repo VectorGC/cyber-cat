@@ -104,6 +104,30 @@ namespace ApiGateway.Client.Infrastructure.WebClient
             }
         }
 
+        public void AddHeader(string header, string value)
+        {
+            try
+            {
+                _webClient.AddHeader(header, value);
+            }
+            catch (WebException e)
+            {
+                throw WebExceptionWithMessage(e);
+            }
+        }
+
+        public void RemoveHeader(string header)
+        {
+            try
+            {
+                _webClient.RemoveHeader(header);
+            }
+            catch (WebException e)
+            {
+                throw WebExceptionWithMessage(e);
+            }
+        }
+
         private WebException WebExceptionWithMessage(WebException exception)
         {
             var response = exception.Response as HttpWebResponse;

@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using LogicUI.FancyTextRendering;
 using TMPro;
 using UnityEngine;
@@ -9,7 +7,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(MarkdownRenderer))]
 public class MarkdownText : UIBehaviour, IText
 {
-    private MarkdownRenderer _markdownRenderer;
+    [SerializeField] private MarkdownRenderer _markdownRenderer;
 
     public string Text
     {
@@ -23,18 +21,15 @@ public class MarkdownText : UIBehaviour, IText
         set => _markdownRenderer.TextMesh.color = value;
     }
 
-    protected override void Awake()
+#if UNITY_EDITOR
+    protected override void OnValidate()
     {
         TryGetComponent(out _markdownRenderer);
     }
+#endif
 
-    public void SetTextAsync(Task<string> handler)
+    public void SetText(string text)
     {
-        SetTextAsync(handler.AsUniTask()).Forget();
-    }
-
-    private async UniTaskVoid SetTextAsync(UniTask<string> handler)
-    {
-        Text = await handler;
+        Text = text;
     }
 }

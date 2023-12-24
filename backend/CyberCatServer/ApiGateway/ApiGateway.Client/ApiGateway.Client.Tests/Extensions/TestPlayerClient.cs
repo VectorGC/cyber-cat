@@ -1,37 +1,37 @@
+using System;
 using System.Threading.Tasks;
 using ApiGateway.Client.Application;
-using ApiGateway.Client.Application.API;
-using ApiGateway.Client.Application.UseCases;
-using ApiGateway.Client.Domain;
 
 namespace ApiGateway.Client.Tests.Extensions
 {
-    public class TestPlayerClient : IApiGatewayClient
+    public class TestPlayerClient : IDisposable
     {
-        public PlayerAPI Player => Client.Player;
         public ApiGatewayClient Client { get; }
-        public string Password { get; }
 
-        public TestPlayerClient(ApiGatewayClient client, string password)
+        public static async Task<TestPlayerClient> Create(ServerEnvironment serverEnvironment, string email = "test@test.com", string password = "test_password", string userName = "Test_Name")
         {
-            Password = password;
+            var client = new ApiGatewayClient(serverEnvironment);
+
+            var result = await client.RegisterPlayer(email, password, userName);
+            if (!result.IsSuccess)
+                throw new InvalidOperationException(result.Error);
+
+            var loginResult = await client.LoginPlayer(email, password);
+            if (!loginResult.IsSuccess)
+                throw new InvalidOperationException(loginResult.Error);
+
+            return new TestPlayerClient(client);
+        }
+
+        private TestPlayerClient(ApiGatewayClient client)
+        {
             Client = client;
         }
 
         public void Dispose()
         {
-            Client.Player.Remove(Password);
+            Client.Player.Remove();
             Client.Dispose();
-        }
-
-        public Task<Result> RegisterPlayer(string email, string password, string userName)
-        {
-            return Client.RegisterPlayer(email, password, userName);
-        }
-
-        public Task<Result<PlayerModel>> LoginPlayer(string email, string password)
-        {
-            return Client.LoginPlayer(email, password);
         }
     }
 }

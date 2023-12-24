@@ -1,16 +1,15 @@
 using System.Net;
 using fastJSON;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Users;
 using Shared.Models.Infrastructure;
 using Shared.Server.Application.Services;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Authorize]
 public class TasksController : ControllerBase
 {
     private readonly ITaskService _taskService;
@@ -23,10 +22,11 @@ public class TasksController : ControllerBase
     [HttpGet(WebApi.GetTaskDescriptions)]
     [ProducesResponseType(typeof(List<TaskDescription>), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<List<TaskDescription>>> GetTasks()
+    public async Task<ActionResult<string>> GetTasks()
     {
         var response = await _taskService.GetTasks();
-        return response;
+        var json = JSON.ToJSON(response);
+        return json;
     }
 
     [HttpGet(WebApi.GetTestCasesTemplate)]

@@ -29,7 +29,8 @@ namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 
             if (!webRequest.isDone || isNetworkError || isHttpError || webRequest.responseCode != (int) HttpStatusCode.OK)
             {
-                throw new UnityWebException((HttpStatusCode) webRequest.responseCode);
+                DebugOnly.LogError($"Throw Web Exception: Status: '{webRequest.responseCode}'. {webRequest.downloadHandler.text}");
+                throw new UnityWebException((HttpStatusCode) webRequest.responseCode, webRequest.downloadHandler.text);
             }
         }
     }

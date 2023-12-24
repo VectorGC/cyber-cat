@@ -16,21 +16,12 @@ namespace Shared.Server.Application.Services;
 [Service]
 public interface IPlayerService
 {
-    Task<List<TaskProgress>> GetTasksProgress(GetTasksProgressArgs args);
-    Task<TaskProgress> GetTaskProgress(GetTaskProgressArgs args);
+    Task<List<TaskProgress>> GetTasksProgress(UserId userId);
     Task<Verdict> SubmitSolution(SubmitSolutionArgs args);
     Task RemovePlayer(RemovePlayerArgs args);
     Task<List<UserId>> GetUsersWhoSolvedTask(TaskId taskId);
+    Task SaveVerdictHistory(SaveVerdictHistoryArgs args);
 }
-
-[ProtoContract(SkipConstructor = true)]
-public record GetTasksProgressArgs(
-    [property: ProtoMember(1)] UserId UserId);
-
-[ProtoContract(SkipConstructor = true)]
-public record GetTaskProgressArgs(
-    [property: ProtoMember(1)] UserId UserId,
-    [property: ProtoMember(2)] TaskId TaskId);
 
 [ProtoContract(SkipConstructor = true)]
 public record SubmitSolutionArgs(
@@ -42,7 +33,12 @@ public record SubmitSolutionArgs(
 public record RemovePlayerArgs(
     [property: ProtoMember(1)] UserId UserId);
 
-public static class PlayerServiceExtensions
+[ProtoContract(SkipConstructor = true)]
+public record SaveVerdictHistoryArgs(
+    [property: ProtoMember(1)] UserId UserId,
+    [property: ProtoMember(2)] List<Verdict> Verdicts);
+
+public static partial class ServiceExtensions
 {
     public static IHttpClientBuilder AddPlayerServiceGrpcClient(this WebApplicationBuilder builder)
     {

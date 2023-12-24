@@ -1,4 +1,5 @@
-﻿using MongoDbGenericRepository;
+﻿using MongoDB.Driver;
+using MongoDbGenericRepository;
 using PlayerService.Application;
 using PlayerService.Domain;
 using Shared.Models.Domain.Tasks;
@@ -20,7 +21,7 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         try
         {
             await AddOneAsync(player);
-            return new CreateResult(true, UserRepositoryError.None, player);
+            return new CreateResult(true, PlayerRepositoryError.None, player);
         }
         catch (Exception)
         {
@@ -37,17 +38,12 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
     {
         try
         {
-            var success = await UpdateOneAsync(player);
-            if (!success)
-            {
-                return new UpdateResult(false, UserRepositoryError.Unknown);
-            }
-
-            return new UpdateResult(true, UserRepositoryError.None);
+            await UpdateOneAsync(player);
+            return new UpdateResult(true, PlayerRepositoryError.None);
         }
         catch (Exception)
         {
-            throw;
+            return new UpdateResult(false, PlayerRepositoryError.Unknown);
         }
     }
 
@@ -58,10 +54,10 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
             var countDeleted = await DeleteOneAsync<PlayerEntity>(player => player.Id == userId.Value);
             if (countDeleted == 0)
             {
-                return new DeleteResult(false, UserRepositoryError.NotFound);
+                return new DeleteResult(false, PlayerRepositoryError.NotFound);
             }
 
-            return new DeleteResult(true, UserRepositoryError.None);
+            return new DeleteResult(true, PlayerRepositoryError.None);
         }
         catch (Exception)
         {
@@ -69,15 +65,10 @@ public class PlayerMongoRepository : BaseMongoRepository<long>, IPlayerRepositor
         }
     }
 
-    public async IAsyncEnumerable<PlayerEntity> GetPlayerWhoSolvedTask(TaskId taskId)
+    public async Task<List<PlayerEntity>> GetPlayerWhoSolvedTask(TaskId taskId)
     {
-        var whoSolvingTask = await GetAllAsync<PlayerEntity>(player => player.Tasks.ContainsKey(taskId));
-
-        foreach (var player in whoSolvingTask)
-        {
-            var completeTask = player.Tasks[taskId].StatusType == TaskProgressStatusType.Complete;
-            if (completeTask)
-                yield return player;
-        }
+        var filterSuccessVerdict = Builders<PlayerEntity>.Filter.ElemMatch(p => p.Verdicts, v => v.IsSuccess && v.TaskId == taskId);
+        var whoSolvingTask = await GetCollection<PlayerEntity>().Find(filterSuccessVerdict).ToListAsync();
+        return whoSolvingTask;
     }
 }

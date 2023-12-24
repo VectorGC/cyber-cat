@@ -1,6 +1,4 @@
-using ApiGateway.Client.Models;
-using Shared.Models.Models;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters;
-using ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClientAdapter;
 using Shared.Models.Infrastructure.Authorization;
 
 namespace ApiGateway.Client.Infrastructure.WebClient
 {
-    internal class WebClient : IWebClient
+    public class WebClient : IWebClient
     {
         public ServerEnvironment ServerEnvironment { get; }
 
@@ -17,10 +16,10 @@ namespace ApiGateway.Client.Infrastructure.WebClient
         {
             _internalWebClient =
 #if UNITY_WEBGL
-                new ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest.UnityWebClient();
+                new ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebRequest.UnityWebClient();
 #endif
 #if WEB_CLIENT
-                new InternalWebClientAdapter();
+                new ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.WebClientAdapter.InternalWebClientAdapter();
 #endif
 
             _token = token;
@@ -69,6 +68,16 @@ namespace ApiGateway.Client.Infrastructure.WebClient
         public async Task<TResponse> PostAsync<TResponse>(string path, Dictionary<string, string> form)
         {
             return await _internalWebClient.PostAsFastJsonPolymorphicAsync<TResponse>(ServerEnvironment.ToUri(path), form);
+        }
+
+        public void AddHeader(string header, string value)
+        {
+            _internalWebClient.AddHeader(header, value);
+        }
+
+        public void RemoveHeader(string header)
+        {
+            _internalWebClient.RemoveHeader(header);
         }
     }
 }

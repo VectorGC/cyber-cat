@@ -23,7 +23,7 @@ public interface ITaskService
 [ProtoContract(SkipConstructor = true)]
 public record NeedSendWebHookResponse([property: ProtoMember(1)] bool NeedSendWebHook);
 
-public static class TaskServiceExtensions
+public static partial class ServiceExtensions
 {
     public static IHttpClientBuilder AddTaskServiceGrpcClient(this WebApplicationBuilder builder)
     {

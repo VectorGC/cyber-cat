@@ -3,10 +3,12 @@ using ProtoBuf;
 
 namespace Shared.Models.Infrastructure.Authorization
 {
-    [ProtoContract(SkipConstructor = true)]
+    [ProtoContract]
     public class JwtAccessToken : AuthorizationToken
     {
-        public override string Type => JwtBearerDefaults.AuthenticationScheme;
+        public const string AuthenticationScheme = "Bearer";
+
+        public override string Type => AuthenticationScheme;
         public override string Value => access_token;
         public override string TokenName => "access_token";
 

@@ -30,7 +30,7 @@ public static class TaskTypesMap
         [TaskType.Task9] = "task-9",
     };
 
-    public static string GetId(this TaskType type)
+    public static string Id(this TaskType type)
     {
         return TaskIdsMap[type];
     }

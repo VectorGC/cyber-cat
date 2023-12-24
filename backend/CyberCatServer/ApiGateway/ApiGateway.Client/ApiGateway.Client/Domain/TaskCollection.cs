@@ -17,5 +17,10 @@ namespace ApiGateway.Client.Domain
         {
             return _tasks.GetEnumerator();
         }
+
+        public bool TryGetValue(TaskId taskId, out TaskModel taskModel)
+        {
+            return _tasks.TryGetValue(taskId, out taskModel);
+        }
     }
 }

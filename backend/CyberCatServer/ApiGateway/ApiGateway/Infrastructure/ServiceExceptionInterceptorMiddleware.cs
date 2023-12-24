@@ -1,6 +1,6 @@
-using System.Net;
 using Grpc.Core;
 using Microsoft.AspNetCore.Http.Extensions;
+using Shared.Server.Infrastructure.Exceptions;
 
 namespace ApiGateway.Infrastructure;
 
@@ -23,9 +23,12 @@ public class ServiceExceptionInterceptorMiddleware
         }
         catch (RpcException ex)
         {
-            var statusCodeMetadata = ex.Trailers.Get(nameof(HttpStatusCode)) ?? throw ex;
-            var status = Enum.Parse<HttpStatusCode>(statusCodeMetadata.Value);
-            var message = ex.Status.Detail;
+            var serviceException = ex.ToServiceException();
+            if (serviceException == null)
+                throw;
+
+            var status = serviceException.HttpStatusCode;
+            var message = serviceException.Message;
 
             // Note: The gRPC framework also logs exceptions thrown by handlers to .NET Core logging.
             var detailMessage = $"Error thrown by {context.Request.GetDisplayUrl()} - {status} ({(int) status})";

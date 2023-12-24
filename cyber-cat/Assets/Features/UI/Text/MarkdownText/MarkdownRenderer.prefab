@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 491effb5e08dc4646b522b07c9bea968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _markdownRenderer: {fileID: 3933884474535505986}
 --- !u!114 &3933884474535505986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +174,8 @@ MonoBehaviour:
     list</size></b></u>\n<size=0.3em>\u200B</size>\r\n<size=0.76em>\u200B</size>\n<line-height=0%><width=100><align=right>\u2022</width></align>\n</line-height><indent=120>one</indent>\r\n<line-height=0%><width=100><align=right>\u2022</width></align>\n</line-height><indent=120>two</indent>\n<size=0.76em>\u200B</size>\r\n<color=#1D7CEAFF><link=\"https://jimmycushnie.itch.io/fancytextrendering-demo\">See
     more</link></color>\r\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 27d990be6d34e4148b569353d9903967, type: 2}
+  m_sharedMaterial: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Shared.Models.Ids;
-using Shared.Models.Models.TestCases;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
 
 public class CodeEditorState : ILifetimeScope
@@ -74,11 +74,11 @@ public class CodeEditorState : ILifetimeScope
         };
     }
 
-    public TestCase GetTestCaseById(TestCaseId testCaseId)
+    public TestCaseDescription GetTestCaseById(TestCaseId testCaseId)
     {
         return Section switch
         {
-            TestCasesSection testCasesSection => testCasesSection.TestCases?[testCaseId.TaskId, testCaseId.Index],
+            TestCasesSection testCasesSection => testCasesSection.TestCases?.FirstOrDefault(x => x.Id == testCaseId),
             _ => null
         };
     }
@@ -92,7 +92,7 @@ public class CodeEditorState : ILifetimeScope
         };
     }
 
-    public TestCase GetSelectedTestCase()
+    public TestCaseDescription GetSelectedTestCase()
     {
         return Section switch
         {
@@ -123,10 +123,10 @@ public interface ISection : ILifetimeScope
 
 public class TestCasesSection : ISection
 {
-    [Atom] public TestCases TestCases { get; set; }
+    [Atom] public List<TestCaseDescription> TestCases { get; set; }
     [Atom] public TestCaseId SelectedTestCaseId { get; set; }
-    [Atom] public List<TestCaseId> TestCaseIds => TestCases.Values.Select(x => (TestCaseId) x.Key).ToList();
-    [Atom] public TestCase SelectedTestCase => SelectedTestCaseId != null ? TestCases?.Values[SelectedTestCaseId] : null;
+    [Atom] public List<TestCaseId> TestCaseIds => TestCases.Select(x => x.Id).ToList();
+    [Atom] public TestCaseDescription SelectedTestCase => SelectedTestCaseId != null ? TestCases?.FirstOrDefault(x => x.Id == SelectedTestCaseId) : null;
 
     public Lifetime Lifetime { get; }
 
@@ -143,15 +143,15 @@ public class ResultSection : ISection
     [Atom]
     public TestCaseId SelectedTestCaseId
     {
-        get => TestCaseIds?[_selectedTestCaseIndex];
-        set => _selectedTestCaseIndex = TestCaseIds?.FindIndex(id => id == value) ?? 0;
+        get => TestCaseIds != null && TestCaseIds.Count > _selectedTestCaseIndex ? TestCaseIds[_selectedTestCaseIndex] : null;
+        set => _selectedTestCaseIndex = TestCaseIds?.FindIndex(id => id.Equals(value)) ?? 0;
     }
 
-    [Atom] public TestCasesVerdict TestCasesVerdict => (Verdict as Success)?.TestCases ?? (Verdict as Failure)?.TestCases;
+    [Atom] public TestCasesVerdict TestCasesVerdict => Verdict?.TestCases;
     [Atom] public List<TestCaseId> TestCaseIds => TestCasesVerdict?.Values.Values.Select(test => test.TestCase.Id).ToList();
     [Atom] public TestCaseVerdict SelectedTestCaseVerdict => SelectedTestCaseId != null ? TestCasesVerdict?[SelectedTestCaseId] : null;
 
-    [Atom] private int _selectedTestCaseIndex { get; set; } = 0;
+    [Atom] private int _selectedTestCaseIndex { get; set; } = 0; // Force select first tab.
 
     public Lifetime Lifetime { get; }
 

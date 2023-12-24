@@ -1,30 +1,55 @@
 #if UNITY_WEBGL
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest;
 using fastJSON;
 using UnityEngine;
 
-namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
+namespace ApiGateway.Client.Infrastructure.WebClient.WebClientAdapters.UnityWebRequest
 {
     internal class UnityWebClient : IInternalWebClientAdapter
     {
-        private string _authorizationHeaderValue;
+        private readonly Dictionary<string, string> _headers = new Dictionary<string, string>();
+        private bool _debug;
+
+        public UnityWebClient()
+        {
+            SetDebugMode();
+        }
 
         public void Dispose()
         {
         }
 
+        [Conditional("DEBUG")]
+        private void SetDebugMode()
+        {
+            _debug = true;
+        }
+
         public void AddAuthorizationHeader(string type, string value)
         {
-            _authorizationHeaderValue = $"{type} {value}";
-            DebugOnly.Log($"Add authorization header '{_authorizationHeaderValue}'");
+            _headers["Authorization"] = $"{type} {value}";
         }
 
         public void RemoveAuthorizationHeader()
         {
-            _authorizationHeaderValue = string.Empty;
-            DebugOnly.Log("Remove authorization header");
+            RemoveHeader("Authorization");
+        }
+
+        public void AddHeader(string header, string value)
+        {
+            _headers[header] = value;
+            DebugOnly.Log($"Add header '{header}' - '{value}'");
+        }
+
+        public void RemoveHeader(string header)
+        {
+            _headers.Remove(header);
+            DebugOnly.Log($"Remove header '{header}'");
         }
 
         public async Task<string> GetStringAsync(string uri)
@@ -65,9 +90,24 @@ namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
         {
             DebugOnly.Log($"Try deserialize response to object of type '{typeof(TResponse)}'");
             var response = await GetStringAsync(uri);
-            var obj = JSON.ToObject<TResponse>(response);
-            DebugOnly.Log($"Success deserialize object '{obj}'");
+            TResponse obj;
+            if (_debug)
+            {
+                try
+                {
+                    obj = JSON.ToObject<TResponse>(response);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Uri: {uri}, Json: {response}", e);
+                }
+            }
+            else
+            {
+                obj = JSON.ToObject<TResponse>(response);
+            }
 
+            DebugOnly.Log($"Success deserialize object '{obj}'");
             return obj;
         }
 
@@ -123,9 +163,9 @@ namespace ApiGateway.Client.V3.Infrastructure.WebClientAdapters.UnityWebRequest
 
         private void SetAuthorizationIfNeeded(UnityEngine.Networking.UnityWebRequest request)
         {
-            if (!string.IsNullOrEmpty(_authorizationHeaderValue))
+            foreach (var header in _headers)
             {
-                request.SetRequestHeader("Authorization", _authorizationHeaderValue);
+                request.SetRequestHeader(header.Key, header.Value);
             }
         }
 

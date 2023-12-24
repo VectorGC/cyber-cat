@@ -17,9 +17,9 @@ public class JudgeGrpcService : IJudgeService
         _taskService = taskService;
     }
 
-    public async Task<Verdict> GetVerdict(SubmitSolutionArgs args)
+    public async Task<Verdict> GetVerdict(GetVerdictArgs args)
     {
-        var (_, taskId, solution) = args;
+        var (taskId, solution) = args;
         var tests = await _taskService.GetTestCases(taskId);
 
         var testsVerdict = new TestCasesVerdict();
@@ -30,7 +30,11 @@ public class JudgeGrpcService : IJudgeService
             {
                 return new NativeFailure()
                 {
-                    Error = output.StandardError
+                    TaskId = taskId,
+                    TestCases = testsVerdict,
+                    Solution = solution,
+                    Error = output.StandardError,
+                    DateTime = DateTime.UtcNow
                 };
             }
 
@@ -44,7 +48,8 @@ public class JudgeGrpcService : IJudgeService
         {
             TaskId = taskId,
             Solution = solution,
-            TestCases = testsVerdict
+            TestCases = testsVerdict,
+            DateTime = DateTime.UtcNow
         };
     }
 }

@@ -13,6 +13,36 @@ public abstract class LifetimeUIBehaviour : LifetimeMonoBehaviour
     protected abstract void OnUpdate();
 }
 
+public abstract class LifetimeUIBehaviourV3<TState> : LifetimeMonoBehaviour where TState : ILifetimeScope
+{
+    [Atom] protected abstract TState State { get; set; }
+
+    protected sealed override void Start()
+    {
+        base.Start();
+        Atom.Reaction(Lifetime, OnUpdate, debugName: $"{GetType().Name}.{nameof(OnUpdate)}");
+        OnInit();
+    }
+
+    protected sealed override void OnDestroy()
+    {
+        OnDispose();
+        base.OnDestroy();
+    }
+
+    protected virtual void OnInit()
+    {
+    }
+
+    protected virtual void OnDispose()
+    {
+    }
+
+    protected virtual void OnUpdate()
+    {
+    }
+}
+
 public abstract class LifetimeUIBehaviourV2<TState> : LifetimeMonoBehaviour where TState : ILifetimeScope
 {
     [Atom] protected abstract TState State { get; set; }

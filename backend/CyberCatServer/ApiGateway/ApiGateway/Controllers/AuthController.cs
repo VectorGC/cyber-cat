@@ -27,10 +27,7 @@ public class AuthController : Controller
     [ProducesResponseType((int) HttpStatusCode.Conflict)]
     public async Task<ActionResult> RegisterPlayer(string email, string password, string name)
     {
-        await _authService.CreateUser(new CreateUserArgs(email, password, name, new Roles()
-        {
-            Roles.Player
-        }));
+        await _authService.CreateUser(new CreateUserArgs(email, password, name, new Roles(Roles.Player)));
 
         return Ok();
     }
@@ -38,9 +35,9 @@ public class AuthController : Controller
     [HttpPost(WebApi.RemoveUser)]
     [ProducesResponseType((int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> RemoveUser(string password)
+    public async Task<ActionResult> RemoveUser()
     {
-        await _authService.RemoveUser(new RemoveUserArgs(User.Id(), password));
+        await _authService.RemoveUser(new RemoveUserArgs(User.Id()));
         await _playerService.RemovePlayer(new RemovePlayerArgs(User.Id()));
         return Ok();
     }

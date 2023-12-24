@@ -1,14 +1,20 @@
 using System;
-using ApiGateway.Client.Internal.Tasks.Statuses;
-using ApiGateway.Client.Internal.Tasks.Verdicts;
+using System.Collections.Generic;
+using System.Diagnostics;
+using ApiGateway.Client.Application;
+using ApiGateway.Client.Application.CQRS;
 using Cysharp.Threading.Tasks;
 using Models;
-using Shared.Models.Models.TestCases;
-using Shared.Models.Models.Verdicts;
+using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
 using UniMob;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using Debug = UnityEngine.Debug;
 
 public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 {
@@ -26,12 +32,22 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     [Atom] public override CodeEditorState State { get; set; }
 
     private ICodeEditor _codeEditor;
-    private TestCases _testCasesCache;
+    private List<TestCaseDescription> _testCasesCache;
     private Verdict _verdictCache;
+    private ApiGatewayClient _client;
+
+#if UNITY_EDITOR
+    private static bool IsSuccessSubmitCheat
+    {
+        get => EditorPrefs.GetBool(nameof(IsSuccessSubmitCheat));
+        set => EditorPrefs.SetBool(nameof(IsSuccessSubmitCheat), value);
+    }
+#endif
 
     [Inject]
-    private async void Construct(ICodeEditor codeEditor)
+    private async void Construct(ICodeEditor codeEditor, ApiGatewayClient client)
     {
+        _client = client;
         _codeEditor = codeEditor;
 
 #if UNITY_EDITOR
@@ -42,10 +58,30 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         }
 #endif
 
-        var descriptionHandler = codeEditor.Task.GetDescription();
-        _taskDescription.Value.SetTextAsync(descriptionHandler);
+        _taskDescription.Value.SetText(codeEditor.Task.Description);
         _codeEditorView.Language = LanguageProg.Cpp;
     }
+
+#if UNITY_EDITOR
+    [MenuItem("Cheats/Always success submit for anonymous")]
+    private static void SuccessSubmitCheat()
+    {
+        IsSuccessSubmitCheat = !IsSuccessSubmitCheat;
+    }
+
+    [MenuItem("Cheats/Always success submit for anonymous", true)]
+    private static bool SuccessSubmitCheatValidate()
+    {
+        Menu.SetChecked("Cheats/Always success submit for anonymous", IsSuccessSubmitCheat);
+        return true;
+    }
+
+    [MenuItem("Cheats/ClearPlayerPrefs")]
+    private static void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+#endif
 
     protected override async void Start()
     {
@@ -53,21 +89,29 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
         await UniTask.WaitUntil(() => _codeEditor.Task != null);
 
-        var progress = await _codeEditor.Task.GetStatus();
-        switch (progress)
+        if (_client.Player == null)
         {
-            case NotStarted notStarted:
-                _codeEditorView.SourceCode = await _codeEditor.Task.GetDefaultCode();
-                break;
-            case Complete complete:
-                _codeEditorView.SourceCode = complete.Solution;
-                break;
-            case HaveSolution haveSolution:
-                _codeEditorView.SourceCode = haveSolution.Solution;
-                break;
+            var verdict = _client.VerdictHistoryService.GetBestOrLastVerdict(_codeEditor.Task.Id);
+            if (verdict != null)
+            {
+                _codeEditorView.SourceCode = verdict.Solution;
+            }
+            else
+            {
+                var description = await _client.TaskRepository.GetTaskDescription(_codeEditor.Task.Id);
+                _codeEditorView.SourceCode = description.DefaultCode;
+            }
+        }
+        else
+        {
+            var taskModel = _client.Player.Tasks[_codeEditor.Task.Id];
+            if (!taskModel.IsStarted)
+                _codeEditorView.SourceCode = taskModel.Description.DefaultCode;
+            else
+                _codeEditorView.SourceCode = taskModel.LastSolution;
         }
 
-        _testCasesCache = await _codeEditor.Task.GetTestCases();
+        _testCasesCache = await _client.TaskRepository.GetTestCases(_codeEditor.Task.Id);
         State = new CodeEditorState(Lifetime)
         {
             Section = new TestCasesSection(Lifetime)
@@ -91,7 +135,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
                     resultSection.Verdict = _verdictCache;
                 break;
             case TestCasesSection testCasesSection:
-                _testCasesCache ??= await _codeEditor.Task.GetTestCases();
+                _testCasesCache ??= await _client.TaskRepository.GetTestCases(_codeEditor.Task.Id);
                 testCasesSection.TestCases = _testCasesCache;
                 break;
             default:
@@ -104,7 +148,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.AddListener(GetSavedCode);
         _resetCode.onClick.AddListener(ResetCode);
-        _exit.Clicked += ExitEditor;
+        _exit.OnClick += ExitEditor;
     }
 
     protected override void OnDisposeView()
@@ -112,7 +156,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         _verifySolution.onClick.AddListener(VerifySolution);
         _loadSavedCode.onClick.RemoveListener(GetSavedCode);
         _resetCode.onClick.RemoveListener(ResetCode);
-        _exit.Clicked -= ExitEditor;
+        _exit.OnClick -= ExitEditor;
     }
 
     protected override void OnInitState(CodeEditorState state)
@@ -130,7 +174,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
 
     protected override void OnUpdate()
     {
-        if (_verdictCache is Success)
+        if (_verdictCache?.IsSuccess ?? false)
         {
             _exit.SetActiveHighlight(true);
         }
@@ -143,7 +187,7 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
     private async void VerifySolution()
     {
         var sourceCode = _codeEditorView.SourceCode;
-        _verdictCache = await _codeEditor.Task.VerifySolution(sourceCode).ToReportProgressStatus(State, "Выполняется...");
+        _verdictCache = await SubmitSolution(_codeEditor.Task.Id, sourceCode);
 
         // Force select Result section.
         State.Section = new ResultSection(Lifetime)
@@ -152,15 +196,68 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
         };
     }
 
-    private async void GetSavedCode()
+    private async UniTask<Verdict> SubmitSolution(TaskId taskId, string sourceCode)
     {
-        var sourceCode = await _codeEditor.Task.GetLastSavedSolution();
-        _codeEditorView.SourceCode = sourceCode;
+#if UNITY_EDITOR
+        if (IsSuccessSubmitCheat && _client.Player == null)
+        {
+            var verdict = new Verdict()
+            {
+                TaskId = taskId,
+                Solution = sourceCode,
+                TestCases = new TestCasesVerdict()
+                {
+                    Values = new Dictionary<string, TestCaseVerdict>()
+                    {
+                        [new TestCaseId(taskId, 0)] = new SuccessTestCaseVerdict()
+                        {
+                            TestCase = new TestCaseDescription()
+                        }
+                    }
+                }
+            };
+            _client.VerdictHistoryService.Add(verdict, DateTime.Now);
+            return verdict;
+        }
+#endif
+
+        var result = _client.Player != null
+            ? await _client.Player.Tasks[_codeEditor.Task.Id].SubmitSolution(sourceCode).ToReportProgressStatus(State, "Выполняется...")
+            : await _client.SubmitAnonymousSolution(_codeEditor.Task.Id, sourceCode).ToReportProgressStatus(State, "Выполняется...");
+
+        if (result.IsSuccess)
+        {
+            return result.Value;
+        }
+        else
+        {
+            Debug.LogError(result.Error);
+            return new NativeFailure()
+            {
+                Error = result.Error,
+                Solution = sourceCode,
+                TaskId = _codeEditor.Task.Id,
+                TestCases = new TestCasesVerdict()
+            };
+        }
     }
 
-    private async void ResetCode()
+    private void GetSavedCode()
     {
-        var sourceCode = await _codeEditor.Task.GetDefaultCode();
+        if (_client.Player != null)
+        {
+            var taskModel = _client.Player.Tasks[_codeEditor.Task.Id];
+            _codeEditorView.SourceCode = taskModel.LastSolution;
+        }
+        else
+        {
+            _codeEditorView.SourceCode = _codeEditor.Task.DefaultCode;
+        }
+    }
+
+    private void ResetCode()
+    {
+        var sourceCode = _codeEditor.Task.DefaultCode;
         _codeEditorView.SourceCode = sourceCode;
     }
 

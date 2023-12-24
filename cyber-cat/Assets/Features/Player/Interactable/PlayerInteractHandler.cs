@@ -18,13 +18,22 @@ public class PlayerInteractHandler
 
     public void OnUpdate()
     {
-        var canInteractable = _interactables.FirstOrDefault(CanInteract);
-        if (canInteractable != null)
+        Interactable interctableTarget = null;
+        foreach (var interactable in _interactables)
+        {
+            if (CanInteract(interactable))
+            {
+                interctableTarget = interactable;
+                break;
+            }
+        }
+
+        if (interctableTarget != null)
         {
             _hud.HintText = "Взаимодействовать F";
             if (Input.GetKeyDown(KeyCode.F))
             {
-                canInteractable.Interact();
+                interctableTarget.Interact();
             }
         }
     }

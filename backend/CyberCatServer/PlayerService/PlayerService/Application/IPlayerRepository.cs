@@ -4,7 +4,7 @@ using Shared.Models.Domain.Users;
 
 namespace PlayerService.Application;
 
-public enum UserRepositoryError
+public enum PlayerRepositoryError
 {
     None = 0,
     Unknown = 1,
@@ -17,11 +17,11 @@ public interface IPlayerRepository
     Task<PlayerEntity> GetPlayer(UserId userId);
     Task<UpdateResult> Update(PlayerEntity player);
     Task<DeleteResult> Delete(UserId userId);
-    IAsyncEnumerable<PlayerEntity> GetPlayerWhoSolvedTask(TaskId taskId);
+    Task<List<PlayerEntity>> GetPlayerWhoSolvedTask(TaskId taskId);
 }
 
-public record CreateResult(bool IsSuccess, UserRepositoryError Error, PlayerEntity Player);
+public record CreateResult(bool IsSuccess, PlayerRepositoryError Error, PlayerEntity Player);
 
-public record DeleteResult(bool IsSuccess, UserRepositoryError Error);
+public record DeleteResult(bool IsSuccess, PlayerRepositoryError Error);
 
-public record UpdateResult(bool IsSuccess, UserRepositoryError Error);
+public record UpdateResult(bool IsSuccess, PlayerRepositoryError Error);

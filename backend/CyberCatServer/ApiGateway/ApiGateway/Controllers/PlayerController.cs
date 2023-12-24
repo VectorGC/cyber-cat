@@ -3,8 +3,10 @@ using ApiGateway.Infrastructure.CompleteTaskWebHookService;
 using fastJSON;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Models;
 using Shared.Models.Domain.Tasks;
 using Shared.Models.Domain.Users;
+using Shared.Models.Domain.Verdicts;
 using Shared.Models.Infrastructure;
 using Shared.Server.Application.Services;
 using Shared.Server.Infrastructure;
@@ -35,18 +37,20 @@ public class PlayerController : ControllerBase
     public async Task<ActionResult<List<TaskProgress>>> GetTasksProgress()
     {
         var userId = HttpContext.User.Id();
-        var progresses = await _playerService.GetTasksProgress(new GetTasksProgressArgs(userId));
+        var progresses = await _playerService.GetTasksProgress(userId);
         return progresses ?? new List<TaskProgress>();
     }
 
     [HttpGet(WebApi.GetTaskProgressTemplate)]
     [ProducesResponseType(typeof(TaskProgress), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskProgress>> GetTaskProgress(string taskId)
+    public async Task<ActionResult<string>> GetTaskProgress(string taskId)
     {
         var userId = HttpContext.User.Id();
-        var response = await _playerService.GetTaskProgress(new GetTaskProgressArgs(userId, taskId));
-        return response;
+        var progresses = await _playerService.GetTasksProgress(userId);
+        var progress = progresses.FirstOrDefault(progress => progress.TaskId == taskId);
+        var json = JSON.ToJSON(progress);
+        return json;
     }
 
     [HttpPost(WebApi.SubmitSolutionTemplate)]
@@ -76,9 +80,9 @@ public class PlayerController : ControllerBase
         return json;
     }
 
+    [AllowAnonymous]
     [HttpGet(WebApi.GetUsersWhoSolvedTaskTemplate)]
     [ProducesResponseType(typeof(List<UserModel>), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
     public async Task<ActionResult<string>> GetUsersWhoSolvedTask(string taskId)
     {
         var userIds = await _playerService.GetUsersWhoSolvedTask(taskId);
@@ -86,5 +90,15 @@ public class PlayerController : ControllerBase
 
         var json = JSON.ToJSON(users);
         return json;
+    }
+
+    [HttpPost(WebApi.SaveVerdictHistory)]
+    public async Task<ActionResult> SaveVerdictHistory(string verdictHistoryJson)
+    {
+        var unzip = GZIP.UnzipFromString(verdictHistoryJson);
+        var history = JSON.ToObject<List<Verdict>>(unzip);
+        await _playerService.SaveVerdictHistory(new SaveVerdictHistoryArgs(User.Id(), history));
+
+        return Ok();
     }
 }

@@ -7,7 +7,7 @@ public class ProjectContextInstaller : ScriptableObjectInstaller<ProjectContextI
     public override void InstallBindings()
     {
         ServerAPIInstaller.InstallBindings(Container);
-        AccountInstaller.InstallBindings(Container);
+        AuthorizationInstaller.InstallBindings(Container);
         UIInstaller.InstallBindings(Container);
     }
 }
