@@ -1,28 +1,36 @@
-using PlayerService;
-using PlayerService.GrpcServices;
-using PlayerService.Repositories;
-using ProtoBuf.Grpc.ClientFactory;
+using PlayerService.Application;
+using PlayerService.Domain;
+using PlayerService.Infrastructure;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Services;
+using Shared.Models.Domain.VerdictHistory;
+using Shared.Models.Domain.Verdicts;
+using Shared.Models.Domain.Verdicts.TestCases;
+using Shared.Server.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<PlayerServiceAppSettings>(builder.Configuration);
-
+builder.AddMongoDatabaseContext();
 builder.Services.AddScoped<IPlayerRepository, PlayerMongoRepository>();
 
-var appSettings = builder.Configuration.Get<PlayerServiceAppSettings>();
-builder.Services.AddCodeFirstGrpcClient<IJudgeGrpcService>(options => { options.Address = appSettings.ConnectionStrings.JudgeServiceGrpcAddress; });
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<Verdict, VerdictEntity>().ConstructUsing(x => new VerdictEntity(x));
+    cfg.CreateMap<VerdictHistory, List<VerdictEntity>>().ConstructUsing((x, context) =>
+    {
+        var verdicts = x.ToList();
+        return context.Mapper.Map<List<VerdictEntity>>(verdicts);
+    });
+});
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.AddJudgeServiceGrpcClient();
+
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 
 app.MapGrpcService<PlayerGrpcService>();
 
 app.Run();
-
-// TODO: Add service to docker!
 
 namespace PlayerService
 {

@@ -5,16 +5,25 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.1" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+      <PackageReference Include="MongoDbGenericRepository" Version="1.4.8" />
       <PackageReference Include="protobuf-net.BuildTools" Version="3.2.12">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
       <PackageReference Include="protobuf-net.Grpc.ClientFactory" Version="1.1.1" />
+      <PackageReference Include="Faker.Net" Version="2.0.154" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.19" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Shared.Models\Shared.Models.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application" />
     </ItemGroup>
 
 </Project>

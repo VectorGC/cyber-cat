@@ -1,13 +1,17 @@
 using ProtoBuf.Grpc.Server;
-using TaskService.GrpcServices;
-using TaskService.Repositories;
+using Shared.Server.Application.Services;
+using TaskService.Application;
+using TaskService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ITaskRepository, TaskModelConstRepository>();
-builder.Services.AddScoped<ITestRepository, TaskModelConstRepository>();
+builder.AddMongoDatabaseContext();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
+builder.Services.AddScoped<ITaskRepository, TaskModelConstCaseRepository>();
+builder.Services.AddScoped<TaskEntityMapper>();
+
+builder.Services.AddHttpClient();
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 

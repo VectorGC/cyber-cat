@@ -1,4 +1,4 @@
-using ApiGateway.Client.Models;
+using ApiGateway.Client.Application;
 using Features.ServerConfig;
 using Zenject;
 
@@ -6,6 +6,7 @@ public static class ServerAPIInstaller
 {
     public static void InstallBindings(DiContainer container)
     {
-        container.BindAsync<IPlayer>().FromMethod(ServerAPI.CreatePlayerClient).AsSingle();
+        var client = new ApiGatewayClient(ServerAPI.ServerEnvironment);
+        container.BindInterfacesAndSelfTo<ApiGatewayClient>().FromInstance(client).AsSingle();
     }
 }

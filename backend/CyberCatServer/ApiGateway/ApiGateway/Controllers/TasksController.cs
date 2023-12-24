@@ -1,58 +1,41 @@
 using System.Net;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using fastJSON;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Descriptions;
-using Shared.Models.Ids;
-using Shared.Models.Models.TestCases;
-using Shared.Server.Services;
+using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.TestCase;
+using Shared.Models.Domain.Users;
+using Shared.Models.Infrastructure;
+using Shared.Server.Application.Services;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class TasksController : ControllerBase
 {
-    private readonly ITaskGrpcService _taskGrpcService;
+    private readonly ITaskService _taskService;
 
-    public TasksController(ITaskGrpcService taskGrpcService)
+    public TasksController(ITaskService taskService)
     {
-        _taskGrpcService = taskGrpcService;
+        _taskService = taskService;
     }
 
-    [HttpGet]
-    [ProducesResponseType(typeof(TaskIdsDto), (int) HttpStatusCode.OK)]
+    [HttpGet(WebApi.GetTaskDescriptions)]
+    [ProducesResponseType(typeof(List<TaskDescription>), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskIdsDto>> GetTasks()
+    public async Task<ActionResult<string>> GetTasks()
     {
-        var response = await _taskGrpcService.GetTasks();
-        response.EnsureSuccess();
-
-        var taskIds = response.Value.Select(taskId => taskId.Value).ToList();
-        var responseDto = new TaskIdsDto
-        {
-            taskIds = taskIds
-        };
-
-        return responseDto;
+        var response = await _taskService.GetTasks();
+        var json = JSON.ToJSON(response);
+        return json;
     }
 
-    [HttpGet("{taskId}")]
-    [ProducesResponseType(typeof(TaskDescription), (int) HttpStatusCode.OK)]
+    [HttpGet(WebApi.GetTestCasesTemplate)]
+    [ProducesResponseType(typeof(List<TestCaseDescription>), (int) HttpStatusCode.OK)]
     [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskDescription>> GetTask(string taskId)
+    public async Task<ActionResult<string>> GetTestCases(string taskId)
     {
-        var response = await _taskGrpcService.GetTask(taskId);
-        return response;
-    }
-
-    [HttpGet("{taskId}/tests")]
-    [ProducesResponseType(typeof(TestCases), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TestCases>> GetTestCases(string taskId)
-    {
-        var response = await _taskGrpcService.GetTestCases(taskId);
-        return response;
+        var testCases = await _taskService.GetTestCases(taskId);
+        var json = JSON.ToJSON(testCases);
+        return json;
     }
 }

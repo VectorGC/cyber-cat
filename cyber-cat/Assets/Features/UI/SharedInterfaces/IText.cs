@@ -1,7 +1,8 @@
-using System.Threading.Tasks;
+using UnityEngine;
 
 public interface IText
 {
     string Text { get; set; }
-    void SetTextAsync(Task<string> handler);
+    Color Color { get; set; }
+    void SetText(string text);
 }

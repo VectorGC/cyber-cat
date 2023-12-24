@@ -9,8 +9,6 @@ public class GameSceneInstaller : MonoInstaller
     {
         _playerInstaller.InstallBindings(Container);
 
-        ServerAPIInstaller.InstallBindings(Container);
-        UIInstaller.InstallBindings(Container);
         CodeEditorInstaller.InstallBindings(Container);
         HackerVisionInstaller.InstallBindings(Container);
     }

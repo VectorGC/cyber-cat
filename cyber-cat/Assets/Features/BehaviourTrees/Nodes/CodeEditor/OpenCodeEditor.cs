@@ -1,7 +1,8 @@
 using System.Text;
-using ApiGateway.Client.Models;
+using ApiGateway.Client.Application;
 using Bonsai;
 using Bonsai.Core;
+using Shared.Models.Domain.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -10,14 +11,15 @@ public class OpenCodeEditor : Task
 {
     [SerializeField] private TaskType _taskType;
 
-    private ITask _task;
     private ICodeEditor _codeEditor;
+    private ApiGatewayClient _apiGatewayClient;
+    private TaskDescription _task;
 
     [Inject]
-    private async void Construct(AsyncInject<IPlayer> playerAsync, ICodeEditor codeEditor)
+    private async void Construct(ApiGatewayClient apiGatewayClient, ICodeEditor codeEditor)
     {
-        var player = await playerAsync;
-        _task = player.Tasks[_taskType.GetId()];
+        _apiGatewayClient = apiGatewayClient;
+        _task = await _apiGatewayClient.TaskRepository.GetTaskDescription(_taskType.Id());
         _codeEditor = codeEditor;
     }
 

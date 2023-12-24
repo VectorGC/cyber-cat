@@ -41,7 +41,7 @@ public class HackerVision : IInitializable, ITickable
 
     public void Tick()
     {
-        var isHackModePressed = Input.GetKeyDown(KeyCode.Q);
+        var isHackModePressed = Input.GetKeyDown(KeyCode.Q) && Player.CanInput;
         if (isHackModePressed)
         {
             Active = !Active;

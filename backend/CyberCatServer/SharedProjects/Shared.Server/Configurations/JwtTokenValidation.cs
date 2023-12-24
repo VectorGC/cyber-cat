@@ -1,8 +1,18 @@
-﻿namespace Shared.Server.Configurations;
+﻿using System.Linq;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+
+namespace Shared.Server.Configurations;
 
 public static class JwtTokenValidation
 {
-    public const string Issuer = "AuthService";
-    public const string Audience = "AuthService";
-    public const string IssuerSigningKey = "!CyberCatSecret!";
+    public static TokenValidationParameters TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "AuthService",
+        ValidAudience = "AuthService",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("!CyberCatSecret!").ToArray())
+    };
 }

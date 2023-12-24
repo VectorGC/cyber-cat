@@ -1,18 +1,13 @@
-using JudgeService.Configurations;
-using JudgeService.GrpcServices;
-using ProtoBuf.Grpc.ClientFactory;
+using JudgeService.Application;
 using ProtoBuf.Grpc.Server;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<JudgeServiceAppSettings>(builder.Configuration);
+builder.AddCppLauncherGrpcClient();
+builder.AddTaskServiceGrpcClient();
 
-builder.Services.AddCodeFirstGrpc(options => { options.EnableDetailedErrors = true; });
-
-var appSettings = builder.Configuration.Get<JudgeServiceAppSettings>();
-builder.Services.AddCodeFirstGrpcClient<ICodeLauncherGrpcService>(options => { options.Address = appSettings.ConnectionStrings.CppLauncherServiceGrpcAddress; });
-builder.Services.AddCodeFirstGrpcClient<ITaskGrpcService>(options => { options.Address = appSettings.ConnectionStrings.TaskServiceGrpcAddress; });
+builder.Services.AddCodeFirstGrpc();
 
 var app = builder.Build();
 

@@ -1,10 +1,10 @@
-using CppLauncherService.Configurations;
+using CppLauncherService.Application;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ProtoBuf.Grpc.Client;
-using Shared.Server.Data;
-using Shared.Server.Services;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure.Dto;
 using Shared.Tests;
 
 namespace CppLauncherService.Tests;
@@ -27,7 +27,7 @@ public class CompileAndLaunchTests
         const string sourceCode = "#include <stdio.h>\nint main() { printf(\"Hello cat!\"); }";
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(new LaunchCodeArgs(sourceCode));
 
@@ -42,7 +42,7 @@ public class CompileAndLaunchTests
         const string expectedErrorRegex = "Exit Code 1:.*:2:11: error: expected initializer at end of input\n    2 | int main()\n      |           ^\n";
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(new LaunchCodeArgs(sourceCode));
 
@@ -58,7 +58,7 @@ public class CompileAndLaunchTests
         var expectedError = $"Exit Code -1: The process took more than {appSettings.Value.ProcessTimeoutSec} seconds";
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(new LaunchCodeArgs(sourceCode));
 
@@ -73,7 +73,7 @@ public class CompileAndLaunchTests
         const string expectedError = "Exit Code 11: (SIGSEGV signal) Segmentation fault";
 
         using var channel = _factory.CreateGrpcChannel();
-        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherGrpcService>();
+        var codeLauncherService = channel.CreateGrpcService<ICodeLauncherService>();
 
         var output = (OutputDto) await codeLauncherService.Launch(new LaunchCodeArgs(sourceCode));
 

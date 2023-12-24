@@ -9,9 +9,9 @@ namespace ApiGateway.Client
         Production
     }
 
-    internal static class ServerEnvironmentMap
+    internal static class ServerEnvironmentExtensions
     {
-        public static Uri Get(ServerEnvironment environment)
+        public static Uri ToUri(this ServerEnvironment environment)
         {
             switch (environment)
             {
@@ -23,6 +23,11 @@ namespace ApiGateway.Client
                 default:
                     throw new ArgumentOutOfRangeException(nameof(ServerEnvironment));
             }
+        }
+
+        public static string ToUri(this ServerEnvironment environment, string path)
+        {
+            return $"{ToUri(environment)}{path}";
         }
     }
 }

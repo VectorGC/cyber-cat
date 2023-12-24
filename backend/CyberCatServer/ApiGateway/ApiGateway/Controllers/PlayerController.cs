@@ -1,116 +1,104 @@
 ﻿using System.Net;
-using ApiGateway.Attributes;
+using ApiGateway.Infrastructure.CompleteTaskWebHookService;
 using fastJSON;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Data;
-using Shared.Server.Exceptions.PlayerService;
-using Shared.Server.Ids;
-using Shared.Server.Services;
+using Shared.Models;
+using Shared.Models.Domain.Tasks;
+using Shared.Models.Domain.Users;
+using Shared.Models.Domain.Verdicts;
+using Shared.Models.Infrastructure;
+using Shared.Server.Application.Services;
+using Shared.Server.Infrastructure;
 
 namespace ApiGateway.Controllers;
 
 [Controller]
-[Route("[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize]
 public class PlayerController : ControllerBase
 {
-    private readonly IPlayerGrpcService _playerGrpcService;
+    private readonly IPlayerService _playerService;
+    private readonly ITaskService _taskService;
+    private readonly CompleteTaskWebHookService _completeTaskWebHookService;
+    private readonly IAuthService _authService;
 
-    public PlayerController(IPlayerGrpcService playerGrpcService)
+    public PlayerController(IPlayerService playerService, ITaskService taskService, IAuthService authService,
+        CompleteTaskWebHookService completeTaskWebHookService)
     {
-        _playerGrpcService = playerGrpcService;
+        _authService = authService;
+        _completeTaskWebHookService = completeTaskWebHookService;
+        _taskService = taskService;
+        _playerService = playerService;
     }
 
-    [HttpPost("remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> RemovePlayer([FromPlayer] PlayerId playerId)
+    [HttpGet(WebApi.GetTasksProgress)]
+    [ProducesResponseType(typeof(List<TaskProgress>), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<List<TaskProgress>>> GetTasksProgress()
     {
-        return await _playerGrpcService.RemovePlayer(playerId);
+        var userId = HttpContext.User.Id();
+        var progresses = await _playerService.GetTasksProgress(userId);
+        return progresses ?? new List<TaskProgress>();
     }
 
-    [HttpGet]
-    [ProducesResponseType(typeof(PlayerData), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult<PlayerData>> GetPlayerById([FromPlayer] PlayerId playerId)
+    [HttpGet(WebApi.GetTaskProgressTemplate)]
+    [ProducesResponseType(typeof(TaskProgress), (int) HttpStatusCode.OK)]
+    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
+    public async Task<ActionResult<string>> GetTaskProgress(string taskId)
     {
-        return await _playerGrpcService.GetPlayerById(playerId);
-    }
-
-    [HttpPost("signIn")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    public async Task<ActionResult> SignIn([FromUser] UserId userId)
-    {
-        var response = await _playerGrpcService.GetPlayerByUserId(userId);
-        if (!response.IsSucceeded && response.Exception is PlayerNotFoundException)
-        {
-            return await _playerGrpcService.CreatePlayer(userId);
-        }
-
-        return response;
-    }
-
-    [HttpPost("verify/{taskId}")]
-    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-    public async Task<ActionResult<string>> VerifySolution(string taskId, [FromForm] string sourceCode, [FromPlayer] PlayerId playerId)
-    {
-        if (string.IsNullOrEmpty(sourceCode))
-        {
-            throw new ArgumentNullException(nameof(sourceCode));
-        }
-
-        var response = await _playerGrpcService.GetVerdict(new(playerId, taskId, sourceCode));
-        var json = JSON.ToJSON(response.Value);
-
+        var userId = HttpContext.User.Id();
+        var progresses = await _playerService.GetTasksProgress(userId);
+        var progress = progresses.FirstOrDefault(progress => progress.TaskId == taskId);
+        var json = JSON.ToJSON(progress);
         return json;
     }
 
-    [HttpGet("tasks/{taskId}")]
-    [ProducesResponseType(typeof(TaskData), (int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    public async Task<ActionResult<TaskData>> GetTaskData(string taskId, [FromPlayer] PlayerId playerId)
+    [HttpPost(WebApi.SubmitSolutionTemplate)]
+    [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<string>> SubmitSolution(string taskId, [FromForm] string solution)
     {
-        return await _playerGrpcService.GetTaskData(new(playerId, taskId));
+        if (string.IsNullOrEmpty(solution))
+        {
+            throw new ArgumentNullException(nameof(solution));
+        }
+
+        var userId = HttpContext.User.Id();
+        var verdict = await _playerService.SubmitSolution(new SubmitSolutionArgs(userId, taskId, solution));
+
+        var needSendWebHookResponse = await _taskService.NeedSendWebHook(taskId);
+        if (verdict.IsSuccess && needSendWebHookResponse.NeedSendWebHook)
+        {
+            await _completeTaskWebHookService.SendWebHook(new WhoSolvedTaskExternalDto()
+            {
+                IsSolved = true,
+                PlayerName = HttpContext.User.Identity?.Name ?? "Unknown",
+                TaskId = taskId
+            });
+        }
+
+        var json = JSON.ToJSON(verdict);
+        return json;
     }
 
-    /*
-    [HttpPut("bitcoins/add")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> AddBitcoinsToPlayer([FromForm] string bitcoins)
+    [AllowAnonymous]
+    [HttpGet(WebApi.GetUsersWhoSolvedTaskTemplate)]
+    [ProducesResponseType(typeof(List<UserModel>), (int) HttpStatusCode.OK)]
+    public async Task<ActionResult<string>> GetUsersWhoSolvedTask(string taskId)
     {
-        var playerId = User.Identity.GetUserId();
-        var args = new PlayerBtcArgs {PlayerId = playerId, BitcoinsAmount = Convert.ToInt32(bitcoins)};
-        try
-        {
-            await _playerGrpcService.AddBitcoinsToPlayer(args);
-            return Ok();
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
+        var userIds = await _playerService.GetUsersWhoSolvedTask(taskId);
+        var users = await _authService.GetUsersByIds(userIds);
+
+        var json = JSON.ToJSON(users);
+        return json;
     }
 
-    [HttpPut("bitcoins/remove")]
-    [ProducesResponseType((int) HttpStatusCode.OK)]
-    [ProducesResponseType((int) HttpStatusCode.Forbidden)]
-    [ProducesResponseType((int) HttpStatusCode.NotFound)]
-    public async Task<ActionResult> TakeBitcoinsFromPlayer([FromForm] string bitcoins)
+    [HttpPost(WebApi.SaveVerdictHistory)]
+    public async Task<ActionResult> SaveVerdictHistory(string verdictHistoryJson)
     {
-        var playerId = User.Identity.GetUserId();
-        var args = new PlayerBtcArgs {PlayerId = playerId, BitcoinsAmount = Convert.ToInt32(bitcoins)};
-        try
-        {
-            await _playerGrpcService.TakeBitcoinsFromPlayer(args);
-            return Ok();
-        }
-        catch (PlayerNotFoundException)
-        {
-            return NotFound();
-        }
+        var unzip = GZIP.UnzipFromString(verdictHistoryJson);
+        var history = JSON.ToObject<List<Verdict>>(unzip);
+        await _playerService.SaveVerdictHistory(new SaveVerdictHistoryArgs(User.Id(), history));
+
+        return Ok();
     }
-    */
 }

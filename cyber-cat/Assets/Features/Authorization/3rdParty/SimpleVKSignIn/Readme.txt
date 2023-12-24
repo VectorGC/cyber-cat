@@ -1,0 +1,1 @@
+Hello! Please visit our wiki on https://github.com/hippogamesunity/SimpleVKSignIn/wiki

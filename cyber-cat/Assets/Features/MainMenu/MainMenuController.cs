@@ -1,21 +1,26 @@
+using ApiGateway.Client.Application;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using Zenject;
 using Button = UnityEngine.UI.Button;
 
 namespace UI
 {
     public class MainMenuController : UIBehaviour
     {
-        [SerializeField] private Text _greetingsText;
         [SerializeField] private Button _tutorialButton;
         [SerializeField] private Button _inGameButton;
         [SerializeField] private Button _signOut;
 
-        protected override void Start()
+        private ApiGatewayClient _client;
+        private AuthorizationPresenter _authorizationPresenter;
+
+        [Inject]
+        private void Construct(ApiGatewayClient client, AuthorizationPresenter authorizationPresenter)
         {
-            _greetingsText.text = "Доступ получен: Cat";
+            _authorizationPresenter = authorizationPresenter;
+            _client = client;
         }
 
         protected override void OnEnable()
@@ -39,7 +44,20 @@ namespace UI
 
         private void LoadGame()
         {
-            SceneManager.LoadSceneAsync("Game");
+            if (_client.Player == null)
+            {
+                SimpleModalWindow.Create()
+                    .SetHeader("Внимание")
+                    .SetBody("Вы не авторизованы. Ваш прогресс не будет сохраняться. При обновлении страницы брузера - вы потеряете прогрес. Чтобы не потерять прогрес авторизуйтесь." +
+                             "\nВы так же можете сделать это позже, нажав на шестиренку в правом верхнем углу экрана")
+                    .AddButton("Авторизоваться", () => _authorizationPresenter.Show().Forget())
+                    .AddButton("Продолжить аноноимно", () => SceneManager.LoadSceneAsync("Game"))
+                    .Show();
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("Game");
+            }
         }
 
         private void SignOut()
