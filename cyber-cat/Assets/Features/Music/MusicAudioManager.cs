@@ -30,6 +30,20 @@ public class MusicAudioManager : MonoInstaller, IInitializable, IDisposable
         SceneManager.activeSceneChanged -= OnActiveSceneChanged;
     }
 
+    public void SetActiveMusic(bool value)
+    {
+        if (value)
+        {
+            var scene = SceneManager.GetActiveScene();
+            OnActiveSceneChanged(scene, scene);
+        }
+        else
+        {
+            StopAllCoroutines();
+            _audioSource.Pause();
+        }
+    }
+
     private void OnActiveSceneChanged(Scene oldScene, Scene newScene)
     {
         switch (newScene.name)

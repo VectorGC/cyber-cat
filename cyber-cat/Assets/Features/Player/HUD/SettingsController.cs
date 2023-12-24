@@ -8,22 +8,27 @@ using Zenject;
 public class SettingsController : UIBehaviour
 {
     [SerializeField] private Button _button;
+    [SerializeField] private Toggle _musicToggle;
     [SerializeField] private Image _warningSaveIcon;
 
     private AuthorizationPresenter _authorizationPresenter;
     private ApiGatewayClient _client;
+    private MusicAudioManager _musicAudioManager;
 
     [Inject]
-    public void Construct(PlayerInventory playerInventory, AuthorizationPresenter authorizationPresenter, ApiGatewayClient client)
+    public void Construct(PlayerInventory playerInventory, AuthorizationPresenter authorizationPresenter, ApiGatewayClient client, MusicAudioManager musicAudioManager)
     {
+        _musicAudioManager = musicAudioManager;
         _client = client;
         _authorizationPresenter = authorizationPresenter;
         _button.onClick.AddListener(OnSettingsClick);
+        _musicToggle.onValueChanged.AddListener(OnMusicToggled);
     }
 
     protected override void OnDestroy()
     {
         _button.onClick.RemoveListener(OnSettingsClick);
+        _musicToggle.onValueChanged.RemoveListener(OnMusicToggled);
     }
 
     private void OnSettingsClick()
@@ -48,6 +53,12 @@ public class SettingsController : UIBehaviour
                 .Show();
         }
     }
+
+    private void OnMusicToggled(bool value)
+    {
+        _musicAudioManager.SetActiveMusic(value);
+    }
+
 
     private void Update()
     {

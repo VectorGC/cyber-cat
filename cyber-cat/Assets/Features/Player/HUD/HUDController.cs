@@ -14,7 +14,6 @@ public interface IHud
 public class HUDController : UIBehaviour, IHud
 {
     [SerializeField] private Text _hintText;
-    [SerializeField] private SettingsController _settings;
     [SerializeField] private List<Image> _inventoryItems;
     [SerializeField] private Image _uiBack;
 

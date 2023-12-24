@@ -208,6 +208,12 @@ public class CodeEditorController : LifetimeUIBehaviour<CodeEditorState>
                 TestCases = new TestCasesVerdict()
                 {
                     Values = new Dictionary<string, TestCaseVerdict>()
+                    {
+                        [new TestCaseId(taskId, 0)] = new SuccessTestCaseVerdict()
+                        {
+                            TestCase = new TestCaseDescription()
+                        }
+                    }
                 }
             };
             _client.VerdictHistoryService.Add(verdict, DateTime.Now);

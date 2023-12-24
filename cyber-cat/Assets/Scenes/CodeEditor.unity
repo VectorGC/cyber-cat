@@ -2168,6 +2168,10 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 3933884474535505997, guid: 2f96a36b20d4e8f429ce537e44ee9c05, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21945991383466538, guid: 27d990be6d34e4148b569353d9903967, type: 2}
     - target: {fileID: 3933884474535505999, guid: 2f96a36b20d4e8f429ce537e44ee9c05, type: 3}
       propertyPath: m_Name
       value: Text
@@ -4150,8 +4154,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -206.7785}
-  m_SizeDelta: {x: 780, y: 403.557}
+  m_AnchoredPosition: {x: 400, y: -207.9833}
+  m_SizeDelta: {x: 780, y: 405.9666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1867702849
 MonoBehaviour:

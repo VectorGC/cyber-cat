@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -13,6 +14,16 @@ public class Player : MonoBehaviour
         get
         {
             var scene = SceneManager.GetActiveScene();
+            if (!AuthorizationScene.IsValid() && scene.name == "AuthorizationScene")
+            {
+                AuthorizationScene = scene;
+            }
+
+            if (!CodeEditorScene.IsValid() && scene.name == "CodeEditor")
+            {
+                CodeEditorScene = scene;
+            }
+
             return scene != AuthorizationScene && scene != CodeEditorScene;
         }
     }
@@ -27,19 +38,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out _navMeshAgent);
-        for (var i = 0; i < SceneManager.sceneCount; i++)
-        {
-            var scene = SceneManager.GetSceneAt(i);
-            switch (scene.name)
-            {
-                case "AuthorizationScene":
-                    AuthorizationScene = scene;
-                    break;
-                case "CodeEditor":
-                    CodeEditorScene = scene;
-                    break;
-            }
-        }
     }
 
     [Inject]
