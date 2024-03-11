@@ -4,7 +4,7 @@
     extends:
       file: docker-compose.yml
       service: api-gateway
-    entrypoint: dotnet ApiGateway.dll https --ssl /etc/letsencrypt/live/server.cyber-cat.pro/fullchain.pem --key /etc/letsencrypt/live/server.cyber-cat.pro/privkey.pem
+    entrypoint: dotnet ApiGateway.dll https --ssl /etc/letsencrypt/live/server.cyber-cat.ru/fullchain.pem --key /etc/letsencrypt/live/server.cyber-cat.ru/privkey.pem
     ports:
       - "443:443"
     volumes:
@@ -15,7 +15,7 @@
   # docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot-test-dry-run
   certbot-test-dry-run:
     profiles: [ "certbot-test-dry-run" ]
-    command: certonly --standalone -d server.cyber-cat.pro --dry-run
+    command: certonly --standalone -d server.cyber-cat.ru --dry-run
     image: certbot/certbot:latest
     ports:
       - "80:80"
@@ -27,7 +27,7 @@
   # docker compose -f docker-compose.yml -f docker-compose.Prod.yml run --rm certbot
   certbot:
     profiles: [ "certbot" ]
-    command: certonly --standalone -d server.cyber-cat.pro
+    command: certonly --standalone -d server.cyber-cat.ru
     image: certbot/certbot:latest
     ports:
       - "80:80"

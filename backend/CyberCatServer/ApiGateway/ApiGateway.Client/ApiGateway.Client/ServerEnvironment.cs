@@ -19,7 +19,7 @@ namespace ApiGateway.Client
                     // Send to Api Gateway local instance directly.
                     return new Uri("http://localhost");
                 case ServerEnvironment.Production:
-                    return new Uri("https://server.cyber-cat.pro");
+                    return new Uri("https://server.cyber-cat.ru");
                 default:
                     throw new ArgumentOutOfRangeException(nameof(ServerEnvironment));
             }
