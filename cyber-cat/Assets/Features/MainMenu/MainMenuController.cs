@@ -51,7 +51,7 @@ namespace UI
                     .SetBody("Вы не авторизованы. Ваш прогресс не будет сохраняться. При обновлении страницы брузера - вы потеряете прогрес. Чтобы не потерять прогрес авторизуйтесь." +
                              "\nВы так же можете сделать это позже, нажав на шестиренку в правом верхнем углу экрана")
                     .AddButton("Авторизоваться", () => _authorizationPresenter.Show().Forget())
-                    .AddButton("Продолжить аноноимно", () => SceneManager.LoadSceneAsync("Game"))
+                    .AddButton("Продолжить анонимно", () => SceneManager.LoadSceneAsync("Game"))
                     .Show();
             }
             else
