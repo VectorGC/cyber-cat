@@ -83,3 +83,4 @@ cyber-cat/*.csproj
 cyber-cat/cyber-cat.sln
 backend/CyberCatServer/External/mongodb-win32-x86_64-2008plus-ssl-4.0.4/data/db
 cyber-cat/Assets/InitTestScene*
+cyber-cat/Build_cat.zip
