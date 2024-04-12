@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+
     private static Scene AuthorizationScene;
     private static Scene CodeEditorScene;
 
@@ -30,16 +31,6 @@ public class Player : MonoBehaviour
 
     public PlayerInteractHandler Interact { get; private set; }
 
-    private const float _moveSpeed = 4f;
-
-    private NavMeshAgent _navMeshAgent;
-
-
-    private void Awake()
-    {
-        TryGetComponent(out _navMeshAgent);
-    }
-
     [Inject]
     public void Construct(PlayerInteractHandler interactHandler)
     {
@@ -55,7 +46,7 @@ public class Player : MonoBehaviour
         var horizontal = Input.GetAxis("Horizontal");
 
         var directionVector = new Vector3(horizontal, 0, vertical);
-        _navMeshAgent.velocity = Vector3.ClampMagnitude(directionVector, 1) * _moveSpeed;
+        _navMeshAgent.velocity = Vector3.ClampMagnitude(directionVector, 1);
 
         Interact.OnUpdate();
     }
